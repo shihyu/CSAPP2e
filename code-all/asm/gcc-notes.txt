@@ -1,0 +1,39 @@
+Notes on GCC
+
+Compare:
+
+GCC running on Cobia.  Even with -m32, knows that is x86_64 machine
+GCC running on Intel machine.  Generic x86
+
+Architecture flags tested (-march=XXX)
+
+i386
+	     Generic x86.
+	     Cannot force to use SSE
+
+i686
+	     Uses cond. move  (Even works on old versions of GCC)
+	     Cannot force to use SSE
+
+
+pentium4
+prescott
+opteron
+core2
+
+	    All similar.  Use cond. move.
+	    if also say -mfpmath=sse, then uses SSE.
+	    Bass: Only pentium4
+	    Cobia: Not core2
+
+Variations seen:
+
+compiler-eg.c:
+	Comp&incr trick for abs val
+	Use cmov
+	Use cltd to create mask (opteron)
+
+loop.c:
+	Use jump to middle for fact_while
+	Use 3 instruction loop for fact_while
+

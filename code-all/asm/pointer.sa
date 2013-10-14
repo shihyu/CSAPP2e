@@ -1,0 +1,13 @@
+/* $begin pointer-out 1 */
+ip     = 0xbfffefa8, *ip    = 0xbfffefe4, **ip   = 2  # ip[0] = xp. *xp = x = 2
+ip+1   = 0xbfffefac, ip[1]  =  0x804965c, *ip[1] = 15 # ip[1] = &g. g = 15
+&s.v   = 0xbfffefb4, s.v    = 'a'                     # s in stack frame
+&up->v =  0x8049760, up->v  = 'b'                     # up points to area in heap
+f      =  0x8048414                                   # f points to code for fun
+ip     = 0xbfffef68, *ip    = 0xbfffefe4, **ip   = 1  # ip in new frame, x = 1
+ip+1   = 0xbfffef6c, ip[1]  =  0x804965c, *ip[1] = 15 # ip[1] same as before
+&s.v   = 0xbfffef74, s.v    = 'a'                     # s in new frame
+&up->v =  0x8049770, up->v  = 'b'                     # up points to new area in heap
+f      =  0x8048414                                   # f points to code for fun
+/* $end pointer-out 1 */
+

@@ -1,0 +1,76 @@
+	.file	"convert.c"
+	.text
+	.p2align 4,,15
+.globl gfun
+	.type	gfun, @function
+/* $begin gfun-64 6 */
+# x86-64 version of function gfun
+# Arguments in registers %rdi (x) and %rsi (y)
+gfun:
+/* $end gfun-64 6 */
+.LFB2:
+/* $begin gfun-64 8 */
+	movslq	%edi,%rax	# Convert x to long  # line:asm2:gfun_cvtx
+	movslq	%esi,%rdx	# Convert y to long  # line:asm2:gfun_cvty
+	addl	%esi, %edi	# lower bits of t2 (32-bit addition) # line:asm2:gfun_add32
+	addq	%rdx, %rax	# t1 (64-bit addition) # line:asm2:gfun_t1
+	movslq	%edi,%rdi	# Sign extend to get t2 # line:asm2:gfun_t2
+	orq	%rdi, %rax	# Return t1 | t2
+	ret
+/* $end gfun-64 8 */
+.LFE2:
+	.size	gfun, .-gfun
+	.p2align 4,,15
+.globl gfun_u
+	.type	gfun_u, @function
+/* $begin gfun_u-64 20 */
+# x86-64 version of function gfun_u
+# Arguments in registers %rdi (x) and %rsi (y)
+gfun_u:
+/* $end gfun_u-64 20 */
+.LFB3:
+/* $begin gfun_u-64 22 */
+	mov	%edi, %eax	# Convert x to unsigned long
+	mov	%esi, %edx	# Convert y to unsigned long
+	addl	%esi, %edi	# t2 (32-bit addition with zero extension)
+	addq	%rdx, %rax	# t1 (64-bit addition of arguments)
+	orq	%rdi, %rax	
+	ret
+/* $end gfun_u-64 22 */
+.LFE3:
+	.size	gfun_u, .-gfun_u
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB3
+	.quad	.LFE3-.LFB3
+	.align 8
+.LEFDE3:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

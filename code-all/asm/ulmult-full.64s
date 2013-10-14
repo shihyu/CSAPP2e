@@ -1,0 +1,126 @@
+	.file	"ulmult-full.c"
+	.text
+.globl ulmult_full
+	.type	ulmult_full, @function
+ulmult_full:
+.LFB36:
+	movq	%rdx, %rcx
+#APP
+# 34 "ulmult-full.c" 1
+	movq %rdi,%rax      # Get x
+	mulq %rsi            # Unsigned multiply by y
+	movq %rax,%rdi     # Store low-order  8 bytes
+	movq %rdx,%rsi     # Store high-order 8 bytes
+# 0 "" 2
+#NO_APP
+	movq	%rdi, (%rcx)
+	movq	%rsi, 8(%rcx)
+	ret
+.LFE36:
+	.size	ulmult_full, .-ulmult_full
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC0:
+	.string	"Full multiply 0x%lx X 0x%lx\n  --> 0x%.16lx%.16lx\n"
+	.text
+.globl main
+	.type	main, @function
+main:
+.LFB37:
+	movq	%rbx, -32(%rsp)
+.LCFI0:
+	movq	%rbp, -24(%rsp)
+.LCFI1:
+	movq	%r12, -16(%rsp)
+.LCFI2:
+	movq	%r13, -8(%rsp)
+.LCFI3:
+	subq	$56, %rsp
+.LCFI4:
+	movl	%edi, %r12d
+	movq	%rsi, %r13
+	movl	$65536, %ebp
+	cmpl	$1, %edi
+	jle	.L5
+	movq	8(%rsi), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtoul
+	movq	%rax, %rbp
+.L5:
+	movl	$65535, %ebx
+	cmpl	$2, %r12d
+	jle	.L7
+	movq	16(%r13), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtoul
+	movq	%rax, %rbx
+.L7:
+	movq	%rsp, %rdx
+	movq	%rbx, %rsi
+	movq	%rbp, %rdi
+	call	ulmult_full
+	movq	(%rsp), %r9
+	movq	8(%rsp), %r8
+	movq	%rbx, %rcx
+	movq	%rbp, %rdx
+	movl	$.LC0, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %edi
+	call	exit
+.LFE37:
+	.size	main, .-main
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB36
+	.long	.LFE36-.LFB36
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB37
+	.long	.LFE37-.LFB37
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI4-.LFB37
+	.byte	0xe
+	.uleb128 0x40
+	.byte	0x8d
+	.uleb128 0x2
+	.byte	0x8c
+	.uleb128 0x3
+	.byte	0x86
+	.uleb128 0x4
+	.byte	0x83
+	.uleb128 0x5
+	.align 8
+.LEFDE3:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

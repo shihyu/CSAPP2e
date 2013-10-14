@@ -1,0 +1,276 @@
+	.file	"floatconst.c"
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC0:
+	.long	1413754136
+	.long	1075388923
+	.text
+	.p2align 4,,15
+.globl circum
+	.type	circum, @function
+circum:
+.LFB26:
+	mulsd	.LC0(%rip), %xmm0
+	ret
+.LFE26:
+	.size	circum, .-circum
+	.section	.rodata.cst8
+	.align 8
+.LC1:
+	.long	1413754136
+	.long	1074340347
+	.text
+	.p2align 4,,15
+.globl area
+	.type	area, @function
+area:
+.LFB27:
+	movsd	%xmm0, %xmm1
+	mulsd	.LC1(%rip), %xmm1
+	mulsd	%xmm1, %xmm0
+	ret
+.LFE27:
+	.size	area, .-area
+	.section	.rodata.cst8
+	.align 8
+.LC2:
+	.long	3435973837
+	.long	1073532108
+	.align 8
+.LC4:
+	.long	0
+	.long	1077936128
+	.text
+	.p2align 4,,15
+.globl cel2fahr
+	.type	cel2fahr, @function
+cel2fahr:
+.LFB28:
+	mulsd	.LC2(%rip), %xmm0
+	addsd	.LC4(%rip), %xmm0
+	ret
+.LFE28:
+	.size	cel2fahr, .-cel2fahr
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC6:
+	.string	"lo = %u (0x%x)\n"
+.LC7:
+	.string	"hi = %u (0x%x)\n"
+.LC8:
+	.string	"exp = %d (0x%x)\n"
+.LC9:
+	.string	"hi_frac = %d (0x%x)\n"
+.LC10:
+	.string	"frac = %llu (0x%llx)\n"
+.LC11:
+	.string	"frac_val = %.15g\n"
+.LC12:
+	.string	"val = %.15g\n"
+	.section	.rodata.cst8
+	.align 8
+.LC13:
+	.long	0
+	.long	1018167296
+	.text
+	.p2align 4,,15
+.globl decode
+	.type	decode, @function
+decode:
+.LFB29:
+	movq	%r13, -8(%rsp)
+.LCFI0:
+	movl	%esi, %r13d
+	mov	%edi, %eax
+	andl	$1048575, %r13d
+	movq	%rbp, -24(%rsp)
+.LCFI1:
+	movq	%rbx, -32(%rsp)
+.LCFI2:
+	movq	%r13, %rdx
+	movq	%r12, -16(%rsp)
+.LCFI3:
+	subq	$56, %rsp
+.LCFI4:
+	salq	$32, %rdx
+	movl	%esi, %r12d
+	movl	%esi, %ebx
+	addq	%rax, %rdx
+	movabsq	$4503599627370496, %rax
+	shrl	$20, %r12d
+	leaq	(%rdx,%rax), %rbp
+	leal	-1023(%r12), %ecx
+	movl	$1, %eax
+	movl	%edi, %edx
+	movl	%edi, %esi
+	movl	$.LC6, %edi
+	cvtsi2sdq	%rbp, %xmm0
+	sall	%cl, %eax
+	mulsd	.LC13(%rip), %xmm0
+	movsd	%xmm0, 16(%rsp)
+	cvtsi2sd	%eax, %xmm0
+	xorl	%eax, %eax
+	mulsd	16(%rsp), %xmm0
+	movsd	%xmm0, 8(%rsp)
+	call	printf
+	movl	%ebx, %edx
+	movl	%ebx, %esi
+	movl	$.LC7, %edi
+	xorl	%eax, %eax
+	call	printf
+	movl	%r12d, %edx
+	movl	%r12d, %esi
+	movl	$.LC8, %edi
+	xorl	%eax, %eax
+	call	printf
+	movl	%r13d, %edx
+	movl	%r13d, %esi
+	movl	$.LC9, %edi
+	xorl	%eax, %eax
+	call	printf
+	movq	%rbp, %rdx
+	movq	%rbp, %rsi
+	movl	$.LC10, %edi
+	xorl	%eax, %eax
+	call	printf
+	movlpd	16(%rsp), %xmm0
+	movl	$.LC11, %edi
+	movl	$1, %eax
+	call	printf
+	movlpd	8(%rsp), %xmm0
+	movq	24(%rsp), %rbx
+	movl	$.LC12, %edi
+	movq	32(%rsp), %rbp
+	movq	40(%rsp), %r12
+	movl	$1, %eax
+	movq	48(%rsp), %r13
+	addq	$56, %rsp
+	jmp	printf
+.LFE29:
+	.size	decode, .-decode
+	.p2align 4,,15
+.globl main
+	.type	main, @function
+main:
+.LFB30:
+	movq	%rbx, -16(%rsp)
+.LCFI5:
+	movq	%rbp, -8(%rsp)
+.LCFI6:
+	subq	$24, %rsp
+.LCFI7:
+	cmpl	$3, %edi
+	movq	%rsi, %rbx
+	movl	$1413754136, %ebp
+	movl	$1074340347, %esi
+	je	.L12
+	movl	%ebp, %edi
+	call	decode
+	movq	8(%rsp), %rbx
+	movq	16(%rsp), %rbp
+	xorl	%eax, %eax
+	addq	$24, %rsp
+	ret
+	.p2align 4,,7
+.L12:
+	movq	8(%rbx), %rdi
+	xorl	%ecx, %ecx
+	xorl	%edx, %edx
+	xorl	%esi, %esi
+	call	__strtoul_internal
+	movq	16(%rbx), %rdi
+	movl	%eax, %ebp
+	xorl	%ecx, %ecx
+	xorl	%edx, %edx
+	xorl	%esi, %esi
+	call	__strtoul_internal
+	movl	%ebp, %edi
+	movl	%eax, %esi
+	call	decode
+	movq	8(%rsp), %rbx
+	movq	16(%rsp), %rbp
+	xorl	%eax, %eax
+	addq	$24, %rsp
+	ret
+.LFE30:
+	.size	main, .-main
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB26
+	.quad	.LFE26-.LFB26
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB27
+	.quad	.LFE27-.LFB27
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.quad	.LFB28
+	.quad	.LFE28-.LFB28
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.quad	.LFB29
+	.quad	.LFE29-.LFB29
+	.byte	0x4
+	.long	.LCFI0-.LFB29
+	.byte	0x8d
+	.uleb128 0x2
+	.byte	0x4
+	.long	.LCFI4-.LCFI0
+	.byte	0xe
+	.uleb128 0x40
+	.byte	0x8c
+	.uleb128 0x3
+	.byte	0x83
+	.uleb128 0x5
+	.byte	0x86
+	.uleb128 0x4
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.quad	.LFB30
+	.quad	.LFE30-.LFB30
+	.byte	0x4
+	.long	.LCFI7-.LFB30
+	.byte	0xe
+	.uleb128 0x20
+	.byte	0x86
+	.uleb128 0x2
+	.byte	0x83
+	.uleb128 0x3
+	.align 8
+.LEFDE9:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

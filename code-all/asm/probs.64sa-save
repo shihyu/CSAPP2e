@@ -1,0 +1,29 @@
+/* $begin incrprob-64 6 */
+incrprob:
+/* $end incrprob-64 6 */
+.LFB2:
+/* $begin incrprob-64 8 */
+	addl	(%rdx), %edi
+	movl	%edi, (%rdx)
+	movslq	%edi,%rdi
+	addq	%rdi, (%rsi)
+	ret
+/* $end incrprob-64 8 */
+.LFE2:
+	.size	incrprob, .-incrprob
+
+/* $begin arithprob-64 30 */
+# Arguments: a in %edi, b in %sil, c in %rdx, d in %ecx
+arithprob:
+/* $end arithprob-64 30 */
+.LFB4:
+/* $begin arithprob-64 32 */
+	movslq	%ecx,%rcx
+	movsbl	%sil,%esi
+	imulq	%rdx, %rcx
+	imull	%edi, %esi
+	leal	(%rsi,%rcx), %eax
+	ret
+/* $end arithprob-64 32 */
+.LFE4:
+	.size	arithprob, .-arithprob

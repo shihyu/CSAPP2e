@@ -1,0 +1,61 @@
+This directory contains solutions for the malloc lab that are 
+both 32-bit and 64-bit clean.
+
+
+***********
+Main Files:
+***********
+
+mm.c
+	Symbolic link to the current version of malloc, one of
+	mm-implicit.c, mm-explicit.c, or mm-seglist.c. Type "make
+	implicit", "make explicit" or "make seglist" to install one of these
+	solutions.
+
+mm-implicit.c
+        The implicit list allocator described in CS:APP2e.
+mm-explicit.c
+        An explicit list allocator.
+mm-seglist.c
+        A segmented list allocator.
+
+mdriver.c	
+	The malloc driver that tests the mm.c file for correctness,
+	space efficiency, and performance.
+
+mdriver
+        Once you've run make, run ./mdriver to test your solution.
+
+traces/
+	Directory that contains the trace files that the driver uses
+	to test your solution. Files orners.rep, short2.rep, and malloc.rep
+	are tiny trace files that you can use for debugging correctness.
+
+**********************************
+Other support files for the driver
+**********************************
+
+config.h	Configures the malloc lab driver
+fsecs.{c,h}	Wrapper function for the different timer packages
+clock.{c,h}	Routines for accessing the Pentium and Alpha cycle counters
+fcyc.{c,h}	Timer functions based on cycle counters
+ftimer.{c,h}	Timer functions based on interval timers and gettimeofday()
+memlib.{c,h}	Models the heap and sbrk function
+
+*******************************
+Building and running the driver
+*******************************
+To build the driver, type "make" to the shell.
+
+To run the driver on a tiny test trace:
+
+	unix> ./mdriver -V -f traces/malloc.rep
+
+To get a list of the driver flags:
+
+	unix> ./mdriver -h
+
+The -V option prints out helpful tracing information
+
+
+

@@ -1,0 +1,30 @@
+/* $begin simple-raw 1 */
+	.file	"simple.c"
+	.text
+.globl simple
+	.type	simple, @function
+simple:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	addl	(%edx), %eax
+	movl	%eax, (%edx)
+	popl	%ebp
+	ret
+	.size	simple, .-simple
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+/* $end simple-raw 1 */
+
+/* $begin simple-ann 5 */
+simple:
+	pushl	%ebp		# Save frame pointer
+	movl	%esp, %ebp	# Create new frame pointer
+	movl	8(%ebp), %edx	# Retrieve xp
+	movl	12(%ebp), %eax	# Retrieve y
+	addl	(%edx), %eax	# Add *xp to get t
+	movl	%eax, (%edx)	# Store t at xp
+	popl	%ebp		# Restore frame pointer
+	ret			# Return
+/* $end simple-ann 5 */

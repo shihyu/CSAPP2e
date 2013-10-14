@@ -1,0 +1,45 @@
+
+branch.32o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <silly>:
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	8b 55 08             	mov    0x8(%ebp),%edx
+   6:	85 d2                	test   %edx,%edx
+/* $begin branch-rel-d 12 */
+   8:	7e 10                	jle    1a <silly+0x1a>	# Target = \textbf{dest2}#line:asm:branch_jle
+   a:	8d b6 00 00 00 00    	lea    0x0(%esi),%esi	# Added nops#line:asm:branch_lea
+  10:	89 d0                	mov    %edx,%eax      # \textbf{dest1:}#line:asm:branch_mov1
+  12:	d1 f8                	sar    %eax
+  14:	29 c2                	sub    %eax,%edx
+  16:	85 d2                	test   %edx,%edx
+  18:	7f f6                	jg     10 <silly+0x10>	# Target = \textbf{dest1}#line:asm:branch_jg
+  1a:	89 d0                	mov    %edx,%eax      # \textbf{dest2:}#line:asm:branch_mov2
+/* $end branch-rel-d 12 */
+  1c:	5d                   	pop    %ebp
+  1d:	c3                   	ret    
+  1e:	66 90                	xchg   %ax,%ax
+
+00000020 <main>:
+  20:	8d 4c 24 04          	lea    0x4(%esp),%ecx
+  24:	83 e4 f0             	and    $0xfffffff0,%esp
+  27:	ff 71 fc             	pushl  -0x4(%ecx)
+  2a:	ba 02 00 00 00       	mov    $0x2,%edx
+  2f:	55                   	push   %ebp
+  30:	89 e5                	mov    %esp,%ebp
+  32:	51                   	push   %ecx
+  33:	90                   	nop    
+  34:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
+  38:	89 d0                	mov    %edx,%eax
+  3a:	d1 f8                	sar    %eax
+  3c:	29 c2                	sub    %eax,%edx
+  3e:	85 d2                	test   %edx,%edx
+  40:	7f f6                	jg     38 <main+0x18>
+  42:	59                   	pop    %ecx
+  43:	89 d0                	mov    %edx,%eax
+  45:	5d                   	pop    %ebp
+  46:	8d 61 fc             	lea    -0x4(%ecx),%esp
+  49:	c3                   	ret    

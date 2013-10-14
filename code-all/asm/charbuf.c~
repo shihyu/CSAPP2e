@@ -1,0 +1,8 @@
+
+void intprint1(int x) {
+    char buf[12];
+    char *p;
+    sprintf(buf, "%d", x);
+    p = buf;
+    printf(p);    
+}

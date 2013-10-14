@@ -1,0 +1,18 @@
+exchange:
+	pushl %ebp		
+	movl %esp,%ebp
+
+	/* $begin exchange-s 11 */
+	movl 8(%ebp),%eax  # Get xp
+	movl 12(%ebp),%edx # Get y
+	/* $end exchange-s 11 */
+
+	movl %ebp,%esp		
+
+	/* $begin exchange-s 14 */
+	movl (%eax),%ecx   # Get x at *xp
+	movl %edx,(%eax)   # Store y at *xp
+	movl %ecx,%eax	   # Set x as return value
+	/* $end exchange-s 14 */
+	popl %ebp
+	ret

@@ -1,0 +1,146 @@
+	.file	"floatcvt-4.2.c"
+	.text
+.globl fcvt
+	.type	fcvt, @function
+/* $begin fcvt-64 5 */
+# x86-64 implementation of fcvt
+# Arguments:
+#	i	%edi	int
+#	fp	%rsi	float *
+#	dp	%rdx	double *
+#	lp	%rcx	long *
+fcvt:
+/* $end fcvt-64 5 */
+.LFB2:
+/* $begin fcvt-64 7 */
+	movss	(%rsi), %xmm0		# Get f = *fp
+	movq	(%rcx), %r8		# Get l = *lp
+	cvttsd2siq	(%rdx), %rax	# Get d = *dp and convert to long # line:asm:fcvt64:cvttsd2siq
+	movq	%rax, (%rcx)		# Store at lp
+	cvtsi2ss	%edi, %xmm1	# Convert i to float
+	movss	%xmm1, (%rsi)		# Store at fp
+	cvtsi2sdq	%r8, %xmm1	# Convert l to double
+	movsd	%xmm1, (%rdx)		# Store at dp
+	cvtss2sd	%xmm0, %xmm0	# Convert f to double
+	ret		       		# Return f
+/* $end fcvt-64 7 */
+.LFE2:
+	.size	fcvt, .-fcvt
+.globl fcvt2
+	.type	fcvt2, @function
+/* $begin fcvt2-64 21 */
+# x86-64 implementation of fcvt2
+# Arguments:
+#	ip	%rdi	int *
+#	fp	%rsi	float *
+#	dp	%rdx	double *
+#	l	%rcx	long 
+fcvt2:
+/* $end fcvt2-64 21 */
+.LFB3:
+/* $begin fcvt2-64 23 */
+	movl	(%rdi), %r8d
+	movss	(%rsi), %xmm0
+	cvttsd2si	(%rdx), %eax ## line:asm:fcvt2:cvttsd2si
+	movl	%eax, (%rdi)
+	cvtsi2ss	%r8d, %xmm1 ## line:asm:fcvt2:cvtsi2ss
+	movss	%xmm1, (%rsi)
+	cvtsi2sdq	%rcx, %xmm1 ## line:asm:fcvt2:cvtsi2sdq
+	movsd	%xmm1, (%rdx)
+	cvtss2sd	%xmm0, %xmm0 ## line:asm:fcvt2:cvtss2sd
+	ret
+/* $end fcvt2-64 23 */
+.LFE3:
+	.size	fcvt2, .-fcvt2
+.globl mf2md
+	.type	mf2md, @function
+mf2md:
+.LFB4:
+	movss	(%rdi), %xmm0
+	cvtss2sd	%xmm0, %xmm0
+	movsd	%xmm0, (%rsi)
+	ret
+.LFE4:
+	.size	mf2md, .-mf2md
+.globl f2d
+	.type	f2d, @function
+f2d:
+.LFB5:
+	cvtss2sd	%xmm0, %xmm0
+	ret
+.LFE5:
+	.size	f2d, .-f2d
+.globl d2f
+	.type	d2f, @function
+d2f:
+.LFB6:
+	cvtsd2ss	%xmm0, %xmm0
+	ret
+.LFE6:
+	.size	d2f, .-d2f
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB6
+	.long	.LFE6-.LFB6
+	.uleb128 0x0
+	.align 8
+.LEFDE9:
+	.ident	"GCC: (GNU) 4.2.4 (Ubuntu 4.2.4-3ubuntu4)"
+	.section	.note.GNU-stack,"",@progbits

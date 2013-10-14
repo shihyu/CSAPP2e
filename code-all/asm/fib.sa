@@ -1,0 +1,104 @@
+
+	/* $begin fibdw-s 18 */
+.L6:			      # \textbf{loop:}
+	leal (%edx,%ebx),%eax	# Compute t = val + nval 
+	movl %edx,%ebx		# copy nval to val
+	movl %eax,%edx		# Copy t to nval 
+	incl %ecx		# Increment i	
+	cmpl %esi,%ecx		# Compare i:n
+	jl .L6			# If less, goto \textbf{loop}
+	movl %ebx,%eax          # Set val as return value
+	/* $end fibdw-s 18 */ 
+
+	/* $begin fibw-s 40 */
+
+	movl 8(%ebp),%eax	# Get n
+	movl $1,%ebx		# Set val to 1
+	movl $1,%ecx		# Set nval to 1
+	cmpl %eax,%ebx		# Compare val:n
+	jge .L9			# If >= goto \textbf{done}
+	leal -1(%eax),%edx	# nmi = n-1	
+	/* $end fibw-s 40 */	
+
+	.p2align 4,,7
+
+	/* $begin fibw-s 47 */
+.L10:			      # \textbf{loop:}
+	leal (%ecx,%ebx),%eax	# Compute t = nval+val
+	movl %ecx,%ebx		# Set val to nval
+	movl %eax,%ecx		# Set nval to t
+	decl %edx		# Decrement nmi
+	jnz .L10		# if != 0, goto \textbf{loop}
+.L9:			      # \textbf{done:}
+	/* $end fibw-s 47 */
+
+
+	/* $begin fibrec-s 119 */	
+fib_rec:
+	# Setup code
+	pushl %ebp		# Save old \ebpreg                   
+	movl %esp,%ebp		# Set \ebpreg{} as frame pointer  
+	subl $16,%esp		# Allocate 16 bytes on stack  
+	pushl %esi		# Save \esireg{} (offset -20)  
+	pushl %ebx		# Save \ebxreg{} (offset -24)  
+
+	# Body code
+	movl 8(%ebp),%ebx	# Get n   
+	cmpl $2,%ebx		# Compare n:2  
+	jle .L24		# if <=, goto \textbf{terminate}  
+	addl $-12,%esp		# Allocate 12 bytes on stack  
+	leal -2(%ebx),%eax	# Compute n-2 
+	pushl %eax		# Push as argument  
+	call fib_rec		# Call fib_rec(n-2)  
+	movl %eax,%esi		# Store result in \esireg{}  
+	addl $-12,%esp		# Allocate 12 bytes on stack  
+	leal -1(%ebx),%eax	# Compute n-1 
+	pushl %eax		# Push as argument  
+	call fib_rec		# Call fib_rec(n-1)  
+	addl %esi,%eax		# Compute val+nval  
+	jmp .L25		# Go to \textbf{done}  
+	/* $end fibrec-s 119 */	
+	.p2align 4,,7
+	/* $begin fibrec-s 140 */	
+
+	# Terminal condition
+.L24:			      # \textbf{terminate:}  
+	movl $1,%eax		# Return value 1  
+
+	# Finishing code
+.L25:			      # \textbf{done:}  	
+	leal -24(%ebp),%esp	# Set stack to offset -24  
+	popl %ebx		# Restore \ebxreg{}  
+	popl %esi		# Restore \esireg{}  
+	movl %ebp,%esp		# Restore stack pointer 
+	popl %ebp		# Restore \ebpreg{}  
+	ret			# Return
+	/* $end fibrec-s 140 */	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

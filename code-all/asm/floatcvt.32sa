@@ -1,0 +1,41 @@
+	.file	"floatcvt.c"
+	.text
+.globl fcvt
+	.type	fcvt, @function
+/* $begin fcvt-32 5 */
+# IA32+SSE implmentation of fcvt
+# Arguments:
+#	i	%ebp+8	 int
+#	fp	%ebp+12  float *
+#	dp	%ebp+16  double *
+#	lp	%ebp+20  long *
+fcvt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	12(%ebp), %ebx		# Get fp
+	movl	16(%ebp), %esi		# Get dp
+	movl	20(%ebp), %edx		# Get lp
+	movss	(%ebx), %xmm1		# Get f = *fp (float)
+	movl	(%edx), %ecx		# Get l = *lp (long) # line:asm:fcvt32:getl
+	cvttsd2si	(%esi), %eax	# Get d + *dp and convert to long # line:asm:fcvt32:getd
+	movl	%eax, (%edx)		# Store at lp
+	cvtsi2ss	8(%ebp), %xmm0	# Get i and convert to float
+	movss	%xmm0, (%ebx)	 	# Store at fp
+	cvtsi2sd	%ecx, %xmm0	# Convert l to double
+	movsd	%xmm0, (%esi) 		# Store at dp
+	unpcklps	%xmm1, %xmm1	# Make copy of f as second vector arugment
+	cvtps2pd	%xmm1, %xmm1	# Convert both copies of f to double
+	movsd	%xmm1, -16(%ebp)	# Store f in memory # line:asm:fcvt32:storef
+	fldl	-16(%ebp)		# Read f from memory and push onto x87 stack # line:asm:fcvt32:x87push
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+/* $end fcvt-32 5 */
+	.size	fcvt, .-fcvt
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

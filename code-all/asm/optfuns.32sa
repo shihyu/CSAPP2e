@@ -1,0 +1,46 @@
+	.file	"optfuns.c"
+	.text
+.globl select
+	.type	select, @function
+/* $begin select-O1-s 5 */
+# Function select, optimized -O1
+# x at \ebpreg+8, y at \ebpreg+12, i at \ebpreg+16
+select:
+# Setup code
+	pushl	%ebp			# Save frame pointer			(S)
+	movl	%esp, %ebp		# Create new frame pointer		(S)
+	subl	$16, %esp		# Allocate 16 bytes on stack		(S)
+# Body code
+	movl	16(%ebp), %edx		# Get i					(B)
+	movl	$0, %eax  		# Set result = 0			(B)
+	cmpl	$1, %edx		# Compare i:1				(B)
+	ja	.L3 			# if i < 0 or i > 1, goto \textbf{done}	         (B)
+	movl	8(%ebp), %eax		# Get x		     	  	        (B)
+	movl	%eax, -8(%ebp)		# Store in a[0]				(B)
+	movl	12(%ebp), %eax		# Get y					(B)
+	movl	%eax, -4(%ebp)		# Store in a[1]				(B)
+	movl	-8(%ebp,%edx,4), %eax	# Set result = a[i]			(B)
+.L3:				       # \textbf{done:}
+# Completion code
+	leave			       	# Restore stack and frame pointers	(C)
+	ret				# Return  	    	  		(C)
+/* $end select-O1-s 5 */
+	.size	select, .-select
+.globl test_select
+	.type	test_select, @function
+/* $begin test_select-O1-s  24 */
+# Function test_select, optimized -O1
+test_select:
+	pushl	%ebp			
+	movl	%esp, %ebp		
+	subl	$12, %esp		# Allocate 12 bytes on stack
+	movl	$1, 8(%esp)		# Set 1 as 3rd argument
+	movl	$6, 4(%esp)		# Set 6 as 2nd argument
+	movl	$5, (%esp)		# Set 5 as 1st argument
+	call	select			# Call select(5,6,1)
+	leave				
+	ret				
+/* $end test_select-O1-s  24 */
+	.size	test_select, .-test_select
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,102 @@
+DICTPG = ../dictionary-pg
+DICT = ../dictionary
+
+GPFLAGS = -b
+
+MFILE = moby.txt
+SFILE = shakespeare.txt
+
+SIZE = 1021
+BSIZE = 10007
+
+mrun1:	
+	$(DICT) -file $(MFILE) -size $(SIZE) -hash 1 -verb 10 > mrun1.txt
+	$(DICTPG) -file $(MFILE) -size $(SIZE) -hash 1 -verb 10 > /dev/null
+	mv gmon.out mrun1.out
+	gprof $(GPFLAGS) $(DICTPG) mrun1.out > mprof1.txt
+	rm mrun1.out
+
+mrun2:	
+	$(DICT) -file $(MFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 > mrun2.txt
+	$(DICTPG) -file $(MFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 > /dev/null
+	mv gmon.out mrun2.out
+	gprof $(GPFLAGS) $(DICTPG) mrun2.out > mprof2.txt
+	rm mrun2.out
+
+mrun3:
+	$(DICT) -file $(MFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 -lower 1 > mrun3.txt
+	$(DICTPG) -file $(MFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 -lower 1 > /dev/null
+	mv gmon.out mrun3.out
+	gprof $(GPFLAGS) $(DICTPG) mrun3.out > mprof3.txt
+	rm mrun3.out
+
+mrun4:
+	$(DICT) -file $(MFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -lower 1 > mrun4.txt
+	$(DICTPG) -file $(MFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -lower 1 > /dev/null
+	mv gmon.out mrun4.out
+	gprof $(GPFLAGS) $(DICTPG) mrun4.out > mprof4.txt
+	rm mrun4.out
+
+mrun5:
+	$(DICT) -file $(MFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -lower 1 -find 1 > mrun5.txt
+	$(DICTPG) -file $(MFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -lower 1 -find 1 > /dev/null
+	mv gmon.out mrun5.out
+	gprof $(GPFLAGS) $(DICTPG) mrun5.out > mprof5.txt
+	rm mrun5.out
+
+# Shakespeare
+srun: srun1 srun2 srun3 srun4 srun5 srun6 srun7
+
+srun1:	
+	$(DICT) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 > srun1.txt
+	$(DICTPG) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 > /dev/null
+	mv gmon.out srun1.out
+	gprof $(GPFLAGS) $(DICTPG) srun1.out > sprof1.txt
+	rm srun1.out
+
+srun2:	
+	$(DICT) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 > srun2.txt
+	$(DICTPG) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 > /dev/null
+	mv gmon.out srun2.out
+	gprof $(GPFLAGS) $(DICTPG) srun2.out > sprof2.txt
+	rm srun2.out
+
+srun3:
+	$(DICT) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 -find 1 > srun3.txt
+	$(DICTPG) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 -find 1 > /dev/null
+	mv gmon.out srun3.out
+	gprof $(GPFLAGS) $(DICTPG) srun3.out > sprof3.txt
+	rm srun3.out
+
+srun4:
+	$(DICT) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 -find 2 > srun4.txt
+	$(DICTPG) -file $(SFILE) -size $(SIZE) -hash 1 -verb 10 -quick 1 -find 2 > /dev/null
+	mv gmon.out srun4.out
+	gprof $(GPFLAGS) $(DICTPG) srun4.out > sprof4.txt
+	rm srun4.out
+
+srun5:
+	$(DICT) -file $(SFILE) -size $(BSIZE) -hash 1 -verb 10 -quick 1 -find 2 > srun4.txt
+	$(DICTPG) -file $(SFILE) -size $(BSIZE) -hash 1 -verb 10 -quick 1 -find 2 > /dev/null
+	mv gmon.out srun4.out
+	gprof $(GPFLAGS) $(DICTPG) srun4.out > sprof4.txt
+	rm srun4.out
+
+srun6:
+	$(DICT) -file $(SFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -find 2 > srun5.txt
+	$(DICTPG) -file $(SFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -find 2 > /dev/null
+	mv gmon.out srun5.out
+	gprof $(GPFLAGS) $(DICTPG) srun5.out > sprof5.txt
+	rm srun5.out
+
+srun7:
+	$(DICT) -file $(SFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -lower 1 -find 2 > srun6.txt
+	$(DICTPG) -file $(SFILE) -size $(BSIZE) -hash 2 -verb 10 -quick 1 -lower 1 -find 2 > /dev/null
+	mv gmon.out srun6.out
+	gprof $(GPFLAGS) $(DICTPG) srun6.out > sprof6.txt
+	rm srun6.out
+
+
+
+clean:
+	rm -f *run*.out *run*.txt *prof*.txt

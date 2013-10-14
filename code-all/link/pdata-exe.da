@@ -1,0 +1,10 @@
+/* $begin pdata-exe-d  194 */
+08049454 <buf>:
+ 8049454:	01 00 00 00 02 00 00 00 
+
+/* $begin pdata-exe1-d  197 */
+0804945c <bufp0>:
+ 804945c:	54 94 04 08            		# Relocated!
+/* $end pdata-exe1-d  197 */
+/* $end pdata-exe-d  194 */
+

@@ -1,0 +1,3581 @@
+register_combiners:
+	movl	$combine1, %esi
+	subq	$8, %rsp
+	movl	$combine1_descr, %edx
+	movq	%rsi, %rdi
+	call	add_combiner
+	movl	$combine2_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine2, %edi
+	call	add_combiner
+	movl	$combine3_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine3, %edi
+	call	add_combiner
+	movl	$combine3w_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine3w, %edi
+	call	add_combiner
+	movl	$combine4_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine4, %edi
+	call	add_combiner
+	movl	$combine4b_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine4b, %edi
+	call	add_combiner
+	movl	$combine4p_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine4p, %edi
+	call	add_combiner
+	movl	$combine5_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine5, %edi
+	call	add_combiner
+	movl	$combine5p_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine5p, %edi
+	call	add_combiner
+	movl	$unroll2aw_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll2aw_combine, %edi
+	call	add_combiner
+	movl	$unroll3a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll3a_combine, %edi
+	call	add_combiner
+	movl	$unroll4a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll4a_combine, %edi
+	call	add_combiner
+	movl	$unroll5a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll5a_combine, %edi
+	call	add_combiner
+	movl	$unroll6a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll6a_combine, %edi
+	call	add_combiner
+	movl	$unroll8a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8a_combine, %edi
+	call	add_combiner
+	movl	$unroll16a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll16a_combine, %edi
+	call	add_combiner
+	movl	$unroll2_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll2_combine, %edi
+	call	add_combiner
+	movl	$unroll3_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll3_combine, %edi
+	call	add_combiner
+	movl	$unroll4_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll4_combine, %edi
+	call	add_combiner
+	movl	$unroll8_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8_combine, %edi
+	call	add_combiner
+	movl	$unroll16_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll16_combine, %edi
+	call	add_combiner
+	movl	$combine6_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine6, %edi
+	call	add_combiner
+	movl	$unroll4x2a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll4x2a_combine, %edi
+	call	add_combiner
+	movl	$unroll8x2a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8x2a_combine, %edi
+	call	add_combiner
+	movl	$unroll3x3a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll3x3a_combine, %edi
+	call	add_combiner
+	movl	$unroll4x4a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll4x4a_combine, %edi
+	call	add_combiner
+	movl	$unroll5x5a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll5x5a_combine, %edi
+	call	add_combiner
+	movl	$unroll6x6a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll6x6a_combine, %edi
+	call	add_combiner
+	movl	$unroll8x4a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8x4a_combine, %edi
+	call	add_combiner
+	movl	$unroll8x8a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8x8a_combine, %edi
+	call	add_combiner
+	movl	$unroll10x10a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll10x10a_combine, %edi
+	call	add_combiner
+	movl	$unroll12x6a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll12x6a_combine, %edi
+	call	add_combiner
+	movl	$unroll12x12a_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll12x12a_combine, %edi
+	call	add_combiner
+	movl	$unroll8x2_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8x2_combine, %edi
+	call	add_combiner
+	movl	$unroll8x4_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8x4_combine, %edi
+	call	add_combiner
+	movl	$unroll8x8_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8x8_combine, %edi
+	call	add_combiner
+	movl	$unroll9x3_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll9x3_combine, %edi
+	call	add_combiner
+	movl	$unrollx2as_descr, %edx
+	movl	$combine1, %esi
+	movl	$unrollx2as_combine, %edi
+	call	add_combiner
+	movl	$combine7_descr, %edx
+	movl	$combine1, %esi
+	movl	$combine7, %edi
+	call	add_combiner
+	movl	$unroll3aa_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll3aa_combine, %edi
+	call	add_combiner
+	movl	$unroll4aa_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll4aa_combine, %edi
+	call	add_combiner
+	movl	$unroll5aa_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll5aa_combine, %edi
+	call	add_combiner
+	movl	$unroll6aa_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll6aa_combine, %edi
+	call	add_combiner
+	movl	$unroll8aa_descr, %edx
+	movl	$combine1, %esi
+	movl	$unroll8aa_combine, %edi
+	call	add_combiner
+	movl	$simd_v1_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v1_combine, %edi
+	call	add_combiner
+	movl	$simd_v2_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v2_combine, %edi
+	call	add_combiner
+	movl	$simd_v4_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v4_combine, %edi
+	call	add_combiner
+	movl	$simd_v8_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v8_combine, %edi
+	call	add_combiner
+	movl	$simd_v12_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v12_combine, %edi
+	call	add_combiner
+	movl	$simd_v2a_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v2a_combine, %edi
+	call	add_combiner
+	movl	$simd_v4a_descr, %edx
+	movl	$combine1, %esi
+	movl	$simd_v4a_combine, %edi
+	call	add_combiner
+	movl	$simd_v8a_combine, %edi
+	movl	$simd_v8a_descr, %edx
+	movl	$combine1, %esi
+	call	add_combiner
+	movsd	.LC0(%rip), %xmm1
+	movl	$simd_v8a_combine, %edi
+	movsd	.LC1(%rip), %xmm0
+	addq	$8, %rsp
+	jmp	log_combiner
+simd_v8a_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm4
+	jne	.L19
+.L13:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm3
+.L6:
+	cmpl	$31, %esi
+	jle	.L8
+	movl	%esi, %edi
+	movq	%rbp, %rdx
+	leal	-32(%rdi), %esi
+	movl	%esi, %ecx
+	shrl	$5, %ecx
+	mov	%ecx, %eax
+	salq	$7, %rax
+	leaq	128(%rbp,%rax), %rax
+.L9:
+	movaps	(%rdx), %xmm2
+	movaps	32(%rdx), %xmm0
+	mulps	16(%rdx), %xmm2
+	movaps	64(%rdx), %xmm1
+	mulps	48(%rdx), %xmm0
+	mulps	80(%rdx), %xmm1
+	mulps	%xmm0, %xmm2
+	movaps	96(%rdx), %xmm0
+	mulps	112(%rdx), %xmm0
+	subq	$-128, %rdx
+	cmpq	%rax, %rdx
+	mulps	%xmm0, %xmm1
+	mulps	%xmm1, %xmm2
+	mulps	%xmm2, %xmm4
+	jne	.L9
+	leal	-32(%rdi), %eax
+	sall	$5, %ecx
+	subl	%ecx, %esi
+	shrl	$5, %eax
+	mov	%eax, %eax
+	salq	$7, %rax
+	leaq	128(%rbp,%rax), %rbp
+.L8:
+	testl	%esi, %esi
+	je	.L10
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L11:
+	mulss	(%rdx), %xmm3
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L11
+.L10:
+	movaps	%xmm4, 16(%rsp)
+	mulss	16(%rsp), %xmm3
+	mulss	20(%rsp), %xmm3
+	mulss	24(%rsp), %xmm3
+	mulss	28(%rsp), %xmm3
+	movss	%xmm3, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L19:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm3
+	leal	-1(%rax), %edi
+	je	.L13
+.L14:
+	mulss	(%rbp), %xmm3
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L14
+	jmp	.L6
+simd_v4a_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm3
+	jne	.L35
+.L30:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm2
+.L23:
+	cmpl	$15, %esi
+	jle	.L25
+	movl	%esi, %edi
+	movq	%rbp, %rdx
+	leal	-16(%rdi), %esi
+	movl	%esi, %ecx
+	shrl	$4, %ecx
+	mov	%ecx, %eax
+	salq	$6, %rax
+	leaq	64(%rbp,%rax), %rax
+.L26:
+	movaps	(%rdx), %xmm1
+	movaps	32(%rdx), %xmm0
+	mulps	16(%rdx), %xmm1
+	mulps	48(%rdx), %xmm0
+	addq	$64, %rdx
+	cmpq	%rax, %rdx
+	mulps	%xmm0, %xmm1
+	mulps	%xmm1, %xmm3
+	jne	.L26
+	leal	-16(%rdi), %eax
+	sall	$4, %ecx
+	subl	%ecx, %esi
+	shrl	$4, %eax
+	mov	%eax, %eax
+	salq	$6, %rax
+	leaq	64(%rbp,%rax), %rbp
+.L25:
+	testl	%esi, %esi
+	je	.L27
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L28:
+	mulss	(%rdx), %xmm2
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L28
+.L27:
+	movaps	%xmm3, 16(%rsp)
+	mulss	16(%rsp), %xmm2
+	mulss	20(%rsp), %xmm2
+	mulss	24(%rsp), %xmm2
+	mulss	28(%rsp), %xmm2
+	movss	%xmm2, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L35:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm2
+	leal	-1(%rax), %edi
+	je	.L30
+.L31:
+	mulss	(%rbp), %xmm2
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L31
+	jmp	.L23
+simd_v2a_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm2
+	jne	.L51
+.L46:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm1
+.L39:
+	cmpl	$7, %esi
+	jle	.L41
+	movl	%esi, %edi
+	movq	%rbp, %rdx
+	leal	-8(%rdi), %esi
+	movl	%esi, %ecx
+	shrl	$3, %ecx
+	mov	%ecx, %eax
+	salq	$5, %rax
+	leaq	32(%rbp,%rax), %rax
+.L42:
+	movaps	(%rdx), %xmm0
+	mulps	16(%rdx), %xmm0
+	addq	$32, %rdx
+	cmpq	%rax, %rdx
+	mulps	%xmm0, %xmm2
+	jne	.L42
+	leal	0(,%rcx,8), %eax
+	subl	%eax, %esi
+	leal	-8(%rdi), %eax
+	shrl	$3, %eax
+	mov	%eax, %eax
+	salq	$5, %rax
+	leaq	32(%rbp,%rax), %rbp
+.L41:
+	testl	%esi, %esi
+	je	.L43
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L44:
+	mulss	(%rdx), %xmm1
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L44
+.L43:
+	movaps	%xmm2, 16(%rsp)
+	mulss	16(%rsp), %xmm1
+	mulss	20(%rsp), %xmm1
+	mulss	24(%rsp), %xmm1
+	mulss	28(%rsp), %xmm1
+	movss	%xmm1, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L51:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm1
+	leal	-1(%rax), %edi
+	je	.L46
+.L47:
+	mulss	(%rbp), %xmm1
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L47
+	jmp	.L39
+simd_v12_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm0
+	jne	.L68
+.L63:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm9
+.L55:
+	cmpl	$47, %esi
+	jle	.L69
+	movl	%esi, %edi
+	movl	$-1431655765, %eax
+	movq	%rbp, %rcx
+	leal	-48(%rdi), %esi
+	movaps	%xmm0, %xmm12
+	movaps	%xmm0, %xmm10
+	mull	%esi
+	movaps	%xmm0, %xmm11
+	movaps	%xmm0, %xmm7
+	shrl	$5, %edx
+	movaps	%xmm0, %xmm8
+	mov	%edx, %eax
+	movaps	%xmm0, %xmm5
+	leaq	3(%rax,%rax,2), %rax
+	movaps	%xmm0, %xmm6
+	movaps	%xmm0, %xmm3
+	salq	$6, %rax
+	movaps	%xmm0, %xmm4
+	movaps	%xmm0, %xmm1
+	leaq	(%rbp,%rax), %rax
+	movaps	%xmm0, %xmm2
+.L59:
+	mulps	(%rcx), %xmm0
+	mulps	16(%rcx), %xmm12
+	mulps	32(%rcx), %xmm10
+	mulps	48(%rcx), %xmm11
+	mulps	64(%rcx), %xmm7
+	mulps	80(%rcx), %xmm8
+	mulps	96(%rcx), %xmm5
+	mulps	112(%rcx), %xmm6
+	mulps	128(%rcx), %xmm3
+	mulps	144(%rcx), %xmm4
+	mulps	160(%rcx), %xmm1
+	mulps	176(%rcx), %xmm2
+	addq	$192, %rcx
+	cmpq	%rax, %rcx
+	jne	.L59
+	leal	(%rdx,%rdx,2), %eax
+	leal	-48(%rdi), %edx
+	sall	$4, %eax
+	subl	%eax, %esi
+	movl	$-1431655765, %eax
+	mull	%edx
+	shrl	$5, %edx
+	mov	%edx, %edx
+	leaq	3(%rdx,%rdx,2), %rdx
+	salq	$6, %rdx
+	addq	%rdx, %rbp
+.L58:
+	testl	%esi, %esi
+	je	.L60
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L61:
+	mulss	(%rdx), %xmm9
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L61
+.L60:
+	mulps	%xmm12, %xmm0
+	mulps	%xmm11, %xmm10
+	mulps	%xmm8, %xmm7
+	mulps	%xmm6, %xmm5
+	mulps	%xmm10, %xmm0
+	mulps	%xmm4, %xmm3
+	mulps	%xmm2, %xmm1
+	mulps	%xmm7, %xmm0
+	mulps	%xmm5, %xmm0
+	mulps	%xmm3, %xmm0
+	mulps	%xmm1, %xmm0
+	movaps	%xmm0, 16(%rsp)
+	mulss	16(%rsp), %xmm9
+	mulss	20(%rsp), %xmm9
+	mulss	24(%rsp), %xmm9
+	mulss	28(%rsp), %xmm9
+	movss	%xmm9, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L68:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm9
+	leal	-1(%rax), %edi
+	je	.L63
+.L64:
+	mulss	(%rbp), %xmm9
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L64
+	jmp	.L55
+.L69:
+	movaps	%xmm0, %xmm12
+	movaps	%xmm0, %xmm10
+	movaps	%xmm0, %xmm11
+	movaps	%xmm0, %xmm7
+	movaps	%xmm0, %xmm8
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm6
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm4
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm2
+	jmp	.L58
+simd_v8_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm0
+	jne	.L86
+.L81:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm8
+.L73:
+	cmpl	$31, %esi
+	jle	.L87
+	movl	%esi, %edi
+	movaps	%xmm0, %xmm7
+	leal	-32(%rdi), %esi
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm6
+	movq	%rbp, %rdx
+	movl	%esi, %ecx
+	movaps	%xmm0, %xmm3
+	shrl	$5, %ecx
+	movaps	%xmm0, %xmm4
+	mov	%ecx, %eax
+	movaps	%xmm0, %xmm2
+	salq	$7, %rax
+	movaps	%xmm0, %xmm1
+	leaq	128(%rbp,%rax), %rax
+.L77:
+	mulps	(%rdx), %xmm0
+	mulps	16(%rdx), %xmm7
+	mulps	32(%rdx), %xmm5
+	mulps	48(%rdx), %xmm6
+	mulps	64(%rdx), %xmm3
+	mulps	80(%rdx), %xmm4
+	mulps	96(%rdx), %xmm2
+	mulps	112(%rdx), %xmm1
+	subq	$-128, %rdx
+	cmpq	%rax, %rdx
+	jne	.L77
+	leal	-32(%rdi), %eax
+	sall	$5, %ecx
+	subl	%ecx, %esi
+	shrl	$5, %eax
+	mov	%eax, %eax
+	salq	$7, %rax
+	leaq	128(%rbp,%rax), %rbp
+.L76:
+	testl	%esi, %esi
+	je	.L78
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L79:
+	mulss	(%rdx), %xmm8
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L79
+.L78:
+	mulps	%xmm7, %xmm0
+	mulps	%xmm6, %xmm5
+	mulps	%xmm4, %xmm3
+	mulps	%xmm1, %xmm2
+	mulps	%xmm5, %xmm0
+	mulps	%xmm3, %xmm0
+	mulps	%xmm2, %xmm0
+	movaps	%xmm0, 16(%rsp)
+	mulss	16(%rsp), %xmm8
+	mulss	20(%rsp), %xmm8
+	mulss	24(%rsp), %xmm8
+	mulss	28(%rsp), %xmm8
+	movss	%xmm8, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L86:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm8
+	leal	-1(%rax), %edi
+	je	.L81
+.L82:
+	mulss	(%rbp), %xmm8
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L82
+	jmp	.L73
+.L87:
+	movaps	%xmm0, %xmm7
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm6
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm4
+	movaps	%xmm0, %xmm2
+	movaps	%xmm0, %xmm1
+	jmp	.L76
+simd_v4_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm0
+	jne	.L104
+.L99:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm4
+.L91:
+	cmpl	$15, %esi
+	jle	.L105
+	movl	%esi, %edi
+	movaps	%xmm0, %xmm3
+	leal	-16(%rdi), %esi
+	movaps	%xmm0, %xmm2
+	movaps	%xmm0, %xmm1
+	movq	%rbp, %rdx
+	movl	%esi, %ecx
+	shrl	$4, %ecx
+	mov	%ecx, %eax
+	salq	$6, %rax
+	leaq	64(%rbp,%rax), %rax
+.L95:
+	mulps	(%rdx), %xmm0
+	mulps	16(%rdx), %xmm3
+	mulps	32(%rdx), %xmm2
+	mulps	48(%rdx), %xmm1
+	addq	$64, %rdx
+	cmpq	%rax, %rdx
+	jne	.L95
+	leal	-16(%rdi), %eax
+	sall	$4, %ecx
+	subl	%ecx, %esi
+	shrl	$4, %eax
+	mov	%eax, %eax
+	salq	$6, %rax
+	leaq	64(%rbp,%rax), %rbp
+.L94:
+	testl	%esi, %esi
+	je	.L96
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L97:
+	mulss	(%rdx), %xmm4
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L97
+.L96:
+	mulps	%xmm3, %xmm0
+	mulps	%xmm1, %xmm2
+	mulps	%xmm2, %xmm0
+	movaps	%xmm0, 16(%rsp)
+	mulss	16(%rsp), %xmm4
+	mulss	20(%rsp), %xmm4
+	mulss	24(%rsp), %xmm4
+	mulss	28(%rsp), %xmm4
+	movss	%xmm4, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L104:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm4
+	leal	-1(%rax), %edi
+	je	.L99
+.L100:
+	mulss	(%rbp), %xmm4
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L100
+	jmp	.L91
+.L105:
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+	movaps	%xmm0, %xmm1
+	jmp	.L94
+simd_v2_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm0
+	jne	.L123
+.L117:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm2
+.L109:
+	cmpl	$7, %esi
+	movq	%rbp, %rdx
+	movaps	%xmm0, %xmm1
+	jle	.L112
+	movl	%esi, %edi
+	leal	-8(%rdi), %esi
+	movl	%esi, %ecx
+	shrl	$3, %ecx
+	mov	%ecx, %eax
+	salq	$5, %rax
+	leaq	32(%rbp,%rax), %rax
+.L118:
+	mulps	(%rdx), %xmm0
+	mulps	16(%rdx), %xmm1
+	addq	$32, %rdx
+	cmpq	%rax, %rdx
+	jne	.L118
+	leal	0(,%rcx,8), %eax
+	subl	%eax, %esi
+	leal	-8(%rdi), %eax
+	shrl	$3, %eax
+	mov	%eax, %eax
+	salq	$5, %rax
+	leaq	32(%rbp,%rax), %rbp
+.L112:
+	testl	%esi, %esi
+	je	.L114
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L115:
+	mulss	(%rdx), %xmm2
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L115
+.L114:
+	mulps	%xmm1, %xmm0
+	movaps	%xmm0, 16(%rsp)
+	mulss	16(%rsp), %xmm2
+	mulss	20(%rsp), %xmm2
+	mulss	24(%rsp), %xmm2
+	mulss	28(%rsp), %xmm2
+	movss	%xmm2, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L123:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm2
+	leal	-1(%rax), %edi
+	je	.L117
+.L119:
+	mulss	(%rbp), %xmm2
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L119
+	jmp	.L109
+simd_v1_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$32, %rsp
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	movl	$0x3f800000, %edx
+	testb	$15, %bpl
+	movl	%eax, %esi
+	movl	%edx, 16(%rsp)
+	movl	%edx, 20(%rsp)
+	movl	%edx, 24(%rsp)
+	movl	%edx, 28(%rsp)
+	movaps	16(%rsp), %xmm1
+	jne	.L139
+.L134:
+	movl	%edx, 12(%rsp)
+	movss	12(%rsp), %xmm0
+.L127:
+	cmpl	$3, %esi
+	jle	.L129
+	movl	%esi, %edi
+	movq	%rbp, %rdx
+	leal	-4(%rdi), %esi
+	movl	%esi, %ecx
+	shrl	$2, %ecx
+	mov	%ecx, %eax
+	salq	$4, %rax
+	leaq	16(%rbp,%rax), %rax
+.L130:
+	mulps	(%rdx), %xmm1
+	addq	$16, %rdx
+	cmpq	%rax, %rdx
+	jne	.L130
+	leal	0(,%rcx,4), %eax
+	subl	%eax, %esi
+	leal	-4(%rdi), %eax
+	shrl	$2, %eax
+	mov	%eax, %eax
+	salq	$4, %rax
+	leaq	16(%rbp,%rax), %rbp
+.L129:
+	testl	%esi, %esi
+	je	.L131
+	leal	-1(%rsi), %eax
+	movq	%rbp, %rdx
+	leaq	4(%rbp,%rax,4), %rax
+.L132:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rax, %rdx
+	jne	.L132
+.L131:
+	movaps	%xmm1, 16(%rsp)
+	mulss	16(%rsp), %xmm0
+	mulss	20(%rsp), %xmm0
+	mulss	24(%rsp), %xmm0
+	mulss	28(%rsp), %xmm0
+	movss	%xmm0, (%r12)
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L139:
+	movl	%edx, 12(%rsp)
+	xorl	%ecx, %ecx
+	testl	%eax, %eax
+	movss	12(%rsp), %xmm0
+	leal	-1(%rax), %edi
+	je	.L134
+.L135:
+	mulss	(%rbp), %xmm0
+	addq	$4, %rbp
+	subl	$1, %esi
+	testb	$15, %bpl
+	setne	%dl
+	cmpl	%ecx, %edi
+	setne	%al
+	addq	$1, %rcx
+	testb	%al, %dl
+	jne	.L135
+	jmp	.L127
+unroll8aa_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-7(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rdx
+	jle	.L149
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm3
+.L143:
+	movss	(%rdx,%rax,4), %xmm2
+	movss	8(%rdx,%rax,4), %xmm0
+	mulss	4(%rdx,%rax,4), %xmm2
+	mulss	12(%rdx,%rax,4), %xmm0
+	movss	16(%rdx,%rax,4), %xmm1
+	mulss	20(%rdx,%rax,4), %xmm1
+	mulss	%xmm0, %xmm2
+	movss	24(%rdx,%rax,4), %xmm0
+	mulss	28(%rdx,%rax,4), %xmm0
+	addq	$8, %rax
+	cmpq	%rax, %r12
+	mulss	%xmm0, %xmm1
+	mulss	%xmm1, %xmm2
+	mulss	%xmm2, %xmm3
+	jg	.L143
+	leaq	-8(%rbp), %rax
+	shrq	$3, %rax
+	leaq	8(,%rax,8), %rcx
+.L142:
+	cmpq	%rcx, %rbp
+	jle	.L144
+	leaq	(%rdx,%rcx,4), %rax
+.L145:
+	addq	$1, %rcx
+	mulss	(%rax), %xmm3
+	addq	$4, %rax
+	cmpq	%rcx, %rbp
+	jg	.L145
+.L144:
+	movss	%xmm3, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L149:
+	xorl	%ecx, %ecx
+	movss	.LC2(%rip), %xmm3
+	jmp	.L142
+unroll6aa_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-5(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L159
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm2
+.L153:
+	movss	(%rcx,%rax,4), %xmm0
+	movss	8(%rcx,%rax,4), %xmm1
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	12(%rcx,%rax,4), %xmm1
+	mulss	%xmm1, %xmm0
+	movss	16(%rcx,%rax,4), %xmm1
+	mulss	20(%rcx,%rax,4), %xmm1
+	addq	$6, %rax
+	cmpq	%rax, %r12
+	mulss	%xmm1, %xmm0
+	mulss	%xmm0, %xmm2
+	jg	.L153
+	leaq	-6(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	$2, %rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+	addq	%rdx, %rdx
+.L152:
+	cmpq	%rdx, %rbp
+	jle	.L154
+	leaq	(%rcx,%rdx,4), %rax
+.L155:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm2
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L155
+.L154:
+	movss	%xmm2, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L159:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm2
+	jmp	.L152
+unroll5aa_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-4(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L169
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm2
+.L163:
+	movss	(%rcx,%rax,4), %xmm0
+	movss	8(%rcx,%rax,4), %xmm1
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	12(%rcx,%rax,4), %xmm1
+	mulss	%xmm1, %xmm0
+	mulss	16(%rcx,%rax,4), %xmm0
+	addq	$5, %rax
+	cmpq	%rax, %r12
+	mulss	%xmm0, %xmm2
+	jg	.L163
+	leaq	-5(%rbp), %rdx
+	movabsq	$-3689348814741910323, %rax
+	mulq	%rdx
+	shrq	$2, %rdx
+	leaq	5(%rdx,%rdx,4), %rdx
+.L162:
+	cmpq	%rdx, %rbp
+	jle	.L164
+	leaq	(%rcx,%rdx,4), %rax
+.L165:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm2
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L165
+.L164:
+	movss	%xmm2, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L169:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm2
+	jmp	.L162
+unroll4aa_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-3(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L179
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm2
+.L173:
+	movss	(%rcx,%rax,4), %xmm1
+	movss	8(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm1
+	mulss	12(%rcx,%rax,4), %xmm0
+	addq	$4, %rax
+	cmpq	%rax, %r12
+	mulss	%xmm0, %xmm1
+	mulss	%xmm1, %xmm2
+	jg	.L173
+	leaq	-4(%rbp), %rax
+	shrq	$2, %rax
+	leaq	4(,%rax,4), %rdx
+.L172:
+	cmpq	%rdx, %rbp
+	jle	.L174
+	leaq	(%rcx,%rdx,4), %rax
+.L175:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm2
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L175
+.L174:
+	movss	%xmm2, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L179:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm2
+	jmp	.L172
+unroll3aa_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-2(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L189
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm1
+.L183:
+	movss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	8(%rcx,%rax,4), %xmm0
+	addq	$3, %rax
+	cmpq	%rax, %r12
+	mulss	%xmm0, %xmm1
+	jg	.L183
+	leaq	-3(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	%rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+.L182:
+	cmpq	%rdx, %rbp
+	jle	.L184
+	leaq	(%rcx,%rdx,4), %rax
+.L185:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm1
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L185
+.L184:
+	movss	%xmm1, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L189:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm1
+	jmp	.L182
+combine7:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-1(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L199
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm1
+.L193:
+	movss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	addq	$2, %rax
+	cmpq	%rax, %r12
+	mulss	%xmm0, %xmm1
+	jg	.L193
+	leaq	-2(%rbp), %rax
+	shrq	%rax
+	leaq	2(%rax,%rax), %rdx
+.L192:
+	cmpq	%rdx, %rbp
+	jle	.L194
+	leaq	(%rcx,%rdx,4), %rax
+.L195:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm1
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L195
+.L194:
+	movss	%xmm1, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L199:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm1
+	jmp	.L192
+unroll8x8_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	-28(%rax,%r12,4), %rcx
+	movq	%rax, %rdx
+	cmpq	%rcx, %rax
+	jae	.L210
+	movss	.LC2(%rip), %xmm2
+	movaps	%xmm2, %xmm6
+	movaps	%xmm2, %xmm5
+	movaps	%xmm2, %xmm0
+	movaps	%xmm2, %xmm4
+	movaps	%xmm2, %xmm3
+.L203:
+	movss	20(%rax), %xmm1
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm4
+	mulss	8(%rax), %xmm3
+	mulss	12(%rax), %xmm5
+	mulss	16(%rax), %xmm2
+	mulss	24(%rax), %xmm1
+	mulss	28(%rax), %xmm6
+	addq	$32, %rax
+	cmpq	%rax, %rcx
+	ja	.L203
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	andq	$-32, %rax
+	leaq	32(%rdx,%rax), %rdx
+.L202:
+	leaq	28(%rcx), %rax
+	cmpq	%rdx, %rax
+	jbe	.L204
+.L207:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L207
+.L204:
+	mulss	%xmm4, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm5, %xmm0
+	mulss	%xmm2, %xmm0
+	mulss	%xmm0, %xmm1
+	mulss	%xmm6, %xmm1
+	movss	%xmm1, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L210:
+	movss	.LC2(%rip), %xmm2
+	movaps	%xmm2, %xmm1
+	movaps	%xmm2, %xmm6
+	movaps	%xmm2, %xmm5
+	movaps	%xmm2, %xmm4
+	movaps	%xmm2, %xmm3
+	movaps	%xmm2, %xmm0
+	jmp	.L202
+unroll8x4_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	-28(%rax,%r12,4), %rcx
+	movq	%rax, %rdx
+	cmpq	%rcx, %rax
+	jae	.L221
+	movss	.LC2(%rip), %xmm0
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+.L214:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm1
+	mulss	8(%rax), %xmm3
+	mulss	12(%rax), %xmm2
+	mulss	16(%rax), %xmm0
+	mulss	20(%rax), %xmm1
+	mulss	24(%rax), %xmm3
+	mulss	28(%rax), %xmm2
+	addq	$32, %rax
+	cmpq	%rax, %rcx
+	ja	.L214
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	andq	$-32, %rax
+	leaq	32(%rdx,%rax), %rdx
+.L213:
+	leaq	28(%rcx), %rax
+	cmpq	%rdx, %rax
+	jbe	.L215
+.L218:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L218
+.L215:
+	mulss	%xmm1, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L221:
+	movss	.LC2(%rip), %xmm1
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L213
+unroll9x3_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	-32(%rax,%r12,4), %rsi
+	movq	%rax, %rcx
+	cmpq	%rsi, %rax
+	jae	.L232
+	movss	.LC2(%rip), %xmm0
+	movaps	%xmm0, %xmm2
+	movaps	%xmm0, %xmm1
+.L225:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm2
+	mulss	8(%rax), %xmm1
+	mulss	12(%rax), %xmm0
+	mulss	16(%rax), %xmm2
+	mulss	20(%rax), %xmm1
+	mulss	24(%rax), %xmm0
+	mulss	28(%rax), %xmm2
+	mulss	32(%rax), %xmm1
+	addq	$36, %rax
+	cmpq	%rax, %rsi
+	ja	.L225
+	movq	%rcx, %rdx
+	movabsq	$-2049638230412172401, %rax
+	notq	%rdx
+	addq	%rsi, %rdx
+	mulq	%rdx
+	shrq	$5, %rdx
+	leaq	9(%rdx,%rdx,8), %rdx
+	leaq	(%rcx,%rdx,4), %rcx
+.L224:
+	leaq	32(%rsi), %rax
+	cmpq	%rcx, %rax
+	jbe	.L226
+.L229:
+	mulss	(%rcx), %xmm0
+	addq	$4, %rcx
+	cmpq	%rcx, %rax
+	ja	.L229
+.L226:
+	mulss	%xmm2, %xmm0
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L232:
+	movss	.LC2(%rip), %xmm2
+	movaps	%xmm2, %xmm1
+	movaps	%xmm2, %xmm0
+	jmp	.L224
+unroll8x2_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	-28(%rax,%r12,4), %rcx
+	movq	%rax, %rdx
+	cmpq	%rcx, %rax
+	jae	.L243
+	movss	.LC2(%rip), %xmm0
+	movaps	%xmm0, %xmm1
+.L236:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm1
+	mulss	8(%rax), %xmm0
+	mulss	12(%rax), %xmm1
+	mulss	16(%rax), %xmm0
+	mulss	20(%rax), %xmm1
+	mulss	24(%rax), %xmm0
+	mulss	28(%rax), %xmm1
+	addq	$32, %rax
+	cmpq	%rax, %rcx
+	ja	.L236
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	andq	$-32, %rax
+	leaq	32(%rdx,%rax), %rdx
+.L235:
+	leaq	28(%rcx), %rax
+	cmpq	%rdx, %rax
+	jbe	.L237
+.L240:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L240
+.L237:
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L243:
+	movss	.LC2(%rip), %xmm1
+	movaps	%xmm1, %xmm0
+	jmp	.L235
+unroll4x2as_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	movq	%rax, %r12
+	shrq	$63, %rax
+	movq	%rbx, %rdi
+	leaq	(%rax,%r12), %rbp
+	call	get_vec_start
+	sarq	%rbp
+	testq	%rbp, %rbp
+	leaq	(%rax,%rbp,4), %rcx
+	jle	.L253
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm0
+.L247:
+	mulss	(%rax,%rdx,4), %xmm1
+	mulss	(%rcx,%rdx,4), %xmm0
+	addq	$1, %rdx
+	cmpq	%rdx, %rbp
+	jg	.L247
+.L246:
+	leaq	(%rbp,%rbp), %rdx
+	cmpq	%rdx, %r12
+	jle	.L248
+	leaq	(%rax,%rbp,8), %rax
+.L249:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %r12
+	jg	.L249
+.L248:
+	mulss	%xmm0, %xmm1
+	movss	%xmm1, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L253:
+	movss	.LC2(%rip), %xmm1
+	movaps	%xmm1, %xmm0
+	jmp	.L246
+unrollx2as_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	movq	%rax, %r12
+	shrq	$63, %rax
+	movq	%rbx, %rdi
+	leaq	(%rax,%r12), %rbp
+	call	get_vec_start
+	sarq	%rbp
+	testq	%rbp, %rbp
+	leaq	(%rax,%rbp,4), %rcx
+	jle	.L263
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm0
+.L257:
+	mulss	(%rax,%rdx,4), %xmm1
+	mulss	(%rcx,%rdx,4), %xmm0
+	addq	$1, %rdx
+	cmpq	%rdx, %rbp
+	jg	.L257
+.L256:
+	leaq	(%rbp,%rbp), %rdx
+	cmpq	%rdx, %r12
+	jle	.L258
+	leaq	(%rax,%rbp,8), %rax
+.L259:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %r12
+	jg	.L259
+.L258:
+	mulss	%xmm0, %xmm1
+	movss	%xmm1, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L263:
+	movss	.LC2(%rip), %xmm1
+	movaps	%xmm1, %xmm0
+	jmp	.L256
+unroll10x10a_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	cmpq	$9, %rbp
+	movq	%rax, %rdi
+	jle	.L273
+	leaq	-10(%rbp), %rdx
+	movq	%rax, %rcx
+	movabsq	$-3689348814741910323, %rax
+	movss	.LC2(%rip), %xmm0
+	xorl	%esi, %esi
+	mulq	%rdx
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm9
+	movaps	%xmm0, %xmm8
+	movaps	%xmm0, %xmm7
+	movaps	%xmm0, %xmm6
+	shrq	$3, %rdx
+	movaps	%xmm0, %xmm5
+	leaq	5(%rdx,%rdx,4), %rdx
+	movaps	%xmm0, %xmm4
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+	leaq	0(,%rdx,8), %rax
+.L267:
+	addq	$40, %rsi
+	mulss	(%rcx), %xmm0
+	mulss	4(%rcx), %xmm1
+	mulss	8(%rcx), %xmm9
+	mulss	12(%rcx), %xmm8
+	mulss	16(%rcx), %xmm7
+	mulss	20(%rcx), %xmm6
+	mulss	24(%rcx), %xmm5
+	mulss	28(%rcx), %xmm4
+	mulss	32(%rcx), %xmm3
+	mulss	36(%rcx), %xmm2
+	addq	$40, %rcx
+	cmpq	%rax, %rsi
+	jne	.L267
+	addq	%rdx, %rdx
+.L266:
+	cmpq	%rdx, %rbp
+	jle	.L268
+	leaq	(%rdi,%rdx,4), %rax
+.L269:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L269
+.L268:
+	mulss	%xmm1, %xmm0
+	popq	%rbx
+	popq	%rbp
+	mulss	%xmm9, %xmm0
+	mulss	%xmm8, %xmm0
+	mulss	%xmm7, %xmm0
+	mulss	%xmm6, %xmm0
+	mulss	%xmm5, %xmm0
+	mulss	%xmm4, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%r12)
+	popq	%r12
+	ret
+
+.L273:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm9
+	movaps	%xmm1, %xmm8
+	movaps	%xmm1, %xmm7
+	movaps	%xmm1, %xmm6
+	movaps	%xmm1, %xmm5
+	movaps	%xmm1, %xmm4
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L266
+unroll8x8a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-7(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rdx
+	jle	.L283
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm7
+	movaps	%xmm0, %xmm6
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm4
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+.L277:
+	mulss	(%rdx,%rax,4), %xmm0
+	mulss	4(%rdx,%rax,4), %xmm1
+	mulss	8(%rdx,%rax,4), %xmm7
+	mulss	12(%rdx,%rax,4), %xmm6
+	mulss	16(%rdx,%rax,4), %xmm5
+	mulss	20(%rdx,%rax,4), %xmm4
+	mulss	24(%rdx,%rax,4), %xmm3
+	mulss	28(%rdx,%rax,4), %xmm2
+	addq	$8, %rax
+	cmpq	%rax, %r12
+	jg	.L277
+	leaq	-8(%rbp), %rax
+	shrq	$3, %rax
+	leaq	8(,%rax,8), %rcx
+.L276:
+	cmpq	%rcx, %rbp
+	jle	.L278
+	leaq	(%rdx,%rcx,4), %rax
+.L279:
+	addq	$1, %rcx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rcx, %rbp
+	jg	.L279
+.L278:
+	mulss	%xmm1, %xmm0
+	mulss	%xmm7, %xmm0
+	mulss	%xmm6, %xmm0
+	mulss	%xmm5, %xmm0
+	mulss	%xmm4, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L283:
+	movss	.LC2(%rip), %xmm1
+	xorl	%ecx, %ecx
+	movaps	%xmm1, %xmm7
+	movaps	%xmm1, %xmm6
+	movaps	%xmm1, %xmm5
+	movaps	%xmm1, %xmm4
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L276
+unroll6x6a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-5(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L293
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm4
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+.L287:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm1
+	mulss	8(%rcx,%rax,4), %xmm5
+	mulss	12(%rcx,%rax,4), %xmm4
+	mulss	16(%rcx,%rax,4), %xmm3
+	mulss	20(%rcx,%rax,4), %xmm2
+	addq	$6, %rax
+	cmpq	%rax, %r12
+	jg	.L287
+	leaq	-6(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	$2, %rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+	addq	%rdx, %rdx
+.L286:
+	cmpq	%rdx, %rbp
+	jle	.L288
+	leaq	(%rcx,%rdx,4), %rax
+.L289:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L289
+.L288:
+	mulss	%xmm1, %xmm0
+	mulss	%xmm5, %xmm0
+	mulss	%xmm4, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L293:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm5
+	movaps	%xmm1, %xmm4
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L286
+unroll5x5a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-4(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L303
+	movss	.LC2(%rip), %xmm1
+	xorl	%eax, %eax
+	movaps	%xmm1, %xmm0
+	movaps	%xmm1, %xmm4
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+.L297:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm4
+	mulss	8(%rcx,%rax,4), %xmm3
+	mulss	12(%rcx,%rax,4), %xmm2
+	mulss	16(%rcx,%rax,4), %xmm1
+	addq	$5, %rax
+	cmpq	%rax, %r12
+	jg	.L297
+	leaq	-5(%rbp), %rdx
+	movabsq	$-3689348814741910323, %rax
+	mulq	%rdx
+	shrq	$2, %rdx
+	leaq	5(%rdx,%rdx,4), %rdx
+.L296:
+	cmpq	%rdx, %rbp
+	jle	.L298
+	leaq	(%rcx,%rdx,4), %rax
+.L299:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L299
+.L298:
+	mulss	%xmm4, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L303:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm4
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L296
+unroll12x12a_combine:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	cmpq	$11, %rbp
+	movq	%rax, %rdi
+	jle	.L313
+	leaq	-12(%rbp), %rdx
+	movq	%rax, %rcx
+	movabsq	$-6148914691236517205, %rax
+	movss	.LC2(%rip), %xmm0
+	xorl	%esi, %esi
+	mulq	%rdx
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm10
+	movaps	%xmm0, %xmm11
+	movaps	%xmm0, %xmm8
+	movaps	%xmm0, %xmm9
+	shrq	$3, %rdx
+	movaps	%xmm0, %xmm6
+	leaq	3(%rdx,%rdx,2), %rdx
+	movaps	%xmm0, %xmm7
+	movaps	%xmm0, %xmm4
+	movq	%rdx, %rax
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm2
+	salq	$4, %rax
+	movaps	%xmm0, %xmm3
+.L307:
+	addq	$48, %rsi
+	mulss	(%rcx), %xmm0
+	mulss	24(%rcx), %xmm6
+	mulss	4(%rcx), %xmm1
+	mulss	28(%rcx), %xmm7
+	mulss	8(%rcx), %xmm10
+	mulss	32(%rcx), %xmm4
+	mulss	12(%rcx), %xmm11
+	mulss	36(%rcx), %xmm5
+	mulss	16(%rcx), %xmm8
+	mulss	40(%rcx), %xmm2
+	mulss	20(%rcx), %xmm9
+	mulss	44(%rcx), %xmm3
+	addq	$48, %rcx
+	cmpq	%rax, %rsi
+	jne	.L307
+	salq	$2, %rdx
+.L306:
+	cmpq	%rdx, %rbp
+	jle	.L308
+	leaq	(%rdi,%rdx,4), %rax
+.L309:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L309
+.L308:
+	mulss	%xmm1, %xmm0
+	mulss	%xmm11, %xmm10
+	mulss	%xmm9, %xmm8
+	mulss	%xmm7, %xmm6
+	mulss	%xmm5, %xmm4
+	mulss	%xmm10, %xmm0
+	mulss	%xmm3, %xmm2
+	popq	%rbx
+	popq	%rbp
+	mulss	%xmm8, %xmm0
+	mulss	%xmm6, %xmm0
+	mulss	%xmm4, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%r12)
+	popq	%r12
+	ret
+
+.L313:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm10
+	movaps	%xmm1, %xmm11
+	movaps	%xmm1, %xmm8
+	movaps	%xmm1, %xmm9
+	movaps	%xmm1, %xmm6
+	movaps	%xmm1, %xmm7
+	movaps	%xmm1, %xmm4
+	movaps	%xmm1, %xmm5
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm0
+	jmp	.L306
+unroll12x6a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-11(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L323
+	movss	.LC2(%rip), %xmm0
+	xorl	%edx, %edx
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+	movaps	%xmm0, %xmm5
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm4
+.L317:
+	mulss	(%rax), %xmm0
+	addq	$12, %rdx
+	mulss	4(%rax), %xmm3
+	mulss	8(%rax), %xmm2
+	mulss	12(%rax), %xmm5
+	mulss	16(%rax), %xmm1
+	mulss	20(%rax), %xmm4
+	mulss	24(%rax), %xmm0
+	mulss	28(%rax), %xmm3
+	mulss	32(%rax), %xmm2
+	mulss	36(%rax), %xmm5
+	mulss	40(%rax), %xmm1
+	mulss	44(%rax), %xmm4
+	addq	$48, %rax
+	cmpq	%rdx, %r12
+	jg	.L317
+	leaq	-12(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	$3, %rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+	salq	$2, %rdx
+.L316:
+	cmpq	%rdx, %rbp
+	jle	.L318
+	leaq	(%rcx,%rdx,4), %rax
+.L319:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L319
+.L318:
+	mulss	%xmm3, %xmm0
+	mulss	%xmm5, %xmm2
+	mulss	%xmm4, %xmm1
+	mulss	%xmm2, %xmm0
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L323:
+	movss	.LC2(%rip), %xmm3
+	xorl	%edx, %edx
+	movaps	%xmm3, %xmm2
+	movaps	%xmm3, %xmm5
+	movaps	%xmm3, %xmm1
+	movaps	%xmm3, %xmm4
+	movaps	%xmm3, %xmm0
+	jmp	.L316
+unroll8x4a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-7(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rdx
+	jle	.L333
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+.L327:
+	mulss	(%rdx,%rax,4), %xmm0
+	mulss	4(%rdx,%rax,4), %xmm1
+	mulss	8(%rdx,%rax,4), %xmm3
+	mulss	12(%rdx,%rax,4), %xmm2
+	mulss	16(%rdx,%rax,4), %xmm0
+	mulss	20(%rdx,%rax,4), %xmm1
+	mulss	24(%rdx,%rax,4), %xmm3
+	mulss	28(%rdx,%rax,4), %xmm2
+	addq	$8, %rax
+	cmpq	%rax, %r12
+	jg	.L327
+	leaq	-8(%rbp), %rax
+	shrq	$3, %rax
+	leaq	8(,%rax,8), %rcx
+.L326:
+	cmpq	%rcx, %rbp
+	jle	.L328
+	leaq	(%rdx,%rcx,4), %rax
+.L329:
+	addq	$1, %rcx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rcx, %rbp
+	jg	.L329
+.L328:
+	mulss	%xmm1, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L333:
+	movss	.LC2(%rip), %xmm1
+	xorl	%ecx, %ecx
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L326
+unroll4x4a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-3(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L343
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm1
+	movaps	%xmm0, %xmm3
+	movaps	%xmm0, %xmm2
+.L337:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm1
+	mulss	8(%rcx,%rax,4), %xmm3
+	mulss	12(%rcx,%rax,4), %xmm2
+	addq	$4, %rax
+	cmpq	%rax, %r12
+	jg	.L337
+	leaq	-4(%rbp), %rax
+	shrq	$2, %rax
+	leaq	4(,%rax,4), %rdx
+.L336:
+	cmpq	%rdx, %rbp
+	jle	.L338
+	leaq	(%rcx,%rdx,4), %rax
+.L339:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L339
+.L338:
+	mulss	%xmm1, %xmm0
+	mulss	%xmm3, %xmm0
+	mulss	%xmm2, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L343:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm3
+	movaps	%xmm1, %xmm2
+	movaps	%xmm1, %xmm0
+	jmp	.L336
+unroll3x3a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-2(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L353
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm2
+	movaps	%xmm0, %xmm1
+.L347:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm2
+	mulss	8(%rcx,%rax,4), %xmm1
+	addq	$3, %rax
+	cmpq	%rax, %r12
+	jg	.L347
+	leaq	-3(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	%rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+.L346:
+	cmpq	%rdx, %rbp
+	jle	.L348
+	leaq	(%rcx,%rdx,4), %rax
+.L349:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L349
+.L348:
+	mulss	%xmm2, %xmm0
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L353:
+	movss	.LC2(%rip), %xmm2
+	xorl	%edx, %edx
+	movaps	%xmm2, %xmm1
+	movaps	%xmm2, %xmm0
+	jmp	.L346
+unroll8x2a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-7(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rdx
+	jle	.L363
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm1
+.L357:
+	mulss	(%rdx,%rax,4), %xmm0
+	mulss	4(%rdx,%rax,4), %xmm1
+	mulss	8(%rdx,%rax,4), %xmm0
+	mulss	12(%rdx,%rax,4), %xmm1
+	mulss	16(%rdx,%rax,4), %xmm0
+	mulss	20(%rdx,%rax,4), %xmm1
+	mulss	24(%rdx,%rax,4), %xmm0
+	mulss	28(%rdx,%rax,4), %xmm1
+	addq	$8, %rax
+	cmpq	%rax, %r12
+	jg	.L357
+	leaq	-8(%rbp), %rax
+	shrq	$3, %rax
+	leaq	8(,%rax,8), %rcx
+.L356:
+	cmpq	%rcx, %rbp
+	jle	.L358
+	leaq	(%rdx,%rcx,4), %rax
+.L359:
+	addq	$1, %rcx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rcx, %rbp
+	jg	.L359
+.L358:
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L363:
+	movss	.LC2(%rip), %xmm1
+	xorl	%ecx, %ecx
+	movaps	%xmm1, %xmm0
+	jmp	.L356
+unroll4x2a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-3(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L373
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+	movaps	%xmm0, %xmm1
+.L367:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm1
+	mulss	8(%rcx,%rax,4), %xmm0
+	mulss	12(%rcx,%rax,4), %xmm1
+	addq	$4, %rax
+	cmpq	%rax, %r12
+	jg	.L367
+	leaq	-4(%rbp), %rax
+	shrq	$2, %rax
+	leaq	4(,%rax,4), %rdx
+.L366:
+	cmpq	%rdx, %rbp
+	jle	.L368
+	leaq	(%rcx,%rdx,4), %rax
+.L369:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L369
+.L368:
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L373:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm0
+	jmp	.L366
+combine6:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-1(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L383
+	movss	.LC2(%rip), %xmm1
+	xorl	%eax, %eax
+	movaps	%xmm1, %xmm0
+.L377:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm1
+	addq	$2, %rax
+	cmpq	%rax, %r12
+	jg	.L377
+	leaq	-2(%rbp), %rax
+	shrq	%rax
+	leaq	2(%rax,%rax), %rdx
+.L376:
+	cmpq	%rdx, %rbp
+	jle	.L378
+	leaq	(%rcx,%rdx,4), %rax
+.L379:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L379
+.L378:
+	mulss	%xmm1, %xmm0
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L383:
+	movss	.LC2(%rip), %xmm1
+	xorl	%edx, %edx
+	movaps	%xmm1, %xmm0
+	jmp	.L376
+unroll16_combine:
+	pushq	%r12
+	movq	%rdi, %r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	call	vec_length
+	movq	%r12, %rdi
+	movq	%rax, %rbx
+	call	get_vec_start
+	movq	%rax, %rdx
+	movq	%rbx, %rax
+	sarq	$63, %rax
+	shrq	$60, %rax
+	leaq	(%rbx,%rax), %rsi
+	andl	$15, %esi
+	subq	%rax, %rsi
+	subq	%rsi, %rbx
+	leaq	(%rdx,%rbx,4), %rcx
+	cmpq	%rcx, %rdx
+	jae	.L394
+	movq	%rdx, %rax
+	movss	.LC2(%rip), %xmm0
+.L387:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm0
+	mulss	8(%rax), %xmm0
+	mulss	12(%rax), %xmm0
+	mulss	16(%rax), %xmm0
+	mulss	20(%rax), %xmm0
+	mulss	24(%rax), %xmm0
+	mulss	28(%rax), %xmm0
+	mulss	32(%rax), %xmm0
+	mulss	36(%rax), %xmm0
+	mulss	40(%rax), %xmm0
+	mulss	44(%rax), %xmm0
+	mulss	48(%rax), %xmm0
+	mulss	52(%rax), %xmm0
+	mulss	56(%rax), %xmm0
+	mulss	60(%rax), %xmm0
+	addq	$64, %rax
+	cmpq	%rax, %rcx
+	ja	.L387
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	andq	$-64, %rax
+	leaq	64(%rdx,%rax), %rdx
+.L386:
+	leaq	(%rcx,%rsi,4), %rax
+	cmpq	%rdx, %rax
+	jbe	.L388
+.L391:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L391
+.L388:
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L394:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L386
+unroll8_combine:
+	pushq	%r12
+	movq	%rdi, %r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	call	vec_length
+	movq	%r12, %rdi
+	movq	%rax, %rbx
+	call	get_vec_start
+	movq	%rax, %rdx
+	movq	%rbx, %rax
+	sarq	$63, %rax
+	shrq	$61, %rax
+	leaq	(%rbx,%rax), %rsi
+	andl	$7, %esi
+	subq	%rax, %rsi
+	subq	%rsi, %rbx
+	leaq	(%rdx,%rbx,4), %rcx
+	cmpq	%rcx, %rdx
+	jae	.L405
+	movq	%rdx, %rax
+	movss	.LC2(%rip), %xmm0
+.L398:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm0
+	mulss	8(%rax), %xmm0
+	mulss	12(%rax), %xmm0
+	mulss	16(%rax), %xmm0
+	mulss	20(%rax), %xmm0
+	mulss	24(%rax), %xmm0
+	mulss	28(%rax), %xmm0
+	addq	$32, %rax
+	cmpq	%rax, %rcx
+	ja	.L398
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	andq	$-32, %rax
+	leaq	32(%rdx,%rax), %rdx
+.L397:
+	leaq	(%rcx,%rsi,4), %rax
+	cmpq	%rdx, %rax
+	jbe	.L399
+.L402:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L402
+.L399:
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L405:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L397
+unroll4_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	-12(%rax,%r12,4), %rcx
+	movq	%rax, %rdx
+	cmpq	%rcx, %rax
+	jae	.L416
+	movss	.LC2(%rip), %xmm0
+.L409:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm0
+	mulss	8(%rax), %xmm0
+	mulss	12(%rax), %xmm0
+	addq	$16, %rax
+	cmpq	%rax, %rcx
+	ja	.L409
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	andq	$-16, %rax
+	leaq	16(%rdx,%rax), %rdx
+.L408:
+	leaq	12(%rcx), %rax
+	cmpq	%rdx, %rax
+	jbe	.L410
+.L413:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L413
+.L410:
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L416:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L408
+unroll3_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	-8(%rax,%r12,4), %rsi
+	movq	%rax, %rcx
+	cmpq	%rsi, %rax
+	jae	.L427
+	movss	.LC2(%rip), %xmm0
+.L420:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm0
+	mulss	8(%rax), %xmm0
+	addq	$12, %rax
+	cmpq	%rax, %rsi
+	ja	.L420
+	movq	%rcx, %rdx
+	movabsq	$-6148914691236517205, %rax
+	notq	%rdx
+	addq	%rsi, %rdx
+	mulq	%rdx
+	shrq	$3, %rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+	leaq	(%rcx,%rdx,4), %rcx
+.L419:
+	leaq	8(%rsi), %rax
+	cmpq	%rcx, %rax
+	jbe	.L421
+.L424:
+	mulss	(%rcx), %xmm0
+	addq	$4, %rcx
+	cmpq	%rcx, %rax
+	ja	.L424
+.L421:
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L427:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L419
+unroll2_combine:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	movq	%rax, %rdx
+	movq	%r12, %rax
+	shrq	$63, %rax
+	leaq	(%r12,%rax), %rsi
+	andl	$1, %esi
+	subq	%rax, %rsi
+	subq	%rsi, %r12
+	leaq	(%rdx,%r12,4), %rcx
+	cmpq	%rcx, %rdx
+	jae	.L438
+	movq	%rdx, %rax
+	movss	.LC2(%rip), %xmm0
+.L431:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm0
+	addq	$8, %rax
+	cmpq	%rax, %rcx
+	ja	.L431
+	movq	%rdx, %rax
+	notq	%rax
+	addq	%rcx, %rax
+	shrq	$3, %rax
+	leaq	8(%rdx,%rax,8), %rdx
+.L430:
+	leaq	(%rcx,%rsi,4), %rax
+	cmpq	%rdx, %rax
+	jbe	.L432
+.L435:
+	mulss	(%rdx), %xmm0
+	addq	$4, %rdx
+	cmpq	%rdx, %rax
+	ja	.L435
+.L432:
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L438:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L430
+unroll16a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-15(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L448
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+.L442:
+	mulss	(%rax), %xmm0
+	addq	$16, %rdx
+	mulss	4(%rax), %xmm0
+	mulss	8(%rax), %xmm0
+	mulss	12(%rax), %xmm0
+	mulss	16(%rax), %xmm0
+	mulss	20(%rax), %xmm0
+	mulss	24(%rax), %xmm0
+	mulss	28(%rax), %xmm0
+	mulss	32(%rax), %xmm0
+	mulss	36(%rax), %xmm0
+	mulss	40(%rax), %xmm0
+	mulss	44(%rax), %xmm0
+	mulss	48(%rax), %xmm0
+	mulss	52(%rax), %xmm0
+	mulss	56(%rax), %xmm0
+	mulss	60(%rax), %xmm0
+	addq	$64, %rax
+	cmpq	%rdx, %r12
+	jg	.L442
+	leaq	-16(%rbp), %rax
+	andq	$-16, %rax
+	leaq	16(%rax), %rdx
+.L441:
+	cmpq	%rdx, %rbp
+	jle	.L443
+	leaq	(%rcx,%rdx,4), %rax
+.L444:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L444
+.L443:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L448:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L441
+unroll8a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-7(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rdx
+	jle	.L458
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm0
+.L452:
+	mulss	(%rdx,%rax,4), %xmm0
+	mulss	4(%rdx,%rax,4), %xmm0
+	mulss	8(%rdx,%rax,4), %xmm0
+	mulss	12(%rdx,%rax,4), %xmm0
+	mulss	16(%rdx,%rax,4), %xmm0
+	mulss	20(%rdx,%rax,4), %xmm0
+	mulss	24(%rdx,%rax,4), %xmm0
+	mulss	28(%rdx,%rax,4), %xmm0
+	addq	$8, %rax
+	cmpq	%rax, %r12
+	jg	.L452
+	leaq	-8(%rbp), %rax
+	shrq	$3, %rax
+	leaq	8(,%rax,8), %rcx
+.L451:
+	cmpq	%rcx, %rbp
+	jle	.L453
+	leaq	(%rdx,%rcx,4), %rax
+.L454:
+	addq	$1, %rcx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rcx, %rbp
+	jg	.L454
+.L453:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L458:
+	xorl	%ecx, %ecx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L451
+unroll6a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-5(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L468
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm0
+.L462:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	8(%rcx,%rax,4), %xmm0
+	mulss	12(%rcx,%rax,4), %xmm0
+	mulss	16(%rcx,%rax,4), %xmm0
+	mulss	20(%rcx,%rax,4), %xmm0
+	addq	$6, %rax
+	cmpq	%rax, %r12
+	jg	.L462
+	leaq	-6(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	$2, %rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+	addq	%rdx, %rdx
+.L461:
+	cmpq	%rdx, %rbp
+	jle	.L463
+	leaq	(%rcx,%rdx,4), %rax
+.L464:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L464
+.L463:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L468:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L461
+unroll5a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-4(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L478
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm0
+.L472:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	8(%rcx,%rax,4), %xmm0
+	mulss	12(%rcx,%rax,4), %xmm0
+	mulss	16(%rcx,%rax,4), %xmm0
+	addq	$5, %rax
+	cmpq	%rax, %r12
+	jg	.L472
+	leaq	-5(%rbp), %rdx
+	movabsq	$-3689348814741910323, %rax
+	mulq	%rdx
+	shrq	$2, %rdx
+	leaq	5(%rdx,%rdx,4), %rdx
+.L471:
+	cmpq	%rdx, %rbp
+	jle	.L473
+	leaq	(%rcx,%rdx,4), %rax
+.L474:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L474
+.L473:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L478:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L471
+unroll4a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-3(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L488
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm0
+.L482:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	8(%rcx,%rax,4), %xmm0
+	mulss	12(%rcx,%rax,4), %xmm0
+	addq	$4, %rax
+	cmpq	%rax, %r12
+	jg	.L482
+	leaq	-4(%rbp), %rax
+	shrq	$2, %rax
+	leaq	4(,%rax,4), %rdx
+.L481:
+	cmpq	%rdx, %rbp
+	jle	.L483
+	leaq	(%rcx,%rdx,4), %rax
+.L484:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L484
+.L483:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L488:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L481
+unroll2aw_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-1(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L498
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm0
+.L492:
+	mulss	(%rcx,%rax,4), %xmm0
+	addq	$2, %rax
+	cmpq	%rax, %r12
+	mulss	-4(%rcx,%rax,4), %xmm0
+	jg	.L492
+	leaq	-2(%rbp), %rax
+	shrq	%rax
+	leaq	2(%rax,%rax), %rdx
+.L491:
+	cmpq	%rdx, %rbp
+	jle	.L493
+	leaq	(%rcx,%rdx,4), %rax
+.L494:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L494
+.L493:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L498:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L491
+combine5p:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	get_vec_start
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	vec_length
+	leaq	(%rbp,%rax,4), %rdx
+	leaq	-4(%rdx), %rcx
+	cmpq	%rcx, %rbp
+	jae	.L510
+	movq	%rbp, %rax
+	movss	.LC2(%rip), %xmm0
+.L502:
+	mulss	(%rax), %xmm0
+	mulss	4(%rax), %xmm0
+	addq	$8, %rax
+	cmpq	%rax, %rcx
+	ja	.L502
+	movq	%rdx, %rax
+	subq	%rbp, %rax
+	subq	$5, %rax
+	shrq	$3, %rax
+	leaq	8(%rbp,%rax,8), %rbp
+	jmp	.L509
+.L506:
+	mulss	(%rbp), %xmm0
+	addq	$4, %rbp
+.L509:
+	cmpq	%rbp, %rdx
+	ja	.L506
+	popq	%rbx
+	popq	%rbp
+	movss	%xmm0, (%r12)
+	popq	%r12
+	ret
+
+.L510:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L509
+unroll3a_combine:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-2(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L520
+	movss	.LC2(%rip), %xmm0
+	xorl	%eax, %eax
+.L514:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	mulss	8(%rcx,%rax,4), %xmm0
+	addq	$3, %rax
+	cmpq	%rax, %r12
+	jg	.L514
+	leaq	-3(%rbp), %rdx
+	movabsq	$-6148914691236517205, %rax
+	mulq	%rdx
+	shrq	%rdx
+	leaq	3(%rdx,%rdx,2), %rdx
+.L513:
+	cmpq	%rdx, %rbp
+	jle	.L515
+	leaq	(%rcx,%rdx,4), %rax
+.L516:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L516
+.L515:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L520:
+	movss	.LC2(%rip), %xmm0
+	xorl	%edx, %edx
+	jmp	.L513
+combine5:
+	pushq	%r13
+	movq	%rsi, %r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	leaq	-1(%rax), %r12
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%r12, %r12
+	movq	%rax, %rcx
+	jle	.L530
+	xorl	%eax, %eax
+	movss	.LC2(%rip), %xmm0
+.L524:
+	mulss	(%rcx,%rax,4), %xmm0
+	mulss	4(%rcx,%rax,4), %xmm0
+	addq	$2, %rax
+	cmpq	%rax, %r12
+	jg	.L524
+	leaq	-2(%rbp), %rax
+	shrq	%rax
+	leaq	2(%rax,%rax), %rdx
+.L523:
+	cmpq	%rdx, %rbp
+	jle	.L525
+	leaq	(%rcx,%rdx,4), %rax
+.L526:
+	addq	$1, %rdx
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rdx, %rbp
+	jg	.L526
+.L525:
+	movss	%xmm0, (%r13)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+.L530:
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+	jmp	.L523
+combine4p:
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	call	get_vec_start
+	leaq	(%rax,%r12,4), %rdx
+	cmpq	%rdx, %rax
+	jae	.L537
+	movss	.LC2(%rip), %xmm0
+.L534:
+	mulss	(%rax), %xmm0
+	addq	$4, %rax
+	cmpq	%rax, %rdx
+	ja	.L534
+.L533:
+	movss	%xmm0, (%rbp)
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+.L537:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L533
+combine4b:
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	subq	$8, %rsp
+	call	vec_length
+	testq	%rax, %rax
+	movq	%rax, %rcx
+	jle	.L545
+	movq	(%rbx), %rsi
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+.L542:
+	cmpq	%rdx, %rsi
+	jle	.L541
+	movq	8(%rbx), %rax
+	mulss	(%rax,%rdx,4), %xmm0
+.L541:
+	addq	$1, %rdx
+	cmpq	%rdx, %rcx
+	jg	.L542
+.L540:
+	movss	%xmm0, (%rbp)
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+
+.L545:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L540
+combine4:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%rbp, %rbp
+	jle	.L552
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+.L549:
+	mulss	(%rax,%rdx,4), %xmm0
+	addq	$1, %rdx
+	cmpq	%rdx, %rbp
+	jg	.L549
+.L548:
+	popq	%rbx
+	popq	%rbp
+	movss	%xmm0, (%r12)
+	popq	%r12
+	ret
+
+.L552:
+	movss	.LC2(%rip), %xmm0
+	jmp	.L548
+combine3w:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	testq	%rbp, %rbp
+	jle	.L556
+	xorl	%edx, %edx
+	movss	.LC2(%rip), %xmm0
+.L555:
+	mulss	(%rax,%rdx,4), %xmm0
+	addq	$1, %rdx
+	cmpq	%rdx, %rbp
+	movss	%xmm0, (%r12)
+	jg	.L555
+.L556:
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+combine3:
+	pushq	%r12
+	movq	%rsi, %r12
+	pushq	%rbp
+	pushq	%rbx
+	movq	%rdi, %rbx
+	call	vec_length
+	movq	%rbx, %rdi
+	movq	%rax, %rbp
+	call	get_vec_start
+	movss	.LC2(%rip), %xmm0
+	testq	%rbp, %rbp
+	movss	%xmm0, (%r12)
+	jle	.L561
+	xorl	%edx, %edx
+/* $begin fpb-combine3-O2-s 3400 */
+# combine3: data_t = float, OP = *, compiled -O2
+# i in \rdxreg, data in \raxreg, limit in \rbpreg, dest at \rxiireg
+# Product in \xmmreg{0}
+.L560:				      # \textbf{loop:}
+	mulss	(%rax,%rdx,4), %xmm0	# Multiply product by data[i]
+	addq	$1, %rdx		# Increment i
+	cmpq	%rdx, %rbp		# Compare limit:i
+	movss	%xmm0, (%r12) 		# Store product at dest
+	jg	.L560			# If >, goto \textbf{loop}
+/* $end fpb-combine3-O2-s 3400 */
+.L561:
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+combine2:
+	pushq	%r14
+	pushq	%r13
+	movq	%rdi, %r13
+	pushq	%r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	subq	$16, %rsp
+	call	vec_length
+	testq	%rax, %rax
+	movq	%rax, %r12
+	movl	$0x3f800000, (%rbp)
+	jle	.L566
+	leaq	12(%rsp), %r14
+	xorl	%ebx, %ebx
+.L565:
+	movq	%rbx, %rsi
+	movq	%r14, %rdx
+	movq	%r13, %rdi
+	call	get_vec_element
+	movss	(%rbp), %xmm0
+	addq	$1, %rbx
+	mulss	12(%rsp), %xmm0
+	cmpq	%rbx, %r12
+	movss	%xmm0, (%rbp)
+	jg	.L565
+.L566:
+	addq	$16, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	ret
+
+combine1:
+	pushq	%r13
+	pushq	%r12
+	movq	%rdi, %r12
+	pushq	%rbp
+	movq	%rsi, %rbp
+	pushq	%rbx
+	xorl	%ebx, %ebx
+	subq	$24, %rsp
+	movl	$0x3f800000, (%rsi)
+	leaq	20(%rsp), %r13
+	jmp	.L569
+.L570:
+	movq	%rbx, %rsi
+	movq	%r13, %rdx
+	movq	%r12, %rdi
+	call	get_vec_element
+	movss	(%rbp), %xmm0
+	addq	$1, %rbx
+	mulss	20(%rsp), %xmm0
+	movss	%xmm0, (%rbp)
+.L569:
+	movq	%r12, %rdi
+	call	vec_length
+	cmpq	%rax, %rbx
+	jl	.L570
+	addq	$24, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+combine1_descr:
+combine2_descr:
+combine3_descr:
+combine3w_descr:
+combine4_descr:
+combine4b_descr:
+combine4p_descr:
+combine5_descr:
+unroll3a_descr:
+combine5p_descr:
+unroll2aw_descr:
+unroll4a_descr:
+unroll5a_descr:
+unroll6a_descr:
+unroll8a_descr:
+unroll16a_descr:
+unroll2_descr:
+unroll3_descr:
+unroll4_descr:
+unroll8_descr:
+unroll16_descr:
+combine6_descr:
+unroll4x2a_descr:
+unroll8x2a_descr:
+unroll3x3a_descr:
+unroll4x4a_descr:
+unroll8x4a_descr:
+unroll12x6a_descr:
+unroll12x12a_descr:
+unroll5x5a_descr:
+unroll6x6a_descr:
+unroll8x8a_descr:
+unroll10x10a_descr:
+unrollx2as_descr:
+unroll4x2as_descr:
+unroll8x2_descr:
+unroll9x3_descr:
+unroll8x4_descr:
+unroll8x8_descr:
+combine7_descr:
+unroll3aa_descr:
+unroll4aa_descr:
+unroll5aa_descr:
+unroll6aa_descr:
+unroll8aa_descr:
+simd_v1_descr:
+simd_v2_descr:
+simd_v4_descr:
+simd_v8_descr:
+simd_v12_descr:
+simd_v2a_descr:
+simd_v4a_descr:
+simd_v8a_descr:
+.Lframe1:

@@ -1,0 +1,366 @@
+	.file	"array-new.c"
+	.text
+	.p2align 4,,15
+.globl get_value
+	.type	get_value, @function
+get_value:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	16(%ebp), %edx
+	movl	12(%ebp), %eax
+	sall	$2, %edx
+	addl	8(%ebp), %edx
+	leal	(%eax,%eax,2), %eax
+	popl	%ebp
+	movl	(%edx,%eax,4), %eax
+	ret
+	.size	get_value, .-get_value
+	.p2align 4,,15
+.globl get_value2
+	.type	get_value2, @function
+get_value2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	movl	(%eax,%edx,4), %edx
+	movl	16(%ebp), %eax
+	popl	%ebp
+	movl	(%edx,%eax,4), %eax
+	ret
+	.size	get_value2, .-get_value2
+	.p2align 4,,15
+.globl fix_prod_ele
+	.type	fix_prod_ele, @function
+fix_prod_ele:
+	pushl	%ebp
+	xorl	%edx, %edx
+	movl	%esp, %ebp
+	movl	20(%ebp), %ecx
+	pushl	%esi
+	movl	16(%ebp), %esi
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	sall	$2, %ecx
+	sall	$6, %esi
+	addl	12(%ebp), %ecx
+	addl	8(%ebp), %esi
+	.p2align 4,,7
+	.p2align 3
+.L6:
+	movl	(%ecx), %eax
+	addl	$64, %ecx
+	imull	(%esi,%edx,4), %eax
+	addl	$1, %edx
+	addl	%eax, %ebx
+	cmpl	$16, %edx
+	jne	.L6
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fix_prod_ele, .-fix_prod_ele
+	.p2align 4,,15
+.globl fix_prod_ele_opt
+	.type	fix_prod_ele_opt, @function
+fix_prod_ele_opt:
+	pushl	%ebp
+	xorl	%edx, %edx
+	movl	%esp, %ebp
+	movl	20(%ebp), %ecx
+	pushl	%esi
+	movl	16(%ebp), %esi
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	sall	$2, %ecx
+	sall	$6, %esi
+	addl	12(%ebp), %ecx
+	addl	8(%ebp), %esi
+	.p2align 4,,7
+	.p2align 3
+.L11:
+	movl	(%ecx), %eax
+	addl	$64, %ecx
+	imull	(%esi,%edx,4), %eax
+	addl	$1, %edx
+	addl	%eax, %ebx
+	cmpl	$16, %edx
+	jne	.L11
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fix_prod_ele_opt, .-fix_prod_ele_opt
+	.p2align 4,,15
+.globl fix_ele
+	.type	fix_ele, @function
+fix_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	16(%ebp), %edx
+	movl	12(%ebp), %eax
+	sall	$2, %edx
+	addl	8(%ebp), %edx
+	sall	$6, %eax
+	popl	%ebp
+	movl	(%edx,%eax), %eax
+	ret
+	.size	fix_ele, .-fix_ele
+	.p2align 4,,15
+.globl var_ele
+	.type	var_ele, @function
+var_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	sall	$2, %edx
+	imull	16(%ebp), %edx
+	sall	$2, %eax
+	addl	12(%ebp), %eax
+	popl	%ebp
+	movl	(%eax,%edx), %eax
+	ret
+	.size	var_ele, .-var_ele
+	.p2align 4,,15
+.globl var_prod_ele
+	.type	var_prod_ele, @function
+var_prod_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	pushl	%edi
+	movl	20(%ebp), %eax
+	pushl	%esi
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	testl	%edx, %edx
+	jle	.L20
+	movl	8(%ebp), %edi
+	xorl	%ebx, %ebx
+	movl	12(%ebp), %esi
+	movl	16(%ebp), %edx
+	sall	$2, %edi
+	imull	%edi, %eax
+	addl	%eax, %esi
+	movl	24(%ebp), %eax
+	leal	(%edx,%eax,4), %ecx
+	xorl	%edx, %edx
+	.p2align 4,,7
+	.p2align 3
+.L21:
+	movl	(%ecx), %eax
+	addl	%edi, %ecx
+	imull	(%esi,%edx,4), %eax
+	addl	$1, %edx
+	addl	%eax, %ebx
+	cmpl	%edx, 8(%ebp)
+	jg	.L21
+.L20:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	var_prod_ele, .-var_prod_ele
+	.p2align 4,,15
+.globl var_prod_ele_opt
+	.type	var_prod_ele_opt, @function
+var_prod_ele_opt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	pushl	%edi
+	movl	20(%ebp), %eax
+	pushl	%esi
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	testl	%ecx, %ecx
+	jle	.L26
+	imull	8(%ebp), %eax
+	xorl	%ebx, %ebx
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %esi
+	leal	(%edx,%eax,4), %edi
+	movl	16(%ebp), %edx
+	movl	24(%ebp), %eax
+	sall	$2, %esi
+	leal	(%edx,%eax,4), %ecx
+	xorl	%edx, %edx
+	.p2align 4,,7
+	.p2align 3
+.L27:
+	movl	(%ecx), %eax
+	addl	%esi, %ecx
+	imull	(%edi,%edx,4), %eax
+	addl	$1, %edx
+	addl	%eax, %ebx
+	cmpl	%edx, 8(%ebp)
+	jg	.L27
+.L26:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	var_prod_ele_opt, .-var_prod_ele_opt
+	.p2align 4,,15
+.globl fix_set_diag
+	.type	fix_set_diag, @function
+fix_set_diag:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	.p2align 4,,7
+	.p2align 3
+.L31:
+	movl	%edx, (%ecx,%eax)
+	addl	$68, %eax
+	cmpl	$1088, %eax
+	jne	.L31
+	popl	%ebp
+	ret
+	.size	fix_set_diag, .-fix_set_diag
+	.p2align 4,,15
+.globl fix_set_diag_opt
+	.type	fix_set_diag_opt, @function
+fix_set_diag_opt:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	.p2align 4,,7
+	.p2align 3
+.L35:
+	movl	%edx, (%ecx,%eax,4)
+	addl	$17, %eax
+	cmpl	$272, %eax
+	jne	.L35
+	popl	%ebp
+	ret
+	.size	fix_set_diag_opt, .-fix_set_diag_opt
+	.p2align 4,,15
+.globl transpose
+	.type	transpose, @function
+transpose:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	xorl	%edi, %edi
+	pushl	%esi
+	movl	8(%ebp), %esi
+	addl	$1, %edi
+	pushl	%ebx
+	addl	$52, %esi
+	cmpl	$13, %edi
+	je	.L42
+	.p2align 4,,7
+	.p2align 3
+.L44:
+	movl	8(%ebp), %eax
+	xorl	%ecx, %ecx
+	leal	(%eax,%edi,4), %ebx
+	.p2align 4,,7
+	.p2align 3
+.L40:
+	movl	(%ebx), %eax
+	movl	(%esi,%ecx,4), %edx
+	movl	%eax, (%esi,%ecx,4)
+	addl	$1, %ecx
+	movl	%edx, (%ebx)
+	addl	$52, %ebx
+	cmpl	%edi, %ecx
+	jl	.L40
+	addl	$1, %edi
+	addl	$52, %esi
+	cmpl	$13, %edi
+	jne	.L44
+.L42:
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	transpose, .-transpose
+	.p2align 4,,15
+.globl transpose_opt
+	.type	transpose_opt, @function
+transpose_opt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	movl	8(%ebp), %edi
+	pushl	%esi
+	xorl	%esi, %esi
+	pushl	%ebx
+	.p2align 4,,7
+	.p2align 3
+.L52:
+	testl	%esi, %esi
+	je	.L46
+.L54:
+	movl	8(%ebp), %eax
+	xorl	%ecx, %ecx
+	leal	(%eax,%esi,4), %ebx
+	.p2align 4,,7
+	.p2align 3
+.L47:
+	movl	(%ebx), %eax
+	movl	(%edi,%ecx,4), %edx
+	movl	%eax, (%edi,%ecx,4)
+	addl	$1, %ecx
+	movl	%edx, (%ebx)
+	addl	$52, %ebx
+	cmpl	%esi, %ecx
+	jl	.L47
+	addl	$1, %esi
+	addl	$52, %edi
+	cmpl	$13, %esi
+	jne	.L52
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+.L46:
+	movl	$1, %esi
+	addl	$52, %edi
+	jmp	.L54
+	.size	transpose_opt, .-transpose_opt
+	.p2align 4,,15
+.globl new_var_matrix
+	.type	new_var_matrix, @function
+new_var_matrix:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	imull	%eax, %eax
+	sall	$2, %eax
+	movl	%eax, 8(%ebp)
+	popl	%ebp
+	jmp	malloc
+	.size	new_var_matrix, .-new_var_matrix
+.globl B
+	.data
+	.align 4
+	.type	B, @object
+	.size	B, 16
+B:
+	.long	row0
+	.long	row1
+	.long	row2
+	.long	row3
+	.comm	A,60,32
+	.comm	row0,12,4
+	.comm	row1,12,4
+	.comm	row2,12,4
+	.comm	row3,12,4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

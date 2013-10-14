@@ -1,0 +1,61 @@
+	.file	"decimal5.c"
+	.text
+.globl decimal5
+	.type	decimal5, @function
+decimal5:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin decimal5-s 8 */
+	movl	8(%ebp), %ecx		# Get x
+	movl	$0, %edx		# Set i to 0
+	movl	$0, %eax		# Set val to 0
+.L2:				      # \textbf{loop:}
+	leal	(%eax,%eax,4), %eax	# Compute val = 5*val
+	addl	%eax, %eax		# Compute val = val+val
+	addl	(%ecx,%edx,4), %eax	# Compute val += x[i]
+	addl	$1, %edx		# Compute i++
+	cmpl	$5, %edx		# Compare i:5
+	jne	.L2			# if !=, goto \textbf{loop}
+					# Return val
+/* $end decimal5-s 8 */
+	popl	%ebp
+	ret
+	.size	decimal5, .-decimal5
+.globl decimal5_opt_old
+	.type	decimal5_opt_old, @function
+decimal5_opt_old:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$0, %eax
+	movl	$0, %edx
+.L6:
+	leal	(%eax,%eax,4), %eax
+	addl	%eax, %eax
+	addl	(%ecx,%edx), %eax
+	addl	$4, %edx
+	cmpl	$20, %edx
+	jne	.L6
+	popl	%ebp
+	ret
+	.size	decimal5_opt_old, .-decimal5_opt_old
+.globl decimal5_opt
+	.type	decimal5_opt, @function
+decimal5_opt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+.L10:
+	leal	(%eax,%eax,4), %eax
+	addl	%eax, %eax
+	addl	(%edx), %eax
+	addl	$4, %edx
+	addl	$1, %ecx
+	cmpl	$4, %ecx
+	jle	.L10
+	popl	%ebp
+	ret
+	.size	decimal5_opt, .-decimal5_opt
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

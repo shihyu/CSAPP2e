@@ -1,0 +1,58 @@
+	.file	"dw.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl dw_loop
+	.type	 dw_loop,@function
+dw_loop:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %esi
+	pushl %ebx
+/* $begin dw-s 13 */
+# Initially x, y, and n are at offsets 8, 12, and 16 from %ebp	
+	movl 8(%ebp),%esi
+	movl 12(%ebp),%ebx
+	movl 16(%ebp),%ecx
+	.p2align 4,,7	# Inserted to optimize cache performance
+.L6:
+	imull %ecx,%ebx
+	addl %ecx,%esi
+	decl %ecx
+	testl %ecx,%ecx
+	setg %al
+	cmpl %ecx,%ebx
+	setl %dl
+	andl %edx,%eax
+	testb $1,%al
+	jne .L6
+/* $end dw-s 13 */	
+	movl %esi,%eax
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 dw_loop,.Lfe1-dw_loop
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+/* $begin dw-ann-s 13 */
+# Initially x, y, and n are at offsets 8, 12, and 16 from %ebp	
+	movl 8(%ebp),%esi    # Put x in %esi
+	movl 12(%ebp),%ebx   # Put y in %ebx
+	movl 16(%ebp),%ecx   # Put n in %ecx
+	.p2align 4,,7
+.L6:			   # \textbf{loop:}
+	imull %ecx,%ebx      # y *= n
+	addl %ecx,%esi       # x += n
+	decl %ecx            # n--
+	testl %ecx,%ecx      # Test n
+	setg %al             # n > 0
+	cmpl %ecx,%ebx       # Compare y:n
+	setl %dl             # y < n
+	andl %edx,%eax       # (n > 0) & (y < n) 
+	testb $1,%al         # Test least significant bit
+	jne .L6               # If != 0, goto \textbf{loop}
+/* $end dw-ann-s 13 */	

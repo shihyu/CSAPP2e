@@ -1,0 +1,11 @@
+copy:
+	pushl %ebp
+	movl %esp,%ebp
+
+	/* $begin float2bit-s 23 */
+	movl 8(%ebp),%eax
+	/* $end float2bit-s 23 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret

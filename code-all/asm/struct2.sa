@@ -1,0 +1,51 @@
+	.file	"struct2.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl sp_init
+	.type	 sp_init,@function
+sp_init:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin struct2-s 11 */	
+	movl 8(%ebp),%eax
+/* $end struct2-s 11 */		
+	movl %ebp,%esp
+/* $begin struct2-s 13 */		
+	movl 8(%eax),%edx
+	movl %edx,4(%eax)
+	leal 4(%eax),%edx
+	movl %edx,(%eax)
+	movl %eax,12(%eax)
+/* $end struct2-s 13 */	
+	popl %ebp
+	ret
+
+	.align 4
+.globl sp_init
+	.type	 sp_init,@function
+sp_init:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin struct2-ans-s 11 */	
+	movl 8(%ebp),%eax	# Get sp
+/* $end struct2-ans-s 11 */		
+	movl %ebp,%esp	
+/* $begin struct2-ans-s 13 */		
+	movl 8(%eax),%edx	# Get sp->s.y
+	movl %edx,4(%eax)	# Copy to sp->s.x
+	leal 4(%eax),%edx	# Get &(sp->s.x)
+	movl %edx,(%eax)	# Copy to sp->p
+	movl %eax,12(%eax)	# sp->next = p
+/* $end struct2-ans-s 13 */	
+	popl %ebp
+	ret
+	
+	
+	.Lfe1:
+	.size	 sp_init,.Lfe1-sp_init
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+
+

@@ -1,0 +1,22 @@
+	.file	"calleesave.c"
+	.text
+	.p2align 4,,15
+.globl P
+	.type	P, @function
+P:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %ebx
+	imull	%ebx, %ebx
+	movl	%ebx, (%esp)
+	call	Q
+	addl	$4, %esp
+	leal	(%ebx,%eax), %eax
+	popl	%ebx
+	leave
+	ret
+	.size	P, .-P
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

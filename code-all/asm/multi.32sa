@@ -1,0 +1,43 @@
+	.file	"multi.c"
+	.text
+.globl store_prod
+	.type	store_prod, @function
+store_prod:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin multi-prob-s 8 */
+# dest at \ebpreg{}+8, x at \ebpreg{}+12, y at \ebpreg{}+16 
+	movl	12(%ebp), %eax 
+	movl	20(%ebp), %ecx  ##line:asm:multi:fetchh
+	imull	%eax, %ecx	##line:asm:multi:mulh
+	mull	16(%ebp)  	##line:asm:multi:fetchl
+	leal	(%ecx,%edx), %edx
+	movl	8(%ebp), %ecx
+	movl	%eax, (%ecx)    ##line:asm:multi:storel
+	movl	%edx, 4(%ecx)   ##line:asm:multi:storeh
+/* $end multi-prob-s 8 */
+	popl	%ebp
+	ret
+	.size	store_prod, .-store_prod
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+store_prod:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin multi-ann-s 8 */
+# dest at \ebpreg{}+8, x at \ebpreg{}+12, y at \ebpreg{}+16 
+	movl	12(%ebp), %eax		  # Get x
+	movl	20(%ebp), %ecx		  # Get y_h
+	imull	%eax, %ecx		  # Compute s = x*y_h
+	mull	16(%ebp)		  # Compute t = x*y_l
+	leal	(%ecx,%edx), %edx	  # Add s to t_h
+	movl	8(%ebp), %ecx		  # Get dest
+	movl	%eax, (%ecx)		  # Store t_l
+	movl	%edx, 4(%ecx)		  # Store s+t_h
+/* $end multi-ann-s 8 */
+	popl	%ebp
+	ret
+	.size	store_prod, .-store_prod
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

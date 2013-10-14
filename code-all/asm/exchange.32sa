@@ -1,0 +1,20 @@
+	.file	"exchange.c"
+	.text
+.globl exchange
+	.type	exchange, @function
+exchange:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin exchange-s 8 */
+# xp at \ebpreg+8, y at \ebpreg+12	
+	movl	8(%ebp), %edx	# Get xp			  #line:asm:exchange:getxp
+	# By copying to \eaxreg{} below, x becomes the return value
+	movl	(%edx), %eax	# Get x at xp 			  #line:asm:exchange:getx
+	movl	12(%ebp), %ecx	# Get y				  # line:asm:exchange:gety
+	movl	%ecx, (%edx)	# Store y at xp  		  # line:asm:exchange:storey
+/* $end exchange-s 8 */
+	popl	%ebp
+	ret
+	.size	exchange, .-exchange
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,202 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "cpe.h"
+
+#ifdef FLOAT
+typedef float data_t;
+#define DATA_NAME "Float"
+#endif
+
+#ifdef DOUBLE
+typedef double data_t;
+#define DATA_NAME "Double"
+#endif
+
+#ifdef INT
+typedef int data_t;
+#define DATA_NAME "Integer"
+#endif
+
+char *psum1_descr = "psum1: Basic implementation";
+/* $begin psum1-c */
+/* Compute prefix sum of vector a */
+data_t psum1(data_t a[], data_t p[], int cnt)
+{
+    int i;
+    p[0] = a[0];
+    for (i = 1; i < cnt; i++)
+	p[i] = a[i] + p[i-1];
+    return p[cnt-1];
+}
+/* $end psum1-c */
+
+char *psum2_descr = "psum2: Unroll 2x, local mid_val";
+/* $begin psum2-c */
+/* Compute prefix sum of vector a */
+/* Use 2-way loop unrolling */
+data_t psum2(int cnt)
+{
+    int i;
+    data_t mid_val;
+    p[0] = a[0];
+    for (i = 1; i < cnt-1; i+=2) {
+	mid_val = p[i-1] + a[i];
+	p[i]    = mid_val;
+	p[i+1]  = mid_val + a[i+1];
+    }
+    /* Finish remaining elements */
+    for (; i < cnt; i++)
+	p[i] = a[i] + p[i-1];
+    return p[cnt-1];
+}
+/* $end psum2-c */
+
+
+char *psum1a_descr = "psum1a: local val";
+/* $begin psum1a-c */
+/* Compute prefix sum of vector a */
+data_t psum1a(data_t a[], data_t p[], int cnt)
+{
+    int i;
+    /* last_val holds p[i=1]; val holds p[i] */
+    data_t last_val, val;
+    last_val = p[0] = a[0];
+    for (i = 1; i < cnt; i++) {
+	val  = last_val + a[i];
+	p[i] = val;
+	last_val = val;
+    }
+    return last_val;
+}
+/* $end psum1a-c */
+
+char *psum2a_descr = "psum2a: Unroll 2x, lookahead";
+/* $begin psum2a-c */
+/* Compute prefix sum of vector a */
+/* Use 2-way loop unrolling + lookahead */
+data_t psum2a(int cnt)
+{
+    int i;
+    /* last_val holds p[i-1]; val holds p[i+1] */
+    data_t last_val, val;
+    last_val = p[0] = a[0];
+    for (i = 1; i < cnt-1; i+=2) {
+	data_t a01 = a[i] + a[i+1];
+	val    = last_val + a01;
+	p[i]   = last_val + a[i];
+	p[i+1] = val;
+	last_val = val;
+    }
+    /* Finish remaining elements */
+    for (; i < cnt; i++) {
+	val  = last_val + a[i];
+	p[i] = val;
+	last_val = val;
+    }
+    return last_val;
+}
+/* $end psum2a-c */
+
+char *psum4a_descr = "psum4a: Unroll 4x, lookahead";
+/* $begin psum4a-c */
+/* Compute prefix sum of vector a */
+/* Use 4-way loop unrolling + lookahead */
+data_t psum4a(int cnt)
+{
+    int i;
+    /* last_val holds p[i-1]; val holds p[i+3] */
+    data_t last_val, val;
+    last_val = p[0] = a[0];
+    for (i = 1; i < cnt-3; i+=4) {
+	data_t a01   = a[i] + a[i+1];
+	data_t a012  = a01  + a[i+2];
+	data_t a0123 = a012 + a[i+3];
+	val    = last_val + a0123;
+	p[i]   = last_val + a[i];
+	p[i+1] = last_val + a01;
+	p[i+2] = last_val + a012;
+	p[i+3] = val;
+	last_val = val;
+    }
+    /* Finish remaining elements */
+    for (; i < cnt; i++) {
+	val  = last_val + a[i];
+	p[i] = val;
+	last_val = val;
+    }
+    return last_val;
+}
+/* $end psum4a-c */
+
+typedef data_t (*prefixer)(data_t *, data_t *, int);
+
+int PCNT 5
+prefixer funs[PCNT] = {
+    psum1,
+    psum2,
+    psum3,
+    psum4,
+    psum5
+};
+
+char *descrs[PCNT] = {
+    psum1_descr,
+    psum2_descr,
+    psum3_descr,
+    psum4_descr,
+    psum5_descr
+};
+
+/* Test of CPE code */
+#define ERRLIM 10
+#define MAXCNT 4096
+data_t a[MAXCNT], p1[MAXCNT], p2[MAXCNT];
+data_t *p;
+
+
+static void setup()
+{
+    int i;
+    for (i = 0; i < MAXCNT; i++) {
+	a[i] = (data_t) (random() & 0xFF);
+    }
+    p = p1;
+}
+
+void run(int cnt) {
+    funs[idx](a, p, cnt);
+}
+
+static void run_test(int ix) {
+    int cnt = 103;
+    printf("%s %s\n", DATA_NAME, descrs[idx]);
+    /* Check results to left and right of region */
+    p1[0] = p1[cnt+1] = 0;
+    p2[0] = p2[cnt+1] = 0;
+    data_t sum1 = psum1(a+1, p1, cnt);
+    data_t sum2 = funs[ix](a+1, p2, cnt);
+    int i;
+    if (sum1 != sum2) {
+	printf("Mismatch: results %.0f != %.0f\n", (double) sum1, (double) sum2);
+    }
+    for (i = 0; i < cnt+2; i++) {
+	if (p1[i] != p2[i]) {
+	    printf("cnt = %d, Mismatch: p1[%d] = %.0f != p2[%d] = %.0f\n"
+		   i-1, i-1, (double) p1[i], p2[i]);
+	    break;
+	}
+    }
+    idx = ix;
+    double cpe = find_cpe(run, MAXCNT);
+    printf("%.2f cycles/element\n", cpe);
+}
+
+
+int main(int argc, char *argv[])
+{
+    int i;
+    setup();
+    for (i = 0; i < PCNT; i++)
+	run_test(i);
+    return 0;
+}

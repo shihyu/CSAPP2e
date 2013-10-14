@@ -1,0 +1,31 @@
+	.file	"struct2.c"
+	.text
+.globl sp_init
+	.type	sp_init, @function
+sp_init:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin struct2-s 8 */
+# sp at \ebpreg+8
+	movl	8(%ebp), %eax
+	movl	8(%eax), %edx
+	movl	%edx, 4(%eax)
+	leal	4(%eax), %edx
+	movl	%edx, (%eax)
+	movl	%eax, 12(%eax)
+/* $end struct2-s 8 */
+	popl	%ebp
+	ret
+	.size	sp_init, .-sp_init
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin struct2-ans-s 8 */
+# sp at \ebpreg+8
+	movl	8(%ebp), %eax	# Get sp
+	movl	8(%eax), %edx	# Get sp->s.y
+	movl	%edx, 4(%eax)	# Store in sp->s.x
+	leal	4(%eax), %edx	# Compute &(sp->s.x)
+	movl	%edx, (%eax)	# Store in sp->p
+	movl	%eax, 12(%eax)	# Store sp in sp->next
+/* $end struct2-ans-s 8 */

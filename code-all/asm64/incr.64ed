@@ -1,0 +1,343 @@
+
+incr:     file format elf64-x86-64
+
+Disassembly of section .init:
+
+00000000004003a8 <_init>:
+  4003a8:	48 83 ec 08          	sub    $0x8,%rsp
+  4003ac:	e8 6b 00 00 00       	callq  40041c <call_gmon_start>
+  4003b1:	e8 ca 00 00 00       	callq  400480 <frame_dummy>
+  4003b6:	e8 65 02 00 00       	callq  400620 <__do_global_ctors_aux>
+  4003bb:	48 83 c4 08          	add    $0x8,%rsp
+  4003bf:	c3                   	retq   
+Disassembly of section .plt:
+
+00000000004003c0 <__libc_start_main@plt-0x10>:
+  4003c0:	ff 35 02 0e 10 00    	pushq  1052162(%rip)        # 5011c8 <_GLOBAL_OFFSET_TABLE_+0x8>
+  4003c6:	ff 25 04 0e 10 00    	jmpq   *1052164(%rip)        # 5011d0 <_GLOBAL_OFFSET_TABLE_+0x10>
+  4003cc:	90                   	nop    
+  4003cd:	90                   	nop    
+  4003ce:	90                   	nop    
+  4003cf:	90                   	nop    
+
+00000000004003d0 <__libc_start_main@plt>:
+  4003d0:	ff 25 02 0e 10 00    	jmpq   *1052162(%rip)        # 5011d8 <_GLOBAL_OFFSET_TABLE_+0x18>
+  4003d6:	68 00 00 00 00       	pushq  $0x0
+  4003db:	e9 e0 ff ff ff       	jmpq   4003c0 <_init+0x18>
+
+00000000004003e0 <random@plt>:
+  4003e0:	ff 25 fa 0d 10 00    	jmpq   *1052154(%rip)        # 5011e0 <_GLOBAL_OFFSET_TABLE_+0x20>
+  4003e6:	68 01 00 00 00       	pushq  $0x1
+  4003eb:	e9 d0 ff ff ff       	jmpq   4003c0 <_init+0x18>
+Disassembly of section .text:
+
+00000000004003f0 <_start>:
+  4003f0:	48 31 ed             	xor    %rbp,%rbp
+  4003f3:	49 89 d1             	mov    %rdx,%r9
+  4003f6:	5e                   	pop    %rsi
+  4003f7:	48 89 e2             	mov    %rsp,%rdx
+  4003fa:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+  4003fe:	50                   	push   %rax
+  4003ff:	54                   	push   %rsp
+  400400:	49 c7 c0 e0 05 40 00 	mov    $0x4005e0,%r8
+  400407:	48 c7 c1 80 05 40 00 	mov    $0x400580,%rcx
+  40040e:	48 c7 c7 40 05 40 00 	mov    $0x400540,%rdi
+  400415:	e8 b6 ff ff ff       	callq  4003d0 <__libc_start_main@plt>
+  40041a:	f4                   	hlt    
+  40041b:	90                   	nop    
+
+000000000040041c <call_gmon_start>:
+  40041c:	48 83 ec 08          	sub    $0x8,%rsp
+  400420:	48 8b 05 91 0d 10 00 	mov    1052049(%rip),%rax        # 5011b8 <_DYNAMIC+0x190>
+  400427:	48 85 c0             	test   %rax,%rax
+  40042a:	74 02                	je     40042e <call_gmon_start+0x12>
+  40042c:	ff d0                	callq  *%eax
+  40042e:	48 83 c4 08          	add    $0x8,%rsp
+  400432:	c3                   	retq   
+  400433:	90                   	nop    
+  400434:	90                   	nop    
+  400435:	90                   	nop    
+  400436:	90                   	nop    
+  400437:	90                   	nop    
+  400438:	90                   	nop    
+  400439:	90                   	nop    
+  40043a:	90                   	nop    
+  40043b:	90                   	nop    
+  40043c:	90                   	nop    
+  40043d:	90                   	nop    
+  40043e:	90                   	nop    
+  40043f:	90                   	nop    
+
+0000000000400440 <__do_global_dtors_aux>:
+  400440:	80 3d d9 0d 10 00 00 	cmpb   $0x0,1052121(%rip)        # 501220 <completed.1>
+  400447:	55                   	push   %rbp
+  400448:	48 89 e5             	mov    %rsp,%rbp
+  40044b:	74 10                	je     40045d <__do_global_dtors_aux+0x1d>
+  40044d:	eb 24                	jmp    400473 <__do_global_dtors_aux+0x33>
+  40044f:	90                   	nop    
+  400450:	48 83 c0 08          	add    $0x8,%rax
+  400454:	48 89 05 9d 0d 10 00 	mov    %rax,1052061(%rip)        # 5011f8 <p.0>
+  40045b:	ff d2                	callq  *%edx
+  40045d:	48 8b 05 94 0d 10 00 	mov    1052052(%rip),%rax        # 5011f8 <p.0>
+  400464:	48 8b 10             	mov    (%rax),%rdx
+  400467:	48 85 d2             	test   %rdx,%rdx
+  40046a:	75 e4                	jne    400450 <__do_global_dtors_aux+0x10>
+  40046c:	c6 05 ad 0d 10 00 01 	movb   $0x1,1052077(%rip)        # 501220 <completed.1>
+  400473:	c9                   	leaveq 
+  400474:	c3                   	retq   
+  400475:	66                   	data16
+  400476:	66                   	data16
+  400477:	66                   	data16
+  400478:	90                   	nop    
+  400479:	66                   	data16
+  40047a:	66                   	data16
+  40047b:	66                   	data16
+  40047c:	90                   	nop    
+  40047d:	66                   	data16
+  40047e:	66                   	data16
+  40047f:	90                   	nop    
+
+0000000000400480 <frame_dummy>:
+  400480:	55                   	push   %rbp
+  400481:	48 83 3d 97 0b 10 00 	cmpq   $0x0,1051543(%rip)        # 501020 <__JCR_END__>
+  400488:	00 
+  400489:	48 89 e5             	mov    %rsp,%rbp
+  40048c:	74 16                	je     4004a4 <frame_dummy+0x24>
+  40048e:	b8 00 00 00 00       	mov    $0x0,%eax
+  400493:	48 85 c0             	test   %rax,%rax
+  400496:	74 0c                	je     4004a4 <frame_dummy+0x24>
+  400498:	bf 20 10 50 00       	mov    $0x501020,%edi
+  40049d:	49 89 c3             	mov    %rax,%r11
+  4004a0:	c9                   	leaveq 
+  4004a1:	41 ff e3             	jmpq   *%r11d
+  4004a4:	c9                   	leaveq 
+  4004a5:	c3                   	retq   
+  4004a6:	90                   	nop    
+  4004a7:	90                   	nop    
+  4004a8:	90                   	nop    
+  4004a9:	90                   	nop    
+  4004aa:	90                   	nop    
+  4004ab:	90                   	nop    
+  4004ac:	90                   	nop    
+  4004ad:	90                   	nop    
+  4004ae:	90                   	nop    
+  4004af:	90                   	nop    
+
+00000000004004b0 <simple>:
+  4004b0:	03 37                	add    (%rdi),%esi
+  4004b2:	89 f0                	mov    %esi,%eax
+  4004b4:	89 37                	mov    %esi,(%rdi)
+  4004b6:	c3                   	retq   
+  4004b7:	66                   	data16
+  4004b8:	66                   	data16
+  4004b9:	90                   	nop    
+  4004ba:	66                   	data16
+  4004bb:	66                   	data16
+  4004bc:	90                   	nop    
+  4004bd:	66                   	data16
+  4004be:	66                   	data16
+  4004bf:	90                   	nop    
+
+00000000004004c0 <simple_l>:
+  4004c0:	48 03 37             	add    (%rdi),%rsi
+  4004c3:	48 89 f0             	mov    %rsi,%rax
+  4004c6:	48 89 37             	mov    %rsi,(%rdi)
+  4004c9:	c3                   	retq   
+  4004ca:	66                   	data16
+  4004cb:	66                   	data16
+  4004cc:	90                   	nop    
+  4004cd:	66                   	data16
+  4004ce:	66                   	data16
+  4004cf:	90                   	nop    
+
+00000000004004d0 <call_simple>:
+  4004d0:	48 83 ec 08          	sub    $0x8,%rsp
+  4004d4:	be 0c 00 00 00       	mov    $0xc,%esi
+  4004d9:	48 8d 7c 24 04       	lea    0x4(%rsp),%rdi
+  4004de:	c7 44 24 04 25 00 00 	movl   $0x25,0x4(%rsp)
+  4004e5:	00 
+  4004e6:	e8 c5 ff ff ff       	callq  4004b0 <simple>
+  4004eb:	03 44 24 04          	add    0x4(%rsp),%eax
+  4004ef:	48 83 c4 08          	add    $0x8,%rsp
+  4004f3:	c3                   	retq   
+  4004f4:	66                   	data16
+  4004f5:	66                   	data16
+  4004f6:	66                   	data16
+  4004f7:	90                   	nop    
+  4004f8:	66                   	data16
+  4004f9:	66                   	data16
+  4004fa:	66                   	data16
+  4004fb:	90                   	nop    
+  4004fc:	66                   	data16
+  4004fd:	66                   	data16
+  4004fe:	66                   	data16
+  4004ff:	90                   	nop    
+
+/* $begin call_simple_l-64e 176 */
+0000000000400500 <call_simple_l>:
+  400500:	be 0c 00 00 00       	mov    $0xc,%esi	 # Set 12 as 1st argument
+  400505:	bf 08 12 50 00       	mov    $0x501208,%edi    # Set &gval1 as 2nd argument
+  40050a:	e8 b1 ff ff ff       	callq  4004c0 <simple_l> # Call simple_l
+  40050f:	48 03 05 ea 0c 10 00 	add    1051882(%rip),%rax  # Add gval2 to result
+  400516:	c3                   	retq   
+/* $end call_simple_l-64e 176 */
+  400517:	66                   	data16
+  400518:	66                   	data16
+  400519:	90                   	nop    
+  40051a:	66                   	data16
+  40051b:	66                   	data16
+  40051c:	90                   	nop    
+  40051d:	66                   	data16
+  40051e:	66                   	data16
+  40051f:	90                   	nop    
+
+0000000000400520 <post_incr>:
+  400520:	8b 07                	mov    (%rdi),%eax
+  400522:	8d 34 30             	lea    (%rax,%rsi,1),%esi
+  400525:	89 37                	mov    %esi,(%rdi)
+  400527:	c3                   	retq   
+  400528:	66                   	data16
+  400529:	66                   	data16
+  40052a:	66                   	data16
+  40052b:	90                   	nop    
+  40052c:	66                   	data16
+  40052d:	66                   	data16
+  40052e:	66                   	data16
+  40052f:	90                   	nop    
+
+0000000000400530 <post_incr_l>:
+  400530:	48 8b 07             	mov    (%rdi),%rax
+  400533:	48 8d 34 30          	lea    (%rax,%rsi,1),%rsi
+  400537:	48 89 37             	mov    %rsi,(%rdi)
+  40053a:	c3                   	retq   
+  40053b:	66                   	data16
+  40053c:	66                   	data16
+  40053d:	90                   	nop    
+  40053e:	66                   	data16
+  40053f:	90                   	nop    
+
+0000000000400540 <main>:
+  400540:	55                   	push   %rbp
+  400541:	31 ed                	xor    %ebp,%ebp
+  400543:	53                   	push   %rbx
+  400544:	48 83 ec 08          	sub    $0x8,%rsp
+  400548:	48 63 dd             	movslq %ebp,%rbx
+  40054b:	ff c5                	inc    %ebp
+  40054d:	e8 8e fe ff ff       	callq  4003e0 <random@plt>
+  400552:	81 fd ff 01 00 00    	cmp    $0x1ff,%ebp
+  400558:	89 04 9d 40 22 50 00 	mov    %eax,0x502240(,%rbx,4)
+  40055f:	48 98                	cltq   
+  400561:	48 89 04 dd 40 12 50 	mov    %rax,0x501240(,%rbx,8)
+  400568:	00 
+  400569:	7e dd                	jle    400548 <main+0x8>
+  40056b:	48 83 c4 08          	add    $0x8,%rsp
+  40056f:	31 c0                	xor    %eax,%eax
+  400571:	5b                   	pop    %rbx
+  400572:	5d                   	pop    %rbp
+  400573:	c3                   	retq   
+  400574:	90                   	nop    
+  400575:	90                   	nop    
+  400576:	90                   	nop    
+  400577:	90                   	nop    
+  400578:	90                   	nop    
+  400579:	90                   	nop    
+  40057a:	90                   	nop    
+  40057b:	90                   	nop    
+  40057c:	90                   	nop    
+  40057d:	90                   	nop    
+  40057e:	90                   	nop    
+  40057f:	90                   	nop    
+
+0000000000400580 <__libc_csu_init>:
+  400580:	48 89 5c 24 e8       	mov    %rbx,0xffffffffffffffe8(%rsp)
+  400585:	4c 89 64 24 f8       	mov    %r12,0xfffffffffffffff8(%rsp)
+  40058a:	4c 8d 25 6f 0a 10 00 	lea    1051247(%rip),%r12        # 501000 <__fini_array_end>
+  400591:	48 89 6c 24 f0       	mov    %rbp,0xfffffffffffffff0(%rsp)
+  400596:	48 83 ec 18          	sub    $0x18,%rsp
+  40059a:	31 db                	xor    %ebx,%ebx
+  40059c:	e8 07 fe ff ff       	callq  4003a8 <_init>
+  4005a1:	48 8d 05 58 0a 10 00 	lea    1051224(%rip),%rax        # 501000 <__fini_array_end>
+  4005a8:	4c 29 e0             	sub    %r12,%rax
+  4005ab:	48 c1 f8 03          	sar    $0x3,%rax
+  4005af:	48 39 c3             	cmp    %rax,%rbx
+  4005b2:	73 0f                	jae    4005c3 <__libc_csu_init+0x43>
+  4005b4:	48 89 c5             	mov    %rax,%rbp
+  4005b7:	41 ff 14 dc          	callq  *(%r12,%rbx,8)
+  4005bb:	48 ff c3             	inc    %rbx
+  4005be:	48 39 eb             	cmp    %rbp,%rbx
+  4005c1:	72 f4                	jb     4005b7 <__libc_csu_init+0x37>
+  4005c3:	48 8b 1c 24          	mov    (%rsp),%rbx
+  4005c7:	48 8b 6c 24 08       	mov    0x8(%rsp),%rbp
+  4005cc:	4c 8b 64 24 10       	mov    0x10(%rsp),%r12
+  4005d1:	48 83 c4 18          	add    $0x18,%rsp
+  4005d5:	c3                   	retq   
+  4005d6:	66                   	data16
+  4005d7:	66                   	data16
+  4005d8:	66                   	data16
+  4005d9:	90                   	nop    
+  4005da:	66                   	data16
+  4005db:	66                   	data16
+  4005dc:	90                   	nop    
+  4005dd:	66                   	data16
+  4005de:	66                   	data16
+  4005df:	90                   	nop    
+
+00000000004005e0 <__libc_csu_fini>:
+  4005e0:	55                   	push   %rbp
+  4005e1:	48 8d 05 18 0a 10 00 	lea    1051160(%rip),%rax        # 501000 <__fini_array_end>
+  4005e8:	48 8d 2d 11 0a 10 00 	lea    1051153(%rip),%rbp        # 501000 <__fini_array_end>
+  4005ef:	48 29 e8             	sub    %rbp,%rax
+  4005f2:	53                   	push   %rbx
+  4005f3:	48 c1 f8 03          	sar    $0x3,%rax
+  4005f7:	48 8d 58 ff          	lea    0xffffffffffffffff(%rax),%rbx
+  4005fb:	48 83 ec 08          	sub    $0x8,%rsp
+  4005ff:	eb 07                	jmp    400608 <__libc_csu_fini+0x28>
+  400601:	ff 54 dd 00          	callq  *0x0(%rbp,%rbx,8)
+  400605:	48 ff cb             	dec    %rbx
+  400608:	48 83 fb ff          	cmp    $0xffffffffffffffff,%rbx
+  40060c:	75 f3                	jne    400601 <__libc_csu_fini+0x21>
+  40060e:	48 83 c4 08          	add    $0x8,%rsp
+  400612:	5b                   	pop    %rbx
+  400613:	5d                   	pop    %rbp
+  400614:	e9 3f 00 00 00       	jmpq   400658 <_fini>
+  400619:	90                   	nop    
+  40061a:	90                   	nop    
+  40061b:	90                   	nop    
+  40061c:	90                   	nop    
+  40061d:	90                   	nop    
+  40061e:	90                   	nop    
+  40061f:	90                   	nop    
+
+0000000000400620 <__do_global_ctors_aux>:
+  400620:	55                   	push   %rbp
+  400621:	48 89 e5             	mov    %rsp,%rbp
+  400624:	53                   	push   %rbx
+  400625:	48 c7 c3 00 10 50 00 	mov    $0x501000,%rbx
+  40062c:	48 83 ec 08          	sub    $0x8,%rsp
+  400630:	48 8b 05 c9 09 10 00 	mov    1051081(%rip),%rax        # 501000 <__fini_array_end>
+  400637:	eb 10                	jmp    400649 <__do_global_ctors_aux+0x29>
+  400639:	66                   	data16
+  40063a:	66                   	data16
+  40063b:	66                   	data16
+  40063c:	90                   	nop    
+  40063d:	66                   	data16
+  40063e:	66                   	data16
+  40063f:	90                   	nop    
+  400640:	48 83 eb 08          	sub    $0x8,%rbx
+  400644:	ff d0                	callq  *%eax
+  400646:	48 8b 03             	mov    (%rbx),%rax
+  400649:	48 83 f8 ff          	cmp    $0xffffffffffffffff,%rax
+  40064d:	75 f1                	jne    400640 <__do_global_ctors_aux+0x20>
+  40064f:	48 83 c4 08          	add    $0x8,%rsp
+  400653:	5b                   	pop    %rbx
+  400654:	c9                   	leaveq 
+  400655:	c3                   	retq   
+  400656:	90                   	nop    
+  400657:	90                   	nop    
+Disassembly of section .fini:
+
+0000000000400658 <_fini>:
+  400658:	48 83 ec 08          	sub    $0x8,%rsp
+  40065c:	e8 df fd ff ff       	callq  400440 <__do_global_dtors_aux>
+  400661:	48 83 c4 08          	add    $0x8,%rsp
+  400665:	c3                   	retq   

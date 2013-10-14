@@ -1,0 +1,341 @@
+	.file	"proc.c"
+	.text
+.globl proc
+	.type	proc, @function
+proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	%ebx, (%esp)
+	movl	%esi, 4(%esp)
+	movl	12(%ebp), %edx
+	movl	20(%ebp), %ecx
+	movl	28(%ebp), %ebx
+	movl	36(%ebp), %esi
+	movl	8(%ebp), %eax
+	addl	%eax, (%edx)
+	movl	16(%ebp), %eax
+	addl	%eax, (%ecx)
+	movzwl	24(%ebp), %eax
+	addw	%ax, (%ebx)
+	movzbl	32(%ebp), %eax
+	addb	%al, (%esi)
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	proc, .-proc
+.globl call_proc
+	.type	call_proc, @function
+call_proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$48, %esp
+	movl	$1, -8(%ebp)
+	movl	$2, -12(%ebp)
+	movw	$3, -4(%ebp)
+	movb	$4, -1(%ebp)
+	leal	-1(%ebp), %eax
+	movl	%eax, 28(%esp)
+	movl	$4, 24(%esp)
+	leal	-4(%ebp), %eax
+	movl	%eax, 20(%esp)
+	movl	$3, 16(%esp)
+	leal	-12(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	$2, 8(%esp)
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	$1, (%esp)
+	call	proc
+	movswl	-4(%ebp),%eax
+	movsbl	-1(%ebp),%edx
+	subl	%edx, %eax
+	movl	-12(%ebp), %edx
+	addl	-8(%ebp), %edx
+	imull	%edx, %eax
+	leave
+	ret
+	.size	call_proc, .-call_proc
+.globl rproc
+	.type	rproc, @function
+rproc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$40, %esp
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %eax
+	movl	%ebx, %edx
+	addl	(%eax), %edx
+	movl	%edx, -16(%ebp)
+	movl	(%eax), %ecx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L7
+	movl	%ebx, %eax
+	subl	%ecx, %eax
+	movl	%eax, -20(%ebp)
+	leal	-16(%ebp), %ebx
+	movl	%ebx, 4(%esp)
+	movl	%edx, (%esp)
+	call	rproc
+	movl	%eax, %edi
+	leal	-20(%ebp), %esi
+	movl	%esi, 4(%esp)
+	movl	-20(%ebp), %eax
+	movl	%eax, (%esp)
+	call	rproc
+	movl	%eax, -32(%ebp)
+	movl	%ebx, 4(%esp)
+	movl	-20(%ebp), %eax
+	movl	%eax, (%esp)
+	call	rproc
+	movl	%eax, %ebx
+	movl	%esi, 4(%esp)
+	movl	-16(%ebp), %eax
+	movl	%eax, (%esp)
+	call	rproc
+	movl	-32(%ebp), %edx
+	imull	%edi, %edx
+	imull	%ebx, %edx
+	imull	%edx, %eax
+.L7:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	rproc, .-rproc
+.globl rfact
+	.type	rfact, @function
+rfact:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %ebx
+	movl	$1, %eax
+	testl	%ebx, %ebx
+	jle	.L11
+	leal	-1(%ebx), %eax
+	movl	%eax, (%esp)
+	call	rfact
+	imull	%ebx, %eax
+.L11:
+	addl	$4, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	rfact, .-rfact
+.globl sfact_helper
+	.type	sfact_helper, @function
+sfact_helper:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$36, %esp
+	movl	8(%ebp), %ebx
+	testl	%ebx, %ebx
+	jg	.L14
+	movl	12(%ebp), %eax
+	movl	$1, (%eax)
+	jmp	.L16
+.L14:
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-1(%ebx), %eax
+	movl	%eax, (%esp)
+	call	sfact_helper
+	movl	%ebx, %eax
+	imull	-8(%ebp), %eax
+	movl	12(%ebp), %edx
+	movl	%eax, (%edx)
+.L16:
+	addl	$36, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	sfact_helper, .-sfact_helper
+.globl sfact
+	.type	sfact, @function
+sfact:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	leal	-4(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	sfact_helper
+	movl	-4(%ebp), %eax
+	leave
+	ret
+	.size	sfact, .-sfact
+.globl pwr
+	.type	pwr, @function
+pwr:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$20, %esp
+	movl	12(%ebp), %ebx
+	movl	$1, %eax
+	testl	%ebx, %ebx
+	je	.L21
+	leal	-1(%ebx), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	pwr
+	imull	%ebx, %eax
+.L21:
+	addl	$20, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	pwr, .-pwr
+.globl pwr_dc
+	.type	pwr_dc, @function
+pwr_dc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	8(%ebp), %edi
+	movl	12(%ebp), %esi
+	testl	%esi, %esi
+	jne	.L24
+	movl	$1, %edi
+	jmp	.L25
+.L24:
+	cmpl	$1, %esi
+	je	.L25
+	movl	%esi, %ebx
+	shrl	$31, %ebx
+	addl	%esi, %ebx
+	sarl	%ebx
+	movl	%ebx, 4(%esp)
+	movl	%edi, (%esp)
+	call	pwr_dc
+	movl	%eax, -16(%ebp)
+	movl	%esi, %eax
+	subl	%ebx, %eax
+	movl	%eax, 4(%esp)
+	movl	%edi, (%esp)
+	call	pwr_dc
+	movl	-16(%ebp), %edi
+	imull	%eax, %edi
+.L25:
+	movl	%edi, %eax
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	pwr_dc, .-pwr_dc
+.globl multi_fact
+	.type	multi_fact, @function
+multi_fact:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$56, %esp
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	8(%ebp), %ebx
+	movl	24(%ebp), %esi
+	movl	28(%ebp), %edi
+	testl	%ebx, %ebx
+	jg	.L28
+	movl	16(%ebp), %eax
+	addl	12(%ebp), %eax
+	addl	20(%ebp), %eax
+	addl	%esi, %eax
+	addl	%edi, %eax
+	jmp	.L29
+.L28:
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-1(%ebx), %eax
+	movl	%eax, (%esp)
+	call	multi_fact
+	movl	%eax, -24(%ebp)
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	subl	$1, %eax
+	movl	%eax, 4(%esp)
+	movl	%ebx, (%esp)
+	call	multi_fact
+	movl	%eax, -20(%ebp)
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	subl	$1, %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	%ebx, (%esp)
+	call	multi_fact
+	movl	%eax, -16(%ebp)
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	20(%ebp), %eax
+	subl	$1, %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	%ebx, (%esp)
+	call	multi_fact
+	movl	-20(%ebp), %edx
+	addl	-24(%ebp), %edx
+	addl	-16(%ebp), %edx
+	leal	(%edx,%eax), %eax
+.L29:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	multi_fact, .-multi_fact
+.globl local_array
+	.type	local_array, @function
+local_array:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	$2, -16(%ebp)
+	movl	$3, -12(%ebp)
+	movl	$5, -8(%ebp)
+	movl	$7, -4(%ebp)
+	movl	8(%ebp), %eax
+	andl	$3, %eax
+	movl	-16(%ebp,%eax,4), %eax
+	leave
+	ret
+	.size	local_array, .-local_array
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

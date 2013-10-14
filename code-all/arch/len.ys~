@@ -1,0 +1,28 @@
+
+len2:
+	pushl %ebp		# Save %ebp
+	rrmovl %esp, %ebp	# Create new frame pointer
+	pushl %esi   		# Save callee-save register
+	irmovl $4, %esi		# Set %esi to 4
+	pushl %edi		# Save callee-save register
+	irmovl $1, %edi		# Set %edi to 1
+	mrmovl 8(%ebp), %edx	# Get a
+	xorl %ecx, %ecx		# len = 0
+	mrmovl (%edx), %eax	# Get *a
+	addl %esi, %edx		# a++
+	andl %eax, %eax		# Test *a
+	je Done	   		# If zero, goto Done
+Loop:
+	addl %edi, %ecx		# len++
+	movl (%edx), %eax	# Get *a
+	addl %esi, %edx		# a++
+	andl %eax, %eax		# Test *a
+	jne Loop   		# If !0, goto Loop
+Done:
+	rrmovl %ecx, %eax	# return value = len
+	popl %edi    		# Restore %edi
+	popl %esi		# Restore %esi
+	popl %ebp		# Restore %ebp
+	ret
+
+	

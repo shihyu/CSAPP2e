@@ -1,0 +1,147 @@
+	.file	"fib.c"
+	.text
+.globl fib_dw
+	.type	fib_dw, @function
+fib_dw:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+/$begin fib-dw-s 10 */
+# i in %ecx, val in %ecx, nval in %eax
+# n in %esi
+	movl	8(%ebp), %esi		# Get n
+	movl	$0, %edx		# Set i to 0
+	movl	$0, %ecx		# Set val to 0
+	movl	$1, %eax		# Set nval to 1
+# Note curious rearrangement of loop
+.L3:				      # \textbf{loop:}
+	leal	(%eax,%ecx), %ebx	# Compute t = nval + val
+	addl	$1, %edx		# Increment i
+	cmpl	%esi, %edx		# Compare i:n
+	jge	.L2			# If >=, goto \textbf{done}
+	movl	%eax, %ecx		# Set val to nval
+	movl	%ebx, %eax		# Set nval to t
+	jmp	.L3			# Goto \textbf{loop}
+.L2:				      # \textbf{done:}
+					# Return nval
+/* $end fib-dw-s 10 */
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_dw, .-fib_dw
+.globl fib_w
+	.type	fib_w, @function
+fib_w:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+/* $begin fibw-s 35 */
+# i in %edx, val in %ecx, nval in %eax
+# n in %esi
+	movl	8(%ebp), %esi		# Get n
+	movl	$1, %eax		# Set nval to 1
+	cmpl	$1, %esi		# Compare n:1
+	jle	.L7			# if <=, goto \textbf{done}
+	movl	$1, %edx		# Set i to 1
+	movl	$1, %ecx		# Set val to 1
+	movl	$1, %eax		# Set nval to 1
+.L9:				      #  \textbf{loop:}
+	leal	(%eax,%ecx), %ebx 	# Compute t = nval + val
+	addl	$1, %edx		# Increment i
+	cmpl	%edx, %esi		# Compare n:i
+	jle	.L7			# if <=, goto \textbf{done}
+	movl	%eax, %ecx		# Set val to nval
+	movl	%ebx, %eax		# Set nval to t
+	jmp	.L9			# Goto \textbf{loop}
+.L7:				      # \textbf{done:}
+					# Return nval
+/* $end fibw-s 35 */
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_w, .-fib_w
+.globl fib_w_goto
+	.type	fib_w_goto, @function
+fib_w_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+	cmpl	$1, %edx
+	jle	.L15
+	subl	$1, %edx
+	movl	$1, %ebx
+.L13:
+	leal	(%eax,%ebx), %ecx
+	subl	$1, %edx
+	je	.L15
+	movl	%eax, %ebx
+	movl	%ecx, %eax
+	jmp	.L13
+.L15:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	fib_w_goto, .-fib_w_goto
+.globl fib_f
+	.type	fib_f, @function
+fib_f:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$1, %eax
+	cmpl	$1, %esi
+	jle	.L19
+	movl	$1, %edx
+	movl	$1, %ecx
+	movl	$1, %eax
+.L21:
+	leal	(%eax,%ecx), %ebx
+	addl	$1, %edx
+	cmpl	%edx, %esi
+	jle	.L19
+	movl	%eax, %ecx
+	movl	%ebx, %eax
+	jmp	.L21
+.L19:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_f, .-fib_f
+.globl fib_rec
+	.type	fib_rec, @function
+fib_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	8(%ebp), %esi
+	movl	$1, %eax
+	cmpl	$2, %esi
+	jle	.L25
+	leal	-2(%esi), %eax
+	movl	%eax, (%esp)
+	call	fib_rec
+	movl	%eax, %ebx
+	leal	-1(%esi), %eax
+	movl	%eax, (%esp)
+	call	fib_rec
+	addl	%ebx, %eax
+.L25:
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	fib_rec, .-fib_rec
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

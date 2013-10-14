@@ -1,0 +1,56 @@
+	.file	"continue-eg.c"
+	.text
+.globl loop1
+	.type	loop1, @function
+loop1:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	$0, %eax
+	movl	$0, %edx
+.L3:
+	testb	$1, %dl
+	jne	.L2
+	addl	%edx, %eax
+.L2:
+	addl	$1, %edx
+	cmpl	$10, %edx
+	jne	.L3
+	popl	%ebp
+	ret
+	.size	loop1, .-loop1
+.globl loop2
+	.type	loop2, @function
+loop2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	$0, %eax
+.L9:
+	testb	$1, %al
+	jne	.L9
+	addl	$1, %eax
+	cmpl	$10, %eax
+	jne	.L9
+	movb	$45, %al
+	popl	%ebp
+	ret
+	.size	loop2, .-loop2
+.globl loop32
+	.type	loop32, @function
+loop32:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	$0, %eax
+	movl	$0, %edx
+.L12:
+	testb	$1, %dl
+	jne	.L11
+	addl	%edx, %eax
+.L11:
+	addl	$1, %edx
+	cmpl	$10, %edx
+	jne	.L12
+	popl	%ebp
+	ret
+	.size	loop32, .-loop32
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

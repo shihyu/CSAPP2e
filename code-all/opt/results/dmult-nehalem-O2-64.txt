@@ -1,0 +1,9 @@
+Count = 20000, Ghz = 1.60
+Function 'list' (Traversing Singly-Linked List) 107835 cycles, 67397 nsecs, 5.39 cycles/element
+Function 'array_u1p1S' (Array.  Unroll 1x.  Parallel 1x, Standard associativity) 100950 cycles, 63094 nsecs, 5.05 cycles/element
+Function 'array_u5p5S' (Array.  Unroll 5x.  Parallel 5x, Standard associativity) 33955 cycles, 21222 nsecs, 1.70 cycles/element
+Function 'array_u5p1S' (Array.  Unroll 5x.  Parallel 1x, Standard associativity) 100928 cycles, 63080 nsecs, 5.05 cycles/element
+Function 'array_u5p1A' (Array.  Unroll 5x.  Parallel 1x, Modified associativity) 30744 cycles, 19215 nsecs, 1.54 cycles/element
+Function 'sse_u1p1' (2x SSE.  Unroll 1x.  Parallel 1x.) 50952 cycles, 31845 nsecs, 2.55 cycles/element
+Function 'sse_u5p5' (2x SSE.  Unroll 5x.  Parallel 5x.) 21104 cycles, 13190 nsecs, 1.06 cycles/element
+Function 'sse_u8p8' (2x SSE.  Unroll 8x.  Parallel 8x.) 18504 cycles, 11565 nsecs, 0.93 cycles/element

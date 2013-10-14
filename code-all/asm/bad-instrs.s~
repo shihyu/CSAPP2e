@@ -1,0 +1,22 @@
+# Examples of invalid instructions 
+/* $begin bad-instrs-prob-s 0 */
+    movb $0xF, (%bl)
+    popl (%ebp)
+    movl %ax, (%esp)
+    movw (%eax),4(%esp)
+    movl %eax,$0x123
+    movl %eax,%dx
+    pushl 4(%ebp)
+    movb %si, 8(%ebp)
+/* $end bad-instrs-prob-s 0 */
+
+/* $begin bad-instrs-ans-s 0 */
+    movb $0xF, (%bl)	  # Cannot use %bl as address register
+    popl (%ebp)		  # Cannot pop value into memory
+    movl %ax, (%esp)	  # Mismatch between instruction suffix and register ID
+    movw (%eax),4(%esp)	  # Cannot have both source and destination be memory references
+    movl %eax,$0x123	  # Cannot have immediate as destination
+    movl %eax,%dx	  # Destination operand incorrect size
+    pushl 4(%ebp)	  # Cannot push value from memory
+    movb %si, 8(%ebp)	  # Mismatch between instruction suffix and register ID
+/* $end bad-instrs-ans-s 0 */

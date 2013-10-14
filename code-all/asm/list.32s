@@ -1,0 +1,440 @@
+	.file	"list.c"
+	.text
+.globl val
+	.type	val, @function
+val:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L3
+	movl	(%edx), %eax
+.L3:
+	popl	%ebp
+	ret
+	.size	val, .-val
+.globl next
+	.type	next, @function
+next:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L7
+	movl	4(%edx), %eax
+.L7:
+	popl	%ebp
+	ret
+	.size	next, .-next
+.globl is_null
+	.type	is_null, @function
+is_null:
+	pushl	%ebp
+	movl	%esp, %ebp
+	cmpl	$0, 8(%ebp)
+	sete	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	is_null, .-is_null
+.globl sum_list_rec
+	.type	sum_list_rec, @function
+sum_list_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L13
+	movl	(%edx), %ebx
+	movl	4(%edx), %eax
+	movl	%eax, (%esp)
+	call	sum_list_rec
+	addl	%ebx, %eax
+.L13:
+	addl	$4, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	sum_list_rec, .-sum_list_rec
+.globl dsum_list_rec
+	.type	dsum_list_rec, @function
+dsum_list_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$40, %esp
+	movl	8(%ebp), %eax
+	testl	%eax, %eax
+	jne	.L16
+	fldz
+	jmp	.L17
+.L16:
+	cvtsi2sd	(%eax), %xmm0
+	movsd	%xmm0, -16(%ebp)
+	movl	4(%eax), %eax
+	movl	%eax, (%esp)
+	call	dsum_list_rec
+	fstpl	-8(%ebp)
+	movsd	-16(%ebp), %xmm0
+	addsd	-8(%ebp), %xmm0
+	movsd	%xmm0, -24(%ebp)
+	fldl	-24(%ebp)
+.L17:
+	leave
+	ret
+	.size	dsum_list_rec, .-dsum_list_rec
+.globl diff_list_rec
+	.type	diff_list_rec, @function
+diff_list_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L21
+	movl	(%edx), %ebx
+	movl	4(%edx), %eax
+	movl	%eax, (%esp)
+	call	diff_list_rec
+	subl	%eax, %ebx
+	movl	%ebx, %eax
+.L21:
+	addl	$4, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	diff_list_rec, .-diff_list_rec
+.globl diff_list_rec_helper
+	.type	diff_list_rec_helper, @function
+diff_list_rec_helper:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$20, %esp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %ecx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L25
+	movl	%ecx, %ebx
+	imull	(%edx), %ebx
+	movl	%ecx, %eax
+	negl	%eax
+	movl	%eax, 4(%esp)
+	movl	4(%edx), %eax
+	movl	%eax, (%esp)
+	call	diff_list_rec_helper
+	addl	%ebx, %eax
+.L25:
+	addl	$20, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	diff_list_rec_helper, .-diff_list_rec_helper
+.globl diff_list_rec2
+	.type	diff_list_rec2, @function
+diff_list_rec2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$1, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	diff_list_rec_helper
+	leave
+	ret
+	.size	diff_list_rec2, .-diff_list_rec2
+.globl diff_list_iter1
+	.type	diff_list_iter1, @function
+diff_list_iter1:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %edx
+	movl	$1, %ecx
+	movl	$0, %ebx
+	testl	%edx, %edx
+	je	.L31
+.L34:
+	movl	%ecx, %eax
+	imull	(%edx), %eax
+	addl	%eax, %ebx
+	negl	%ecx
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L34
+.L31:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	diff_list_iter1, .-diff_list_iter1
+.globl sum_list_rec_abs
+	.type	sum_list_rec_abs, @function
+sum_list_rec_abs:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	8(%ebp), %esi
+	movl	%esi, (%esp)
+	call	is_null
+	movl	$0, %edx
+	testl	%eax, %eax
+	jne	.L38
+	movl	%esi, (%esp)
+	call	val
+	movl	%eax, %ebx
+	movl	%esi, (%esp)
+	call	next
+	movl	%eax, (%esp)
+	call	sum_list_rec_abs
+	leal	(%eax,%ebx), %edx
+.L38:
+	movl	%edx, %eax
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	sum_list_rec_abs, .-sum_list_rec_abs
+.globl sum_list_tail
+	.type	sum_list_tail, @function
+sum_list_tail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%edx, %edx
+	je	.L41
+	addl	(%edx), %eax
+	movl	%eax, 4(%esp)
+	movl	4(%edx), %eax
+	movl	%eax, (%esp)
+	call	sum_list_tail
+.L41:
+	leave
+	ret
+	.size	sum_list_tail, .-sum_list_tail
+.globl sum_list_tail_call
+	.type	sum_list_tail_call, @function
+sum_list_tail_call:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$0, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	sum_list_tail
+	leave
+	ret
+	.size	sum_list_tail_call, .-sum_list_tail_call
+.globl sum_list_iter
+	.type	sum_list_iter, @function
+sum_list_iter:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L47
+.L50:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L50
+.L47:
+	popl	%ebp
+	ret
+	.size	sum_list_iter, .-sum_list_iter
+.globl sum_list_iter_abs
+	.type	sum_list_iter_abs, @function
+sum_list_iter_abs:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %ebx
+	movl	$0, %esi
+	jmp	.L53
+.L54:
+	movl	%ebx, (%esp)
+	call	val
+	addl	%eax, %esi
+	movl	%ebx, (%esp)
+	call	next
+	movl	%eax, %ebx
+.L53:
+	movl	%ebx, (%esp)
+	call	is_null
+	testl	%eax, %eax
+	je	.L54
+	movl	%esi, %eax
+	addl	$4, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	sum_list_iter_abs, .-sum_list_iter_abs
+.globl sum_list_iter_expand
+	.type	sum_list_iter_expand, @function
+sum_list_iter_expand:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L58
+.L59:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L59
+.L58:
+	popl	%ebp
+	ret
+	.size	sum_list_iter_expand, .-sum_list_iter_expand
+.globl max
+	.type	max, @function
+max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%edx, %eax
+	cmovl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	max, .-max
+.globl max_list_rec
+	.type	max_list_rec, @function
+max_list_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$20, %esp
+	movl	8(%ebp), %ebx
+	movl	$-2147483648, %eax
+	testl	%ebx, %ebx
+	je	.L65
+	movl	4(%ebx), %eax
+	movl	%eax, (%esp)
+	call	max_list_rec
+	movl	%eax, 4(%esp)
+	movl	(%ebx), %eax
+	movl	%eax, (%esp)
+	call	max
+.L65:
+	addl	$20, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	max_list_rec, .-max_list_rec
+.globl max_list_tail
+	.type	max_list_tail, @function
+max_list_tail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$20, %esp
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %edx
+	testl	%ebx, %ebx
+	je	.L68
+	movl	(%ebx), %eax
+	movl	%eax, 4(%esp)
+	movl	%edx, (%esp)
+	call	max
+	movl	%eax, 4(%esp)
+	movl	4(%ebx), %eax
+	movl	%eax, (%esp)
+	call	max_list_tail
+	movl	%eax, %edx
+.L68:
+	movl	%edx, %eax
+	addl	$20, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	max_list_tail, .-max_list_tail
+.globl max_list_tail_call
+	.type	max_list_tail_call, @function
+max_list_tail_call:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$-2147483648, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	max_list_tail
+	leave
+	ret
+	.size	max_list_tail_call, .-max_list_tail_call
+.globl sum_list_iter2
+	.type	sum_list_iter2, @function
+sum_list_iter2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L74
+	movl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	je	.L74
+.L77:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L77
+.L74:
+	popl	%ebp
+	ret
+	.size	sum_list_iter2, .-sum_list_iter2
+.globl sum_list_itail
+	.type	sum_list_itail, @function
+sum_list_itail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%edx, %edx
+	je	.L80
+.L84:
+	movl	4(%edx), %ecx
+	addl	(%edx), %eax
+	testl	%ecx, %ecx
+	je	.L80
+	movl	%ecx, %edx
+	jmp	.L84
+.L80:
+	popl	%ebp
+	.p2align 4,,2
+	.p2align 3
+	ret
+	.size	sum_list_itail, .-sum_list_itail
+.globl new_ele
+	.type	new_ele, @function
+new_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$8, (%esp)
+	call	malloc
+	movl	8(%ebp), %edx
+	movl	%edx, (%eax)
+	leave
+	ret
+	.size	new_ele, .-new_ele
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

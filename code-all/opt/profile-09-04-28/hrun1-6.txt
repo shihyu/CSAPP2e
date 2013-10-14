@@ -1,0 +1,24 @@
+verbose	10
+size	199999
+hash	2
+lower	0
+find	2
+ngram	1
+quicksort	1
+file	../../../corpora/hansard.36.txt
+N-gram size 1
+Lower case function lower1
+Hash function h_xor
+Find element function find_ele_iter_r
+1263902	'the'
+601741	'to'
+591284	'of'
+386561	'and'
+365095	'in'
+346391	'that'
+309789	'a'
+298471	'is'
+211398	'i'
+191827	'it'
+17835020 n-grams, 58600 unique, 17424 singletons.  Most common (1263902) = 'the'.  Longest (2 have length 23) = 'déconfessionnalisation'
+Total time = 3.420000 seconds

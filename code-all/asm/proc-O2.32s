@@ -1,0 +1,346 @@
+	.file	"proc.c"
+	.text
+	.p2align 4,,15
+.globl proc
+	.type	proc, @function
+proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	12(%ebp), %edx
+	movl	20(%ebp), %ecx
+	movl	%ebx, (%esp)
+	movl	28(%ebp), %ebx
+	movl	8(%ebp), %eax
+	movl	%esi, 4(%esp)
+	movl	36(%ebp), %esi
+	addl	%eax, (%edx)
+	movl	16(%ebp), %eax
+	addl	%eax, (%ecx)
+	movzwl	24(%ebp), %eax
+	addw	%ax, (%ebx)
+	movzbl	32(%ebp), %eax
+	addb	%al, (%esi)
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	proc, .-proc
+	.p2align 4,,15
+.globl call_proc
+	.type	call_proc, @function
+call_proc:
+	pushl	%ebp
+	movl	$-12, %eax
+	movl	%esp, %ebp
+	popl	%ebp
+	ret
+	.size	call_proc, .-call_proc
+	.p2align 4,,15
+.globl rproc
+	.type	rproc, @function
+rproc:
+	pushl	%ebp
+	xorl	%edx, %edx
+	movl	%esp, %ebp
+	subl	$40, %esp
+	movl	%ebx, -12(%ebp)
+	movl	12(%ebp), %eax
+	movl	8(%ebp), %ebx
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	%ebx, %ecx
+	addl	(%eax), %ecx
+	testl	%ecx, %ecx
+	movl	%ecx, -16(%ebp)
+	movl	(%eax), %eax
+	je	.L7
+	subl	%eax, %ebx
+	movl	%ebx, -20(%ebp)
+	leal	-16(%ebp), %ebx
+	movl	%ecx, (%esp)
+	leal	-20(%ebp), %esi
+	movl	%ebx, 4(%esp)
+	call	rproc
+	movl	%esi, 4(%esp)
+	movl	%eax, -32(%ebp)
+	movl	-20(%ebp), %eax
+	movl	%eax, (%esp)
+	call	rproc
+	movl	%ebx, 4(%esp)
+	movl	%eax, %edi
+	movl	-20(%ebp), %eax
+	movl	%eax, (%esp)
+	call	rproc
+	movl	%esi, 4(%esp)
+	movl	%eax, %ebx
+	movl	-16(%ebp), %eax
+	movl	%eax, (%esp)
+	call	rproc
+	movl	-32(%ebp), %edx
+	imull	%edi, %edx
+	imull	%ebx, %edx
+	imull	%eax, %edx
+.L7:
+	movl	-12(%ebp), %ebx
+	movl	%edx, %eax
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	rproc, .-rproc
+	.p2align 4,,15
+.globl rfact
+	.type	rfact, @function
+rfact:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	jle	.L12
+	.p2align 4,,7
+	.p2align 3
+.L15:
+	imull	%edx, %eax
+	subl	$1, %edx
+	testl	%edx, %edx
+	jg	.L15
+.L12:
+	popl	%ebp
+	ret
+	.size	rfact, .-rfact
+	.p2align 4,,15
+.globl sfact_helper
+	.type	sfact_helper, @function
+sfact_helper:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$36, %esp
+	movl	8(%ebp), %ebx
+	testl	%ebx, %ebx
+	jle	.L21
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-1(%ebx), %eax
+	movl	%eax, (%esp)
+	call	sfact_helper
+	movl	12(%ebp), %eax
+	imull	-8(%ebp), %ebx
+	movl	%ebx, (%eax)
+	addl	$36, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.p2align 4,,7
+	.p2align 3
+.L21:
+	movl	12(%ebp), %eax
+	movl	$1, (%eax)
+	addl	$36, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	sfact_helper, .-sfact_helper
+	.p2align 4,,15
+.globl sfact
+	.type	sfact, @function
+sfact:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	leal	-4(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	sfact_helper
+	movl	-4(%ebp), %eax
+	leave
+	ret
+	.size	sfact, .-sfact
+	.p2align 4,,15
+.globl pwr
+	.type	pwr, @function
+pwr:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	testl	%edx, %edx
+	je	.L26
+	.p2align 4,,7
+	.p2align 3
+.L27:
+	imull	%edx, %eax
+	subl	$1, %edx
+	jne	.L27
+.L26:
+	popl	%ebp
+	ret
+	.size	pwr, .-pwr
+	.p2align 4,,15
+.globl pwr_dc
+	.type	pwr_dc, @function
+pwr_dc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	subl	$12, %esp
+	movl	12(%ebp), %esi
+	testl	%esi, %esi
+	je	.L38
+	cmpl	$1, %esi
+	movl	$1, %edi
+	jne	.L33
+	jmp	.L31
+	.p2align 4,,7
+	.p2align 3
+.L34:
+	cmpl	$1, %esi
+	.p2align 4,,5
+	.p2align 3
+	je	.L39
+.L33:
+	movl	%esi, %ebx
+	shrl	$31, %ebx
+	addl	%esi, %ebx
+	sarl	%ebx
+	movl	%ebx, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	pwr_dc
+	imull	%eax, %edi
+	subl	%ebx, %esi
+	jne	.L34
+	movl	%edi, 8(%ebp)
+.L31:
+	movl	8(%ebp), %eax
+	addl	$12, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.p2align 4,,7
+	.p2align 3
+.L39:
+	imull	8(%ebp), %edi
+	movl	%edi, 8(%ebp)
+	movl	8(%ebp), %eax
+	addl	$12, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+.L38:
+	movl	$1, 8(%ebp)
+	jmp	.L31
+	.size	pwr_dc, .-pwr_dc
+	.p2align 4,,15
+.globl multi_fact
+	.type	multi_fact, @function
+multi_fact:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$56, %esp
+	movl	%ebx, -12(%ebp)
+	movl	8(%ebp), %ebx
+	movl	%esi, -8(%ebp)
+	movl	24(%ebp), %esi
+	movl	%edi, -4(%ebp)
+	movl	28(%ebp), %edi
+	testl	%ebx, %ebx
+	jle	.L44
+	movl	20(%ebp), %eax
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-1(%ebx), %eax
+	movl	%eax, (%esp)
+	call	multi_fact
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	%ebx, (%esp)
+	movl	%eax, -24(%ebp)
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	subl	$1, %eax
+	movl	%eax, 4(%esp)
+	call	multi_fact
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	%ebx, (%esp)
+	movl	%eax, -20(%ebp)
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	subl	$1, %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	call	multi_fact
+	movl	%edi, 20(%esp)
+	movl	%esi, 16(%esp)
+	movl	%ebx, (%esp)
+	movl	%eax, -16(%ebp)
+	movl	20(%ebp), %eax
+	subl	$1, %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	call	multi_fact
+	movl	-20(%ebp), %edx
+	addl	-24(%ebp), %edx
+	addl	-16(%ebp), %edx
+	leal	(%edx,%eax), %eax
+.L42:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.p2align 4,,7
+	.p2align 3
+.L44:
+	movl	16(%ebp), %eax
+	addl	12(%ebp), %eax
+	addl	20(%ebp), %eax
+	addl	%esi, %eax
+	addl	%edi, %eax
+	jmp	.L42
+	.size	multi_fact, .-multi_fact
+	.p2align 4,,15
+.globl local_array
+	.type	local_array, @function
+local_array:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	8(%ebp), %eax
+	movl	$2, -16(%ebp)
+	movl	$3, -12(%ebp)
+	movl	$5, -8(%ebp)
+	andl	$3, %eax
+	movl	$7, -4(%ebp)
+	movl	-16(%ebp,%eax,4), %eax
+	leave
+	ret
+	.size	local_array, .-local_array
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

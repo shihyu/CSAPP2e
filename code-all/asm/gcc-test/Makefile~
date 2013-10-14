@@ -1,0 +1,2 @@
+CC=/usr/local/cs/bin/gcc
+CFLAGS=-O1

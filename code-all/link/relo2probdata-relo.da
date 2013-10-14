@@ -1,0 +1,8 @@
+Disassembly of section .data:
+
+/* $begin relo2probdata-relo-d 6 */
+00000000 <x>:
+   0:	01 00 00 00                                       
+00000004 <xp>:
+   4:	00 00 00 00                                       
+/* $end relo2probdata-relo-d 6 */

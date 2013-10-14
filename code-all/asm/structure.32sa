@@ -1,0 +1,88 @@
+	.file	"structure.c"
+	.text
+.globl copy
+	.type	copy, @function
+copy:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx	
+/* $begin structcopy-s 9 */
+	movl	(%edx), %eax	# Get r->i
+	movl	%eax, 4(%edx)   # Store in r->j
+/* $end structcopy-s 9 */
+	popl	%ebp
+	ret
+	.size	copy, .-copy
+.globl set_i
+	.type	set_i, @function
+set_i:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%edx, (%eax)
+	popl	%ebp
+	ret
+	.size	set_i, .-set_i
+.globl set_a_ele
+	.type	set_a_ele, @function
+set_a_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	16(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%ecx, 8(%eax,%edx,4)
+	popl	%ebp
+	ret
+	.size	set_a_ele, .-set_a_ele
+.globl set_p
+	.type	set_p, @function
+set_p:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%edx, 20(%eax)
+	popl	%ebp
+	ret
+	.size	set_p, .-set_p
+.globl find_a
+	.type	find_a, @function
+find_a:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	movl	%edx, p
+	movl	%eax, j
+	movl	%edx, q
+	movl	%eax, k
+	/* $begin structptr-s 59 */
+	# Registers: r in \edxreg, i in \eaxreg
+	leal	8(%edx,%eax,4), %eax	# Set \eaxreg{} to &r->a[i]
+	/* $end structptr-s 59 */
+	popl	%ebp
+	ret
+	.size	find_a, .-find_a
+.globl link_p
+	.type	link_p, @function
+link_p:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+/* $begin structlink-s 69 */
+	movl	4(%edx), %eax		# Get r->j
+	addl	(%edx), %eax		# Add r->i
+	leal	8(%edx,%eax,4), %eax	# Compute &r->a[r->i + r->j]
+	movl	%eax, 20(%edx)		# Store in r->p
+/* $end structlink-s 69 */
+	popl	%ebp
+	ret
+	.size	link_p, .-link_p
+	.comm	p,4,4
+	.comm	q,4,4
+	.comm	j,4,4
+	.comm	k,4,4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

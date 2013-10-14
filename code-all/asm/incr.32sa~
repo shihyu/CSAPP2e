@@ -1,0 +1,144 @@
+	.file	"incr.c"
+	.text
+.globl simple
+	.type	simple, @function
+simple:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	addl	(%edx), %eax
+	movl	%eax, (%edx)
+	popl	%ebp
+	ret
+	.size	simple, .-simple
+.globl simple_l
+	.type	simple_l, @function
+/* $begin simple_l-32 17 */
+# IA32 implementation of function simple_l.
+# xp at \ebpreg+8, y at \ebpreg+12
+simple_l:
+	pushl	%ebp		# Save frame pointer       (W) # line:asm:simple32:setup_start
+	movl	%esp, %ebp	# Create new frame pointer # line:asm:simple32:setup_finish
+	movl	8(%ebp), %edx	# Retrieve xp              (R) # line:asm:simple32:compute_start
+	movl	12(%ebp), %eax	# Retrieve yp              (R)
+	addl	(%edx), %eax	# Add *xp to get t         (R) # line:asm:simple32:compute_finish
+	movl	%eax, (%edx)	# Store t at xp            (W) # line:asm:simple32:store
+	popl	%ebp		# Restore frame pointer    (R) # line:asm:simple32:finish
+	ret			# Return                   (R)
+/* $end simple_l-32 17 */
+	.size	simple_l, .-simple_l
+.globl call_simple
+	.type	call_simple, @function
+call_simple:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	$37, -4(%ebp)
+	movl	$12, 4(%esp)
+	leal	-4(%ebp), %eax
+	movl	%eax, (%esp)
+	call	simple
+	addl	-4(%ebp), %eax
+	leave
+	ret
+	.size	call_simple, .-call_simple
+.globl call_simple_l
+	.type	call_simple_l, @function
+call_simple_l:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$12, 4(%esp)
+	movl	$gval1, (%esp)
+	call	simple_l
+	addl	gval2, %eax
+	leave
+	ret
+	.size	call_simple_l, .-call_simple_l
+.globl post_incr
+	.type	post_incr, @function
+post_incr:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	movl	12(%ebp), %ecx
+	addl	%eax, %ecx
+	movl	%ecx, (%edx)
+	popl	%ebp
+	ret
+	.size	post_incr, .-post_incr
+.globl post_incr_l
+	.type	post_incr_l, @function
+post_incr_l:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	movl	12(%ebp), %ecx
+	addl	%eax, %ecx
+	movl	%ecx, (%edx)
+	popl	%ebp
+	ret
+	.size	post_incr_l, .-post_incr_l
+	.type	init, @function
+init:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	subl	$12, %esp
+	movl	$0, %ebx
+	movl	$val, %edi
+	movl	$val_l, %esi
+.L14:
+	call	random
+	movl	%eax, (%edi,%ebx,4)
+	movl	%eax, (%esi,%ebx,4)
+	addl	$1, %ebx
+	cmpl	$512, %ebx
+	jne	.L14
+	addl	$12, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	init, .-init
+.globl main
+	.type	main, @function
+main:
+	leal	4(%esp), %ecx
+	andl	$-16, %esp
+	pushl	-4(%ecx)
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ecx
+	subl	$4, %esp
+	call	init
+	movl	$0, %eax
+	addl	$4, %esp
+	popl	%ecx
+	popl	%ebp
+	leal	-4(%ecx), %esp
+	ret
+	.size	main, .-main
+.globl gval1
+	.data
+	.align 4
+	.type	gval1, @object
+	.size	gval1, 4
+gval1:
+	.long	567
+.globl gval2
+	.align 4
+	.type	gval2, @object
+	.size	gval2, 4
+gval2:
+	.long	763
+	.comm	val,2048,32
+	.comm	val_l,2048,32
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

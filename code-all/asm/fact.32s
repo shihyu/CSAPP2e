@@ -1,0 +1,167 @@
+	.file	"fact.c"
+	.text
+.globl fact_do
+	.type	fact_do, @function
+fact_do:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+.L2:
+	imull	%edx, %eax
+	subl	$1, %edx
+	cmpl	$1, %edx
+	jg	.L2
+	popl	%ebp
+	ret
+	.size	fact_do, .-fact_do
+.globl fact_while
+	.type	fact_while, @function
+fact_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+	cmpl	$1, %edx
+	jle	.L7
+.L10:
+	imull	%edx, %eax
+	subl	$1, %edx
+	cmpl	$1, %edx
+	jg	.L10
+.L7:
+	popl	%ebp
+	ret
+	.size	fact_while, .-fact_while
+.globl fact_for
+	.type	fact_for, @function
+fact_for:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %ecx
+	jle	.L14
+.L17:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L17
+.L14:
+	popl	%ebp
+	ret
+	.size	fact_for, .-fact_for
+.globl fact_for_while
+	.type	fact_for_while, @function
+fact_for_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %ecx
+	jle	.L21
+.L24:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L24
+.L21:
+	popl	%ebp
+	ret
+	.size	fact_for_while, .-fact_for_while
+.globl fact_for_do
+	.type	fact_for_do, @function
+fact_for_do:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %ecx
+	jle	.L28
+.L31:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L31
+.L28:
+	popl	%ebp
+	ret
+	.size	fact_for_do, .-fact_for_do
+.globl fact_do_goto
+	.type	fact_do_goto, @function
+fact_do_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+.L34:
+	imull	%edx, %eax
+	subl	$1, %edx
+	cmpl	$1, %edx
+	jg	.L34
+	popl	%ebp
+	ret
+	.size	fact_do_goto, .-fact_do_goto
+.globl fact_while_goto
+	.type	fact_while_goto, @function
+fact_while_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+	cmpl	$1, %edx
+	jle	.L39
+.L42:
+	imull	%edx, %eax
+	subl	$1, %edx
+	cmpl	$1, %edx
+	jg	.L42
+.L39:
+	popl	%ebp
+	ret
+	.size	fact_while_goto, .-fact_while_goto
+.globl fact_for_goto
+	.type	fact_for_goto, @function
+fact_for_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %ecx
+	jle	.L46
+.L49:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L49
+.L46:
+	popl	%ebp
+	ret
+	.size	fact_for_goto, .-fact_for_goto
+.globl rfact
+	.type	rfact, @function
+rfact:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+	movl	8(%ebp), %ebx
+	movl	$1, %eax
+	cmpl	$1, %ebx
+	jle	.L53
+	leal	-1(%ebx), %eax
+	movl	%eax, (%esp)
+	call	rfact
+	imull	%ebx, %eax
+.L53:
+	addl	$4, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	rfact, .-rfact
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

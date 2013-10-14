@@ -1,0 +1,83 @@
+	.file	"fp.c"
+	.text
+.globl ident_x
+	.type	ident_x, @function
+ident_x:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fldl	8(%ebp)
+	fld	%st(0)
+	fmul	%st(1), %st
+	fdivp	%st, %st(1)
+	popl	%ebp
+	ret
+	.size	ident_x, .-ident_x
+.globl ident_d
+	.type	ident_d, @function
+ident_d:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	fldl	8(%ebp)
+	fld	%st(0)
+	fmul	%st(1), %st
+	fstpl	-8(%ebp)
+	movl	i, %eax
+	fdivrl	-8(%ebp,%eax,8)
+	leave
+	ret
+	.size	ident_d, .-ident_d
+.globl funct
+	.type	funct, @function
+funct:
+	pushl	%ebp
+	movl	%esp, %ebp
+	flds	16(%ebp)
+	fmull	8(%ebp)
+	fildl	28(%ebp)
+	fdivrl	20(%ebp)
+	fsubrp	%st, %st(1)
+	popl	%ebp
+	ret
+	.size	funct, .-funct
+.globl less
+	.type	less, @function
+less:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fldl	16(%ebp)
+	fldl	8(%ebp)
+	fxch	%st(1)
+	fucompp
+	fnstsw	%ax
+	testb	$69, %ah
+	sete	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	less, .-less
+.globl lesseq
+	.type	lesseq, @function
+lesseq:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fldl	16(%ebp)
+	fldl	8(%ebp)
+	fxch	%st(1)
+	fucompp
+	fnstsw	%ax
+	testb	$5, %ah
+	sete	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	lesseq, .-lesseq
+.globl i
+	.bss
+	.align 4
+	.type	i, @object
+	.size	i, 4
+i:
+	.zero	4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

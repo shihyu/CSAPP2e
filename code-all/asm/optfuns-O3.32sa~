@@ -1,0 +1,41 @@
+	.file	"optfuns-O3.c"
+	.text
+	.p2align 4,,15
+.globl select
+	.type	select, @function
+/* $begin select-O1-s 6 */
+# Function select, optimized -O1
+# x at \epbreg+8, y at \ebpreg+12, i at \ebpreg+16
+select:
+	pushl	%ebp			# Save old frame pointer
+	xorl	%eax, %eax		# Set result = 0 # line:asm:select:zero
+	movl	%esp, %ebp		# Create new frame pointer
+	subl	$16, %esp		# Allocate 16 bytes on the stack
+	movl	16(%ebp), %edx		# Get i
+	cmpl	$1, %edx  		# Compare i:1
+	jbe	.L6 			# If i >= 0 and i <= 1, goto \textbf{index}
+	leave				# Restore stack and frame pointers # line:asm:select:leave1
+	ret				# Return # line:asm:select:ret1
+	.p2align 4,,7			# (Inserted to improve instruction alignment)
+	.p2align 3
+.L6:				      # \textbf{index:}
+	movl	8(%ebp), %eax	      	# Get x
+	movl	%eax, -8(%ebp)		# Store in a[0]
+	movl	12(%ebp), %eax		# Get y
+	movl	%eax, -4(%ebp)		# Store in a[1]
+	movl	-8(%ebp,%edx,4), %eax	# result = a[i]
+	leave			 	# Restore stack and frame pointers # line:asm:select:leave2
+	ret				# Return  # # line:asm:select:ret2
+	.size	select, .-select
+	.p2align 4,,15
+.globl test_select
+	.type	test_select, @function
+test_select:
+	pushl	%ebp
+	movl	$6, %eax
+	movl	%esp, %ebp
+	popl	%ebp
+	ret
+	.size	test_select, .-test_select
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

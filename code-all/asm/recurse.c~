@@ -1,0 +1,12 @@
+
+int prange(int min, int max)
+{
+    if (min > max)
+	return 0;
+    if (min == max)
+	return min;
+    int mid = (min+max)/2;
+    int v1 = prange(min, mid);
+    int v2 = prange(mid+1, max);
+    return v1*v2;
+}

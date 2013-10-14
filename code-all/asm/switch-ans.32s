@@ -1,0 +1,13 @@
+	.file	"switch-ans.c"
+	.text
+.globl switch_prob
+	.type	switch_prob, @function
+switch_prob:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	switch_prob, .-switch_prob
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

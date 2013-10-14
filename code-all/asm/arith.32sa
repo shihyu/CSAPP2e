@@ -1,0 +1,22 @@
+	.file	"arith.c"
+	.text
+.globl arith
+	.type	arith, @function
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin arith-s 8 */
+# x at \ebpreg{}+8, y at \ebpreg{}+12, z at \ebpreg{}+16 
+	movl	16(%ebp), %eax		# z	# line:asm:arith:getz
+	leal	(%eax,%eax,2), %eax	# z*3	# line:asm:arith:3z
+	sall	$4, %eax		# t2 = z*48 # line:asm:arith:48z
+	movl	12(%ebp), %edx		# y	# line:asm:arith:gety
+	addl	8(%ebp), %edx		# t1 = x+y	# line:asm:arith:addxy
+	andl	$65535, %edx		# t3 = t1&0xFFFF	#line:asm:arith:andmask
+	imull	%edx, %eax		# Return t4 = t2*t3	#line:asm:arith:mult
+/* $end arith-s 8 */
+	popl	%ebp
+	ret
+	.size	arith, .-arith
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

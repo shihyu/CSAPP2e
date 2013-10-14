@@ -1,0 +1,179 @@
+	.file	"parity.c"
+	.text
+.globl odd_parity_ref
+	.type	odd_parity_ref, @function
+odd_parity_ref:
+.LFB36:
+	movl	$0, %ecx
+	movl	$0, %edx
+.L2:
+	movq	%rdi, %rax
+	shrq	%cl, %rax
+	andl	$1, %eax
+	xorl	%eax, %edx
+	addl	$1, %ecx
+	cmpl	$64, %ecx
+	jne	.L2
+	movl	%edx, %eax
+	ret
+.LFE36:
+	.size	odd_parity_ref, .-odd_parity_ref
+.globl nonzero
+	.type	nonzero, @function
+nonzero:
+.LFB37:
+	testq	%rdi, %rdi
+	setne	%al
+	movzbl	%al, %eax
+	ret
+.LFE37:
+	.size	nonzero, .-nonzero
+.globl odd_parity
+	.type	odd_parity, @function
+odd_parity:
+.LFB38:
+	movl	$0, %edx
+	testq	%rdi, %rdi
+	je	.L9
+.L12:
+#APP
+# 34 "parity.c" 1
+	testb %dil,%dil # Test value of low-order byte
+	setnp %al        # Set if odd parity
+# 0 "" 2
+#NO_APP
+	movsbl	%al,%eax
+	xorl	%eax, %edx
+	shrq	$8, %rdi
+	testq	%rdi, %rdi
+	jne	.L12
+.L9:
+	movl	%edx, %eax
+	ret
+.LFE38:
+	.size	odd_parity, .-odd_parity
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"ERR"
+.LC1:
+	.string	"OK"
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC2:
+	.string	"x = 0x%lx, refp = %d, valp = %d, %s\n"
+	.text
+.globl main
+	.type	main, @function
+main:
+.LFB39:
+	pushq	%rbp
+.LCFI0:
+	pushq	%rbx
+.LCFI1:
+	subq	$8, %rsp
+.LCFI2:
+	movl	$4042322160, %ebp
+	cmpl	$1, %edi
+	jle	.L16
+	movq	8(%rsi), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtoul
+	movq	%rax, %rbp
+.L16:
+	movq	%rbp, %rdi
+	call	odd_parity_ref
+	movl	%eax, %ebx
+	movq	%rbp, %rdi
+	call	odd_parity
+	cmpl	%eax, %ebx
+	movl	$.LC0, %edx
+	movl	$.LC1, %r9d
+	cmovne	%rdx, %r9
+	movl	%eax, %r8d
+	movl	%ebx, %ecx
+	movq	%rbp, %rdx
+	movl	$.LC2, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %eax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	ret
+.LFE39:
+	.size	main, .-main
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB36
+	.long	.LFE36-.LFB36
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB37
+	.long	.LFE37-.LFB37
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB38
+	.long	.LFE38-.LFB38
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB39
+	.long	.LFE39-.LFB39
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI0-.LFB39
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x4
+	.long	.LCFI1-.LCFI0
+	.byte	0xe
+	.uleb128 0x18
+	.byte	0x4
+	.long	.LCFI2-.LCFI1
+	.byte	0xe
+	.uleb128 0x20
+	.byte	0x83
+	.uleb128 0x3
+	.byte	0x86
+	.uleb128 0x2
+	.align 8
+.LEFDE7:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

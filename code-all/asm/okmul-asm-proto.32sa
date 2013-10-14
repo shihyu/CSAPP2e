@@ -1,0 +1,38 @@
+	.file	"okmul-asm-proto.c"
+	.text
+/* $begin tmult_ok_asm-proto-s 3 */
+.globl tmult_ok_asm
+/* $end tmult_ok_asm-proto-s 3 */
+	.type	tmult_ok_asm, @function
+/* $begin tmult_ok_asm-proto-s 5 */
+tmult_ok_asm:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	imull	8(%ebp), %eax
+	movl	16(%ebp), %edx
+	movl	%eax, (%edx)
+	testl	%eax, %eax ##line:asm:tmult_ok_asm_proto:testl
+	setg	%al   ##line:asm:tmult_ok_asm_proto:setg
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+/* $end tmult_ok_asm-proto-s 5 */
+	.size	tmult_ok_asm, .-tmult_ok_asm
+.globl umult_ok_asm
+	.type	umult_ok_asm, @function
+umult_ok_asm:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	imull	8(%ebp), %eax
+	movl	16(%ebp), %edx
+	movl	%eax, (%edx)
+	testl	%eax, %eax
+	setne	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	umult_ok_asm, .-umult_ok_asm
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

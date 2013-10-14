@@ -1,0 +1,17 @@
+/* $begin ftrick-64 1 */	
+	movlpd  (%rax), %xmm0	# Read double into %xmm0
+	xorps	%xmm2, %xmm2	# Set %xmm2 to zero
+	movaps  %xmm0, %xmm1	# Copy %xmm0 to %xmm1
+/* $end ftrick-64 1 */	
+
+/* $begin fls-64 7 */	
+	flds	16(%rsp)	# Load single-precision into FP register
+	fstpl	8(%rsp)		# Store FP register as double precision
+/* $end fls-64 7 */	
+
+
+/* $begin flse-64 11 */	
+	movss		16(%rsp), %xmm0	# Read single-precision into %xmm0
+	cvtss2sd	%xmm0, %xmm0	# Convert to double precision
+	movsd		%xmm0, 8(%rsp)  # Store double precision
+/* $end flse-64 11 */	

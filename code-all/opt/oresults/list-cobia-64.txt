@@ -1,0 +1,20 @@
+Description: Iterative List Length, f(1024) = 1024, CPE = 5.25
+Description: Iterative List Sum, f(1024) = 523776, CPE = 6.32
+Description: Pipelined List Sum with old, f(1024) = 523776, CPE = 5.18
+Description: Pipelined List Sum with new, f(1024) = 523776, CPE = 6.40
+Description: Recursive List Length, f(1024) = 1024, CPE = 16.89
+Description: Recursive List Sum, f(1024) = 523776, CPE = 20.35
+Description: List Length with Clear, f(1024) = 1024, CPE = 7.90
+Description: List Sum with Clear, f(1024) = 523776, CPE = 7.69
+Description: List Copy, list --> list, CPE = 9.43
+Description: List Copy, list --> list->next, CPE = 11.63
+Description: List Copy, list->next --> list, CPE = 9.59
+Description: Pipelined List Copy Do-While, list --> list, CPE = 11.69
+Description: Pipelined List Copy Do-While, list --> list->next, CPE = 13.20
+Description: Pipelined List Copy Do-While, list->next --> list, CPE = 11.87
+Description: Pipelined List Copy While, list --> list, CPE = 11.98
+Description: Pipelined List Copy While, list --> list->next, CPE = 12.81
+Description: Pipelined List Copy While, list->next --> list, CPE = 11.95
+Description: Stationary Copy, list --> list, CPE = -0.00
+Description: Stationary Copy, list --> list->next, CPE = 0.00
+Description: Stationary Copy, list->next --> list, CPE = -0.00

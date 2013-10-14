@@ -1,0 +1,34 @@
+	.file	"frame.c"
+	.version	"01.01"
+gcc2_compiled.:
+.section	.rodata
+.LC0:
+	.string	"%x %x"
+.text
+	.align 4
+.globl proc
+	.type	 proc,@function
+/* $begin frame-prob-s 	11 */	
+proc:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $24,%esp
+	addl $-4,%esp
+	leal -4(%ebp),%eax
+	pushl %eax
+	leal -8(%ebp),%eax
+	pushl %eax
+	pushl $.LC0	# Pointer to string "%x %x"
+	call scanf
+# Diagram stack frame at this point	
+	movl -8(%ebp),%eax
+	movl -4(%ebp),%edx
+	subl %eax,%edx
+	movl %edx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+/* $end frame-prob-s 11 */	
+.Lfe1:
+	.size	 proc,.Lfe1-proc
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"

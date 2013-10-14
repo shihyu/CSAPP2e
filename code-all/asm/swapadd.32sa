@@ -1,0 +1,52 @@
+	.file	"swapadd.c"
+	.text
+.globl swap_add
+	.type	swap_add, @function
+/* $begin swapadd-setup-s 5 */
+swap_add:
+	pushl	%ebp		# Save old \ebpreg 
+	movl	%esp, %ebp	# Set \ebpreg{} as frame pointer 
+	pushl	%ebx		# Save \ebxreg{}
+/* $end swapadd-setup-s 5 */
+
+/* $begin swapadd-body-s 9 */
+	movl	8(%ebp), %edx	# Get xp
+	movl	12(%ebp), %ecx	# Get yp
+	movl	(%edx), %ebx	# Get x
+	movl	(%ecx), %eax	# Get y
+	movl	%eax, (%edx)	# Store y at xp
+	movl	%ebx, (%ecx)	# Store x at yp
+	addl	%ebx, %eax	# Return value = x+y
+/* $end swapadd-body-s 9 */
+
+/* $begin swapadd-finish-s 16 */
+	popl	%ebx		# Restore \ebxreg{}
+	popl	%ebp		# Restore \ebpreg{}
+	ret			# Return
+/* $end swapadd-finish-s 16 */
+	.size	swap_add, .-swap_add
+.globl caller
+	.type	caller, @function
+/* $begin swapadd-call-s 22 */
+caller:
+	pushl	%ebp		# Save old \ebpreg #line:asm:swapadd:push
+	movl	%esp, %ebp	# Set \ebpreg{} as frame pointer #line:asm:swapadd:frame
+	subl	$24, %esp	# Allocate 24 bytes on stack
+	movl	$534, -4(%ebp)	# Set arg1 to 534 # line:asm:swapadd:arg1
+	movl	$1057, -8(%ebp)	# Set arg2 to 1057 # line:asm:swapadd:arg2
+	leal	-8(%ebp), %eax	# Compute &arg2 # line:asm:swapadd:leal1
+	movl	%eax, 4(%esp)	# Store on stack # line:asm:swapadd:movl1
+	leal	-4(%ebp), %eax	# Compute &arg1 # line:asm:swapadd:leal2
+	movl	%eax, (%esp)	# Store on stack # line:asm:swapadd:movl2
+	call	swap_add	# Call the swap_add function
+/* $end swapadd-call-s 22 */
+/* $begin swapadd-resume-s 33 */
+	movl	-4(%ebp), %edx
+	subl	-8(%ebp), %edx
+	imull	%edx, %eax
+	leave
+	ret
+/* $end swapadd-resume-s 33 */
+	.size	caller, .-caller
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

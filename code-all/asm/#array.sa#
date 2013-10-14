@@ -1,0 +1,237 @@
+	.file	"array.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl get_value
+	.type	 get_value,@function
+get_value:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl 12(%ebp),%edx
+	movl 16(%ebp),%ecx
+/* $begin arrayaccess-s 14 */
+	# A in %eax, i in %edx, j in %ecx
+	sall $2,%ecx			# j * 4
+	leal (%edx,%edx,2),%edx		# i * 3
+	leal (%ecx,%edx,4),%edx		# j * 4 + i * 12
+/* $end arrayaccess-s 14 */
+	movl %ebp,%esp
+	popl %ebp
+/* $begin arrayaccess-s 19 */
+	movl (%eax,%edx),%eax	# Read \(\memref{\startaddr{A}+4(3\cdot i+j)}\)
+/* $end arrayaccess-s 19 */
+	ret
+.Lfe1:
+	.size	 get_value,.Lfe1-get_value
+.globl B
+.data
+	.align 4
+	.type	 B,@object
+	.size	 B,16
+B:
+	.long row0
+	.long row1
+	.long row2
+	.long row3
+.text
+	.align 4
+.globl get_value2
+	.type	 get_value2,@function
+get_value2:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%ecx
+	movl 12(%ebp),%eax
+	movl 16(%ebp),%edx
+	movl (%ecx,%eax,4),%eax
+	movl %ebp,%esp
+	popl %ebp
+	movl (%eax,%edx,4),%eax
+	ret
+.Lfe2:
+	.size	 get_value2,.Lfe2-get_value2
+	.align 4
+.globl fix_prod_ele
+	.type	 fix_prod_ele,@function
+fix_prod_ele:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %esi
+	pushl %ebx
+	movl 20(%ebp),%ecx
+	movl 16(%ebp),%edx
+	xorl %esi,%esi
+	sall $2,%ecx
+	addl 12(%ebp),%ecx
+	sall $6,%edx
+	addl 8(%ebp),%edx
+	movl $15,%ebx
+	.p2align 4,,7
+
+/* $begin fixprodele-s 67 */
+# Aptr is in %edx, Bptr in %ecx, result in %esi, cnt in %ebx
+.L23:			      # \textbf{loop:}
+	movl (%edx),%eax	# Compute t = *Aptr	
+	imull (%ecx),%eax	# Compute v = *Bptr * t
+	addl %eax,%esi		# Add v result
+	addl $64,%ecx		# Add 64 to Bptr
+	addl $4,%edx		# Add 4 to Aptr
+	decl %ebx		# Decrement cnt
+	jns .L23		# if >=, goto \textbf{loop}
+/* $end fixprodele-s 67 */
+
+	movl %esi,%eax
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+var_ele:
+	pushl %ebp
+	movl %esp,%ebp
+
+/* $begin varele-s 158 */
+	movl 8(%ebp),%edx	# Get A
+	movl 12(%ebp),%eax	# Get i
+	imull 20(%ebp),%eax	# Compute n*i
+	addl 16(%ebp),%eax	# Compute n*i + j
+/* $end varele-s 158 */
+
+	movl %ebp,%esp # finish code that we've elided
+	popl %ebp
+
+/* $begin varele-s 164 */
+	movl (%edx,%eax,4),%eax	# Get A[i*n + j]
+/* $end varele-s 164 */
+	ret
+
+	
+var_prod_ele:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $12,%esp
+	pushl %edi
+	pushl %esi
+	pushl %ebx
+	movl 16(%ebp),%edx
+	xorl %esi,%esi
+	cmpl 24(%ebp),%esi
+	jge .L35
+	imull 24(%ebp),%edx
+	movl 8(%ebp),%eax
+	movl 20(%ebp),%ecx
+	leal (%eax,%edx,4),%ebx
+	movl 24(%ebp),%edx
+	.p2align 4,,7
+
+/* $begin varprodele-s 188 */	
+.L37:				      # \textbf{loop:}
+	movl 12(%ebp),%eax		# Get B
+	movl (%ebx),%edi		# Get *Aptr	
+	addl $4,%ebx			# Increment Aptr
+	imull (%eax,%ecx,4),%edi	# Multiply by B[nTjPk]	
+	addl %edi,%esi			# Add to result
+	addl 24(%ebp),%ecx		# Add n to nTjPk
+	decl %edx			# Decrement cnt
+	jnz .L37			# If cnt != 0, goto \textbf{loop}
+/* $end varprodele-s 188 */	
+
+
+.L35:
+	movl %esi,%eax
+	popl %ebx
+	popl %esi
+	popl %edi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+var_prod_ele_opt:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $12,%esp
+/* $begin array-register-s 214 */
+	pushl %edi
+	pushl %esi
+	pushl %ebx
+	movl 24(%ebp),%eax
+	imull 16(%ebp),%eax
+	movl 24(%ebp),%ebx
+	leal 0(,%eax,4),%ecx
+	addl 8(%ebp),%ecx
+	movl %ebx,%edx
+/* $end array-register-s  214 */
+	xorl %esi,%esi
+	testl %edx,%edx
+	jg .L44
+	xorl %eax,%eax
+	jmp .L45
+	.p2align 4,,7
+.L44:
+	movl 12(%ebp),%eax
+	movl (%ecx),%edi
+	addl $4,%ecx
+	imull (%eax,%ebx,4),%edi
+	addl %edi,%esi
+	addl 24(%ebp),%ebx
+	decl %edx
+	jnz .L44
+	movl %esi,%eax
+.L45:
+	popl %ebx
+	popl %esi
+	popl %edi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+	.align 4
+.globl fix_set_diag
+	.type	 fix_set_diag,@function
+fix_set_diag:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin fixdiag-prob-s 254 */
+	movl 12(%ebp),%edx
+	movl 8(%ebp),%eax
+	movl $15,%ecx
+	addl $1020,%eax
+	.p2align 4,,7	    # Added to optimize cache performance
+.L50:
+	movl %edx,(%eax)
+	addl $-68,%eax
+	decl %ecx
+	jns .L50
+/* $end fixdiag-prob-s 254 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe5:
+	.size	 fix_set_diag,.Lfe5-fix_set_diag
+
+	.align 4
+.globl fix_set_diag
+	.type	 fix_set_diag,@function
+fix_set_diag:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin fixdiag-ans-s 254 */
+	movl 12(%ebp),%edx  # Get val
+	movl 8(%ebp),%eax   # Get A
+	movl $15,%ecx	    # i = 0
+	addl $1020,%eax     # Aptr = &A[0][0] + 1020/4
+	.p2align 4,,7
+.L50:			  # \textbf{loop:}
+	movl %edx,(%eax)    # *Aptr = val
+	addl $-68,%eax      # Aptr -= 68/4
+	decl %ecx 	    # i--
+	jns .L50            # if i >= 0 goto \textbf{loop}
+/* $end fixdiag-ans-s 254 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe5:
+	.size	 fix_set_diag,.Lfe5-fix_set_diag

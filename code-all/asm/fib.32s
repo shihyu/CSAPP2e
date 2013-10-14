@@ -1,0 +1,164 @@
+	.file	"fib.c"
+	.text
+.globl fib_dw
+	.type	fib_dw, @function
+fib_dw:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %edx
+	movl	$0, %ecx
+	movl	$1, %eax
+.L3:
+	leal	(%eax,%ecx), %ebx
+	addl	$1, %edx
+	cmpl	%esi, %edx
+	jge	.L2
+	movl	%eax, %ecx
+	movl	%ebx, %eax
+	jmp	.L3
+.L2:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_dw, .-fib_dw
+.globl fib_w
+	.type	fib_w, @function
+fib_w:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$1, %eax
+	cmpl	$1, %esi
+	jle	.L7
+	movl	$1, %edx
+	movl	$1, %ecx
+	movl	$1, %eax
+.L9:
+	leal	(%eax,%ecx), %ebx
+	addl	$1, %edx
+	cmpl	%edx, %esi
+	jle	.L7
+	movl	%eax, %ecx
+	movl	%ebx, %eax
+	jmp	.L9
+.L7:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_w, .-fib_w
+.globl fib_f
+	.type	fib_f, @function
+fib_f:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$1, %eax
+	cmpl	$1, %esi
+	jle	.L13
+	movl	$1, %edx
+	movl	$1, %ecx
+	movl	$1, %eax
+.L15:
+	leal	(%eax,%ecx), %ebx
+	addl	$1, %edx
+	cmpl	%edx, %esi
+	jle	.L13
+	movl	%eax, %ecx
+	movl	%ebx, %eax
+	jmp	.L15
+.L13:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_f, .-fib_f
+.globl fib_rec
+	.type	fib_rec, @function
+fib_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	8(%ebp), %esi
+	movl	$1, %eax
+	cmpl	$2, %esi
+	jle	.L19
+	leal	-2(%esi), %eax
+	movl	%eax, (%esp)
+	call	fib_rec
+	movl	%eax, %ebx
+	leal	-1(%esi), %eax
+	movl	%eax, (%esp)
+	call	fib_rec
+	addl	%ebx, %eax
+.L19:
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	fib_rec, .-fib_rec
+.globl fib_dow_goto
+	.type	fib_dow_goto, @function
+fib_dow_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %edx
+	movl	$0, %ecx
+	movl	$1, %eax
+.L22:
+	leal	(%eax,%ecx), %ebx
+	addl	$1, %edx
+	cmpl	%esi, %edx
+	jge	.L23
+	movl	%eax, %ecx
+	movl	%ebx, %eax
+	jmp	.L22
+.L23:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_dow_goto, .-fib_dow_goto
+.globl fib_w_goto
+	.type	fib_w_goto, @function
+fib_w_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$1, %eax
+	cmpl	$1, %esi
+	jle	.L27
+	movl	$1, %edx
+	movl	$1, %ecx
+.L28:
+	leal	(%eax,%ecx), %ebx
+	addl	$1, %edx
+	cmpl	%edx, %esi
+	jle	.L27
+	movl	%eax, %ecx
+	movl	%ebx, %eax
+	jmp	.L28
+.L27:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fib_w_goto, .-fib_w_goto
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,21 @@
+/* Study the operation of canaries */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void fun(char *p) {
+    char buf[4];
+    /* Point to word just beyond buf */
+    int *cpos = (int *) buf + 2;
+    int cval = *cpos;
+    int cposval = (int) cpos;
+    printf("Pos = %p, value = 0x%x, Pos ^ value = 0x%x, Pos - value = 0x%x\n",
+	   cpos, cval, cposval ^ cval, cposval - cval);
+    strcpy(buf, p);
+}
+
+int main() {
+    char str = "Hi!";
+    fun(str);
+    return 0;
+}

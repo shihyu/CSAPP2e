@@ -1,0 +1,22 @@
+	.file	"shift.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl shift_left2_rightn
+	.type	 shift_left2_rightn,@function
+shift_left2_rightn:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin shift-ans 11 */	
+	movl 12(%ebp),%ecx  # Get n
+	movl 8(%ebp),%eax   # Get x
+	sall $2,%eax        # x <<= 2
+	sarl %cl,%eax       # x >>= n
+/* $end shift-ans 11 */	
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 shift_left2_rightn,.Lfe1-shift_left2_rightn
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"

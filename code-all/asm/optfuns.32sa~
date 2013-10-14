@@ -1,0 +1,45 @@
+	.file	"optfuns.c"
+	.text
+.globl select
+	.type	select, @function
+/* $begin select-O1-s 5 */
+# Function select, optimized -O1
+# x at \epbreg+8, y at \ebpreg+12, i at \ebpreg+16
+select:
+	pushl	%ebp			# Save old frame pointer
+	movl	%esp, %ebp		# Create new frame pointer
+	subl	$16, %esp		# Allocate 16 bytes on stack
+	movl	16(%ebp), %edx		# Get i
+	movl	$0, %eax  		# Set result = 0
+	cmpl	$1, %edx		# Compare i:1
+	ja	.L3 			# if i < 0 or i > 1, goto \textbf{done}
+	movl	8(%ebp), %eax		# Get x
+	movl	%eax, -8(%ebp)		# Store in a[0]
+	movl	12(%ebp), %eax		# Get y
+	movl	%eax, -4(%ebp)		# Store in a[1]
+	movl	%edx, %eax		
+	andl	$1, %eax		# i &= 0x1
+	movl	-8(%ebp,%eax,4), %eax	# return 
+.L3:
+	leave
+	ret
+/* $end select-O1-s 5 */
+	.size	select, .-select
+.globl test_select
+	.type	test_select, @function
+/* $begin test_select-O1-s  26 */
+# Function test_select, optimized -O1
+test_select:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$12, %esp
+	movl	$1, 8(%esp)
+	movl	$6, 4(%esp)
+	movl	$5, (%esp)
+	call	select
+	leave
+	ret
+/* $end test_select-O1-s  26 */
+	.size	test_select, .-test_select
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

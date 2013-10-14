@@ -1,0 +1,92 @@
+Double Product combine1: Maximum use of data abstraction:
+Best: 27.65 (6%), Overall Best: 29.21 40-most: 29.21 cycles/element
+Double Product combine2: Take vec_length() out of loop:
+Best: 21.15 (2%), Overall Best: 21.15 40-most: 27.99 cycles/element
+Double Product combine3: Array reference to vector data:
+Best: 7.45 (2%), Overall Best: 7.45 40-most: 11.48 cycles/element
+Double Product combine3v: Array reference to vector data. Volatile dest:
+Best: 7.46 (2%), Overall Best: 7.46 40-most: 11.48 cycles/element
+Double Product combine4: Array reference, accumulate in temporary:
+Best: 7.45 (2%), Overall Best: 7.45 40-most: 11.48 cycles/element
+Double Product combine4p: Pointer reference, accumulate in temporary:
+Best: 8.07 (2%), Overall Best: 8.07 40-most: 12.43 cycles/element
+Double Product unroll2a: Array code, unrolled by 2:
+Best: 5.27 (2%), Overall Best: 5.27 40-most: 8.12 cycles/element
+Double Product combine5p: Pointer code, unrolled by 3, for loop:
+Best: 4.56 (2%), Overall Best: 4.56 40-most: 7.02 cycles/element
+Double Product unroll3aw: Array code, unrolled by 3, while loop:
+Best: 6.00 (2%), Overall Best: 6.00 40-most: 9.26 cycles/element
+Double Product unroll4a: Array code, unrolled by 4:
+Best: 5.28 (2%), Overall Best: 5.28 40-most: 8.12 cycles/element
+Double Product unroll8a: Array code, unrolled by 8:
+Best: 5.27 (2%), Overall Best: 5.27 40-most: 8.12 cycles/element
+Double Product unroll16a: Array code, unrolled by 16:
+Best: 5.27 (2%), Overall Best: 5.27 40-most: 8.12 cycles/element
+Double Product unroll2: Pointer code, unrolled by 2:
+Best: 7.45 (2%), Overall Best: 7.45 40-most: 12.04 cycles/element
+Double Product unroll3: Pointer code, unrolled by 3:
+Best: 7.85 (2%), Overall Best: 7.85 40-most: 12.68 cycles/element
+Double Product unroll4: Pointer code, unrolled by 4:
+Best: 7.60 (2%), Overall Best: 7.60 40-most: 12.27 cycles/element
+Double Product unroll8: Pointer code, unrolled by 8:
+Best: 7.61 (2%), Overall Best: 7.61 40-most: 12.27 cycles/element
+Double Product unroll16: Pointer code, unrolled by 16:
+Best: 7.58 (2%), Overall Best: 7.58 40-most: 12.25 cycles/element
+Double Product combine6: Array code, unrolled by 2, Superscalar x2:
+Best: 4.34 (2%), Overall Best: 4.34 40-most: 7.00 cycles/element
+Double Product unroll4x2a: Array code, unrolled by 4, Superscalar x2:
+Best: 3.73 (2%), Overall Best: 3.73 40-most: 6.01 cycles/element
+Double Product unroll8x2a: Array code, unrolled by 8, Superscalar x2:
+Best: 3.73 (2%), Overall Best: 3.73 40-most: 6.02 cycles/element
+Double Product unroll3x3a: Array code, unrolled by 3, Superscalar x3:
+Best: 3.83 (2%), Overall Best: 3.83 40-most: 6.09 cycles/element
+Double Product unroll4x4a: Array code, unrolled by 4, Superscalar x4:
+Best: 3.30 (2%), Overall Best: 3.30 40-most: 5.34 cycles/element
+Double Product unroll8x4a: Array code, unrolled by 8, Superscalar x4:
+Best: 3.12 (2%), Overall Best: 3.12 40-most: 5.02 cycles/element
+Double Product unroll6x6a: Array code, unrolled by 6, Superscalar x6:
+Best: 2.91 (2%), Overall Best: 2.91 40-most: 4.70 cycles/element
+Double Product unroll8x8a: Array code, unrolled by 8, Superscalar x8:
+Best: 2.75 (2%), Overall Best: 2.75 40-most: 4.62 cycles/element
+Double Product unroll10x10a: Array code, unrolled by 10, Superscalar x10:
+Best: 2.75 (2%), Overall Best: 2.75 40-most: 4.44 cycles/element
+Double Product unroll2x6a: Array code, unrolled by 12, Superscalar x6:
+Best: 3.06 (2%), Overall Best: 3.06 40-most: 4.94 cycles/element
+Double Product unroll12x12a: Array code, unrolled by 12, Superscalar x12:
+Best: 2.70 (2%), Overall Best: 2.70 40-most: 4.35 cycles/element
+Double Product unroll8x2: Pointer code, unrolled by 8, Superscalar x2:
+Best: 3.80 (2%), Overall Best: 3.80 40-most: 6.16 cycles/element
+Double Product unroll8x4: Pointer code, unrolled by 8, Superscalar x4:
+Best: 2.50 (2%), Overall Best: 2.50 40-most: 4.04 cycles/element
+Double Product unroll8x8: Pointer code, unrolled by 8, Superscalar x8:
+Best: 2.24 (2%), Overall Best: 2.24 40-most: 3.62 cycles/element
+Double Product unroll9x3: Pointer code, unrolled by 9, Superscalar x3:
+Best: 2.70 (2%), Overall Best: 2.70 40-most: 4.37 cycles/element
+Double Product unrollx2as: Array code, Unroll x2, Superscalar x2, noninterleaved:
+Best: 4.39 (2%), Overall Best: 4.39 40-most: 7.12 cycles/element
+Double Product unroll2aa: Array code, unrolled by 2, different associativity:
+Best: 3.73 (2%), Overall Best: 3.73 40-most: 6.02 cycles/element
+Double Product unroll3aa: Array code, unrolled by 3, Different Associativity:
+Best: 3.12 (2%), Overall Best: 3.12 40-most: 5.03 cycles/element
+Double Product unroll4aa: Array code, unrolled by 4, Different Associativity:
+Best: 3.41 (2%), Overall Best: 3.41 40-most: 5.54 cycles/element
+Double Product unroll6aa: Array code, unrolled by 6, Different Associativity:
+Best: 3.11 (2%), Overall Best: 3.11 40-most: 5.05 cycles/element
+Double Product unroll8aa: Array code, unrolled by 8, Different Associativity:
+Best: 3.28 (2%), Overall Best: 3.28 40-most: 5.26 cycles/element
+Double Product unrollv1: SSE code, 1*VSIZE-way parallelism:
+Best: 3.76 (2%), Overall Best: 3.76 40-most: 6.08 cycles/element
+Double Product unrollv2: SSE code, 2*VSIZE-way parallelism:
+Best: 2.45 (2%), Overall Best: 2.45 40-most: 3.96 cycles/element
+Double Product unrollv4: SSE code, 4*VSIZE-way parallelism:
+Best: 1.97 (2%), Overall Best: 1.97 40-most: 3.19 cycles/element
+Double Product unrollv8: SSE code, 8*VSIZE-way parallelism:
+Best: 1.44 (2%), Overall Best: 1.44 40-most: 2.35 cycles/element
+Double Product unrollv12: SSE code, 12*VSIZE-way parallelism:
+Best: 1.36 (2%), Overall Best: 1.36 40-most: 2.20 cycles/element
+Double Product unrollv2a: SSE code, 2*VSIZE-way parallelism, reassociate:
+Best: 2.21 (2%), Overall Best: 2.21 40-most: 3.55 cycles/element
+Double Product unrollv4a: SSE code, 4*VSIZE-way parallelism, reassociate:
+Best: 1.68 (2%), Overall Best: 1.68 40-most: 2.82 cycles/element
+Double Product unrollv8a: SSE code, 8*VSIZE-way parallelism, reassociate:
+Best: 1.19 (2%), Overall Best: 1.19 40-most: 1.94 cycles/element

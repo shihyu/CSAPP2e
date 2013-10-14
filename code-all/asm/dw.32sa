@@ -1,0 +1,43 @@
+	.file	"dw.c"
+	.text
+.globl dw_loop
+	.type	dw_loop, @function
+dw_loop:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin dw-s 8 */
+# x at \ebpreg+8, y at \ebpreg+12, n at \ebpreg+16
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %ecx
+	movl	16(%ebp), %edx
+.L2:
+	addl	%edx, %eax ##line:asm:dw:sbstart
+	imull	%edx, %ecx
+	subl	$1, %edx ##line:asm:dw:sbfinish
+	testl	%edx, %edx ##line:asm:dw:ststart
+	jle	.L5 
+	cmpl	%edx, %ecx
+	jl	.L2 ##line:asm:dw:stfinish
+.L5:
+/* $end dw-s 8 */
+	popl	%ebp
+	ret
+	.size	dw_loop, .-dw_loop
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin dw-ann-s 8 */
+# x at \ebpreg+8, y at \ebpreg+12, n at \ebpreg+16
+	movl	8(%ebp), %eax	# Get x
+	movl	12(%ebp), %ecx	# Get y
+	movl	16(%ebp), %edx	# Get n
+.L2:			      # \bf{loop:}
+	addl	%edx, %eax	# x += n
+	imull	%edx, %ecx	# y *= n
+	subl	$1, %edx	# n--
+	testl	%edx, %edx	# Test n
+	jle	.L5		# If <= 0, goto \textbf{done}
+	cmpl	%edx, %ecx	# Compare y:n
+	jl	.L2		# If <, goto \textbf{loop}
+.L5:			      # \textbf{done:}
+/* $end dw-ann-s 8 */

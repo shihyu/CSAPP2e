@@ -1,0 +1,16 @@
+	.file	"exchange.c"
+	.text
+.globl exchange
+	.type	exchange, @function
+exchange:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	movl	12(%ebp), %ecx
+	movl	%ecx, (%edx)
+	popl	%ebp
+	ret
+	.size	exchange, .-exchange
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

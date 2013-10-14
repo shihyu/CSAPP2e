@@ -1,0 +1,26 @@
+	.file	"arith.c"
+	.text
+	.p2align 4,,15
+.globl arith
+	.type	arith, @function
+arith:
+	pushl	%ebp
+/* $begin arith-s 8 */
+	movl	$48, %ecx	# 48
+/* $end arith-s 8 */
+	movl	%esp, %ebp
+/* $begin arith-s 10 */
+	movl	16(%ebp), %eax	# Get z
+	movl	12(%ebp), %edx	# Get y
+	addl	8(%ebp), %edx	# Compute t1 = x+y
+/* $end arith-s 10 */
+	leave
+/* $begin arith-s 14 */
+	imull	%ecx, %eax	# Compute t2 = z*48
+	andl	$65535, %edx	# Compute te = t1 & 0xFFFF
+	imull	%edx, %eax	# Compute t4 = t2*t3 as return value
+/* $end arith-s 14 */
+	ret
+	.size	arith, .-arith
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

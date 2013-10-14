@@ -1,0 +1,77 @@
+	.file	"sa.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl shrink
+	.type	 shrink,@function
+shrink:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 shrink,.Lfe1-shrink
+	.align 4
+.globl prod
+	.type	 prod,@function
+prod:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $8,%esp
+	/* $begin imull-s 24 */
+	# x at \ebpreg+8, y at \ebpreg+12
+	movl 8(%ebp),%eax	# Put x in \eaxreg
+	imull 12(%ebp)		# Multiply by y
+	/* $end imull-s 24 */
+	addl $-8,%esp		
+	/* $begin imull-s 27 */
+	pushl %edx		# Push high-order 32 bits
+	pushl %eax		# Push low-order 32 bits
+	/* $end imull-s 27 */
+	call shrink
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 prod,.Lfe2-prod
+	.align 4
+.globl combine
+	.type	 combine,@function
+combine:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 12(%ebp),%eax
+	addl 8(%ebp),%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe3:
+	.size	 combine,.Lfe3-combine
+	.align 4
+.globl div
+	.type	 div,@function
+div:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $8,%esp
+	/* $begin divl-s 55 */
+	# x at \ebpreg+8, y at \ebpreg+12
+	movl 8(%ebp),%eax	# Put x in \eaxreg
+	cltd			# Sign extend into \edxreg
+	idivl 12(%ebp)		# Divide by y
+	/* $end divl-s 55 */
+	addl $-8,%esp		
+	/* $begin divl-s 59 */
+	pushl %eax		# Push x / y
+	pushl %edx		# Push x % y
+	/* $end divl-s 59 */
+	call combine
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe4:
+	.size	 div,.Lfe4-div
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"

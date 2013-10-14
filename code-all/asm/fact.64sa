@@ -1,0 +1,267 @@
+	.file	"fact.c"
+	.text
+.globl fact_do
+	.type	fact_do, @function
+fact_do:
+.LFB2:
+	movl	$1, %eax
+.L2:
+	imull	%edi, %eax
+	subl	$1, %edi
+	cmpl	$1, %edi
+	jg	.L2
+	rep
+	ret
+.LFE2:
+	.size	fact_do, .-fact_do
+.globl fact_while
+	.type	fact_while, @function
+/* $begin fact_while-64 19 */
+fact_while:
+# n in \rdireg{}
+/* $end fact_while-64 19 */
+.LFB3:
+/* $begin fact_while-64 21 */
+	movl	$1, %eax	# Set result = 1
+	cmpl	$1, %edi	# Compare n:1
+	jle	.L7 		# If <=, goto \textbf{done}
+.L10:			      # \textbf{loop:}
+	imull	%edi, %eax      # Compute result *= n
+	subl	$1, %edi	# Decrement n
+	cmpl	$1, %edi	# Compare n:1
+	jg	.L10		# If >, goto \textbf{loop}
+.L7:			      # \textbf{done:}
+	rep		      	# (See explanation in aside) # line:asm:fact_while:rep
+	ret			# Return result
+/* $end fact_while-64 21 */
+.LFE3:
+	.size	fact_while, .-fact_while
+.globl fact_for
+	.type	fact_for, @function
+fact_for:
+.LFB4:
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L14
+.L17:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L17
+.L14:
+	rep
+	ret
+.LFE4:
+	.size	fact_for, .-fact_for
+.globl fact_for_while
+	.type	fact_for_while, @function
+fact_for_while:
+.LFB5:
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L21
+.L24:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L24
+.L21:
+	rep
+	ret
+.LFE5:
+	.size	fact_for_while, .-fact_for_while
+.globl fact_for_do
+	.type	fact_for_do, @function
+fact_for_do:
+.LFB6:
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L28
+.L31:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L31
+.L28:
+	rep
+	ret
+.LFE6:
+	.size	fact_for_do, .-fact_for_do
+.globl fact_do_goto
+	.type	fact_do_goto, @function
+fact_do_goto:
+.LFB7:
+	movl	$1, %eax
+.L34:
+	imull	%edi, %eax
+	subl	$1, %edi
+	cmpl	$1, %edi
+	jg	.L34
+	rep
+	ret
+.LFE7:
+	.size	fact_do_goto, .-fact_do_goto
+.globl fact_while_goto
+	.type	fact_while_goto, @function
+fact_while_goto:
+.LFB8:
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L39
+.L42:
+	imull	%edi, %eax
+	subl	$1, %edi
+	cmpl	$1, %edi
+	jg	.L42
+.L39:
+	rep
+	ret
+.LFE8:
+	.size	fact_while_goto, .-fact_while_goto
+.globl fact_for_goto
+	.type	fact_for_goto, @function
+fact_for_goto:
+.LFB9:
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L46
+.L49:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L49
+.L46:
+	rep
+	ret
+.LFE9:
+	.size	fact_for_goto, .-fact_for_goto
+.globl rfact
+	.type	rfact, @function
+rfact:
+.LFB10:
+	pushq	%rbx
+.LCFI0:
+	movl	%edi, %ebx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L53
+	leal	-1(%rbx), %edi
+	call	rfact
+	imull	%ebx, %eax
+.L53:
+	popq	%rbx
+	ret
+.LFE10:
+	.size	rfact, .-rfact
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB6
+	.long	.LFE6-.LFB6
+	.uleb128 0x0
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.long	.LFB7
+	.long	.LFE7-.LFB7
+	.uleb128 0x0
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.long	.LFB8
+	.long	.LFE8-.LFB8
+	.uleb128 0x0
+	.align 8
+.LEFDE13:
+.LSFDE15:
+	.long	.LEFDE15-.LASFDE15
+.LASFDE15:
+	.long	.LASFDE15-.Lframe1
+	.long	.LFB9
+	.long	.LFE9-.LFB9
+	.uleb128 0x0
+	.align 8
+.LEFDE15:
+.LSFDE17:
+	.long	.LEFDE17-.LASFDE17
+.LASFDE17:
+	.long	.LASFDE17-.Lframe1
+	.long	.LFB10
+	.long	.LFE10-.LFB10
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI0-.LFB10
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x83
+	.uleb128 0x2
+	.align 8
+.LEFDE17:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

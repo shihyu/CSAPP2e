@@ -1,0 +1,9 @@
+	/* $begin add-suffix-prob-sa */
+	mov %eax, (%esp)
+	mov (%eax), %dx
+	mov $0xFF, %bl
+	push %ebx
+	pop %di
+	movs %bl,%esp
+
+	/* $end add-suffix-prob-sa */

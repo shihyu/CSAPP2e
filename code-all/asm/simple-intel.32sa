@@ -1,0 +1,20 @@
+	.file	"simple.c"
+	.intel_syntax noprefix
+	.text
+.globl simple
+	.type	simple, @function
+/* $begin simple-intel-s 6 */
+# Assembly code for simple in Intel format
+simple:
+	push	ebp
+	mov	ebp, esp
+	mov	edx, DWORD PTR [ebp+8]
+	mov	eax, DWORD PTR [ebp+12]
+	add	eax, DWORD PTR [edx]
+	mov	DWORD PTR [edx], eax
+	pop	ebp
+	ret
+/* $end simple-intel-s 6 */
+	.size	simple, .-simple
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

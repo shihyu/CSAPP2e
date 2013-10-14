@@ -1,0 +1,130 @@
+	.file	"switch.c"
+	.text
+.globl switch_eg
+	.type	switch_eg, @function
+switch_eg:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin switch1-s 8 */
+# x at \ebpreg+8, n at \ebpreg+12
+	movl	8(%ebp), %edx		  # Get x
+	movl	12(%ebp), %eax  	  # Get n
+   	# Set up jump table access
+	subl	$100, %eax		  # Compute index = n-100
+	cmpl	$6, %eax		  # Compare index:6
+	ja	.L2 			  # If >, goto \textbf{loc\_def}
+	jmp	*.L7(,%eax,4)		  # Goto *jt[index] #line:asm:switch:s_jump
+/* $end switch1-s 8 */
+
+/* $begin switch2-s 14 */
+	.section	.rodata
+	.align 4	# Align address to multiple of 4 #line:asm:switch:align
+/* $end switch2-s 14 */
+	.align 4
+/* $begin switch2-s 17 */
+.L7:
+	.long	.L3	# Case 100: loc_A
+	.long	.L2	# Case 101: loc_def
+	.long	.L4	# Case 102: loc_B
+	.long	.L5	# Case 103: loc_C
+	.long	.L6	# Case 104: loc_D
+	.long	.L2	# Case 105: loc_def
+	.long	.L6	# Case 106: loc_D
+/* $end switch2-s 17 */
+	.text
+/* $begin switch1-s 26 */
+   	# Default case
+.L2:					# \textbf{loc\_def:}
+	movl	$0, %eax		  # result = 0;
+	jmp	.L8 			  # Goto \textbf{done}
+	# Case 103
+.L5:					# \textbf{loc\_C:}
+	movl	%edx, %eax		  # result = x;
+/* $end switch1-s 26 */
+	.p2align 4,,7
+	.p2align 3
+/* $begin switch1-s 33 */
+	jmp	.L9			  # Goto \textbf{rest}
+	# Case 100
+.L3:					# \textbf{loc\_A:}
+	leal	(%edx,%edx,2), %eax	  # result = x*3;
+	leal	(%edx,%eax,4), %eax	  # result = x+4*result
+/* $end switch1-s 33 */
+	.p2align 4,,3
+	.p2align 3
+/* $begin switch1-s 39 */
+	jmp	.L8			  # Goto \textbf{done}
+	# Case 102
+.L4:					# \textbf{loc\_B:}
+	leal	10(%edx), %eax		  # result = x+10
+	# Fall through
+.L9:					# \textbf{rest:}
+	addl	$11, %eax		  # result += 11;
+	jmp	.L8  			  # Goto \textbf{done}
+	# Cases 104, 106
+.L6:					# \textbf{loc\_D}
+	movl	%edx, %eax		  # result = x
+	imull	%edx, %eax		  # result *= x
+	# Fall through
+.L8:					# \textbf{done:}
+					  # Return result
+/* $end switch1-s 39 */
+	popl	%ebp			
+	ret
+	.size	switch_eg, .-switch_eg
+.globl switch_eg_impl
+	.type	switch_eg_impl, @function
+switch_eg_impl:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %eax
+	subl	$100, %eax
+	movl	8(%ebp), %ebx
+	cmpl	$6, %eax
+	ja	.L12
+	jmp	*jt.1208(,%eax,4)
+.L12:
+	movl	$0, %eax
+	jmp	.L13
+.L14:
+	leal	(%ebx,%ebx,2), %eax
+	leal	(%ebx,%eax,4), %eax
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L13
+.L15:
+	addl	$10, %ebx
+	.p2align 4,,3
+	.p2align 3
+	jmp	.L17
+.L16:
+.L17:
+	leal	11(%ebx), %eax
+	.p2align 4,,3
+	.p2align 3
+	jmp	.L13
+.L18:
+	movl	%ebx, %eax
+	imull	%ebx, %eax
+.L13:
+	popl	%ebx
+	popl	%ebp
+	.p2align 4,,1
+	.p2align 3
+	ret
+	.size	switch_eg_impl, .-switch_eg_impl
+	.section	.rodata
+	.align 4
+	.type	jt.1208, @object
+	.size	jt.1208, 28
+jt.1208:
+	.long	.L14
+	.long	.L12
+	.long	.L15
+	.long	.L16
+	.long	.L18
+	.long	.L12
+	.long	.L18
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

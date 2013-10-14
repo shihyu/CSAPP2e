@@ -1,0 +1,109 @@
+	.file	"cc.c"
+	.text
+.globl comp
+	.type	comp, @function
+comp:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	movl	%edx, x
+	movl	%eax, y
+	cmpl	%eax, %edx
+	setl	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	comp, .-comp
+.globl ge
+	.type	ge, @function
+ge:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movzbl	8(%ebp), %ecx
+	movzbl	12(%ebp), %edx
+	movzbl	%cl, %eax
+	movl	%eax, x
+	movzbl	%dl, %eax
+	movl	%eax, y
+	cmpb	%dl, %cl
+	setae	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	ge, .-ge
+.globl ne
+	.type	ne, @function
+ne:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movzwl	8(%ebp), %ecx
+	movzwl	12(%ebp), %edx
+	movswl	%cx,%eax
+	movl	%eax, x
+	movswl	%dx,%eax
+	movl	%eax, y
+	cmpw	%dx, %cx
+	setne	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	ne, .-ne
+.globl eq
+	.type	eq, @function
+eq:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	movl	%edx, x
+	movl	%eax, y
+	cmpl	%eax, %edx
+	sete	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	eq, .-eq
+.globl test
+	.type	test, @function
+test:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	%eax, x
+	testl	%eax, %eax
+	setne	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	test, .-test
+.globl test_eq
+	.type	test_eq, @function
+test_eq:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movzwl	8(%ebp), %edx
+	movswl	%dx,%eax
+	movl	%eax, x
+	testw	%dx, %dx
+	sete	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	test_eq, .-test_eq
+.globl test_ge
+	.type	test_ge, @function
+test_ge:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	8(%ebp),%eax
+	movl	%eax, x
+	notl	%eax
+	shrl	$31, %eax
+	popl	%ebp
+	ret
+	.size	test_ge, .-test_ge
+	.comm	x,4,4
+	.comm	y,4,4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

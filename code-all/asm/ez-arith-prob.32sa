@@ -1,0 +1,20 @@
+	.file	"arith-prob-ez.c"
+	.text
+.globl arith
+	.type	arith, @function
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin ez-arith-prob-s 8 */
+# x at \ebpreg{}+8, y at \ebpreg{}+12, z at \ebpreg{}+16 
+	movl	12(%ebp), %eax
+	xorl	8(%ebp), %eax
+	sarl	$3, %eax
+	notl	%eax
+	subl	16(%ebp), %eax
+/* $end ez-arith-prob-s 8 */
+	popl	%ebp
+	ret
+	.size	arith, .-arith
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

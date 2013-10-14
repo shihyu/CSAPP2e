@@ -1,0 +1,67 @@
+	.file	"treesum.c"
+	.text
+.globl sum_tree_rec
+	.type	sum_tree_rec, @function
+sum_tree_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	8(%ebp), %esi
+	movl	$0, %eax
+	testl	%esi, %esi
+	je	.L3
+	movl	(%esi), %ebx
+	movl	4(%esi), %eax
+	movl	%eax, (%esp)
+	call	sum_tree_rec
+	movl	%eax, %edi
+	movl	8(%esi), %eax
+	movl	%eax, (%esp)
+	call	sum_tree_rec
+	leal	(%edi,%eax), %eax
+	addl	%ebx, %eax
+.L3:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	sum_tree_rec, .-sum_tree_rec
+.globl sum_tree_lrec
+	.type	sum_tree_lrec, @function
+sum_tree_lrec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	subl	$12, %esp
+	movl	8(%ebp), %esi
+	movl	$0, %edi
+	testl	%esi, %esi
+	je	.L7
+.L10:
+	movl	(%esi), %ebx
+	movl	4(%esi), %eax
+	movl	%eax, (%esp)
+	call	sum_tree_lrec
+	addl	%edi, %eax
+	leal	(%eax,%ebx), %edi
+	movl	8(%esi), %esi
+	testl	%esi, %esi
+	jne	.L10
+.L7:
+	movl	%edi, %eax
+	addl	$12, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	sum_tree_lrec, .-sum_tree_lrec
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

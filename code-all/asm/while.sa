@@ -1,0 +1,50 @@
+	.file	"while.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl loop_while
+	.type	 loop_while,@function
+loop_while:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+/* $begin while-s 12 */
+# Initially a and b are at offsets 8 and 12 from %ebp
+	movl 8(%ebp),%eax
+	movl 12(%ebp),%ebx
+	xorl %ecx,%ecx
+	movl %eax,%edx
+	.p2align 4,,7
+.L5:
+	addl %eax,%edx
+	subl %ebx,%eax
+	addl %ebx,%ecx
+	cmpl $255,%ecx
+	jle .L5
+/* $end while-s 12 */	# Inserted to optimize cache performance
+	movl %edx,%eax
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 loop_while,.Lfe1-loop_while
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+
+/* $begin while-ann-s 12 */	
+	movl 8(%ebp),%eax	# Put a in %eax
+	movl 12(%ebp),%ebx	# Put b in %ebx
+	xorl %ecx,%ecx		# i = 0
+	movl %eax,%edx		# result = a
+	.p2align 4,,7
+# a in %eax, b in %ebx, i in %ecx, result in %edx	
+.L5:			      # \textbf{loop:}
+	addl %eax,%edx		# result += a
+	subl %ebx,%eax		# a -= b
+	addl %ebx,%ecx		# i += b
+	cmpl $255,%ecx		# Compare i:255
+	jle .L5			# If <= goto \textbf{loop}
+	movl %edx,%eax		# Set result as return value
+/* $end while-ann-s 12 */

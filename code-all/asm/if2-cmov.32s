@@ -1,0 +1,31 @@
+	.file	"if2-cmov.c"
+	.text
+.globl test
+	.type	test, @function
+test:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %ecx
+	testl	%ecx, %ecx
+	jle	.L2
+	movl	%ebx, %edx
+	subl	%ecx, %edx
+	movl	%ecx, %eax
+	xorl	%ebx, %eax
+	cmpl	%ecx, %ebx
+	cmovl	%edx, %eax
+	jmp	.L4
+.L2:
+	leal	0(,%ebx,4), %edx
+	leal	(%ecx,%ebx), %eax
+	cmpl	$-2, %ecx
+	cmovge	%edx, %eax
+.L4:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	test, .-test
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,182 @@
+		****   DISASSEMBLER  ****
+
+
+disassembly for sum
+
+section	.text
+_start()
+	10670:  bc 10 20 00        clr     	%fp
+	10674:  e0 03 a0 40        ld      	[%sp + 64], %l0
+	10678:  a2 03 a0 44        add     	%sp, 68, %l1
+	1067c:  9c 23 a0 20        sub     	%sp, 32, %sp
+	10680:  80 90 00 01        orcc    	%g0, %g1, %g0
+	10684:  02 80 00 04        be      	0x10694
+	10688:  90 10 00 01        mov     	%g1, %o0
+	1068c:  40 00 40 d6        call    	atexit
+	10690:  01 00 00 00        nop     	
+	10694:  11 00 00 42        sethi   	%hi(0x10800), %o0
+	10698:  90 12 20 e0        or      	%o0, 0xe0, %o0	! _fini
+	1069c:  40 00 40 d2        call    	atexit
+	106a0:  01 00 00 00        nop     	
+	106a4:  40 00 00 88        call    	_init
+	106a8:  01 00 00 00        nop     	
+	106ac:  90 10 00 10        mov     	%l0, %o0
+	106b0:  92 10 00 11        mov     	%l1, %o1
+	106b4:  95 2c 20 02        sll     	%l0, 2, %o2
+	106b8:  94 02 a0 04        add     	%o2, 4, %o2
+	106bc:  94 04 40 0a        add     	%l1, %o2, %o2
+	106c0:  17 00 00 82        sethi   	%hi(0x20800), %o3
+	106c4:  96 12 e2 70        or      	%o3, 0x270, %o3	! _environ
+	106c8:  d4 22 c0 00        st      	%o2, [%o3]
+	106cc:  40 00 00 50        call    	main
+	106d0:  01 00 00 00        nop     	
+	106d4:  40 00 40 c7        call    	exit
+	106d8:  01 00 00 00        nop     	
+	106dc:  40 00 40 c8        call    	_exit
+	106e0:  01 00 00 00        nop     	
+	106e4:  81 c3 e0 08        jmp     	%o7 + 8
+	106e8:  ae 03 c0 17        add     	%o7, %l7, %l7
+__do_global_dtors_aux()
+	106ec:  9d e3 bf 90        save    	%sp, -112, %sp
+	106f0:  11 00 00 00        sethi   	%hi(0x0), %o0
+	106f4:  2f 00 00 40        sethi   	%hi(0x10000), %l7
+	106f8:  7f ff ff fb        call    	gcc2_compiled.
+	106fc:  ae 05 e2 14        add     	%l7, 532, %l7
+	10700:  90 12 20 10        or      	%o0, 16, %o0
+	10704:  d2 05 c0 08        ld      	[%l7 + %o0], %o1
+	10708:  d4 02 40 00        ld      	[%o1], %o2
+	1070c:  80 a2 a0 00        cmp     	%o2, 0
+	10710:  12 80 00 23        bne     	0x1079c
+	10714:  11 00 00 00        sethi   	%hi(__register_frame_info), %o0
+	10718:  90 12 20 08        or      	%o0, 0x8, %o0	! 0x8
+	1071c:  d4 05 c0 08        ld      	[%l7 + %o0], %o2
+	10720:  d2 02 80 00        ld      	[%o2], %o1
+	10724:  d0 02 40 00        ld      	[%o1], %o0
+	10728:  80 a2 20 00        cmp     	%o0, 0
+	1072c:  02 80 00 0f        be      	0x10768
+	10730:  11 00 00 00        sethi   	%hi(0x0), %o0
+	10734:  a0 10 00 0a        mov     	%o2, %l0
+	10738:  d0 04 00 00        ld      	[%l0], %o0
+	1073c:  90 02 20 04        add     	%o0, 4, %o0
+	10740:  d0 24 00 00        st      	%o0, [%l0]
+	10744:  d2 02 3f fc        ld      	[%o0 - 4], %o1
+	10748:  9f c2 40 00        jmpl    	%o1, %o7
+	1074c:  01 00 00 00        nop     	
+	10750:  d0 04 00 00        ld      	[%l0], %o0
+	10754:  d2 02 00 00        ld      	[%o0], %o1
+	10758:  80 a2 60 00        cmp     	%o1, 0
+	1075c:  12 bf ff f9        bne     	0x10740
+	10760:  90 02 20 04        add     	%o0, 4, %o0
+	10764:  11 00 00 00        sethi   	%hi(__register_frame_info), %o0
+	10768:  90 12 20 1c        or      	%o0, 0x1c, %o0	! 0x1c
+	1076c:  d2 05 c0 08        ld      	[%l7 + %o0], %o1
+	10770:  80 a2 60 00        cmp     	%o1, 0
+	10774:  02 80 00 05        be      	0x10788
+	10778:  13 00 00 00        sethi   	%hi(__register_frame_info), %o1
+	1077c:  92 12 60 0c        or      	%o1, 0xc, %o1	! 0xc
+	10780:  40 00 40 a2        call    	0x20a08
+	10784:  d0 05 c0 09        ld      	[%l7 + %o1], %o0
+	10788:  11 00 00 00        sethi   	%hi(__register_frame_info), %o0
+	1078c:  90 12 20 10        or      	%o0, 0x10, %o0	! 0x10
+	10790:  d4 05 c0 08        ld      	[%l7 + %o0], %o2
+	10794:  92 10 20 01        mov     	1, %o1
+	10798:  d2 22 80 00        st      	%o1, [%o2]
+	1079c:  81 c7 e0 08        ret     	
+	107a0:  81 e8 00 00        restore 	
+fini_dummy()
+	107a4:  9d e3 bf 90        save    	%sp, -112, %sp
+	107a8:  81 c7 e0 08        ret     	
+	107ac:  81 e8 00 00        restore 	
+frame_dummy()
+	107b0:  9d e3 bf 90        save    	%sp, -112, %sp
+	107b4:  11 00 00 00        sethi   	%hi(0x0), %o0
+	107b8:  2f 00 00 40        sethi   	%hi(0x10000), %l7
+	107bc:  7f ff ff ca        call    	gcc2_compiled.
+	107c0:  ae 05 e1 50        add     	%l7, 336, %l7
+	107c4:  90 12 20 18        or      	%o0, 24, %o0
+	107c8:  d2 05 c0 08        ld      	[%l7 + %o0], %o1
+	107cc:  80 a2 60 00        cmp     	%o1, 0
+	107d0:  02 80 00 08        be      	0x107f0
+	107d4:  13 00 00 00        sethi   	%hi(__register_frame_info), %o1
+	107d8:  92 12 60 0c        or      	%o1, 0xc, %o1	! 0xc
+	107dc:  15 00 00 00        sethi   	%hi(0x0), %o2
+	107e0:  d0 05 c0 09        ld      	[%l7 + %o1], %o0
+	107e4:  94 12 a0 04        or      	%o2, 4, %o2
+	107e8:  40 00 40 8b        call    	0x20a14
+	107ec:  d2 05 c0 0a        ld      	[%l7 + %o2], %o1
+	107f0:  81 c7 e0 08        ret     	
+	107f4:  81 e8 00 00        restore 	
+init_dummy()
+	107f8:  9d e3 bf 90        save    	%sp, -112, %sp
+	107fc:  81 c7 e0 08        ret     	
+	10800:  81 e8 00 00        restore 	
+sum()
+	10804:  81 c3 e0 08        jmp     	%o7 + 8
+	10808:  90 02 00 09        add     	%o0, %o1, %o0
+main()
+	1080c:  9d e3 bf 90        save    	%sp, -112, %sp
+	10810:  a0 10 20 01        mov     	1, %l0
+	10814:  80 a4 00 18        cmp     	%l0, %i0
+	10818:  16 80 00 0c        bge     	0x10848
+	1081c:  a2 10 20 00        clr     	%l1
+	10820:  93 2c 20 02        sll     	%l0, 2, %o1
+	10824:  d0 06 40 09        ld      	[%i1 + %o1], %o0
+	10828:  40 00 40 7e        call    	atoi
+	1082c:  a0 04 20 01        add     	%l0, 1, %l0
+	10830:  92 10 00 08        mov     	%o0, %o1
+	10834:  7f ff ff f4        call    	gcc2_compiled.
+	10838:  90 10 00 11        mov     	%l1, %o0
+	1083c:  80 a4 00 18        cmp     	%l0, %i0
+	10840:  06 bf ff f8        bl      	0x10820
+	10844:  a2 10 00 08        mov     	%o0, %l1
+	10848:  11 00 00 42        sethi   	%hi(0x10800), %o0
+	1084c:  90 12 21 00        or      	%o0, 0x100, %o0	! 0x10900
+	10850:  40 00 40 77        call    	printf
+	10854:  92 10 00 11        mov     	%l1, %o1
+	10858:  81 c7 e0 08        ret     	
+	1085c:  91 e8 20 00        restore 	%g0, 0, %o0
+	10860:  81 c3 e0 08        jmp     	%o7 + 8
+	10864:  ae 03 c0 17        add     	%o7, %l7, %l7
+__do_global_ctors_aux()
+	10868:  9d e3 bf 90        save    	%sp, -112, %sp
+	1086c:  11 00 00 00        sethi   	%hi(0x0), %o0
+	10870:  2f 00 00 40        sethi   	%hi(0x10000), %l7
+	10874:  7f ff ff fb        call    	gcc2_compiled.
+	10878:  ae 05 e0 98        add     	%l7, 152, %l7
+	1087c:  90 12 20 14        or      	%o0, 20, %o0
+	10880:  d2 05 c0 08        ld      	[%l7 + %o0], %o1
+	10884:  d4 02 7f fc        ld      	[%o1 - 4], %o2
+	10888:  80 a2 bf ff        cmp     	%o2, -1
+	1088c:  02 80 00 09        be      	0x108b0
+	10890:  a0 02 7f fc        add     	%o1, -4, %l0
+	10894:  d0 04 00 00        ld      	[%l0], %o0
+	10898:  9f c2 00 00        jmpl    	%o0, %o7
+	1089c:  a0 04 3f fc        add     	%l0, -4, %l0
+	108a0:  d0 04 00 00        ld      	[%l0], %o0
+	108a4:  80 a2 3f ff        cmp     	%o0, -1
+	108a8:  12 bf ff fb        bne     	0x10894
+	108ac:  01 00 00 00        nop     	
+	108b0:  81 c7 e0 08        ret     	
+	108b4:  81 e8 00 00        restore 	
+init_dummy()
+	108b8:  9d e3 bf 90        save    	%sp, -112, %sp
+	108bc:  81 c7 e0 08        ret     	
+	108c0:  81 e8 00 00        restore 	
+
+section	.init
+_init()
+	108c4:  9d e3 bf a0        save    	%sp, -96, %sp
+	108c8:  7f ff ff ba        call    	frame_dummy
+	108cc:  01 00 00 00        nop     	
+	108d0:  7f ff ff e6        call    	__do_global_ctors_aux
+	108d4:  01 00 00 00        nop     	
+	108d8:  81 c7 e0 08        ret     	
+	108dc:  81 e8 00 00        restore 	
+
+section	.fini
+_fini()
+	108e0:  9d e3 bf a0        save    	%sp, -96, %sp
+	108e4:  7f ff ff 82        call    	__do_global_dtors_aux
+	108e8:  01 00 00 00        nop     	
+	108ec:  81 c7 e0 08        ret     	
+	108f0:  81 e8 00 00        restore 	

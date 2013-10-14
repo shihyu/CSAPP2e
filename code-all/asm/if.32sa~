@@ -1,0 +1,39 @@
+	.file	"if.c"
+	.text
+.globl test
+	.type	test, @function
+test:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	cmpl	$-3, %eax
+	jge	.L2
+	cmpl	%edx, %eax
+	jle	.L3
+	imull	%edx, %eax
+	jmp	.L4
+.L3:
+	leal	(%edx,%eax), %eax
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L4
+.L2:
+	cmpl	$2, %eax
+	.p2align 4,,5
+	.p2align 3
+	jg	.L5
+	xorl	%edx, %eax
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L4
+.L5:
+	subl	%edx, %eax
+.L4:
+	popl	%ebp
+	.p2align 4,,4
+	.p2align 3
+	ret
+	.size	test, .-test
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

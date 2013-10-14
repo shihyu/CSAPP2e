@@ -1,0 +1,56 @@
+	/* $begin swapadd-setup-s 8 */
+	# Setup code in swap_add
+swap_add:
+	pushl %ebp		# Save old \ebpreg
+	movl %esp,%ebp		# Set \ebpreg as frame pointer
+	pushl %ebx		# Save \ebxreg
+	/* $end swapadd-setup-s 8 */
+
+	/* $begin swapadd-body-s 12 */
+	# Body code in swap_add
+	movl 8(%ebp),%edx	# Get xp
+	movl 12(%ebp),%ecx	# Get yp
+	movl (%edx),%ebx	# Get x
+	movl (%ecx),%eax	# Get y
+	movl %eax,(%edx)	# Store y at *xp
+	movl %ebx,(%ecx)	# Store x at *yp
+	addl %ebx,%eax		# Set return value = x+y
+	/* $end swapadd-body-s 12 */
+
+	/* $begin swapadd-finish-s 19 */
+	# Finishing code in swap_add
+	popl %ebx		# Restore \ebxreg
+	movl %ebp,%esp		# Restore \espreg
+	popl %ebp		# Restore \ebpreg
+	ret			# Return to caller
+	/* $end swapadd-finish-s 19 */
+
+caller:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $24,%esp
+	movl $534,-8(%ebp)
+	movl $1057,-4(%ebp)
+	addl $-8,%esp
+
+	/* $begin swapadd-call-s 35 */
+	# Calling code in caller
+	leal -4(%ebp),%eax	# Compute &arg2
+	pushl %eax		# Push &arg2
+	leal -8(%ebp),%eax	# Compute &arg1
+	pushl %eax		# Push &arg1
+	call swap_add		# Call the swap_add function
+	/* $end swapadd-call-s 35 */
+
+	/* $begin swapadd-resume-s 40 */
+	movl %eax,%edx		# Resume here
+	/* $end swapadd-resume-s 40 */
+
+	movl -4(%ebp),%eax
+	movl -8(%ebp),%ecx
+	subl %eax,%ecx
+	movl %ecx,%eax
+	imull %edx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret

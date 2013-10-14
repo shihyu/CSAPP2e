@@ -1,0 +1,19 @@
+	.file	"fpgreater-ans.c"
+	.text
+.globl greater
+	.type	greater, @function
+greater:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fldl	16(%ebp)
+	fldl	8(%ebp)
+	fucompp
+	fnstsw	%ax
+	sahf
+	seta	%al
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+	.size	greater, .-greater
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

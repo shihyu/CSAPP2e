@@ -1,0 +1,37 @@
+
+branch.32o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <silly>:
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	8b 55 08             	mov    0x8(%ebp),%edx
+   6:	85 d2                	test   %edx,%edx
+   8:	7e 0d                	jle    17 <silly+0x17>
+   a:	89 d0                	mov    %edx,%eax
+   c:	d1 f8                	sar    %eax
+   e:	29 c2                	sub    %eax,%edx
+  10:	8d 14 52             	lea    (%edx,%edx,2),%edx
+  13:	85 d2                	test   %edx,%edx
+  15:	7f f3                	jg     a <silly+0xa>
+  17:	89 d0                	mov    %edx,%eax
+  19:	5d                   	pop    %ebp
+  1a:	c3                   	ret    
+
+0000001b <main>:
+  1b:	8d 4c 24 04          	lea    0x4(%esp),%ecx
+  1f:	83 e4 f0             	and    $0xfffffff0,%esp
+  22:	ff 71 fc             	pushl  -0x4(%ecx)
+  25:	55                   	push   %ebp
+  26:	89 e5                	mov    %esp,%ebp
+  28:	51                   	push   %ecx
+  29:	83 ec 04             	sub    $0x4,%esp
+  2c:	c7 04 24 02 00 00 00 	movl   $0x2,(%esp)
+  33:	e8 fc ff ff ff       	call   34 <main+0x19>
+  38:	83 c4 04             	add    $0x4,%esp
+  3b:	59                   	pop    %ecx
+  3c:	5d                   	pop    %ebp
+  3d:	8d 61 fc             	lea    -0x4(%ecx),%esp
+  40:	c3                   	ret    

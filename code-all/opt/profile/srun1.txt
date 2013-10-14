@@ -1,0 +1,22 @@
+verbose	10
+size	1021
+hash	1
+lower	0
+find	0
+quicksort	0
+file	shakespeare.txt
+Lower case function lower1
+Hash function h_add
+Find element function find_ele_rec
+29801	'the'
+27529	'and'
+21029	'i'
+20957	'to'
+18514	'of'
+15370	'a'
+14010	'you'
+12936	'my'
+11722	'in'
+11519	'that'
+946596 words, 26946 unique.  Most common (29801) = 'the'.  Longest (1 have length 27) = 'honorificabilitudinitatibus'
+Total time = 0.860000 seconds

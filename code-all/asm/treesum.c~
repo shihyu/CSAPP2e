@@ -1,0 +1,23 @@
+/* Tree data structure */
+typedef enum { N_LEAF, N_INTERNAL } nodetype_t;
+
+struct NODE_T { 
+    nodetype_t type;
+    union { 
+	struct {  
+	    struct NODE_T *left; 
+	    struct NODE_T *right; 
+	} internal; 
+	int data; 
+    } info; 
+}; 
+
+int sum_leaves(struct NODE_T *root) {
+    if (root->type == N_LEAF)
+	return root->info.data;
+    else {
+	int left_val = sum_leaves(root->info.internal.left);
+	int right_val = sum_leaves(root->info.internal.right);
+	return left_val + right_val;
+    }
+}

@@ -1,0 +1,146 @@
+	.file	"ulmult-full.c"
+	.text
+.globl ulmult_full
+	.type	ulmult_full, @function
+ulmult_full:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	%ebx, (%esp)
+	movl	%esi, 4(%esp)
+	movl	16(%ebp), %esi
+	movl	12(%ebp), %ebx
+	movl	8(%ebp), %ecx
+#APP
+# 19 "ulmult-full.c" 1
+	movl %ecx,%eax      # Get x
+	mull %ebx            # Unsigned multiply by y
+	movl %eax,%ecx     # Store low-order  4 bytes
+	movl %edx,%ebx     # Store high-order 4 bytes
+# 0 "" 2
+#NO_APP
+	movl	%ecx, (%esi)
+	movl	%ebx, 4(%esi)
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	ulmult_full, .-ulmult_full
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"OK"
+	.section	.rodata.str1.4,"aMS",@progbits,1
+	.align 4
+.LC1:
+	.string	"Full multiply %lu (0x%lx) X %lu (0x%lx)\n  --> %llu (0x%llx), %s\n"
+	.section	.rodata.str1.1
+.LC2:
+	.string	"ERR"
+.LC3:
+	.string	"Got %llu (0x%llx)n"
+	.text
+.globl main
+	.type	main, @function
+main:
+	leal	4(%esp), %ecx
+	andl	$-16, %esp
+	pushl	-4(%ecx)
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$88, %esp
+	movl	%ecx, -16(%ebp)
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	(%ecx), %ebx
+	movl	4(%ecx), %esi
+	movl	$65536, -40(%ebp)
+	cmpl	$1, %ebx
+	jle	.L5
+	movl	$0, 8(%esp)
+	movl	$0, 4(%esp)
+	movl	4(%esi), %eax
+	movl	%eax, (%esp)
+	call	strtoul
+	movl	%eax, -40(%ebp)
+.L5:
+	movl	$65535, -36(%ebp)
+	cmpl	$2, %ebx
+	jle	.L7
+	movl	$0, 8(%esp)
+	movl	$0, 4(%esp)
+	movl	8(%esi), %eax
+	movl	%eax, (%esp)
+	call	strtoul
+	movl	%eax, -36(%ebp)
+.L7:
+	leal	-24(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	-36(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	-40(%ebp), %edx
+	movl	%edx, (%esp)
+	call	ulmult_full
+	movl	-20(%ebp), %eax
+	movl	%eax, %ebx
+	movl	$0, %ecx
+	movl	-24(%ebp), %eax
+	movl	$0, %edx
+	movl	%ecx, %esi
+	movl	%ebx, %edi
+	addl	%eax, %esi
+	adcl	%edx, %edi
+	movl	-36(%ebp), %eax
+	mull	-40(%ebp)
+	movl	%eax, %ecx
+	movl	%edx, %ebx
+	movl	%edi, %edx
+	xorl	%ebx, %edx
+	movl	%esi, %eax
+	xorl	%ecx, %eax
+	orl	%eax, %edx
+	jne	.L8
+	movl	$.LC0, 40(%esp)
+	movl	%esi, 32(%esp)
+	movl	%edi, 36(%esp)
+	movl	%esi, 24(%esp)
+	movl	%edi, 28(%esp)
+	movl	-36(%ebp), %edx
+	movl	%edx, 20(%esp)
+	movl	%edx, 16(%esp)
+	movl	-40(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	%eax, 8(%esp)
+	movl	$.LC1, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+.L9:
+	movl	$0, (%esp)
+	call	exit
+.L8:
+	movl	$.LC2, 40(%esp)
+	movl	%ecx, 32(%esp)
+	movl	%ebx, 36(%esp)
+	movl	%ecx, 24(%esp)
+	movl	%ebx, 28(%esp)
+	movl	-36(%ebp), %edx
+	movl	%edx, 20(%esp)
+	movl	%edx, 16(%esp)
+	movl	-40(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	%eax, 8(%esp)
+	movl	$.LC1, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+	movl	%esi, 16(%esp)
+	movl	%edi, 20(%esp)
+	movl	%esi, 8(%esp)
+	movl	%edi, 12(%esp)
+	movl	$.LC3, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+	jmp	.L9
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

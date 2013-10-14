@@ -1,0 +1,11 @@
+CC = gcc34
+CFLAGS = -O1 -m32
+
+pushpoptest: pushpoptest.c pp.s
+	$(CC) $(CFLAGS) -o pushpoptest pushpoptest.c pp.s
+
+
+.SUFFIXES: .c .s .o
+
+.c.s:
+	$(CC) $(CFLAGS) -S $*.c -o $*.s

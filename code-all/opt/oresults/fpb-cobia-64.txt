@@ -1,0 +1,90 @@
+Float Product combine1: Maximum use of data abstraction:
+28.00 cycles/element
+Float Product combine2: Take vec_length() out of loop:
+28.88 cycles/element
+Float Product combine3: Array reference to vector data:
+7.09 cycles/element
+Float Product combine4: Array reference, accumulate in temporary:
+7.00 cycles/element
+Float Product combine4p: Pointer reference, accumulate in temporary:
+7.66 cycles/element
+Float Product unroll2a: Array code, unrolled by 2:
+7.00 cycles/element
+Float Product combine5p: Pointer code, unrolled by 3, for loop:
+7.00 cycles/element
+Float Product unroll3aw: Array code, unrolled by 3, while loop:
+7.00 cycles/element
+Float Product unroll4a: Array code, unrolled by 4:
+7.01 cycles/element
+Float Product unroll8a: Array code, unrolled by 8:
+7.01 cycles/element
+Float Product unroll16a: Array code, unrolled by 16:
+7.01 cycles/element
+Float Product unroll2: Pointer code, unrolled by 2:
+6.99 cycles/element
+Float Product unroll3: Pointer code, unrolled by 3:
+7.00 cycles/element
+Float Product unroll4: Pointer code, unrolled by 4:
+7.01 cycles/element
+Float Product unroll8: Pointer code, unrolled by 8:
+7.00 cycles/element
+Float Product unroll16: Pointer code, unrolled by 16:
+7.02 cycles/element
+Float Product combine6: Array code, unrolled by 2, Superscalar x2:
+3.50 cycles/element
+Float Product unroll4x2a: Array code, unrolled by 4, Superscalar x2:
+3.50 cycles/element
+Float Product unroll8x2a: Array code, unrolled by 8, Superscalar x2:
+3.51 cycles/element
+Float Product unroll3x3a: Array code, unrolled by 3, Superscalar x3:
+2.33 cycles/element
+Float Product unroll4x4a: Array code, unrolled by 4, Superscalar x4:
+2.00 cycles/element
+Float Product unroll8x4a: Array code, unrolled by 8, Superscalar x4:
+2.00 cycles/element
+Float Product unroll6x6a: Array code, unrolled by 6, Superscalar x6:
+2.00 cycles/element
+Float Product unroll8x8a: Array code, unrolled by 8, Superscalar x8:
+2.01 cycles/element
+Float Product unroll10x10a: Array code, unrolled by 10, Superscalar x10:
+2.01 cycles/element
+Float Product unroll2x6a: Array code, unrolled by 12, Superscalar x6:
+2.00 cycles/element
+Float Product unroll12x12a: Array code, unrolled by 12, Superscalar x12:
+2.01 cycles/element
+Float Product unroll8x2: Pointer code, unrolled by 8, Superscalar x2:
+3.51 cycles/element
+Float Product unroll8x4: Pointer code, unrolled by 8, Superscalar x4:
+2.01 cycles/element
+Float Product unroll8x8: Pointer code, unrolled by 8, Superscalar x8:
+2.00 cycles/element
+Float Product unroll9x3: Pointer code, unrolled by 9, Superscalar x3:
+2.34 cycles/element
+Float Product unrollx2as: Array code, Unroll x2, Superscalar x2, noninterleaved:
+3.50 cycles/element
+Float Product unroll2aa: Array code, unrolled by 2, different associativity:
+3.62 cycles/element
+Float Product unroll3aa: Array code, unrolled by 3, Different Associativity:
+2.42 cycles/element
+Float Product unroll4aa: Array code, unrolled by 4, Different Associativity:
+2.01 cycles/element
+Float Product unroll6aa: Array code, unrolled by 6, Different Associativity:
+2.00 cycles/element
+Float Product unroll8aa: Array code, unrolled by 8, Different Associativity:
+2.00 cycles/element
+Float Product unrollv1: SSE code, 1*VSIZE-way parallelism:
+1.88 cycles/element
+Float Product unrollv2: SSE code, 2*VSIZE-way parallelism:
+0.98 cycles/element
+Float Product unrollv4: SSE code, 4*VSIZE-way parallelism:
+0.90 cycles/element
+Float Product unrollv8: SSE code, 8*VSIZE-way parallelism:
+0.58 cycles/element
+Float Product unrollv12: SSE code, 12*VSIZE-way parallelism:
+0.46 cycles/element
+Float Product unrollv2a: SSE code, 2*VSIZE-way parallelism, reassociate:
+1.22 cycles/element
+Float Product unrollv4a: SSE code, 4*VSIZE-way parallelism, reassociate:
+0.63 cycles/element
+Float Product unrollv8a: SSE code, 8*VSIZE-way parallelism, reassociate:
+0.55 cycles/element

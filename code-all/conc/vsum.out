@@ -1,0 +1,21 @@
+droh@csapp2:~/ics2/code/conc$ \time ./vsum 1 27
+result = 134217728.000000
+1.65user 0.42system 0:02.08elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+262355minor)pagefaults 0swaps
+droh@csapp2:~/ics2/code/conc$ \time ./vsum 2 27
+result = 134217728.000000
+1.74user 0.40system 0:01.36elapsed 158%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+262357minor)pagefaults 0swaps
+droh@csapp2:~/ics2/code/conc$ \time ./vsum 4 27
+result = 134217728.000000
+1.68user 0.36system 0:00.93elapsed 221%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+262359minor)pagefaults 0swaps
+droh@csapp2:~/ics2/code/conc$ \time ./vsum 8 27
+result = 134217728.000000
+1.64user 0.47system 0:00.94elapsed 225%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+262363minor)pagefaults 0swaps
+droh@csapp2:~/ics2/code/conc$ \time ./vsum 16 27
+result = 134217728.000000
+1.54user 0.53system 0:00.95elapsed 218%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+262372minor)pagefaults 0swaps
+droh@csapp2:~/ics2/code/conc$

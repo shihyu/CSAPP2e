@@ -1,0 +1,64 @@
+	.file	"convert.c"
+	.text
+	.p2align 4,,15
+.globl gfun
+	.type	gfun, @function
+gfun:
+.LFB2:
+	movslq	%edi,%rax
+	movslq	%esi,%rdx
+	addl	%esi, %edi
+	addq	%rdx, %rax
+	movslq	%edi,%rdi
+	orq	%rdi, %rax
+	ret
+.LFE2:
+	.size	gfun, .-gfun
+	.p2align 4,,15
+.globl gfun_u
+	.type	gfun_u, @function
+gfun_u:
+.LFB3:
+	mov	%edi, %eax
+	mov	%esi, %edx
+	addl	%esi, %edi
+	addq	%rdx, %rax
+	orq	%rdi, %rax
+	ret
+.LFE3:
+	.size	gfun_u, .-gfun_u
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB3
+	.quad	.LFE3-.LFB3
+	.align 8
+.LEFDE3:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

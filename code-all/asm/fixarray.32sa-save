@@ -1,0 +1,39 @@
+	.file	"fixarray.c"
+	.text
+	.p2align 4,,15
+.globl sum_element
+	.type	sum_element, @function
+sum_element:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin fixarray-prob-s 9 */
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %eax
+	leal	0(,%ecx,8), %edx
+	subl	%ecx, %edx
+	addl	%eax, %edx
+	leal	(%eax,%eax,4), %eax
+	addl	%ecx, %eax
+	movl	mat2(,%eax,4), %eax
+	addl	mat1(,%edx,4), %eax
+/* $end fixarray-prob-s 9 */
+	leave
+	ret
+	.size	sum_element, .-sum_element
+	.comm	mat1,140,32
+	.comm	mat2,140,32
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"
+
+
+/* $begin fixarray-ans-s 9 */
+	movl	8(%ebp), %ecx		# Get i
+	movl	12(%ebp), %eax		# Get j
+	leal	0(,%ecx,8), %edx	# 8*i
+	subl	%ecx, %edx		# 7*i
+	addl	%eax, %edx		# 7*i + j
+	leal	(%eax,%eax,4), %eax	# 5*j
+	addl	%ecx, %eax		# 5*j + i
+	movl	mat2(,%eax,4), %eax	# mat2[5*j + i]
+	addl	mat1(,%edx,4), %eax	# + mat1[7*i + j]
+/* $end fixarray-ans-s 9 */

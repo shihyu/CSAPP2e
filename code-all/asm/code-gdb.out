@@ -1,0 +1,18 @@
+GNU gdb 6.8-debian
+Copyright (C) 2008 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu"...
+Breakpoint 1 at 0x8048397
+
+Breakpoint 1, 0x08048397 in sum ()
+Current language:  auto; currently asm
+$1 = 0x8048394
+$2 = 0x8048397
+0x080483a4 in sum ()
+$3 = 0x80483a4
+$4 = 0xfff076b0
+
+Program exited with code 04.

@@ -1,0 +1,40 @@
+	.file	"swapadd.c"
+	.text
+.globl swap_add
+	.type	swap_add, @function
+swap_add:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %ecx
+	movl	(%edx), %ebx
+	movl	(%ecx), %eax
+	movl	%eax, (%edx)
+	movl	%ebx, (%ecx)
+	addl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	swap_add, .-swap_add
+.globl caller
+	.type	caller, @function
+caller:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	$534, -4(%ebp)
+	movl	$1057, -8(%ebp)
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-4(%ebp), %eax
+	movl	%eax, (%esp)
+	call	swap_add
+	movl	-4(%ebp), %edx
+	subl	-8(%ebp), %edx
+	imull	%edx, %eax
+	leave
+	ret
+	.size	caller, .-caller
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,399 @@
+.Ldebug_abbrev0:
+.Ldebug_info0:
+.Ldebug_line0:
+.Ltext0:
+mylink:
+	leal	-1(%rdi), %ecx
+	testl	%ecx, %ecx
+	jle	.L2
+	movl	$main_list+16, %eax
+	movl	$0, %edx
+.L3:
+	movl	%edx, -8(%rax)
+	movq	%rax, -16(%rax)
+	addl	$1, %edx
+	addq	$16, %rax
+	cmpl	%ecx, %edx
+	jl	.L3
+.L2:
+	movslq	%ecx,%rax
+	movl	$main_list, %edx
+	salq	$4, %rax
+	movl	%ecx, 8(%rax,%rdx)
+	movq	$0, (%rax,%rdx)
+	ret
+
+list_len:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L8
+/* $begin list-len-s 30 */
+# len in \eaxreg{}, ls in \rdireg{}
+.L11:	  	     	    # \textbf{loop:}
+	addl	$1, %eax      # Increment len
+	movq	(%rdi), %rdi  # ls = ls->next #line:opt:list_len
+	testq	%rdi, %rdi    # Test ls
+	jne	.L11  	      # If nonnull, goto loop
+/* $end list-len-s 30 */
+.L8:
+	rep
+	ret
+
+list_len_clear:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L15
+.L18:
+	movl	$0, 8(%rdi)
+	movq	(%rdi), %rdi
+	addl	$1, %eax
+	testq	%rdi, %rdi
+	jne	.L18
+.L15:
+	rep
+	ret
+
+list_sum_clear:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L22
+.L25:
+	addl	8(%rdi), %eax
+	movl	$0, 8(%rdi)
+	movq	(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L25
+.L22:
+	rep
+	ret
+
+list_sum:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L29
+.L32:
+	addl	8(%rdi), %eax
+	movq	(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L32
+.L29:
+	rep
+	ret
+
+list_sum2:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L36
+.L37:
+	movq	(%rdi), %rdx
+	addl	8(%rdi), %eax
+	testq	%rdx, %rdx
+	je	.L36
+	movq	%rdx, %rdi
+	jmp	.L37
+.L36:
+	rep
+	ret
+
+pipe_sum2:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L41
+.L42:
+	movq	(%rdi), %rdx
+	addl	8(%rdi), %eax
+	testq	%rdx, %rdx
+	je	.L41
+	movq	%rdx, %rdi
+	jmp	.L42
+.L41:
+	rep
+	ret
+
+rlist_len:
+	subq	$8, %rsp
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L46
+	movq	(%rdi), %rdi
+	call	rlist_len
+	addl	$1, %eax
+.L46:
+	addq	$8, %rsp
+	ret
+
+rlist_sum:
+	pushq	%rbx
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L50
+	movl	8(%rdi), %ebx
+	movq	(%rdi), %rdi
+	call	rlist_sum
+	addl	%ebx, %eax
+.L50:
+	popq	%rbx
+	ret
+
+list_copy:
+	testq	%rdi, %rdi
+	je	.L56
+	testq	%rsi, %rsi
+	je	.L56
+.L57:
+	movl	8(%rdi), %eax
+	movl	%eax, 8(%rsi)
+	movq	(%rdi), %rdi
+	movq	(%rsi), %rsi
+	testq	%rdi, %rdi
+	je	.L56
+	testq	%rsi, %rsi
+	jne	.L57
+.L56:
+	rep
+	ret
+
+plist_copy:
+	testq	%rdi, %rdi
+	je	.L62
+	testq	%rsi, %rsi
+	je	.L62
+.L63:
+	movq	(%rsi), %rcx
+	movq	(%rdi), %rdx
+	movl	8(%rdi), %eax
+	movl	%eax, 8(%rsi)
+	testq	%rdx, %rdx
+	je	.L62
+	testq	%rcx, %rcx
+	je	.L62
+	movq	%rdx, %rdi
+	movq	%rcx, %rsi
+	jmp	.L63
+.L62:
+	rep
+	ret
+
+plist_copy2:
+	testq	%rdi, %rdi
+	je	.L67
+	testq	%rsi, %rsi
+	je	.L67
+.L68:
+	movq	(%rdi), %rdx
+	movq	(%rsi), %rcx
+	movl	8(%rdi), %eax
+	movl	%eax, 8(%rsi)
+	testq	%rdx, %rdx
+	je	.L67
+	testq	%rcx, %rcx
+	je	.L67
+	movq	%rdx, %rdi
+	movq	%rcx, %rsi
+	jmp	.L68
+.L67:
+	rep
+	ret
+
+stationary_copy:
+	movl	$0, %edx
+.L70:
+	movl	8(%rdi), %eax
+	movl	%eax, 8(%rsi)
+	addl	$1, %edx
+	cmpl	$1024, %edx
+	jne	.L70
+	rep
+	ret
+
+test:
+	movq	%rbx, -24(%rsp)
+	movq	%rbp, -16(%rsp)
+	movq	%r12, -8(%rsp)
+	subq	$24, %rsp
+	leal	-1(%rdi), %eax
+	cltq
+	movl	$main_list, %ebx
+	movq	%rax, %rbp
+	salq	$4, %rbp
+	movq	(%rbp,%rbx), %r12
+	movq	$0, (%rbp,%rbx)
+	movslq	myindex(%rip),%rax
+	movq	%rbx, %rdi
+	call	*test_fun(,%rax,8)
+	movq	%r12, (%rbp,%rbx)
+	movq	(%rsp), %rbx
+	movq	8(%rsp), %rbp
+	movq	16(%rsp), %r12
+	addq	$24, %rsp
+	ret
+
+test2a:
+	movq	%rbx, -24(%rsp)
+	movq	%rbp, -16(%rsp)
+	movq	%r12, -8(%rsp)
+	subq	$24, %rsp
+	leal	-1(%rdi), %eax
+	cltq
+	movl	$main_list, %ebx
+	movq	%rax, %rbp
+	salq	$4, %rbp
+	movq	(%rbp,%rbx), %r12
+	movq	$0, (%rbp,%rbx)
+	movslq	myindex(%rip),%rax
+	movq	%rbx, %rsi
+	movq	%rbx, %rdi
+	call	*test2_fun(,%rax,8)
+	movq	%r12, (%rbp,%rbx)
+	movq	(%rsp), %rbx
+	movq	8(%rsp), %rbp
+	movq	16(%rsp), %r12
+	addq	$24, %rsp
+	ret
+
+test2b:
+	movq	%rbx, -24(%rsp)
+	movq	%rbp, -16(%rsp)
+	movq	%r12, -8(%rsp)
+	subq	$24, %rsp
+	leal	-1(%rdi), %eax
+	cltq
+	movl	$main_list, %ebx
+	movq	%rax, %rbp
+	salq	$4, %rbp
+	movq	(%rbp,%rbx), %r12
+	movq	$0, (%rbp,%rbx)
+	movslq	myindex(%rip),%rax
+	movq	(%rbx), %rsi
+	movq	%rbx, %rdi
+	call	*test2_fun(,%rax,8)
+	movq	%r12, (%rbp,%rbx)
+	movq	(%rsp), %rbx
+	movq	8(%rsp), %rbp
+	movq	16(%rsp), %r12
+	addq	$24, %rsp
+	ret
+
+test2c:
+	movq	%rbx, -24(%rsp)
+	movq	%rbp, -16(%rsp)
+	movq	%r12, -8(%rsp)
+	subq	$24, %rsp
+	leal	-1(%rdi), %eax
+	cltq
+	movl	$main_list, %ebx
+	movq	%rax, %rbp
+	salq	$4, %rbp
+	movq	(%rbp,%rbx), %r12
+	movq	$0, (%rbp,%rbx)
+	movslq	myindex(%rip),%rax
+	movq	%rbx, %rsi
+	movq	(%rbx), %rdi
+	call	*test2_fun(,%rax,8)
+	movq	%r12, (%rbp,%rbx)
+	movq	(%rsp), %rbx
+	movq	8(%rsp), %rbp
+	movq	16(%rsp), %r12
+	addq	$24, %rsp
+	ret
+
+run_test:
+	pushq	%r12
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	%edi, %r12d
+	movl	$1024, %edi
+	call	mylink
+	movslq	%r12d,%rbx
+	movl	$main_list, %edi
+	call	*test_fun(,%rbx,8)
+	movq	test_descr(,%rbx,8), %rdx
+	movl	%eax, %r8d
+	movl	$1024, %ecx
+	movl	$.LC0, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	%r12d, myindex(%rip)
+	movl	$1024, %esi
+	movl	$test, %edi
+	call	find_cpe
+	movl	$.LC1, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%r12
+	ret
+
+run_test2:
+	pushq	%r12
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	%edi, %r12d
+	movl	%esi, %ebx
+	movl	$1024, %edi
+	call	mylink
+	movslq	%ebx,%rbx
+	movq	case2_descr(,%rbx,8), %rcx
+	movslq	%r12d,%rax
+	movq	test2_descr(,%rax,8), %rdx
+	movl	$.LC2, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	%r12d, myindex(%rip)
+	movq	case_fun(,%rbx,8), %rdi
+	movl	$1024, %esi
+	call	find_cpe
+	movl	$.LC1, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	call	__printf_chk
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%r12
+	ret
+
+main:
+	pushq	%rbx
+	movl	$0, %ebx
+.L86:
+	movl	%ebx, %edi
+	call	run_test
+	addl	$1, %ebx
+	cmpl	$8, %ebx
+	jne	.L86
+	jmp	.L95
+.L96:
+	movl	$0, %eax
+	popq	%rbx
+	ret
+
+.L95:
+	movl	$0, %ebx
+.L88:
+	movl	$0, %esi
+	movl	%ebx, %edi
+	call	run_test2
+	movl	$1, %esi
+	movl	%ebx, %edi
+	call	run_test2
+	movl	$2, %esi
+	movl	%ebx, %edi
+	call	run_test2
+	addl	$1, %ebx
+	cmpl	$4, %ebx
+	jne	.L88
+	jmp	.L96
+test_fun:
+test_descr:
+case2_descr:
+test2_descr:
+case_fun:
+test2_fun:
+.Lframe0:
+.Lframe1:
+.Letext0:
+.Ldebug_loc0:

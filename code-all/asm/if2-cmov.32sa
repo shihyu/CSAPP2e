@@ -1,0 +1,66 @@
+	.file	"if2-cmov.c"
+	.text
+.globl test
+	.type	test, @function
+test:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin if2-s 9 */
+# x at \ebpreg{}+8, y at \ebpreg{}+12
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %ecx
+	testl	%ecx, %ecx
+	jle	.L2
+	movl	%ebx, %edx
+	subl	%ecx, %edx
+	movl	%ecx, %eax
+	xorl	%ebx, %eax
+	cmpl	%ecx, %ebx
+	cmovl	%edx, %eax
+	jmp	.L4
+.L2:
+	leal	0(,%ebx,4), %edx
+	leal	(%ecx,%ebx), %eax
+	cmpl	$-2, %ecx
+	cmovge	%edx, %eax
+.L4:
+/* $end if2-s 9 */
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	test, .-test
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+test:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin if2-ann-s 9 */
+# x at \ebpreg{}+8, y at \ebpreg{}+12
+	movl	8(%ebp), %ebx	  # Get x
+	movl	12(%ebp), %ecx	  # Get y
+	testl	%ecx, %ecx	  # Test y
+	jle	.L2   		  # If !(y > 0), goto \textbf{false}
+	movl	%ebx, %edx	  # Copy x
+	subl	%ecx, %edx	  # Compute x-y
+	movl	%ecx, %eax	  # Copy y
+	xorl	%ebx, %eax	  # Compute val = x^y
+	cmpl	%ecx, %ebx	  # Compare x:y
+	cmovl	%edx, %eax	  # If <, val = x-y
+	jmp	.L4   		  # Goto \textbf{done}
+.L2:				# \textbf{false:}
+	leal	0(,%ebx,4), %edx  # Compute 4*x
+	leal	(%ecx,%ebx), %eax # Compute val = x+y
+	cmpl	$-2, %ecx    	  # Compare y:-2
+	cmovge	%edx, %eax	  # If >=, val = 4*x
+.L4:		      		# \textbf{done:}
+				  # Return val
+/* $end if-ann-s 9 */
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	test, .-test
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

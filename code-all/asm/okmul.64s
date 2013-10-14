@@ -1,0 +1,448 @@
+	.file	"okmul.c"
+	.text
+.globl tmult_ok1
+	.type	tmult_ok1, @function
+tmult_ok1:
+.LFB36:
+	imull	%edi, %esi
+	movl	%esi, (%rdx)
+#APP
+# 21 "okmul.c" 1
+	setae %al
+# 0 "" 2
+#NO_APP
+	movl	$0, %eax
+	ret
+.LFE36:
+	.size	tmult_ok1, .-tmult_ok1
+.globl tmult_ok2
+	.type	tmult_ok2, @function
+tmult_ok2:
+.LFB37:
+	pushq	%rbx
+.LCFI0:
+	imull	%edi, %esi
+	movl	%esi, (%rdx)
+#APP
+# 32 "okmul.c" 1
+	setae %bl          # Set low-order byte
+	movzbl %bl,%eax  # Zero extend to be result
+# 0 "" 2
+#NO_APP
+	popq	%rbx
+	ret
+.LFE37:
+	.size	tmult_ok2, .-tmult_ok2
+.globl tmult_ok3
+	.type	tmult_ok3, @function
+tmult_ok3:
+.LFB38:
+	imull	%edi, %esi
+	movl	%esi, (%rdx)
+#APP
+# 49 "okmul.c" 1
+	setae %al            # Set result
+# 0 "" 2
+#NO_APP
+	movzbl	%al, %eax
+	ret
+.LFE38:
+	.size	tmult_ok3, .-tmult_ok3
+.globl umult_ok
+	.type	umult_ok, @function
+umult_ok:
+.LFB39:
+	movq	%rdx, %rcx
+#APP
+# 70 "okmul.c" 1
+	movl %edi,%eax      # Get x
+	mull %esi            # Unsigned multiply by y
+	movl %eax,%edi      # Store low-order 4 bytes at dest
+	setae %sil           # Set result
+# 0 "" 2
+#NO_APP
+	movl	%edi, (%rcx)
+	movzbl	%sil, %eax
+	ret
+.LFE39:
+	.size	umult_ok, .-umult_ok
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC0:
+	.string	"Signed multiply: %d*%d->%d, ok = %d\n"
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC1:
+	.string	"OK"
+.LC2:
+	.string	"ERR"
+	.section	.rodata.str1.8
+	.align 8
+.LC3:
+	.string	"%s tmult_ok_asm: %d*%d->%d, ok = %d\n"
+	.align 8
+.LC4:
+	.string	"%s tmult_ok1: %d*%d->%d, ok = %d\n"
+	.align 8
+.LC5:
+	.string	"%s tmult_ok2: %d*%d->%d, ok = %d\n"
+	.align 8
+.LC6:
+	.string	"%s tmult_ok3: %d*%d->%d, ok = %d\n"
+	.align 8
+.LC7:
+	.string	"\nUnsigned multiply: %u*%u->%u, ok = %d\n"
+	.align 8
+.LC8:
+	.string	"%s umult_ok_asm: %u*%u->%u, ok = %d\n"
+	.align 8
+.LC9:
+	.string	"%s umult_ok: %u*%u->%u, ok = %d\n"
+	.text
+.globl main
+	.type	main, @function
+main:
+.LFB40:
+	pushq	%r15
+.LCFI1:
+	pushq	%r14
+.LCFI2:
+	pushq	%r13
+.LCFI3:
+	pushq	%r12
+.LCFI4:
+	pushq	%rbp
+.LCFI5:
+	pushq	%rbx
+.LCFI6:
+	subq	$24, %rsp
+.LCFI7:
+	movl	%edi, %ebx
+	movq	%rsi, %rbp
+	movl	$65536, %r14d
+	cmpl	$1, %edi
+	jle	.L11
+	movq	8(%rsi), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtol
+	movq	%rax, %r14
+.L11:
+	movl	$65535, %r15d
+	cmpl	$2, %ebx
+	jle	.L13
+	movq	16(%rbp), %rdi
+	movl	$0, %edx
+	movl	$0, %esi
+	call	strtol
+	movq	%rax, %r15
+.L13:
+	movl	%r14d, %ebx
+	movl	%r15d, %ebp
+	movl	$1, %r12d
+	testl	%r14d, %r14d
+	je	.L15
+	movl	%r15d, %edx
+	imull	%r14d, %edx
+	movl	%edx, %eax
+	sarl	$31, %edx
+	idivl	%r14d
+	cmpl	%r15d, %eax
+	sete	%al
+	movzbl	%al, %r12d
+.L15:
+	movl	%ebp, %r13d
+	imull	%ebx, %r13d
+	movl	%r12d, %r9d
+	movl	%r13d, %r8d
+	movl	%ebp, %ecx
+	movl	%ebx, %edx
+	movl	$.LC0, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	20(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	tmult_ok_asm
+	movl	20(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L16
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L17
+.L16:
+	movl	$.LC2, %edx
+.L17:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC3, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	20(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	tmult_ok1
+	movl	20(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L18
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L19
+.L18:
+	movl	$.LC2, %edx
+.L19:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC4, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	20(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	tmult_ok2
+	movl	20(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L20
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L21
+.L20:
+	movl	$.LC2, %edx
+.L21:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC5, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	20(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	tmult_ok2
+	movl	20(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L22
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L23
+.L22:
+	movl	$.LC2, %edx
+.L23:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC5, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	20(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	tmult_ok3
+	movl	20(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L24
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L25
+.L24:
+	movl	$.LC2, %edx
+.L25:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC6, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	%r14d, %ebx
+	movl	%r15d, %ebp
+	movl	$1, %r12d
+	testl	%r14d, %r14d
+	je	.L27
+	movl	%r15d, %eax
+	imull	%r14d, %eax
+	movl	$0, %edx
+	divl	%r14d
+	cmpl	%r15d, %eax
+	sete	%al
+	movzbl	%al, %r12d
+.L27:
+	movl	%ebp, %r13d
+	imull	%ebx, %r13d
+	movl	%r12d, %r9d
+	movl	%r13d, %r8d
+	movl	%ebp, %ecx
+	movl	%ebx, %edx
+	movl	$.LC7, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	16(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	umult_ok_asm
+	movl	16(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L28
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L29
+.L28:
+	movl	$.LC2, %edx
+.L29:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC8, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	leaq	16(%rsp), %rdx
+	movl	%ebp, %esi
+	movl	%ebx, %edi
+	call	umult_ok
+	movl	16(%rsp), %ecx
+	cmpl	%eax, %r12d
+	jne	.L30
+	movl	$.LC1, %edx
+	cmpl	%ecx, %r13d
+	je	.L31
+.L30:
+	movl	$.LC2, %edx
+.L31:
+	movl	%eax, (%rsp)
+	movl	%ecx, %r9d
+	movl	%ebp, %r8d
+	movl	%ebx, %ecx
+	movl	$.LC9, %esi
+	movl	$1, %edi
+	movl	$0, %eax
+	call	__printf_chk
+	movl	$0, %edi
+	call	exit
+.LFE40:
+	.size	main, .-main
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB36
+	.long	.LFE36-.LFB36
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB37
+	.long	.LFE37-.LFB37
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI0-.LFB37
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x83
+	.uleb128 0x2
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB38
+	.long	.LFE38-.LFB38
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB39
+	.long	.LFE39-.LFB39
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB40
+	.long	.LFE40-.LFB40
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI1-.LFB40
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x4
+	.long	.LCFI2-.LCFI1
+	.byte	0xe
+	.uleb128 0x18
+	.byte	0x4
+	.long	.LCFI3-.LCFI2
+	.byte	0xe
+	.uleb128 0x20
+	.byte	0x4
+	.long	.LCFI4-.LCFI3
+	.byte	0xe
+	.uleb128 0x28
+	.byte	0x4
+	.long	.LCFI5-.LCFI4
+	.byte	0xe
+	.uleb128 0x30
+	.byte	0x4
+	.long	.LCFI6-.LCFI5
+	.byte	0xe
+	.uleb128 0x38
+	.byte	0x4
+	.long	.LCFI7-.LCFI6
+	.byte	0xe
+	.uleb128 0x50
+	.byte	0x83
+	.uleb128 0x7
+	.byte	0x86
+	.uleb128 0x6
+	.byte	0x8c
+	.uleb128 0x5
+	.byte	0x8d
+	.uleb128 0x4
+	.byte	0x8e
+	.uleb128 0x3
+	.byte	0x8f
+	.uleb128 0x2
+	.align 8
+.LEFDE9:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

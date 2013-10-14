@@ -1,0 +1,6 @@
+/* Factorial using tail recursion */
+int tailfact(int n, int sofar) {
+    if (n <= 10)
+	return sofar;
+    return tailfact(n-1, sofar*n);
+}

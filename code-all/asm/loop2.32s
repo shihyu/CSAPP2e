@@ -1,0 +1,44 @@
+	.file	"loop2.c"
+	.text
+.globl loop
+	.type	loop, @function
+loop:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+.L2:
+	movl	%edx, %eax
+	addl	$4, %edx
+	js	.L2
+	popl	%ebp
+	ret
+	.size	loop, .-loop
+.globl loop2
+	.type	loop2, @function
+loop2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	$0, %eax
+.L9:
+	testb	$1, %dl
+	je	.L6
+	shrl	%ecx
+	jmp	.L7
+.L6:
+	sall	$2, %ecx
+.L7:
+	addl	$1, %eax
+	testl	%ecx, %ecx
+	je	.L8
+	shrl	%edx
+	jmp	.L9
+.L8:
+	popl	%ebp
+	.p2align 4,,2
+	.p2align 3
+	ret
+	.size	loop2, .-loop2
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

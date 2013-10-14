@@ -1,0 +1,17 @@
+less:
+	pushl %ebp
+	movl %esp,%ebp
+	/* $begin fpless-s 73 */
+	fldl 16(%ebp)   # Push y
+	fcompl 8(%ebp)	# Compare y:x
+	/* $begin fpselectbits-s 75 */
+	fnstsw %ax	# Store floating point status word in %ax
+	andb $69,%ah	# Mask all but bits 0, 2, and 6
+	/* $end fpselectbits-s 75 */
+	sete %al	# Test for comparison outcome of 0 (>)
+	movzbl %al,%eax	# Copy low order byte to result, and set rest to 0
+	/* $end fpless-s 73 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+

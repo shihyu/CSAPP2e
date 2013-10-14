@@ -1,0 +1,379 @@
+	.file	"proc.c"
+	.text
+	.p2align 4,,15
+.globl proc
+	.type	proc, @function
+/* $begin proc-64 6 */
+# x86-64 implementation of function proc
+# Arguments passed as follows:
+#   a1  in %rdi     (64 bits)
+#   a1p in %rsi     (64 bits)
+#   a2  in %edx     (32 bits)
+#   a2p in %rcx     (64 bits)
+#   a3  in %r8w     (16 bits)
+#   a3p in %r9      (64 bits)
+#   a4  at  8(%rsp) ( 8 bits)
+#   a4p at 16(%rsp) (64 bits)
+proc:
+/* $end proc-64 6 */
+.LFB2:
+/* $begin proc-64 8 */
+	movq	16(%rsp), %r10	# Fetch a4p  (64 bits)
+	addq	%rdi, (%rsi)	# *a1p += a1 (64 bits)
+	addl	%edx, (%rcx)	# *a2p += a2 (32 bits)
+	movzbl	8(%rsp), %eax	# Fetch a4   (8 bits)
+	addw	%r8w, (%r9)	# *a3p += a3 (16 bits)
+	addb	%al, (%r10)	# *a4p += a4 (8 bits)
+	ret
+/* $end proc-64 8 */
+.LFE2:
+	.size	proc, .-proc
+	.p2align 4,,15
+
+	.p2align 4,,15
+.globl call_proc
+	.type	call_proc, @function
+
+/* $begin call_proc-64 20 */
+# x86-64 implementation of call_proc
+call_proc:
+/* $end call_proc-64 20 */
+.LFB3:
+/* $begin call_proc-64 22 */
+	subq	$32, %rsp	# Allocate 32-byte stack frame
+/* $end call_proc-64 22 */
+.LCFI0:
+/* $begin call_proc-64 24 */
+	movl	$2, %edx	# Pass   2 as argument 3
+	movl	$3, %r8d	# Pass   3 as argument 5
+	leaq	31(%rsp), %rax	# Compute &x4
+	leaq	24(%rsp), %rcx	# Pass &x2 as argument 4
+	leaq	28(%rsp), %r9	# Pass &x3 as argument 6
+	leaq	16(%rsp), %rsi	# Pass &x1 as argument 2
+	movl	$1, %edi	# Pass   1 as argument 1
+	movq	$1, 16(%rsp)	# x1 = 1
+	movq	%rax, 8(%rsp)	# Pass &x4 as argument 8
+	movl	$2, 24(%rsp)	# x2 = 2
+	movw	$3, 28(%rsp)	# x3 = 3
+	movb	$4, 31(%rsp)	# x4 = 4
+	movl	$4, (%rsp)	# Pass   4 as argument 7
+	call	proc		# Call
+	movswl	28(%rsp),%edx	# Get x3
+	movsbl	31(%rsp),%ecx	# Get x4
+	movslq	24(%rsp),%rax	# Get x2
+	addq	16(%rsp), %rax	# Compute x1+x2
+	addq	$32, %rsp	# Deallocate stack frame
+	subl	%ecx, %edx	# Compute (int) (x3-x4)
+	movslq	%edx,%rdx	# Sign extend to long
+	imulq	%rdx, %rax	# Return (x1+x2)*(x3-x4)
+	ret
+/* $end call_proc-64 24 */
+.LFE3:
+	.size	call_proc, .-call_proc
+
+rproc:
+.LFB4:
+	movq	%rbp, -16(%rsp)
+.LCFI1:
+	movq	%rbx, -24(%rsp)
+.LCFI2:
+	movq	%r12, -8(%rsp)
+.LCFI3:
+	subq	$40, %rsp
+.LCFI4:
+	movq	(%rsi), %rax
+	leaq	8(%rsp), %rbp
+	leaq	(%rax,%rdi), %rdx
+	subq	%rax, %rdi
+	xorl	%eax, %eax
+	movq	%rdi, (%rsp)
+	testq	%rdx, %rdx
+	movq	%rdx, 8(%rsp)
+	jne	.L8
+	movq	16(%rsp), %rbx
+	movq	24(%rsp), %rbp
+	movq	32(%rsp), %r12
+	addq	$40, %rsp
+	ret
+	.p2align 4,,7
+.L8:
+	movq	%rdx, %rdi
+	movq	%rbp, %rsi
+	call	rproc
+	movq	(%rsp), %rdi
+	movq	%rsp, %rsi
+	movq	%rax, %rbx
+	call	rproc
+	imulq	%rax, %rbx
+	movq	(%rsp), %rdi
+	movq	%rbp, %rsi
+	call	rproc
+	imulq	%rax, %rbx
+	movq	8(%rsp), %rdi
+	movq	%rsp, %rsi
+	call	rproc
+	imulq	%rbx, %rax
+	movq	24(%rsp), %rbp
+	movq	16(%rsp), %rbx
+	movq	32(%rsp), %r12
+	addq	$40, %rsp
+	ret
+.LFE4:
+	.size	rproc, .-rproc
+	.p2align 4,,15
+.globl rfact
+	.type	rfact, @function
+/* $begin rfact-prob-64 104 */
+# x86-64 implementation of recursive factorial function rfact
+# Argument x in %rdi
+rfact:
+/* $end rfact-prob-64 104 */
+.LFB5:
+/* $begin rfact-prob-64 106 */
+	testq	%rdi, %rdi
+	pushq	%rbx		# # line:asm2:rfact:pushq
+/* $end rfact-prob-64 106 */
+.LCFI5:
+/* $begin rfact-prob-64 109 */
+	movl	$1, %eax
+	movq	%rdi, %rbx
+	jle	.L9
+	leaq	-1(%rdi), %rdi
+	call	rfact
+	imulq	%rbx, %rax
+.L9:				
+	popq	%rbx		# # line:asm2:rfact:popq
+	ret			
+/* $end rfact-prob-64 109 */
+
+/* $begin rfact-ans-64 104 */
+# x86-64 implementation of recursive factorial function rfact
+# Argument x in %rdi
+rfact:
+/* $end rfact-ans-64 104 */
+.LFB5:
+/* $begin rfact-ans-64 106 */
+	testq	%rdi, %rdi	#   Test x
+	pushq	%rbx		#   Save %rbx (callee save) 
+/* $end rfact-ans-64 106 */
+.LCFI5:
+/* $begin rfact-ans-64 109 */
+	movl	$1, %eax	#   result = 1
+	movq	%rdi, %rbx	#   Copy x to %rbx
+	jle	.L9		#   if x<=0 goto done
+	leaq	-1(%rdi), %rdi  #   xm1 = x-1 
+	call	rfact		#   rfact(xm1)
+	imulq	%rbx, %rax	#   result = x*rfact(x)
+.L9:				# done:
+	popq	%rbx		#   Restore %rbx
+	ret			#   Return
+/* $end rfact-ans-64 109 */
+
+.LFE5:
+	.size	rfact, .-rfact
+	.p2align 4,,15
+.globl sfact_helper
+	.type	sfact_helper, @function
+/* $begin sfact_helper-64 123 */
+# x86-64 implementation of sfact_helper
+# Argument x in %rdi, resultp in %rsi
+sfact_helper:
+/* $end sfact_helper-64 123 */
+.LFB6:
+/* $begin sfact_helper-64 125 */
+	movq	%rbx, -16(%rsp)	 #   Save %rbx (callee save) # line:asm2:sfact_helper:save_rbx
+/* $end sfact_helper-64 125 */
+.LCFI6:
+/* $begin sfact_helper-64 127 */
+	movq	%rbp, -8(%rsp)	 #   Save %rbp (callee save) # line:asm2:sfact_helper:save_rbp
+/* $end sfact_helper-64 127 */
+.LCFI7:
+/* $begin sfact_helper-64 129 */
+	subq	$24, %rsp	 #   Allocate 24 bytes on stack # line:asm2:sfact_helper:allocate
+/* $end sfact_helper-64 129 */
+.LCFI8:
+/* $begin sfact_helper-64 131 */
+	testq	%rdi, %rdi	 #   Test x
+	movq	%rdi, %rbx	 #   Copy x to %rbx
+	movq	%rsi, %rbp	 #   Copy resultp to %rbp
+	jle	.L17		 #   if x<=0 goto finish
+	leaq	-1(%rdi), %rdi	 #   xm1 = x-1  (1st argument)
+	movq	%rsp, %rsi	 #   &nresult   (2nd argument)
+	call	sfact_helper	 #   sfact_helper(xm1, &nresult)
+	imulq	(%rsp), %rbx     #   x*nresult
+	movq	%rbx, (%rbp)	 #   *result = x*nresult
+	movq	8(%rsp), %rbx    #   Restore %rbx		# line:asm2:sfact_helper:restore_rbx
+	movq	16(%rsp), %rbp   #   Restore %rbp 		# line:asm2:sfact_helper:restore_rbp
+	addq	$24, %rsp	 #   Deallocate stack frame
+	ret			 #   Return
+/* $end sfact_helper-64 131 */
+	.p2align 4,,7
+/* $begin sfact_helper-64 145 */
+.L17:				 # finish:
+	movq	$1, (%rsi)	 #   *resultp = 1
+	movq	8(%rsp), %rbx	 #   Restore %rbx
+	movq	16(%rsp), %rbp	 #   Restore %rbp
+	addq	$24, %rsp	 #   Deallocate stack frame
+	ret			 #   Return
+/* $end sfact_helper-64 145 */
+.LFE6:
+	.size	sfact_helper, .-sfact_helper
+	.p2align 4,,15
+.globl sfact
+	.type	sfact, @function
+/* $begin sfact-64 156 */
+# x86-64 implementation of factorial function sfact
+# Argument x in %rdi
+sfact:
+/* $end sfact-64 156 */
+.LFB7:
+/* $begin sfact-64 158 */
+	subq	$8, %rsp	# Allocate 8 bytes on stack
+/* $end sfact-64 158 */
+.LCFI9:
+/* $begin sfact-64 160 */
+	movq	%rsp, %rsi	# &result
+	call	sfact_helper	# sfact_helper(x, &nresult)
+	movq	(%rsp), %rax	# return value = result
+	addq	$8, %rsp	# Deallocate stack frame
+	ret			# Return
+/* $end sfact-64 160 */
+.LFE7:
+	.size	sfact, .-sfact
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB3
+	.quad	.LFE3-.LFB3
+	.byte	0x4
+	.long	.LCFI0-.LFB3
+	.byte	0xe
+	.uleb128 0x28
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.quad	.LFB4
+	.quad	.LFE4-.LFB4
+	.byte	0x4
+	.long	.LCFI4-.LFB4
+	.byte	0xe
+	.uleb128 0x30
+	.byte	0x8c
+	.uleb128 0x2
+	.byte	0x83
+	.uleb128 0x4
+	.byte	0x86
+	.uleb128 0x3
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.quad	.LFB5
+	.quad	.LFE5-.LFB5
+	.byte	0x4
+	.long	.LCFI5-.LFB5
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x83
+	.uleb128 0x2
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.quad	.LFB6
+	.quad	.LFE6-.LFB6
+	.byte	0x4
+	.long	.LCFI8-.LFB6
+	.byte	0xe
+	.uleb128 0x20
+	.byte	0x86
+	.uleb128 0x2
+	.byte	0x83
+	.uleb128 0x3
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.quad	.LFB7
+	.quad	.LFE7-.LFB7
+	.byte	0x4
+	.long	.LCFI9-.LFB7
+	.byte	0xe
+	.uleb128 0x10
+	.align 8
+.LEFDE11:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"
+
+.globl local_array
+	.type	local_array, @function
+/* $begin local_array-prob-64 312 */
+# x86-64 implementation of local_array
+# Argument i in %edi
+local_array:
+/* $end local_array-prob-64 312 */
+.LFB11:
+/* $begin local_array-prob-64 314 */
+	andl	$3, %edi
+	movq	$2, -40(%rsp)
+	movq	$3, -32(%rsp)
+	movq	$5, -24(%rsp)
+	movq	$7, -16(%rsp)
+	movq	-40(%rsp,%rdi,8), %rax
+	ret
+/* $end local_array-prob-64 314 */
+.LFE11:
+	.size	local_array, .-local_array
+
+/* $begin local_array-ans-64 312 */
+# x86-64 implementation of local_array
+# Argument i in %edi
+local_array:
+/* $end local_array-ans-64 312 */
+.LFB11:
+/* $begin local_array-ans-64 314 */
+	andl	$3, %edi		# idx = i & 3;
+	movq	$2, -40(%rsp)		# a[0] = 2
+	movq	$3, -32(%rsp)		# a[1] = 3
+	movq	$5, -24(%rsp)		# a[2] = 5
+	movq	$7, -16(%rsp)		# a[3] = 7
+	movq	-40(%rsp,%rdi,8), %rax	# return a[idx]
+	ret
+/* $end local_array-ans-64 314 */
+.LFE11:
+	.size	local_array, .-local_array

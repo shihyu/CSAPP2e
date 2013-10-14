@@ -1,0 +1,8 @@
+#include <math.h>
+
+/* Some test of math functions */
+
+double sin_asin(double x)
+{
+    return sin(asin(x));
+}

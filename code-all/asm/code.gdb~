@@ -1,0 +1,6 @@
+break sum
+run
+print /x sum
+print /x $eip
+print /x (int *) $ebp+2
+pirnt /x *(int *) $ebp+1

@@ -1,0 +1,119 @@
+	.file	"recurse.c"
+	.text
+.globl rfun
+	.type	rfun, @function
+rfun:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$4, %esp
+/* $begin recurse-s 10 */
+	movl	8(%ebp), %ebx
+	movl	$0, %eax
+	testl	%ebx, %ebx
+	je	.L3
+	movl	%ebx, %eax
+	shrl	%eax		# Shift right by 1
+	movl	%eax, (%esp)
+	call	rfun
+	movl	%ebx, %edx
+	andl	$1, %edx
+	leal	(%edx,%eax), %eax
+.L3:
+/* $end recurse-s 10 */
+	addl	$4, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	rfun, .-rfun
+.globl prange
+	.type	prange, @function
+prange:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edi
+	cmpl	%edi, %eax
+	jbe	.L6
+	movl	$0, %eax
+	jmp	.L7
+.L6:
+	cmpl	%edi, %eax
+	je	.L7
+	leal	(%edi,%eax), %ebx
+	shrl	%ebx
+	movl	%ebx, 4(%esp)
+	movl	%eax, (%esp)
+	call	prange
+	movl	%eax, %esi
+	movl	%edi, 4(%esp)
+	addl	$1, %ebx
+	movl	%ebx, (%esp)
+	call	prange
+	imull	%esi, %eax
+.L7:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	prange, .-prange
+.globl o
+	.type	o, @function
+o:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+	testl	%edx, %edx
+	je	.L11
+	movl	%edx, %eax
+	shrl	%eax
+	testb	$1, %dl
+	je	.L12
+	movl	%eax, (%esp)
+	call	e
+	jmp	.L11
+.L12:
+	movl	%eax, (%esp)
+	call	o
+.L11:
+	leave
+	.p2align 4,,5
+	.p2align 3
+	ret
+	.size	o, .-o
+.globl e
+	.type	e, @function
+e:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L16
+	movl	%edx, %eax
+	shrl	%eax
+	testb	$1, %dl
+	je	.L17
+	movl	%eax, (%esp)
+	call	o
+	jmp	.L16
+.L17:
+	movl	%eax, (%esp)
+	call	e
+.L16:
+	leave
+	.p2align 4,,5
+	.p2align 3
+	ret
+	.size	e, .-e
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,21 @@
+	.file	"args.c"
+	.text
+.globl fun
+	.type	fun, @function
+fun:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin args-s 8 */
+	movsbl	12(%ebp),%edx	
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)	##line:asm:args:store
+	movswl	8(%ebp),%eax
+	movl	20(%ebp), %edx
+	subl	%eax, %edx	##line:asm:args:subtract
+	movl	%edx, %eax
+/* $end args-s 8 */
+	popl	%ebp
+	ret
+	.size	fun, .-fun
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

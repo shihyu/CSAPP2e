@@ -1,0 +1,35 @@
+	.file	"multi-signed.c"
+	.text
+.globl store_prod
+	.type	store_prod, @function
+store_prod:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	movl	20(%ebp), %ecx
+	imull	%eax, %ecx
+	mull	16(%ebp)
+	leal	(%ecx,%edx), %edx
+	movl	8(%ebp), %ecx
+	movl	%eax, (%ecx)
+	movl	%edx, 4(%ecx)
+	popl	%ebp
+	ret
+	.size	store_prod, .-store_prod
+.globl neg_prod
+	.type	neg_prod, @function
+neg_prod:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	16(%ebp), %ecx
+	imull	%eax, %ecx
+	mull	12(%ebp)
+	leal	(%ecx,%edx), %edx
+	movl	%edx, %eax
+	shrl	$31, %eax
+	popl	%ebp
+	ret
+	.size	neg_prod, .-neg_prod
+	.ident	"GCC: (GNU) 4.4.6 20120305 (Red Hat 4.4.6-4)"
+	.section	.note.GNU-stack,"",@progbits

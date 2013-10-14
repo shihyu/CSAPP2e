@@ -1,0 +1,96 @@
+	.file	"fpmath.c"
+	.text
+.globl long_hypotenuse
+	.type	long_hypotenuse, @function
+long_hypotenuse:
+.LFB4:
+	fldt	8(%rsp)
+	fldt	24(%rsp)
+	fxch	%st(1)
+	fmul	%st(0), %st
+	fxch	%st(1)
+	fmul	%st(0), %st
+	faddp	%st, %st(1)
+	fstpl	-16(%rsp)
+	movsd	-16(%rsp), %xmm0
+	sqrtsd	%xmm0, %xmm0
+	movsd	%xmm0, -24(%rsp)
+	fldl	-24(%rsp)
+	ret
+.LFE4:
+	.size	long_hypotenuse, .-long_hypotenuse
+.globl hypotenuse
+	.type	hypotenuse, @function
+hypotenuse:
+.LFB3:
+	mulsd	%xmm0, %xmm0
+	mulsd	%xmm1, %xmm1
+	addsd	%xmm1, %xmm0
+	sqrtsd	%xmm0, %xmm0
+	ret
+.LFE3:
+	.size	hypotenuse, .-hypotenuse
+.globl sin_asin
+	.type	sin_asin, @function
+sin_asin:
+.LFB2:
+	subq	$8, %rsp
+.LCFI0:
+	call	asin
+	call	sin
+	addq	$8, %rsp
+	ret
+.LFE2:
+	.size	sin_asin, .-sin_asin
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI0-.LFB2
+	.byte	0xe
+	.uleb128 0x10
+	.align 8
+.LEFDE5:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

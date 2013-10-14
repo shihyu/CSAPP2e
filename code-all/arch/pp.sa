@@ -1,0 +1,26 @@
+/* $begin pushtest-s 0 */	
+	.text
+.globl pushtest
+pushtest:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	%esp, %eax # Copy stack pointer
+	pushl   %esp	   # Push stack pointer
+	popl	%edx	   # Pop it back
+	subl	%edx,%eax  # Subtract new from old stack pointer
+	leave		   # Restore stack & frame pointers
+	ret
+/* $end pushtest-s 0 */	
+/* $begin poptest-s 0 */		
+	.text
+.globl poptest
+poptest:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	$0xabcd	    # Push test value  # line:arch:poptest:testval
+	popl	%esp	    # Pop to stack pointer
+	movl	%esp, %eax  # Set popped value as return value
+	leave		    # Restore stack and frame pointers 
+	ret
+/* $end poptest-s 0 */		
+

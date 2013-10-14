@@ -1,0 +1,236 @@
+	.file	"cond-cmov.c"
+	.text
+.globl max
+	.type	max, @function
+max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	cmpl	%edx, %eax
+	cmovl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	max, .-max
+.globl wa_max
+	.type	wa_max, @function
+wa_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	leal	17(%edx), %ebx
+	leal	23(%ecx), %eax
+	cmpl	%edx, %ecx
+	cmovl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	wa_max, .-wa_max
+.globl wm_max
+	.type	wm_max, @function
+wm_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	cmpl	%edx, %ecx
+	jge	.L8
+	movl	%edx, %eax
+	sall	$4, %eax
+	addl	%edx, %eax
+	jmp	.L9
+.L8:
+	leal	(%ecx,%ecx,2), %eax
+	sall	$3, %eax
+	subl	%ecx, %eax
+.L9:
+	popl	%ebp
+	ret
+	.size	wm_max, .-wm_max
+.globl wm_max2
+	.type	wm_max2, @function
+wm_max2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	%edx, %eax
+	sall	$4, %eax
+	cmpl	%edx, %ecx
+	cmovge	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	wm_max2, .-wm_max2
+.globl wm_max3
+	.type	wm_max3, @function
+wm_max3:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	movl	%eax, %ecx
+	cmpl	%edx, %eax
+	jge	.L15
+	movl	%edx, %eax
+	sall	$4, %eax
+	leal	(%eax,%edx), %ecx
+.L15:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	wm_max3, .-wm_max3
+.globl abs
+	.type	abs, @function
+abs:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	cltd
+	xorl	%edx, %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	abs, .-abs
+.globl cmul
+	.type	cmul, @function
+cmul:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	imull	%edx, %eax
+	testl	%edx, %edx
+	movl	$0, %edx
+	cmove	%edx, %eax
+	popl	%ebp
+	ret
+	.size	cmul, .-cmul
+.globl cmul2
+	.type	cmul2, @function
+cmul2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%eax, %ecx
+	imull	%edx, %ecx
+	cmpl	$1, %edx
+	cmovne	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	cmul2, .-cmul2
+.globl cdiv
+	.type	cdiv, @function
+cdiv:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %edx
+	movl	$0, %ecx
+	testl	%edx, %edx
+	je	.L25
+	movl	8(%ebp), %eax
+	movl	%edx, %ebx
+	cltd
+	idivl	%ebx
+	movl	%eax, %ecx
+.L25:
+	movl	%ecx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	cdiv, .-cdiv
+.globl cdiv2
+	.type	cdiv2, @function
+cdiv2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	cmpl	$1, %edx
+	je	.L27
+	movl	%edx, %ecx
+	cltd
+	idivl	%ecx
+.L27:
+	popl	%ebp
+	ret
+	.size	cdiv2, .-cdiv2
+.globl cread
+	.type	cread, @function
+cread:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L30
+	movl	(%edx), %eax
+.L30:
+	popl	%ebp
+	ret
+	.size	cread, .-cread
+.globl lcount
+	.bss
+	.align 4
+	.type	lcount, @object
+	.size	lcount, 4
+lcount:
+	.zero	4
+	.text
+.globl se_max
+	.type	se_max, @function
+se_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %ecx
+	movl	%eax, %edx
+	cmpl	%ecx, %eax
+	jge	.L33
+	incl	lcount
+	movl	%ecx, %edx
+.L33:
+	movl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	se_max, .-se_max
+.globl arith
+	.type	arith, @function
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+/* $begin arith-prob 206 */
+# Computation by function arith
+# x is in register %eax	
+	leal	3(%eax), %edx
+	cmpl	$-1, %eax
+	cmovle	%edx, %eax
+	sarl	$2, %eax	# Return value in %eax
+/* $end arith-prob 206 */
+	popl	%ebp
+	ret
+	.size	arith, .-arith
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"
+
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+/* $begin arith-ans 206 */
+# Computation by function arith
+# x is in register %eax	
+	leal	3(%eax), %edx	# temp = x+3
+	cmpl	$-1, %eax	# Test x:-1
+	cmovle	%edx, %eax	# If <=, x = temp
+	sarl	$2, %eax	# Return x >> 2 (= x/4)
+/* $end arith-prob ans */
+	popl	%ebp
+	ret
+	.size	arith, .-arith
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

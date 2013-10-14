@@ -1,0 +1,31 @@
+	.file	"cc.c"
+	.text
+.globl lt
+	.type	lt, @function
+lt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	movl	%edx, x
+	movl	%eax, y
+/* $begin cc-s 12 */
+	# a is in \edxreg, b is in \eaxreg
+	cmpl	%eax, %edx   # Compare a:b 
+	setl	%al	     # Set low order byte of %eax to 0 or 1 
+	movzbl	%al, %eax    # Set remaining bytes of %eax to 0
+/* $end cc-s 12 */
+	popl	%ebp
+	ret
+	.size	lt, .-lt
+	.comm	x,4,4
+	.comm	y,4,4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin cc-prob-s 12 */
+	# a is in \edxreg, b is in \eaxreg
+	cmpl	%eax, %edx   # Compare a:b #line:asm:cc_compare
+	setl	%al	     # Set low order byte of %eax to 0 or 1 #line:asm:cc_set
+/* $end cc-prob-s 12 */
+

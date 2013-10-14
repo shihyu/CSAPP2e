@@ -1,0 +1,16 @@
+Integer Sum combine4: Array reference, accumulate in temporary:
+Best: 1.98 (4%), Overall Best: 1.98 40-most: 2.08 cycles/element
+Integer Sum combine5: Array code, unrolled by 2:
+Best: 1.97 (2%), Overall Best: 1.98 40-most: 2.07 cycles/element
+Integer Sum unroll3a: Array code, unrolled by 3:
+Best: 1.06 (2%), Overall Best: 1.06 40-most: 1.12 cycles/element
+Integer Sum unroll4a: Array code, unrolled by 4:
+Best: 1.07 (4%), Overall Best: 1.07 40-most: 1.12 cycles/element
+Integer Sum unroll5a: Array code, unrolled by 5:
+Best: 1.08 (4%), Overall Best: 1.08 40-most: 1.12 cycles/element
+Integer Sum unroll6a: Array code, unrolled by 6:
+Best: 1.08 (4%), Overall Best: 1.08 40-most: 1.12 cycles/element
+Integer Sum unroll8a: Array code, unrolled by 8:
+Best: 1.08 (4%), Overall Best: 1.08 40-most: 1.12 cycles/element
+Integer Sum unroll16a: Array code, unrolled by 16:
+Best: 1.08 (4%), Overall Best: 1.08 40-most: 1.12 cycles/element

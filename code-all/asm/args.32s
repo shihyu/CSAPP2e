@@ -1,0 +1,143 @@
+	.file	"args.c"
+	.text
+.globl fun
+	.type	fun, @function
+fun:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	fun, .-fun
+.globl funuuu
+	.type	funuuu, @function
+funuuu:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funuuu, .-funuuu
+.globl funuus
+	.type	funuus, @function
+funuus:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funuus, .-funuus
+.globl funusu
+	.type	funusu, @function
+funusu:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funusu, .-funusu
+.globl funuss
+	.type	funuss, @function
+funuss:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funuss, .-funuss
+.globl funsuu
+	.type	funsuu, @function
+funsuu:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funsuu, .-funsuu
+.globl funsus
+	.type	funsus, @function
+funsus:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funsus, .-funsus
+.globl funssu
+	.type	funssu, @function
+funssu:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funssu, .-funssu
+.globl funsss
+	.type	funsss, @function
+funsss:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movswl	8(%ebp), %edx
+	movl	20(%ebp), %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	funsss, .-funsss
+.globl funcss
+	.type	funcss, @function
+funcss:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	12(%ebp), %edx
+	movl	16(%ebp), %eax
+	movl	%edx, (%eax)
+	movl	20(%ebp), %eax
+	subb	8(%ebp), %al
+	popl	%ebp
+	ret
+	.size	funcss, .-funcss
+	.ident	"GCC: (GNU) 4.4.6 20120305 (Red Hat 4.4.6-4)"
+	.section	.note.GNU-stack,"",@progbits

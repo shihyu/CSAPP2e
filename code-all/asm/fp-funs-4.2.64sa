@@ -1,0 +1,293 @@
+	.file	"fp-funs-4.2.c"
+	.text
+.globl funct1
+	.type	funct1, @function
+/* $begin fexpr1-64-s 5 */
+# x86-64 implementation of funct1
+funct1:
+/* $end fexpr1-64-s 5 */
+.LFB2:
+/* $begin fexpr1-64-s 7 */
+	cvtsi2ss	%edi, %xmm3 ## line:asm:fexpr1:cvtsi2ss
+	cvtsi2ssq	%rsi, %xmm2 ## line:asm:fexpr1:cvtsi2ssq
+	addss	%xmm0, %xmm2 ## line:asm:fexpr1:addss
+	divss	%xmm2, %xmm3 ## line:asm:fexpr1:divss
+	cvtss2sd	%xmm3, %xmm3 ## line:asm:fexpr1:cvtss2sd
+	movapd	%xmm3, %xmm0
+	subsd	%xmm1, %xmm0 ## line:asm:fexpr1:subsd
+	ret
+/* $end fexpr1-64-s 7 */
+.LFE2:
+	.size	funct1, .-funct1
+.globl funct2
+	.type	funct2, @function
+/* $begin fexpr2-64-s 19 */
+# x86-64 implementation of funct2
+funct2:
+/* $end fexpr2-64-s 19 */
+.LFB3:
+/* $begin fexpr2-64-s 21 */
+	cvtsi2ss	%edi, %xmm2	
+	mulss	%xmm1, %xmm2  		
+	cvtss2sd	%xmm2, %xmm2	
+	cvtsi2sdq	%rsi, %xmm1
+	divsd	%xmm1, %xmm0
+	subsd	%xmm0, %xmm2
+	movapd	%xmm2, %xmm0
+	ret
+/* $end fexpr2-64-s 21 */
+
+/* $begin fexpr2-64-ann-s 19 */
+funct2:
+# x86-64 implementation of funct2
+# Arguments:
+#	w	%xmm0	double
+#	x	%edi	int
+#	y	%xmm1	float
+#	z	%rsi	long
+/* $end fexpr2-64-ann-s 19 */
+.LFB3:
+/* $begin fexpr2-64-ann-s 21 */
+	cvtsi2ss	%edi, %xmm2	# Convert x to float
+	mulss	%xmm1, %xmm2  		# Multiply by y
+	cvtss2sd	%xmm2, %xmm2	# Convert x*y to double
+	cvtsi2sdq	%rsi, %xmm1	# Convert z to double
+	divsd	%xmm1, %xmm0  		# Compute w/z
+	subsd	%xmm0, %xmm2		# Compute x*y-w/z
+	movapd	%xmm2, %xmm0
+	ret
+/* $end fexpr2-64-ann-s 21 */
+
+.LFE3:
+	.size	funct2, .-funct2
+.globl funct3
+	.type	funct3, @function
+
+/* $begin fexpr3-64-s 33 */
+# x86-64 implementation of funct3
+funct3:
+/* $end fexpr3-64-s 33 */
+.LFB4:
+/* $begin fexpr3-64-s 35 */
+	movss	(%rdx), %xmm2
+	cvtsi2sd	(%rdi), %xmm1
+	ucomisd	%xmm1, %xmm0
+	jbe	.L6
+	cvtsi2ssq	%rsi, %xmm0
+	mulss	%xmm2, %xmm0
+	cvtss2sd	%xmm0, %xmm0
+	ret
+.L6:
+	cvtsi2ssq	%rsi, %xmm0
+	movaps	%xmm2, %xmm1
+	addss	%xmm2, %xmm1
+	addss	%xmm1, %xmm0
+	cvtss2sd	%xmm0, %xmm0
+	ret
+/* $end fexpr3-64-s 35 */
+
+/* $begin fexpr3-64-ann-s 33 */
+# x86-64 implementation of funct3
+# Arguments:
+#	ap	%rdi	int *
+#	b	%xmm0	double
+#	c	%rsi	long
+#	dp	%rdx	double *
+funct3:
+/* $end fexpr3-64-ann-s 33 */
+.LFB4:
+/* $begin fexpr3-64-ann-s 35 */
+	movss	(%rdx), %xmm2		# Get d = *dp
+	cvtsi2sd	(%rdi), %xmm1	# Get a = *ap and convert to double
+	ucomisd	%xmm1, %xmm0		# Compare b:a
+	jbe	.L6    			# If b <= a, goto \textbf{lesseq}
+	cvtsi2ssq	%rsi, %xmm0	# Convert c to float
+	mulss	%xmm2, %xmm0  		# Multiply by d 
+	cvtss2sd	%xmm0, %xmm0	# Convert c*d to double
+	ret		       		# Return
+.L6:				      # \textbf{lesseq}:
+	cvtsi2ssq	%rsi, %xmm0     # Convert c to float
+	movaps	%xmm2, %xmm1  		# Copy d
+	addss	%xmm2, %xmm1		# Compute d+d = 2*d
+	addss	%xmm1, %xmm0		# Compute c + 2*d
+	cvtss2sd	%xmm0, %xmm0	# Convert to double
+	ret		       		# Return
+/* $end fexpr3-64-ann-s 35 */
+
+
+.LFE4:
+	.size	funct3, .-funct3
+.globl d_max
+	.type	d_max, @function
+d_max:
+.LFB5:
+	maxsd	%xmm0, %xmm1
+	movapd	%xmm1, %xmm0
+	ret
+.LFE5:
+	.size	d_max, .-d_max
+.globl f_max
+	.type	f_max, @function
+f_max:
+.LFB6:
+	maxss	%xmm0, %xmm1
+	movaps	%xmm1, %xmm0
+	ret
+.LFE6:
+	.size	f_max, .-f_max
+.globl dz
+	.type	dz, @function
+dz:
+.LFB7:
+	xorpd	%xmm0, %xmm0
+	movsd	%xmm0, (%rdi)
+	ret
+.LFE7:
+	.size	dz, .-dz
+.globl libfun
+	.type	libfun, @function
+libfun:
+.LFB8:
+	andpd	.LC1(%rip), %xmm0
+	ret
+.LFE8:
+	.size	libfun, .-libfun
+	.section	.rodata.cst16,"aM",@progbits,16
+	.align 16
+.LC1:
+	.long	4294967295
+	.long	2147483647
+	.long	0
+	.long	0
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB6
+	.long	.LFE6-.LFB6
+	.uleb128 0x0
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.long	.LFB7
+	.long	.LFE7-.LFB7
+	.uleb128 0x0
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.long	.LFB8
+	.long	.LFE8-.LFB8
+	.uleb128 0x0
+	.align 8
+.LEFDE13:
+	.ident	"GCC: (GNU) 4.2.4 (Ubuntu 4.2.4-3ubuntu4)"
+	.section	.note.GNU-stack,"",@progbits
+
+.globl simplefun
+	.type	simplefun, @function
+simplefun:
+.LFB8:
+/* $begin simplefun1-64-s 83 */
+	andpd	.LC1(%rip), %xmm0
+/* $end simplefun1-64-s 83 */
+	ret
+.LFE8:
+	.size	simplefun, .-simplefun
+.globl simplefun2
+	.type	simplefun2, @function
+simplefun2:
+.LFB9:
+/* $begin simplefun2-64-s 91 */
+	xorpd	%xmm0, %xmm0
+/* $end simplefun2-64-s 91 */
+	ret
+.LFE9:
+	.size	simplefun2, .-simplefun2
+.globl simplefun3
+	.type	simplefun3, @function
+simplefun3:
+.LFB10:
+/* $begin simplefun3-64-s 99 */
+	xorpd	.LC2(%rip), %xmm0
+/* $end simplefun3-64-s 99 */
+	ret
+.LFE10:
+	.size	simplefun3, .-simplefun3
+	.section	.rodata.cst16,"aM",@progbits,16
+	.align 16
+/* $begin simplefun1-64-s 105 */
+.LC1:
+	.long	4294967295
+	.long	2147483647
+	.long	0
+	.long	0
+	.align 16
+/* $end simplefun1-64-s 105 */
+/* $begin simplefun3-64-s 111 */
+.LC2:
+	.long	0
+	.long	-2147483648
+	.long	0
+	.long	0
+/* $end simplefun3-64-s 111 */

@@ -1,0 +1,60 @@
+#CC=gcc
+#CFLAGS = -O2 -Wall -g  -march=i486
+
+CC=cc
+CFLAGS = -O2 -DMSTRIDE=8
+
+perf-eg: perf-eg.c clock.o clock.h
+	$(CC) $(CFLAGS) -o perf-eg perf-eg.c clock.o
+
+ctest: ctest.c clock.o clock.h
+	$(CC) $(CFLAGS) -o ctest ctest.c clock.o
+
+tod: tod.c 
+	$(CC) $(CFLAGS) -o tod tod.c
+
+
+osevent: osevent.c clock.o options.o load.o clock.h options.h load.h
+	$(CC) $(CFLAGS) -o osevent osevent.c clock.o options.o load.o
+
+ktest: ktest.c clock.o fcyc.o options.o load.o lsquare.o \
+	clock.h fcyc.h load.h options.h lsquare.h
+	$(CC) $(CFLAGS) -o ktest ktest.c \
+	clock.o fcyc.o options.o load.o lsquare.o
+
+clocktest: clocktest.c clock.o fcyc.o options.o load.o lsquare.o \
+	clock.h fcyc.h load.h options.h lsquare.h
+	$(CC) $(CFLAGS) -o clocktest clocktest.c \
+	clock.o fcyc.o options.o load.o lsquare.o
+
+ftest: ftest.c clock.o fcyc.o clock.h fcyc.h
+	$(CC) $(CFLAGS) -o ftest ftest.c clock.o fcyc.o
+
+clock.o: clock.c clock.h
+	$(CC) $(CFLAGS) -c clock.c
+
+lsquare.o: lsquare.c lsquare.h
+	$(CC) $(CFLAGS) -c lsquare.c
+
+options.o: options.c options.h
+	$(CC) $(CFLAGS) -c options.c
+
+fcyc.o: fcyc.c clock.h
+	$(CC) $(CFLAGS) -c fcyc.c
+
+load.o: load.c clock.h
+	$(CC) $(CFLAGS) -c load.c
+
+thrasher: thrasher.c
+	$(CC) $(CFLAGS) -o thrasher thrasher.c
+
+clean:
+	rm -f *.o core *.exe *~ perf-eg
+
+
+
+
+
+
+
+

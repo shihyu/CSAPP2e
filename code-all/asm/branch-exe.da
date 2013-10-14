@@ -1,0 +1,22 @@
+080483c0 <silly>:
+ 80483c0:	55                   	push   %ebp
+ 80483c1:	89 e5                	mov    %esp,%ebp
+ 80483c3:	8b 55 08             	mov    0x8(%ebp),%edx
+ 80483c6:	85 d2                	test   %edx,%edx
+
+		/* $begin branch-exe-d 141 */
+ 80483c8:	7e 11                	jle    80483db <silly+0x1b>
+ 80483ca:	8d b6 00 00 00 00    	lea    0x0(%esi),%esi
+ 80483d0:	89 d0                	mov    %edx,%eax
+ 80483d2:	c1 f8 01             	sar    $0x1,%eax
+ 80483d5:	29 c2                	sub    %eax,%edx
+ 80483d7:	85 d2                	test   %edx,%edx
+ 80483d9:	7f f5                	jg     80483d0 <silly+0x10>
+ 80483db:	89 d0                	mov    %edx,%eax
+		/* $end branch-exe-d 141 */
+
+ 80483dd:	89 ec                	mov    %ebp,%esp
+ 80483df:	5d                   	pop    %ebp
+ 80483e0:	c3                   	ret    
+ 80483e1:	8d 76 00             	lea    0x0(%esi),%esi
+

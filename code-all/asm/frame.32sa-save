@@ -1,0 +1,28 @@
+	.file	"frame.c"
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%x %x"
+	.text
+	.p2align 4,,15
+.globl proc
+	.type	proc, @function
+/* $begin frame-prob-s 9 */
+proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	leal	-4(%ebp), %eax
+	movl	$.LC0, (%esp)	# Pointer to string "%x %x"
+	movl	%eax, 8(%esp)
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	call	scanf
+# Diagram stack frame at this point
+	movl	-4(%ebp), %eax
+	subl	-8(%ebp), %eax
+	leave
+	ret
+/* $end frame-prob-s 9 */
+	.size	proc, .-proc
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

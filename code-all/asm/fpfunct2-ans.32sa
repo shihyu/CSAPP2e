@@ -1,0 +1,32 @@
+	.file	"fpfunct2-ans.c"
+	.text
+.globl funct2
+	.type	funct2, @function
+funct2:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin fpfunct2-prob-s 8 */
+	fildl	8(%ebp)
+	flds	20(%ebp)
+	faddl	12(%ebp)
+	fdivrp	%st, %st(1)
+	fld1
+	fadds	24(%ebp)
+	fsubrp	%st, %st(1)
+/* $end fpfunct2-prob-s 8 */
+	popl	%ebp
+	ret
+	.size	funct2, .-funct2
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin fpfunct2-ans-s 8 */
+	# p, q, r, and s are at offsets 8, 12, 16, and 24 from \ebpreg{}
+	fildl	8(%ebp)		# Get p (int)
+	flds	20(%ebp)	# Get r (float)
+	faddl	12(%ebp)	# Get q (double) and compute q+r
+	fdivrp	%st, %st(1)	# Compute p/(q+r)
+	fld1			# Load 1.0
+	fadds	24(%ebp)	# Get s (float) and compute s+1.0
+	fsubrp	%st, %st(1)	# Compute p/(q+r) - (s+1.0)
+/* $end fpfunct2-ans-s 8 */

@@ -1,0 +1,20 @@
+	.file	"multi.c"
+	.text
+.globl store_prod
+	.type	store_prod, @function
+store_prod:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	movl	20(%ebp), %ecx
+	imull	%eax, %ecx
+	mull	16(%ebp)
+	leal	(%ecx,%edx), %edx
+	movl	8(%ebp), %ecx
+	movl	%eax, (%ecx)
+	movl	%edx, 4(%ecx)
+	popl	%ebp
+	ret
+	.size	store_prod, .-store_prod
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

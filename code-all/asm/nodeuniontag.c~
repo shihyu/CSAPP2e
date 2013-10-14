@@ -1,0 +1,14 @@
+/* $begin nodeuniontag-c */
+typedef enum { N_LEAF, N_INTERNAL } nodetype_t;
+
+struct NODE { 
+    nodetype_t type;
+    union { 
+	struct {  
+	    struct NODE *left; 
+	    struct NODE *right; 
+	} internal; 
+	double data; 
+    } info; 
+}; 
+/* $end nodeuniontag-c */

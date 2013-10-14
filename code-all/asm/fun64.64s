@@ -1,0 +1,91 @@
+	.file	"fun64.c"
+	.text
+.globl fun_c
+	.type	fun_c, @function
+fun_c:
+.LFB2:
+	movl	$0, %ecx
+	movl	$0, %edx
+	movabsq	$72340172838076673, %rsi
+.L2:
+	movq	%rdi, %rax
+	andq	%rsi, %rax
+	addq	%rax, %rcx
+	shrq	%rdi
+	addl	$1, %edx
+	cmpl	$8, %edx
+	jne	.L2
+	movq	%rcx, %rax
+	sarq	$32, %rax
+	addq	%rcx, %rax
+	movq	%rax, %rdx
+	sarq	$16, %rdx
+	addq	%rax, %rdx
+	movq	%rdx, %rax
+	sarq	$8, %rax
+	addq	%rdx, %rax
+	andl	$255, %eax
+	ret
+.LFE2:
+	.size	fun_c, .-fun_c
+.globl test_fun_c
+	.type	test_fun_c, @function
+test_fun_c:
+.LFB3:
+	movl	$0, %edx
+	movl	$0, %ecx
+	movl	$1, %esi
+.L6:
+	movl	%esi, %eax
+	sall	%cl, %eax
+	cltq
+	testq	%rdi, %rax
+	setne	%al
+	movzbl	%al, %eax
+	addq	%rax, %rdx
+	addl	$1, %ecx
+	cmpl	$64, %ecx
+	jne	.L6
+	movq	%rdx, %rax
+	ret
+.LFE3:
+	.size	test_fun_c, .-test_fun_c
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

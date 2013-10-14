@@ -1,0 +1,105 @@
+	.file	"rect.c"
+	.text
+.globl nothing
+	.type	nothing, @function
+nothing:
+.LFB2:
+	movl	$20, 16(%rdi)
+	movl	$10, 12(%rdi)
+	movl	$16711935, 8(%rdi)
+	movl	$0, (%rdi)
+	movl	$0, 4(%rdi)
+	movq	%rdi, %rax
+	ret
+.LFE2:
+	.size	nothing, .-nothing
+.globl nothing2
+	.type	nothing2, @function
+nothing2:
+.LFB3:
+	movl	$20, 16(%rdi)
+	movl	$10, 12(%rdi)
+	movl	$16711935, 8(%rdi)
+	movl	$0, 4(%rdi)
+	movl	$0, (%rdi)
+	movq	%rdi, %rax
+	ret
+.LFE3:
+	.size	nothing2, .-nothing2
+.globl area
+	.type	area, @function
+area:
+.LFB4:
+	movl	16(%rdi), %eax
+	imull	12(%rdi), %eax
+	ret
+.LFE4:
+	.size	area, .-area
+.globl rotate_left
+	.type	rotate_left, @function
+rotate_left:
+.LFB5:
+	movl	16(%rdi), %edx
+	movl	12(%rdi), %eax
+	movl	%eax, 16(%rdi)
+	movl	%edx, 12(%rdi)
+	ret
+.LFE5:
+	.size	rotate_left, .-rotate_left
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,42 @@
+	.text
+.globl tmult_ok_asm
+tmult_ok_asm:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	imull	8(%ebp), %eax
+	movl	16(%ebp), %edx
+	movl	%eax, (%edx)
+# Remove instructions:	
+#	testl	%eax, %eax
+#	setg	%al
+# Add instruction	
+	setae   %al	# Set low-order byte
+# End of replacement	
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+
+.globl umult_ok_asm
+umult_ok_asm:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+# Remove instructions:		
+#	imull	8(%ebp), %eax	
+# Add instruction	
+	movl    8(%ebx), %ecx
+	mull	%ecx   # Unsigned multiply
+# End of replacement	
+	movl	16(%ebp), %edx
+	movl	%eax, (%edx)
+# Remove instructions:	
+#	testl	%eax, %eax
+#	setg	%al
+# Add instruction	
+	setae   %al	# Set low-order byte
+# End of replacement	
+	movzbl	%al, %eax
+	popl	%ebp
+	ret
+

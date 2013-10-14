@@ -1,0 +1,231 @@
+	.file	"cond-cmov.c"
+	.text
+.globl max
+	.type	max, @function
+max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%edx, %eax
+	cmovl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	max, .-max
+.globl wa_max
+	.type	wa_max, @function
+wa_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	leal	17(%edx), %ebx
+	leal	23(%ecx), %eax
+	cmpl	%edx, %ecx
+	cmovl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	wa_max, .-wa_max
+.globl wm_max
+	.type	wm_max, @function
+wm_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	cmpl	%edx, %eax
+	jge	.L8
+	movl	%edx, %eax
+	sall	$4, %eax
+	addl	%edx, %eax
+	jmp	.L9
+.L8:
+	imull	$23, %eax, %eax
+.L9:
+	popl	%ebp
+	ret
+	.size	wm_max, .-wm_max
+.globl wm_max2
+	.type	wm_max2, @function
+wm_max2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	movl	%edx, %ecx
+	sall	$4, %ecx
+	cmpl	%edx, %eax
+	cmovl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	wm_max2, .-wm_max2
+.globl wm_max3
+	.type	wm_max3, @function
+wm_max3:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	cmpl	%edx, %eax
+	jge	.L15
+	movl	%edx, %eax
+	sall	$4, %eax
+	addl	%edx, %eax
+.L15:
+	popl	%ebp
+	ret
+	.size	wm_max3, .-wm_max3
+.globl abs
+	.type	abs, @function
+abs:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	%eax, %edx
+	sarl	$31, %edx
+	xorl	%edx, %eax
+	subl	%edx, %eax
+	popl	%ebp
+	ret
+	.size	abs, .-abs
+.globl cmul
+	.type	cmul, @function
+cmul:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L21
+	movl	%edx, %eax
+	imull	8(%ebp), %eax
+.L21:
+	popl	%ebp
+	ret
+	.size	cmul, .-cmul
+.globl cmul2
+	.type	cmul2, @function
+cmul2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	movl	%eax, %ecx
+	imull	%edx, %ecx
+	cmpl	$1, %edx
+	cmovne	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	cmul2, .-cmul2
+.globl cdiv
+	.type	cdiv, @function
+cdiv:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %ebx
+	movl	$0, %eax
+	testl	%ebx, %ebx
+	je	.L28
+	movl	8(%ebp), %edx
+	movl	%edx, %eax
+	sarl	$31, %edx
+	idivl	%ebx
+.L28:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	cdiv, .-cdiv
+.globl cdiv2
+	.type	cdiv2, @function
+cdiv2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %ebx
+	cmpl	$1, %ebx
+	je	.L31
+	movl	%eax, %edx
+	sarl	$31, %edx
+	idivl	%ebx
+.L31:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	cdiv2, .-cdiv2
+.globl cread
+	.type	cread, @function
+cread:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L35
+	movl	(%edx), %eax
+.L35:
+	popl	%ebp
+	ret
+	.size	cread, .-cread
+.globl se_max
+	.type	se_max, @function
+se_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jl	.L38
+	movl	%edx, %eax
+	jmp	.L39
+.L38:
+	addl	$1, lcount
+.L39:
+	popl	%ebp
+	ret
+	.size	se_max, .-se_max
+.globl arith
+	.type	arith, @function
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+/* $begin arith-prob 196 */
+# Register: x in \edxreg
+	leal	3(%edx), %eax
+	testl	%edx, %edx
+	cmovns	%edx, %eax	
+	sarl	$2, %eax      # Return value in \eaxreg
+/* $end arith-prob 196 */
+	popl	%ebp
+	ret
+
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+/* $begin arith-ans 196 */
+# Computation by function arith
+# Register: x in \edxreg
+	leal	3(%edx), %eax	# temp = x+3
+	testl	%edx, %edx	# Test x
+	cmovns	%edx, %eax	# If >= 0, temp = x
+	sarl	$2, %eax	# Return temp >> 2 (= x/4)
+/* $end arith-ans 196 */
+	popl	%ebp
+	ret
+
+
+	.size	arith, .-arith
+.globl lcount
+	.bss
+	.align 4
+	.type	lcount, @object
+	.size	lcount, 4
+lcount:
+	.zero	4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

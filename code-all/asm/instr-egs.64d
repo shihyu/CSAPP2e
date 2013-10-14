@@ -1,0 +1,129 @@
+
+instr-egs.64o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <mov>:
+   0:	48 c7 c0 50 40 00 00 	mov    $0x4050,%rax
+   7:	48 89 ec             	mov    %rbp,%rsp
+   a:	48 8b 04 0f          	mov    (%rdi,%rcx,1),%rax
+   e:	48 c7 04 24 ef ff ff 	movq   $0xffffffffffffffef,(%rsp)
+  15:	ff 
+  16:	48 89 45 f4          	mov    %rax,-0xc(%rbp)
+  1a:	b8 50 40 00 00       	mov    $0x4050,%eax
+  1f:	89 ec                	mov    %ebp,%esp
+  21:	8b 04 17             	mov    (%rdi,%rdx,1),%eax
+  24:	c7 04 24 ef ff ff ff 	movl   $0xffffffef,(%rsp)
+  2b:	89 45 f4             	mov    %eax,-0xc(%rbp)
+  2e:	66 b8 50 40          	mov    $0x4050,%ax
+  32:	66 89 ec             	mov    %bp,%sp
+  35:	66 8b 04 17          	mov    (%rdi,%rdx,1),%ax
+  39:	66 c7 04 24 ef ff    	movw   $0xffef,(%rsp)
+  3f:	66 89 45 f4          	mov    %ax,-0xc(%rbp)
+  43:	b4 50                	mov    $0x50,%ah
+  45:	88 fb                	mov    %bh,%bl
+  47:	8a 24 17             	mov    (%rdi,%rdx,1),%ah
+  4a:	c6 04 24 ef          	movb   $0xef,(%rsp)
+  4e:	88 45 f4             	mov    %al,-0xc(%rbp)
+
+0000000000000051 <mov32>:
+  51:	67 66 8b 45 00       	addr32 mov 0x0(%ebp),%ax
+  56:	67 66 c7 45 00 ef ff 	addr32 movw $0xffef,0x0(%ebp)
+  5d:	67 66 89 45 f4       	addr32 mov %ax,-0xc(%ebp)
+
+0000000000000062 <push>:
+  62:	66 50                	push   %ax
+  64:	50                   	push   %rax
+  65:	66 68 ff 00 68 ff    	pushw  $0xffffffffff6800ff
+  6b:	ff 00                	incl   (%rax)
+	...
+
+000000000000006e <pop>:
+  6e:	66 58                	pop    %ax
+  70:	58                   	pop    %rax
+
+0000000000000071 <movs>:
+  71:	66 0f be d8          	movsbw %al,%bx
+  75:	0f be d0             	movsbl %al,%edx
+  78:	0f bf d0             	movswl %ax,%edx
+  7b:	48 0f be d8          	movsbq %al,%rbx
+  7f:	48 0f bf d8          	movswq %ax,%rbx
+  83:	48 63 d8             	movslq %eax,%rbx
+
+0000000000000086 <movz>:
+  86:	66 0f b6 d8          	movzbw %al,%bx
+  8a:	0f b6 d0             	movzbl %al,%edx
+  8d:	0f b7 d0             	movzwl %ax,%edx
+  90:	48 0f b6 d8          	movzbq %al,%rbx
+  94:	48 0f b7 d8          	movzwq %ax,%rbx
+
+0000000000000098 <add>:
+  98:	48 05 50 40 00 00    	add    $0x4050,%rax
+  9e:	48 01 ec             	add    %rbp,%rsp
+  a1:	48 03 04 17          	add    (%rdi,%rdx,1),%rax
+  a5:	48 83 04 24 ef       	addq   $0xffffffffffffffef,(%rsp)
+  aa:	48 01 45 f4          	add    %rax,-0xc(%rbp)
+  ae:	05 50 40 00 00       	add    $0x4050,%eax
+  b3:	01 ec                	add    %ebp,%esp
+  b5:	03 04 17             	add    (%rdi,%rdx,1),%eax
+  b8:	83 04 24 ef          	addl   $0xffffffffffffffef,(%rsp)
+  bc:	01 45 f4             	add    %eax,-0xc(%rbp)
+  bf:	66 05 50 40          	add    $0x4050,%ax
+  c3:	66 01 ec             	add    %bp,%sp
+  c6:	66 03 04 17          	add    (%rdi,%rdx,1),%ax
+  ca:	66 83 04 24 ef       	addw   $0xffffffffffffffef,(%rsp)
+  cf:	66 01 45 f4          	add    %ax,-0xc(%rbp)
+  d3:	80 c4 50             	add    $0x50,%ah
+  d6:	00 fb                	add    %bh,%bl
+  d8:	02 24 17             	add    (%rdi,%rdx,1),%ah
+  db:	80 04 24 ef          	addb   $0xef,(%rsp)
+  df:	00 45 f4             	add    %al,-0xc(%rbp)
+
+00000000000000e2 <lea>:
+  e2:	66 8d 5c 50 04       	lea    0x4(%rax,%rdx,2),%bx
+  e7:	8d 5c 50 04          	lea    0x4(%rax,%rdx,2),%ebx
+  eb:	48 8d 5c 50 04       	lea    0x4(%rax,%rdx,2),%rbx
+
+00000000000000f0 <inc32>:
+  f0:	67 66 ff 45 00       	addr32 incw 0x0(%ebp)
+
+00000000000000f5 <inc>:
+  f5:	fe c0                	inc    %al
+  f7:	fe 44 04 04          	incb   0x4(%rsp,%rax,1)
+  fb:	66 ff c0             	inc    %ax
+  fe:	66 ff 44 04 04       	incw   0x4(%rsp,%rax,1)
+ 103:	ff c0                	inc    %eax
+ 105:	ff 44 04 04          	incl   0x4(%rsp,%rax,1)
+ 109:	48 ff c0             	inc    %rax
+ 10c:	48 ff 44 04 04       	incq   0x4(%rsp,%rax,1)
+
+0000000000000111 <shift>:
+ 111:	d2 e0                	shl    %cl,%al
+ 113:	c0 64 94 08 ff       	shlb   $0xff,0x8(%rsp,%rdx,4)
+ 118:	66 d3 e0             	shl    %cl,%ax
+ 11b:	66 c1 64 94 08 ff    	shlw   $0xff,0x8(%rsp,%rdx,4)
+ 121:	d3 e0                	shl    %cl,%eax
+ 123:	c1 64 94 08 ff       	shll   $0xff,0x8(%rsp,%rdx,4)
+ 128:	48 d3 e0             	shl    %cl,%rax
+ 12b:	48 c1 64 94 08 ff    	shlq   $0xff,0x8(%rsp,%rdx,4)
+
+0000000000000131 <cmp>:
+ 131:	38 c4                	cmp    %al,%ah
+ 133:	3a 08                	cmp    (%rax),%cl
+ 135:	66 83 38 00          	cmpw   $0x0,(%rax)
+ 139:	66 39 08             	cmp    %cx,(%rax)
+ 13c:	83 f8 00             	cmp    $0x0,%eax
+ 13f:	39 00                	cmp    %eax,(%rax)
+ 141:	48 83 f8 00          	cmp    $0x0,%rax
+ 145:	48 39 00             	cmp    %rax,(%rax)
+
+0000000000000148 <test>:
+ 148:	84 e0                	test   %ah,%al
+ 14a:	84 08                	test   %cl,(%rax)
+ 14c:	66 f7 00 00 00       	testw  $0x0,(%rax)
+ 151:	66 85 08             	test   %cx,(%rax)
+ 154:	a9 00 00 00 00       	test   $0x0,%eax
+ 159:	85 00                	test   %eax,(%rax)
+ 15b:	48 a9 00 00 00 00    	test   $0x0,%rax
+ 161:	48 85 00             	test   %rax,(%rax)

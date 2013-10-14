@@ -1,0 +1,101 @@
+	.file	"switch.c"
+	.text
+.globl switch_eg
+	.type	switch_eg, @function
+switch_eg:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	subl	$100, %eax
+	cmpl	$6, %eax
+	ja	.L2
+	jmp	*.L7(,%eax,4)
+	.section	.rodata
+	.align 4
+	.align 4
+.L7:
+	.long	.L3
+	.long	.L2
+	.long	.L4
+	.long	.L5
+	.long	.L6
+	.long	.L2
+	.long	.L6
+	.text
+.L2:
+	movl	$0, %eax
+	jmp	.L8
+.L5:
+	movl	%edx, %eax
+	.p2align 4,,7
+	.p2align 3
+	jmp	.L9
+.L3:
+	leal	(%edx,%edx,2), %eax
+	leal	(%edx,%eax,4), %eax
+	.p2align 4,,3
+	.p2align 3
+	jmp	.L8
+.L4:
+	leal	10(%edx), %eax
+.L9:
+	addl	$11, %eax
+	jmp	.L8
+.L6:
+	movl	%edx, %eax
+	imull	%edx, %eax
+.L8:
+	popl	%ebp
+	ret
+	.size	switch_eg, .-switch_eg
+.globl switch_eg_impl
+	.type	switch_eg_impl, @function
+switch_eg_impl:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	subl	$100, %eax
+	cmpl	$6, %eax
+	ja	.L12
+	jmp	*jt.1208(,%eax,4)
+.L12:
+	movl	$0, %eax
+	jmp	.L13
+.L14:
+	movl	8(%ebp), %eax
+	.p2align 4,,7
+	.p2align 3
+	jmp	.L15
+.L16:
+	movl	8(%ebp), %edx
+	leal	(%edx,%edx,2), %eax
+	leal	(%edx,%eax,4), %eax
+	jmp	.L13
+.L17:
+	movl	8(%ebp), %eax
+	addl	$10, %eax
+.L15:
+	addl	$11, %eax
+	jmp	.L13
+.L18:
+	movl	8(%ebp), %eax
+	imull	%eax, %eax
+.L13:
+	popl	%ebp
+	ret
+	.size	switch_eg_impl, .-switch_eg_impl
+	.section	.rodata
+	.align 4
+	.type	jt.1208, @object
+	.size	jt.1208, 28
+jt.1208:
+	.long	.L16
+	.long	.L12
+	.long	.L17
+	.long	.L14
+	.long	.L18
+	.long	.L12
+	.long	.L18
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,175 @@
+	.file	"loop.c"
+	.text
+.globl fact_dw
+	.type	fact_dw, @function
+fact_dw:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+.L2:
+	imull	%edx, %eax
+	subl	$1, %edx
+	testl	%edx, %edx
+	jg	.L2
+	popl	%ebp
+	ret
+	.size	fact_dw, .-fact_dw
+.globl fact_while
+	.type	fact_while, @function
+fact_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+	testl	%edx, %edx
+	jle	.L7
+.L10:
+	imull	%edx, %eax
+	subl	$1, %edx
+	testl	%edx, %edx
+	jg	.L10
+.L7:
+	popl	%ebp
+	ret
+	.size	fact_while, .-fact_while
+.globl fact_for1
+	.type	fact_for1, @function
+fact_for1:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	%eax, %edx
+	movl	$1, %ecx
+	testl	%eax, %eax
+	jle	.L14
+.L17:
+	imull	%edx, %ecx
+	subl	$1, %edx
+	testl	%edx, %edx
+	jg	.L17
+.L14:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	fact_for1, .-fact_for1
+.globl fact_for2
+	.type	fact_for2, @function
+fact_for2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$1, %eax
+	movl	$2, %edx
+	cmpl	$1, %ecx
+	jle	.L21
+.L24:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L24
+.L21:
+	popl	%ebp
+	ret
+	.size	fact_for2, .-fact_for2
+.globl sum_dw
+	.type	sum_dw, @function
+sum_dw:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+.L27:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L27
+	popl	%ebp
+	ret
+	.size	sum_dw, .-sum_dw
+.globl sum_while
+	.type	sum_while, @function
+sum_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L32
+.L35:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L35
+.L32:
+	popl	%ebp
+	ret
+	.size	sum_while, .-sum_while
+.globl sum_for
+	.type	sum_for, @function
+sum_for:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	%eax, %edx
+	movl	$0, %ecx
+	testl	%eax, %eax
+	je	.L39
+.L42:
+	addl	(%edx), %ecx
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L42
+.L39:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	sum_for, .-sum_for
+.globl puzzle
+	.type	puzzle, @function
+puzzle:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %eax
+	movl	%eax, %ebx
+	andl	8(%ebp), %ebx
+	movl	$1, %eax
+	movl	16(%ebp), %ecx
+	sall	%cl, %eax
+	cmpl	$-1, %eax
+	je	.L45
+	movl	$-1, %edx
+.L46:
+	xorl	%edx, %ebx
+	shrl	$2, %edx
+	cmpl	%eax, %edx
+	ja	.L46
+.L45:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	puzzle, .-puzzle
+.globl sfact_while
+	.type	sfact_while, @function
+sfact_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	$1, %edx
+	testl	%eax, %eax
+	jle	.L51
+.L54:
+	imull	%eax, %edx
+	subl	$1, %eax
+	testl	%eax, %eax
+	jg	.L54
+.L51:
+	movl	12(%ebp), %eax
+	movl	%edx, (%eax)
+	popl	%ebp
+	ret
+	.size	sfact_while, .-sfact_while
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

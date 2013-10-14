@@ -1,0 +1,2 @@
+table.txt:	sprof1.txt sprof2.txt sprof3.txt sprof4.txt sprof5.txt sprof6.txt sprof7.txt format.pl
+	./format.pl > table.txt

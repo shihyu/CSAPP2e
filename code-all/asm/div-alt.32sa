@@ -1,0 +1,8 @@
+/* $begin divl-alt-s 1 */
+	# x at \ebpreg+8, y at \ebpreg+12
+	movl	8(%ebp), %eax	# Put x in \eaxreg
+	cltd 			# Sign extend into \edxreg
+	idivl	12(%ebp)	# Divide by y
+	movl	%eax, 4(%esp)	# Store x / y
+	movl	%edx, (%esp)	# Store x % y
+/* $end divl-alt-s 1 */

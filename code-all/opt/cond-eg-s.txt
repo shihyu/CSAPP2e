@@ -1,0 +1,256 @@
+.Ldebug_abbrev0:
+.Ldebug_info0:
+.Ldebug_line0:
+.Ltext0:
+set_abs1:
+	testl	%esi, %esi
+	jle	.L5
+	movl	$0, %edx
+.L4:
+	movl	(%rdi,%rdx,4), %eax
+	testl	%eax, %eax
+	jns	.L3
+	negl	%eax
+	movl	%eax, (%rdi,%rdx,4)
+.L3:
+	addq	$1, %rdx
+	cmpl	%edx, %esi
+	jg	.L4
+.L5:
+	rep
+	ret
+
+set_abs2:
+	testl	%esi, %esi
+	jle	.L10
+	movl	$0, %ecx
+.L9:
+	movl	(%rdi,%rcx,4), %eax
+	movl	%eax, %edx
+	sarl	$31, %edx
+	xorl	%edx, %eax
+	movl	%eax, (%rdi,%rcx,4)
+	subl	%edx, (%rdi,%rcx,4)
+	addq	$1, %rcx
+	cmpl	%ecx, %esi
+	jg	.L9
+.L10:
+	rep
+	ret
+
+minmax1:
+	testl	%edx, %edx
+	jle	.L16
+	movl	$0, %eax
+.L15:
+	movl	(%rdi,%rax,4), %r8d
+	movl	(%rsi,%rax,4), %ecx
+	cmpl	%ecx, %r8d
+	jle	.L14
+	movl	%ecx, (%rdi,%rax,4)
+	movl	%r8d, (%rsi,%rax,4)
+.L14:
+	addq	$1, %rax
+	cmpl	%eax, %edx
+	jg	.L15
+.L16:
+	rep
+	ret
+
+minmax2:
+	movl	%edx, %r9d
+	testl	%edx, %edx
+	jle	.L21
+	movl	$0, %r8d
+.L20:
+	movl	(%rsi,%r8,4), %eax
+	movl	(%rdi,%r8,4), %edx
+	cmpl	%eax, %edx
+	movl	%eax, %ecx
+	cmovle	%edx, %ecx
+	movl	%ecx, (%rdi,%r8,4)
+	cmovl	%eax, %edx
+	movl	%edx, (%rsi,%r8,4)
+	addq	$1, %r8
+	cmpl	%r8d, %r9d
+	jg	.L20
+.L21:
+	rep
+	ret
+
+init:
+	pushq	%r15
+	pushq	%r14
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	cmpl	$1, %edi
+	ja	.L24
+	movl	$0, %eax
+	movl	$a2, %r9d
+	movl	$a1, %r8d
+	movl	$1, %r10d
+	movl	%r10d, %edx
+	subl	%edi, %edx
+	movl	$b2, %esi
+	movl	$b1, %ecx
+.L25:
+	movl	%edi, (%r9,%rax)
+	movl	%edi, (%r8,%rax)
+	movl	%edx, (%rsi,%rax)
+	movl	%edx, (%rcx,%rax)
+	addq	$4, %rax
+	cmpq	$8192, %rax
+	jne	.L25
+	jmp	.L30
+.L24:
+	cmpl	$2, %edi
+	jne	.L27
+	movl	$0, %ecx
+	movl	$0, %edx
+	movl	$a2, %r10d
+	movl	$a1, %r9d
+	movl	$1, %r8d
+	movl	$b2, %edi
+	movl	$b1, %esi
+.L28:
+	movl	%ecx, %eax
+	andl	$1, %eax
+	movl	%eax, (%r10,%rdx)
+	movl	%eax, (%r9,%rdx)
+	movl	%r8d, %ebx
+	subl	%eax, %ebx
+	movl	%ebx, (%rdi,%rdx)
+	movl	%ebx, (%rsi,%rdx)
+	addl	$1, %ecx
+	addq	$4, %rdx
+	cmpl	$2048, %ecx
+	jne	.L28
+	jmp	.L30
+.L27:
+	call	srandom
+	movl	$0, %ebp
+	movl	$a2, %r15d
+	movl	$a1, %r14d
+	movl	$b2, %r13d
+	movl	$b1, %r12d
+.L29:
+	call	random
+	movq	%rax, %rbx
+	call	random
+	movl	%ebx, (%r15,%rbp)
+	movl	%ebx, (%r14,%rbp)
+	movl	%eax, (%r13,%rbp)
+	movl	%eax, (%r12,%rbp)
+	addq	$4, %rbp
+	cmpq	$8192, %rbp
+	jne	.L29
+.L30:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	ret
+
+run:
+	pushq	%r13
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	%edi, %ebx
+	movl	%esi, %r12d
+	movl	%edx, %r13d
+	testl	%esi, %esi
+	jle	.L37
+	movl	$0, %ebp
+.L36:
+	movl	%r13d, %edi
+	call	init
+	movl	$0, %eax
+	call	start_counter
+	movl	%ebx, %edx
+	movl	$b1, %esi
+	movl	$a1, %edi
+	call	minmax1
+	movl	$0, %eax
+	call	get_counter
+	movsd	%xmm0, (%rsp)
+	movl	$0, %eax
+	call	start_counter
+	movl	%ebx, %edx
+	movl	$b2, %esi
+	movl	$a2, %edi
+	call	minmax2
+	movl	$0, %eax
+	call	get_counter
+	cvtsi2sd	%ebx, %xmm2
+	movapd	%xmm0, %xmm1
+	divsd	%xmm2, %xmm1
+	movsd	(%rsp), %xmm0
+	divsd	%xmm2, %xmm0
+	movl	%ebx, %edx
+	movl	$.LC0, %esi
+	movl	$1, %edi
+	movl	$2, %eax
+	call	__printf_chk
+	addl	$1, %ebp
+	cmpl	%ebp, %r12d
+	jg	.L36
+.L37:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	popq	%r13
+	ret
+
+main:
+	movq	%rbx, -32(%rsp)
+	movq	%rbp, -24(%rsp)
+	movq	%r12, -16(%rsp)
+	movq	%r13, -8(%rsp)
+	subq	$40, %rsp
+	movl	%edi, %ebx
+	movq	%rsi, %rbp
+	movl	$2048, %r13d
+	cmpl	$1, %edi
+	jle	.L41
+	movq	8(%rsi), %rdi
+	call	atoi
+	movl	%eax, %r13d
+.L41:
+	movl	$3, %r12d
+	cmpl	$2, %ebx
+	jle	.L43
+	movq	16(%rbp), %rdi
+	call	atoi
+	movl	%eax, %r12d
+.L43:
+	movl	$1, %edx
+	cmpl	$3, %ebx
+	jle	.L45
+	movq	24(%rbp), %rdi
+	call	atoi
+	movl	%eax, %edx
+.L45:
+	movl	%r12d, %esi
+	movl	%r13d, %edi
+	call	run
+	movl	$0, %eax
+	movq	8(%rsp), %rbx
+	movq	16(%rsp), %rbp
+	movq	24(%rsp), %r12
+	movq	32(%rsp), %r13
+	addq	$40, %rsp
+	ret
+
+.Lframe0:
+.Lframe1:
+.Letext0:
+.Ldebug_loc0:

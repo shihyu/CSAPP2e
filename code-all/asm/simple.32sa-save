@@ -1,0 +1,34 @@
+/* $begin simple-raw 1 */
+	.file	"simple.c"
+	.text
+	.p2align 4,,15
+.globl simple
+	.type	simple, @function
+simple:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	addl	12(%ebp), %eax
+	movl	%eax, (%edx)
+	leave
+	ret
+	.size	simple, .-simple
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"
+/* $end simple-raw 1 */
+
+/* $begin simple-ann 6 */
+simple:
+	pushl	%ebp		# Save frame pointer
+	movl	%esp, %ebp	# Create new frame pointer
+	movl	8(%ebp), %edx	# Get xp
+	movl	(%edx), %eax	# Retrieve *xp
+	addl	12(%ebp), %eax	# Add y to get t
+	movl	%eax, (%edx)	# Store t at *xp
+	leave			# Reset stack and frame pointers
+	ret			# Return
+/* $end simple-ann 6 */
+	.size	simple, .-simple
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

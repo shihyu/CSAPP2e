@@ -1,0 +1,13 @@
+/* $begin simple_l-64 15 */
+# x86-64 version of function simple_l.
+# xp in %rdi, y in %rsi
+simple_l:
+/* $end simple_l-64 15 */
+.LFB3:
+/* $begin simple_l-64 17 */
+	movq	%rsi, %rax	# Copy y
+	addq	(%rdi), %rax	# Add *xp to get t  (R) # line:asm:simple64:compute_start
+	movq	%rax, (%rdi)	# Store t at xp     (W) # line:asm:simple64:store
+	ret			# Return            (R)
+/* $end simple_l-64 17 */
+.LFE3:

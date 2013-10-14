@@ -1,0 +1,45 @@
+	.file	"decode1-ans.c"
+	.text
+.globl decode1
+	.type	decode1, @function
+decode1:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$12, %esp
+	movl	%ebx, (%esp)
+	movl	%esi, 4(%esp)
+	movl	%edi, 8(%esp)
+/* $begin decode1-ans-s 12 */
+# xp at \ebpreg+8, yp at \ebpreg+12, zp at \ebpreg+16
+	movl	8(%ebp), %edi
+	movl	12(%ebp), %edx
+	movl	16(%ebp), %ecx
+	movl	(%edx), %ebx
+	movl	(%ecx), %esi
+	movl	(%edi), %eax
+	movl	%eax, (%edx)
+	movl	%ebx, (%ecx)
+	movl	%esi, (%edi)
+/* $end decode1-ans-s 12 */
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	8(%esp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	decode1, .-decode1
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin decode1-ann-s 12 */
+# xp at \ebpreg+8, yp at \ebpreg+12, zp at \ebpreg+16
+	movl	8(%ebp), %edi	# Get xp
+	movl	12(%ebp), %edx	# Get yp
+	movl	16(%ebp), %ecx	# Get zp
+	movl	(%edx), %ebx	# Get y
+	movl	(%ecx), %esi	# Get z
+	movl	(%edi), %eax	# Get x
+	movl	%eax, (%edx)	# Store x at yp
+	movl	%ebx, (%ecx)	# Store y at zp
+	movl	%esi, (%edi)	# Store z at xp
+/* $end decode1-ann-s 12 */

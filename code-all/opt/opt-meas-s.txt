@@ -1,0 +1,217 @@
+.Ldebug_abbrev0:
+.Ldebug_info0:
+.Ldebug_line0:
+.Ltext0:
+aprod:
+	leal	-2(%rsi), %ecx
+	testl	%ecx, %ecx
+	jg	.L2
+	movl	$0, %edx
+	movsd	.LC0(%rip), %xmm0
+	jmp	.L3
+.L2:
+	movl	$0, %edx
+	movsd	.LC0(%rip), %xmm0
+.L4:
+	movslq	%edx,%rax
+	mulsd	(%rdi,%rax,8), %xmm0
+	mulsd	8(%rdi,%rax,8), %xmm0
+	mulsd	16(%rdi,%rax,8), %xmm0
+	addl	$3, %edx
+	cmpl	%ecx, %edx
+	jl	.L4
+.L3:
+	cmpl	%edx, %esi
+	jle	.L5
+.L8:
+	movslq	%edx,%rax
+	mulsd	(%rdi,%rax,8), %xmm0
+	addl	$1, %edx
+	cmpl	%edx, %esi
+	jg	.L8
+.L5:
+	rep
+	ret
+
+aprod1:
+	testl	%esi, %esi
+	jg	.L12
+	movsd	.LC0(%rip), %xmm0
+	ret
+
+.L12:
+	movsd	.LC0(%rip), %xmm0
+	movl	$0, %edx
+.L14:
+	movslq	%edx,%rax
+	mulsd	(%rdi,%rax,8), %xmm0
+	mulsd	8(%rdi,%rax,8), %xmm0
+	mulsd	16(%rdi,%rax,8), %xmm0
+	addl	$3, %edx
+	cmpl	%edx, %esi
+	jg	.L14
+	rep
+	ret
+
+aprod2:
+	testl	%esi, %esi
+	jg	.L18
+	movsd	.LC0(%rip), %xmm1
+	jmp	.L19
+.L18:
+	movl	$0, %edx
+	movsd	.LC0(%rip), %xmm1
+.L20:
+	movslq	%edx,%rax
+	movsd	(%rdi,%rax,8), %xmm0
+	mulsd	8(%rdi,%rax,8), %xmm0
+	mulsd	%xmm1, %xmm0
+	movapd	%xmm0, %xmm1
+	mulsd	16(%rdi,%rax,8), %xmm1
+	addl	$3, %edx
+	cmpl	%edx, %esi
+	jg	.L20
+.L19:
+	movapd	%xmm1, %xmm0
+	ret
+
+aprod3:
+	testl	%esi, %esi
+	jg	.L24
+	movsd	.LC0(%rip), %xmm1
+	jmp	.L25
+.L24:
+	movl	$0, %edx
+	movsd	.LC0(%rip), %xmm1
+.L26:
+	movslq	%edx,%rax
+	movsd	(%rdi,%rax,8), %xmm0
+	mulsd	8(%rdi,%rax,8), %xmm0
+	mulsd	16(%rdi,%rax,8), %xmm0
+	mulsd	%xmm0, %xmm1
+	addl	$3, %edx
+	cmpl	%edx, %esi
+	jg	.L26
+.L25:
+	movapd	%xmm1, %xmm0
+	ret
+
+aprod4:
+	testl	%esi, %esi
+	jg	.L30
+	movsd	.LC0(%rip), %xmm1
+	jmp	.L31
+.L30:
+	movl	$0, %edx
+	movsd	.LC0(%rip), %xmm1
+.L32:
+	movslq	%edx,%rax
+	movsd	8(%rdi,%rax,8), %xmm0
+	mulsd	16(%rdi,%rax,8), %xmm0
+	mulsd	(%rdi,%rax,8), %xmm0
+	mulsd	%xmm0, %xmm1
+	addl	$3, %edx
+	cmpl	%edx, %esi
+	jg	.L32
+.L31:
+	movapd	%xmm1, %xmm0
+	ret
+
+aprod5:
+	testl	%esi, %esi
+	jg	.L36
+	movsd	.LC0(%rip), %xmm0
+	ret
+
+.L36:
+	movl	$0, %edx
+	movsd	.LC0(%rip), %xmm0
+.L38:
+	movslq	%edx,%rax
+	movapd	%xmm0, %xmm1
+	mulsd	(%rdi,%rax,8), %xmm1
+	movsd	8(%rdi,%rax,8), %xmm0
+	mulsd	16(%rdi,%rax,8), %xmm0
+	mulsd	%xmm1, %xmm0
+	addl	$3, %edx
+	cmpl	%edx, %esi
+	jg	.L38
+	rep
+	ret
+
+t1:
+	movl	%edi, %esi
+	movl	$a, %edi
+	call	aprod1
+	movsd	%xmm0, sink(%rip)
+	ret
+
+t2:
+	movl	%edi, %esi
+	movl	$a, %edi
+	call	aprod2
+	movsd	%xmm0, sink(%rip)
+	ret
+
+t3:
+	movl	%edi, %esi
+	movl	$a, %edi
+	call	aprod3
+	movsd	%xmm0, sink(%rip)
+	ret
+
+t4:
+	movl	%edi, %esi
+	movl	$a, %edi
+	call	aprod4
+	movsd	%xmm0, sink(%rip)
+	ret
+
+t5:
+	movl	%edi, %esi
+	movl	$a, %edi
+	call	aprod5
+	movsd	%xmm0, sink(%rip)
+	ret
+
+main:
+	subq	$8, %rsp
+	movl	$1024, %esi
+	movl	$t1, %edi
+	call	find_cpe
+	movl	$.LC1, %edi
+	movl	$1, %eax
+	call	printf
+	movl	$1024, %esi
+	movl	$t2, %edi
+	call	find_cpe
+	movl	$.LC2, %edi
+	movl	$1, %eax
+	call	printf
+	movl	$1024, %esi
+	movl	$t3, %edi
+	call	find_cpe
+	movl	$.LC3, %edi
+	movl	$1, %eax
+	call	printf
+	movl	$1024, %esi
+	movl	$t4, %edi
+	call	find_cpe
+	movl	$.LC4, %edi
+	movl	$1, %eax
+	call	printf
+	movl	$1024, %esi
+	movl	$t5, %edi
+	call	find_cpe
+	movl	$.LC5, %edi
+	movl	$1, %eax
+	call	printf
+	movl	$0, %eax
+	addq	$8, %rsp
+	ret
+
+sink:
+.Lframe0:
+.Lframe1:
+.Letext0:
+.Ldebug_loc0:

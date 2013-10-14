@@ -1,0 +1,127 @@
+	.file	"incr.c"
+.globl gval2
+	.data
+	.align 4
+	.type	gval2, @object
+	.size	gval2, 4
+gval2:
+	.long	763
+.globl gval1
+	.align 4
+	.type	gval1, @object
+	.size	gval1, 4
+gval1:
+	.long	567
+	.text
+	.p2align 4,,15
+.globl simple
+	.type	simple, @function
+simple:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	addl	12(%ebp), %eax
+	movl	%eax, (%edx)
+	leave
+	ret
+	.size	simple, .-simple
+	.p2align 4,,15
+.globl simple_l
+	.type	simple_l, @function
+simple_l:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	addl	12(%ebp), %eax
+	movl	%eax, (%edx)
+	leave
+	ret
+	.size	simple_l, .-simple_l
+	.p2align 4,,15
+.globl call_simple
+	.type	call_simple, @function
+call_simple:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$12, %esp
+	leal	-4(%ebp), %eax
+	movl	$37, -4(%ebp)
+	movl	$12, 4(%esp)
+	movl	%eax, (%esp)
+	call	simple
+	addl	-4(%ebp), %eax
+	leave
+	ret
+	.size	call_simple, .-call_simple
+	.p2align 4,,15
+.globl call_simple_l
+	.type	call_simple_l, @function
+call_simple_l:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$12, 4(%esp)
+	movl	$gval1, (%esp)
+	call	simple_l
+	addl	gval2, %eax
+	leave
+	ret
+	.size	call_simple_l, .-call_simple_l
+	.p2align 4,,15
+.globl post_incr
+	.type	post_incr, @function
+post_incr:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	movl	%eax, %ecx
+	addl	12(%ebp), %ecx
+	movl	%ecx, (%edx)
+	leave
+	ret
+	.size	post_incr, .-post_incr
+	.p2align 4,,15
+.globl post_incr_l
+	.type	post_incr_l, @function
+post_incr_l:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	(%edx), %eax
+	movl	%eax, %ecx
+	addl	12(%ebp), %ecx
+	movl	%ecx, (%edx)
+	leave
+	ret
+	.size	post_incr_l, .-post_incr_l
+	.p2align 4,,15
+.globl main
+	.type	main, @function
+main:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	subl	$4, %esp
+	andl	$-16, %esp
+	subl	$16, %esp
+	.p2align 4,,7
+.L11:
+	call	random
+	movl	%eax, val(,%ebx,4)
+	movl	%eax, val_l(,%ebx,4)
+	incl	%ebx
+	cmpl	$511, %ebx
+	jle	.L11
+	movl	-4(%ebp), %ebx
+	leave
+	xorl	%eax, %eax
+	ret
+	.size	main, .-main
+	.comm	val,2048,32
+	.comm	val_l,2048,32
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

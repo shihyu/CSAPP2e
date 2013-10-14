@@ -1,0 +1,36 @@
+	.file	"union.c"
+	.text
+.globl float2bit
+	.type	float2bit, @function
+float2bit:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	float2bit, .-float2bit
+.globl copy
+	.type	copy, @function
+copy:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	copy, .-copy
+.globl bit2double
+	.type	bit2double, @function
+bit2double:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	8(%ebp), %eax
+	movl	%eax, -8(%ebp)
+	movl	12(%ebp), %eax
+	movl	%eax, -4(%ebp)
+	fldl	-8(%ebp)
+	leave
+	ret
+	.size	bit2double, .-bit2double
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

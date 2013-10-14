@@ -1,0 +1,588 @@
+	.file	"proc.c"
+	.text
+	.p2align 4,,15
+.globl proc
+	.type	proc, @function
+/* $begin proc-64 5 */
+# x86-64 implementation of function proc
+# Arguments passed as follows:
+#   a1  in %rdi       (64 bits)
+#   a1p in %rsi       (64 bits)
+#   a2  in %edx       (32 bits)
+#   a2p in %rcx       (64 bits)
+#   a3  in %r8w       (16 bits)
+#   a3p in %r9        (64 bits)
+#   a4  at \rspreg+8      (8 bits)
+#   a4p at \rspreg+16    (64 bits)
+proc:
+/* $end proc-64 5 */
+.LFB2:
+/* $begin proc-64 7 */
+	movq	16(%rsp), %r10	# Fetch a4p  (64 bits)
+	addq	%rdi, (%rsi)	# *a1p += a1 (64 bits)
+	addl	%edx, (%rcx)	# *a2p += a2 (32 bits)
+	addw	%r8w, (%r9)	# *a3p += a3 (16 bits)
+	movzbl	8(%rsp), %eax	# Fetch a4    (8 bits)
+	addb	%al, (%r10)	# *a4p += a4  (8 bits)
+	ret
+/* $end proc-64 7 */
+.LFE2:
+	.size	proc, .-proc
+	.p2align 4,,15
+
+/* $begin call_proc-64 18 */
+# x86-64 implementation of call_proc
+call_proc:
+/* $end call_proc-64 18 */
+.LFB3:
+/* $begin call_proc-64 20 */
+	subq	$32, %rsp	# Allocate 32-byte stack frame
+/* $end call_proc-64 20 */
+.LCFI0:
+/* $begin call_proc-64 22 */
+	movq	$1, 16(%rsp)	# Store 1 in &x1
+	movl	$2, 24(%rsp)	# Store 2 in &x2
+	movw	$3, 28(%rsp)	# Store 3 in &x3
+	movb	$4, 31(%rsp)	# Store 4 in &x4
+	leaq	24(%rsp), %rcx	# Pass &x2 as argument 4
+	leaq	16(%rsp), %rsi	# Pass &x1 as argument 2
+	leaq	31(%rsp), %rax	# Compute &x4
+	movq	%rax, 8(%rsp)	# Pass &x4 as argument 8
+	movl	$4, (%rsp)	# Pass   4 as argument 7
+	leaq	28(%rsp), %r9	# Pass &x3 as argument 6
+	movl	$3, %r8d	# Pass   3 as argument 5
+	movl	$2, %edx	# Pass   2 as argument 3
+	movl	$1, %edi	# Pass   1 as argument 1
+	call	proc		# Call
+	movswl	28(%rsp),%eax	# Get x3 and convert to int
+	movsbl	31(%rsp),%edx	# Get x4 and convert to int
+	subl	%edx, %eax	# Compute x3-x4
+	cltq			# Sign extend to long int
+	movslq	24(%rsp),%rdx	# Get x2
+	addq	16(%rsp), %rdx	# Compute x1+x2
+	imulq	%rdx, %rax	# Compute (x1+x2)*(x3-x4)
+	addq	$32, %rsp	# Deallocate stack frame
+	ret			# Return
+/* $end call_proc-64 22 */
+.LFE3:
+	.size	call_proc, .-call_proc
+.globl rproc
+	.type	rproc, @function
+rproc:
+.LFB4:
+	movq	%rbx, -32(%rsp)
+.LCFI1:
+	movq	%rbp, -24(%rsp)
+.LCFI2:
+	movq	%r12, -16(%rsp)
+.LCFI3:
+	movq	%r13, -8(%rsp)
+.LCFI4:
+	subq	$56, %rsp
+.LCFI5:
+	movq	%rdi, %rcx
+	addq	(%rsi), %rdi
+	movq	%rdi, 16(%rsp)
+	movq	(%rsi), %rdx
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L7
+	movq	%rcx, %rax
+	subq	%rdx, %rax
+	movq	%rax, 8(%rsp)
+	leaq	16(%rsp), %rbx
+	movq	%rbx, %rsi
+	call	rproc
+	movq	%rax, %r13
+	leaq	8(%rsp), %r12
+	movq	8(%rsp), %rdi
+	movq	%r12, %rsi
+	call	rproc
+	movq	%rax, %rbp
+	movq	8(%rsp), %rdi
+	movq	%rbx, %rsi
+	call	rproc
+	movq	%rax, %rbx
+	movq	16(%rsp), %rdi
+	movq	%r12, %rsi
+	call	rproc
+	movq	%rbp, %rdx
+	imulq	%r13, %rdx
+	imulq	%rbx, %rdx
+	imulq	%rdx, %rax
+.L7:
+	movq	24(%rsp), %rbx
+	movq	32(%rsp), %rbp
+	movq	40(%rsp), %r12
+	movq	48(%rsp), %r13
+	addq	$56, %rsp
+	ret
+.LFE4:
+	.size	rproc, .-rproc
+.globl rfact
+	.type	rfact, @function
+/* $begin rfact-prob-64 102 */
+# x86-64 implementation of recursive factorial function rfact
+# Argument x in %rdi
+rfact:
+/* $end rfact-prob-64 102 */
+.LFB5:
+/* $begin rfact-prob-64 104 */
+	pushq	%rbx	# #line:asm:rfact:pushq
+/* $end rfact-prob-64 104 */
+.LCFI6:
+/* $begin rfact-prob-64 106 */
+	movq	%rdi, %rbx
+	movl	$1, %eax
+	testq	%rdi, %rdi
+	jle	.L11
+	leaq	-1(%rdi), %rdi
+	call	rfact
+	imulq	%rbx, %rax
+.L11:
+	popq	%rbx	# #line:asm:rfact:popq
+	ret
+/* $end rfact-prob-64 106 */
+.LFE5:
+	.size	rfact, .-rfact
+
+/* $begin rfact-ans-64 102 */
+# x86-64 implementation of recursive factorial function rfact
+# Argument: x in %rdi
+rfact:
+/* $end rfact-ans-64 102 */
+.LFB5:
+/* $begin rfact-ans-64 104 */
+	pushq	%rbx		  # Save \rbxreg (callee save)
+/* $end rfact-ans-64 104 */
+.LCFI6:
+/* $begin rfact-ans-64 106 */
+	movq	%rdi, %rbx	  # Copy x to \rbxreg
+	movl	$1, %eax	  # result = 1
+	testq	%rdi, %rdi	  # Test x
+	jle	.L11		  # If <=0, goto \textbf{done}
+	leaq	-1(%rdi), %rdi	  # Compute xm1 = x-1
+	call	rfact		  # Call rfact(xm1)
+	imulq	%rbx, %rax	  # Compute result = x*rfact(xm1)
+.L11:				# \textbf{done:}
+	popq	%rbx		  # Restore \rbxreg{}
+	ret			  # Return
+/* $end rfact-ans-64 106 */
+
+
+.globl sfact_helper
+	.type	sfact_helper, @function
+/* $begin sfact_helper-64 120 */# x86-64 implementation of sfact_helper
+# Arguments: x in %rdi, resultp in %rsi
+sfact_helper:
+/* $end sfact_helper-64 120 */
+.LFB6:
+/* $begin sfact_helper-64 122 */
+	movq	%rbx, -16(%rsp)	  # Save %rbx (callee save) # line:asm:sfact_helper:save_rbx
+/* $end sfact_helper-64 122 */
+.LCFI7:
+/* $begin sfact_helper-64 124 */
+	movq	%rbp, -8(%rsp)	  # Save %rbp (callee save) # line:asm:sfact_helper:save_rbp
+/* $end sfact_helper-64 124 */
+.LCFI8:
+/* $begin sfact_helper-64 126 */
+	subq	$40, %rsp	  # Allocate 40 bytes on stack # line:asm:sfact_helper:allocate
+/* $end sfact_helper-64 126 */
+.LCFI9:
+/* $begin sfact_helper-64 128 */
+	movq	%rdi, %rbx	  # Copy x to \rbxreg
+	movq	%rsi, %rbp	  # Copy resultp to \rbpreg
+	cmpq	$1, %rdi	  # Compare x:1
+	jg	.L14		  # If >, goto \textbf{recur}
+	movq	$1, (%rsi)	  # Store 1 in *resultp
+	jmp	.L16		  # Goto \textbf{done}
+.L14:				# \textbf{recur:}
+	leaq	16(%rsp), %rsi	  # Compute &nresult as second argument
+	leaq	-1(%rdi), %rdi	  # Compute xm1 = x-1 as first argument
+	call	sfact_helper	  # Call sfact_helper(xm1, &nresult)
+	movq	%rbx, %rax	  # Copy x
+	imulq	16(%rsp), %rax	  # Compute x*nresult
+	movq	%rax, (%rbp)	  # Store at resultp
+.L16:				# \textbf{done:}
+	movq	24(%rsp), %rbx	  # Restore \rbxreg{} # line:asm:sfact_helper:restore_rbx
+	movq	32(%rsp), %rbp	  # Restore \rbpreg{}
+	addq	$40, %rsp	  # Deallocate stack
+	ret			  # Return
+/* $end sfact_helper-64 128 */
+.LFE6:
+	.size	sfact_helper, .-sfact_helper
+.globl sfact
+	.type	sfact, @function
+/* $begin sfact-64 150 */
+# x86-64 implementation of factorial function sfact
+# Argument x in %rdi
+sfact:
+/* $end sfact-64 150 */
+.LFB7:
+/* $begin sfact-64 152 */
+	subq	$24, %rsp	# Allocate 24 bytes on stack
+/* $end sfact-64 152 */
+.LCFI10:
+/* $begin sfact-64 154 */
+	leaq	16(%rsp), %rsi	# Compute &result as argument 1
+	call	sfact_helper	# Call sfact_helper(result, &x)
+	movq	16(%rsp), %rax	# Set result as return value
+	addq	$24, %rsp	# Deallocate stack frame
+	ret			# Return
+/* $end sfact-64 154 */
+.LFE7:
+	.size	sfact, .-sfact
+.globl pwr
+	.type	pwr, @function
+pwr:
+.LFB8:
+	pushq	%rbx
+.LCFI11:
+	movl	%esi, %ebx
+	movl	$1, %eax
+	testl	%esi, %esi
+	je	.L21
+	leal	-1(%rbx), %esi
+	call	pwr
+	movslq	%ebx,%rdx
+	imulq	%rdx, %rax
+.L21:
+	popq	%rbx
+	ret
+.LFE8:
+	.size	pwr, .-pwr
+.globl pwr_dc
+	.type	pwr_dc, @function
+pwr_dc:
+.LFB9:
+	movq	%rbx, -32(%rsp)
+.LCFI12:
+	movq	%rbp, -24(%rsp)
+.LCFI13:
+	movq	%r12, -16(%rsp)
+.LCFI14:
+	movq	%r13, -8(%rsp)
+.LCFI15:
+	subq	$40, %rsp
+.LCFI16:
+	movq	%rdi, %r13
+	movl	%esi, %ebp
+	testl	%esi, %esi
+	jne	.L24
+	movl	$1, %r13d
+	jmp	.L25
+.L24:
+	cmpl	$1, %esi
+	je	.L25
+	movl	%esi, %ebx
+	shrl	$31, %ebx
+	addl	%esi, %ebx
+	sarl	%ebx
+	movl	%ebx, %esi
+	call	pwr_dc
+	movq	%rax, %r12
+	movl	%ebp, %esi
+	subl	%ebx, %esi
+	movq	%r13, %rdi
+	call	pwr_dc
+	movq	%rax, %r13
+	imulq	%r12, %r13
+.L25:
+	movq	%r13, %rax
+	movq	8(%rsp), %rbx
+	movq	16(%rsp), %rbp
+	movq	24(%rsp), %r12
+	movq	32(%rsp), %r13
+	addq	$40, %rsp
+	ret
+.LFE9:
+	.size	pwr_dc, .-pwr_dc
+.globl multi_fact
+	.type	multi_fact, @function
+multi_fact:
+.LFB10:
+	movq	%rbx, -48(%rsp)
+.LCFI17:
+	movq	%rbp, -40(%rsp)
+.LCFI18:
+	movq	%r12, -32(%rsp)
+.LCFI19:
+	movq	%r13, -24(%rsp)
+.LCFI20:
+	movq	%r14, -16(%rsp)
+.LCFI21:
+	movq	%r15, -8(%rsp)
+.LCFI22:
+	subq	$72, %rsp
+.LCFI23:
+	movq	%rdi, %r14
+	movq	%rsi, %rbx
+	movq	%rdx, %r12
+	movq	%rcx, %rbp
+	movq	%r8, %r15
+	movq	%r9, %r13
+	testq	%rdi, %rdi
+	jg	.L28
+	leaq	(%rdx,%rsi), %rax
+	addq	%rcx, %rax
+	addq	%r8, %rax
+	addq	%r9, %rax
+	jmp	.L29
+.L28:
+	leaq	-1(%rdi), %rdi
+	call	multi_fact
+	movq	%rax, (%rsp)
+	leaq	-1(%rbx), %rsi
+	movq	%r13, %r9
+	movq	%r15, %r8
+	movq	%rbp, %rcx
+	movq	%r12, %rdx
+	movq	%r14, %rdi
+	call	multi_fact
+	movq	%rax, 8(%rsp)
+	leaq	-1(%r12), %rdx
+	movq	%r13, %r9
+	movq	%r15, %r8
+	movq	%rbp, %rcx
+	movq	%rbx, %rsi
+	movq	%r14, %rdi
+	call	multi_fact
+	movq	%rax, 16(%rsp)
+	leaq	-1(%rbp), %rcx
+	movq	%r13, %r9
+	movq	%r15, %r8
+	movq	%r12, %rdx
+	movq	%rbx, %rsi
+	movq	%r14, %rdi
+	call	multi_fact
+	movq	8(%rsp), %rdx
+	addq	(%rsp), %rdx
+	addq	16(%rsp), %rdx
+	leaq	(%rdx,%rax), %rax
+.L29:
+	movq	24(%rsp), %rbx
+	movq	32(%rsp), %rbp
+	movq	40(%rsp), %r12
+	movq	48(%rsp), %r13
+	movq	56(%rsp), %r14
+	movq	64(%rsp), %r15
+	addq	$72, %rsp
+	ret
+.LFE10:
+	.size	multi_fact, .-multi_fact
+.globl local_array
+	.type	local_array, @function
+/* $begin local_array-prob-64 301 */
+# x86-64 implementation of local_array
+# Argument: i in %edi
+local_array:
+/* $end local_array-prob-64 301 */
+.LFB11:
+/* $begin local_array-prob-64 303 */
+	movq	$2, -40(%rsp)
+	movq	$3, -32(%rsp)
+	movq	$5, -24(%rsp)
+	movq	$7, -16(%rsp)
+	andl	$3, %edi
+	movq	-40(%rsp,%rdi,8), %rax
+	ret
+/* $end local_array-prob-64 303 */
+.LFE11:
+	.size	local_array, .-local_array
+
+/* $begin local_array-ans-64 301 */
+# x86-64 implementation of local_array
+# Argument i in %edi
+local_array:
+/* $end local_array-ans-64 301 */
+.LFB11:
+/* $begin local_array-ans-64 303 */
+	movq	$2, -40(%rsp)		# Store 2 in a[0]
+	movq	$3, -32(%rsp)		# Store 3 in a[1]
+	movq	$5, -24(%rsp)		# Store 5 in a[2]
+	movq	$7, -16(%rsp)		# Store 7 in a[3]
+	andl	$3, %edi		# Compute idx = i & 3
+	movq	-40(%rsp,%rdi,8), %rax	# Compute a[idx] as return value
+	ret				# Return
+/* $end local_array-ans-64 303 */
+
+
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI0-.LFB3
+	.byte	0xe
+	.uleb128 0x28
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI5-.LFB4
+	.byte	0xe
+	.uleb128 0x40
+	.byte	0x8d
+	.uleb128 0x2
+	.byte	0x8c
+	.uleb128 0x3
+	.byte	0x86
+	.uleb128 0x4
+	.byte	0x83
+	.uleb128 0x5
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI6-.LFB5
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x83
+	.uleb128 0x2
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB6
+	.long	.LFE6-.LFB6
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI9-.LFB6
+	.byte	0xe
+	.uleb128 0x30
+	.byte	0x86
+	.uleb128 0x2
+	.byte	0x83
+	.uleb128 0x3
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.long	.LFB7
+	.long	.LFE7-.LFB7
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI10-.LFB7
+	.byte	0xe
+	.uleb128 0x20
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.long	.LFB8
+	.long	.LFE8-.LFB8
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI11-.LFB8
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x83
+	.uleb128 0x2
+	.align 8
+.LEFDE13:
+.LSFDE15:
+	.long	.LEFDE15-.LASFDE15
+.LASFDE15:
+	.long	.LASFDE15-.Lframe1
+	.long	.LFB9
+	.long	.LFE9-.LFB9
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI16-.LFB9
+	.byte	0xe
+	.uleb128 0x30
+	.byte	0x8d
+	.uleb128 0x2
+	.byte	0x8c
+	.uleb128 0x3
+	.byte	0x86
+	.uleb128 0x4
+	.byte	0x83
+	.uleb128 0x5
+	.align 8
+.LEFDE15:
+.LSFDE17:
+	.long	.LEFDE17-.LASFDE17
+.LASFDE17:
+	.long	.LASFDE17-.Lframe1
+	.long	.LFB10
+	.long	.LFE10-.LFB10
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI23-.LFB10
+	.byte	0xe
+	.uleb128 0x50
+	.byte	0x8f
+	.uleb128 0x2
+	.byte	0x8e
+	.uleb128 0x3
+	.byte	0x8d
+	.uleb128 0x4
+	.byte	0x8c
+	.uleb128 0x5
+	.byte	0x86
+	.uleb128 0x6
+	.byte	0x83
+	.uleb128 0x7
+	.align 8
+.LEFDE17:
+.LSFDE19:
+	.long	.LEFDE19-.LASFDE19
+.LASFDE19:
+	.long	.LASFDE19-.Lframe1
+	.long	.LFB11
+	.long	.LFE11-.LFB11
+	.uleb128 0x0
+	.align 8
+.LEFDE19:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

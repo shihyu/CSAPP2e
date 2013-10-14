@@ -1,0 +1,26 @@
+	.file	"simple-if.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl simple_if
+	.type	 simple_if,@function
+simple_if:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin simple-if-s 11 */
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%eax
+	testl %eax,%eax
+	je .L3
+	testl %edx,%edx
+	jle .L3
+	addl %edx,(%eax)
+.L3:
+/* $end simple-if-s 11 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 simple_if,.Lfe1-simple_if
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"

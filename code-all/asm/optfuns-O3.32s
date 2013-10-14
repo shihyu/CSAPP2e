@@ -1,0 +1,192 @@
+	.file	"optfuns-O3.c"
+	.text
+	.p2align 4,,15
+.globl select
+	.type	select, @function
+select:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	16(%ebp), %edx
+	cmpl	$1, %edx
+	jbe	.L6
+	leave
+	ret
+	.p2align 4,,7
+	.p2align 3
+.L6:
+	movl	8(%ebp), %eax
+	movl	%eax, -8(%ebp)
+	movl	12(%ebp), %eax
+	movl	%eax, -4(%ebp)
+	movl	-8(%ebp,%edx,4), %eax
+	leave
+	ret
+	.size	select, .-select
+	.p2align 4,,15
+.globl test_select
+	.type	test_select, @function
+test_select:
+	pushl	%ebp
+	movl	$6, %eax
+	movl	%esp, %ebp
+	popl	%ebp
+	ret
+	.size	test_select, .-test_select
+	.p2align 4,,15
+.globl fact_recur
+	.type	fact_recur, @function
+fact_recur:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L11
+	.p2align 4,,7
+	.p2align 3
+.L12:
+	imull	%edx, %eax
+	subl	$1, %edx
+	jne	.L12
+.L11:
+	popl	%ebp
+	ret
+	.size	fact_recur, .-fact_recur
+	.p2align 4,,15
+.globl fact_tail
+	.type	fact_tail, @function
+fact_tail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%edx, %edx
+	je	.L15
+	.p2align 4,,7
+	.p2align 3
+.L18:
+	imull	%edx, %eax
+	subl	$1, %edx
+	jne	.L18
+.L15:
+	popl	%ebp
+	ret
+	.size	fact_tail, .-fact_tail
+	.p2align 4,,15
+.globl fact_tail_call
+	.type	fact_tail_call, @function
+fact_tail_call:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L22
+	.p2align 4,,7
+	.p2align 3
+.L25:
+	imull	%edx, %eax
+	subl	$1, %edx
+	jne	.L25
+.L22:
+	popl	%ebp
+	ret
+	.size	fact_tail_call, .-fact_tail_call
+	.p2align 4,,15
+.globl fact_itail
+	.type	fact_itail, @function
+fact_itail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%edx, %edx
+	je	.L28
+	.p2align 4,,7
+	.p2align 3
+.L31:
+	imull	%edx, %eax
+	subl	$1, %edx
+	jne	.L31
+.L28:
+	popl	%ebp
+	ret
+	.size	fact_itail, .-fact_itail
+	.p2align 4,,15
+.globl fact_iter1
+	.type	fact_iter1, @function
+fact_iter1:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L35
+	.p2align 4,,7
+	.p2align 3
+.L38:
+	imull	%edx, %eax
+	subl	$1, %edx
+	jne	.L38
+.L35:
+	popl	%ebp
+	ret
+	.size	fact_iter1, .-fact_iter1
+	.p2align 4,,15
+.globl fact_iter2
+	.type	fact_iter2, @function
+fact_iter2:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L42
+	cmpl	$1, %edx
+	movl	%edx, %eax
+	je	.L42
+	.p2align 4,,7
+	.p2align 3
+.L46:
+	subl	$1, %edx
+	imull	%edx, %eax
+	cmpl	$1, %edx
+	jne	.L46
+.L42:
+	popl	%ebp
+	ret
+	.size	fact_iter2, .-fact_iter2
+	.p2align 4,,15
+.globl fact_iter3
+	.type	fact_iter3, @function
+fact_iter3:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	testl	%ecx, %ecx
+	je	.L50
+	cmpl	$1, %ecx
+	movl	$1, %eax
+	movl	$1, %edx
+	je	.L57
+	.p2align 4,,7
+	.p2align 3
+.L55:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jne	.L55
+.L52:
+	imull	%ecx, %eax
+.L50:
+	popl	%ebp
+	ret
+.L57:
+	movl	%ecx, %eax
+	jmp	.L52
+	.size	fact_iter3, .-fact_iter3
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

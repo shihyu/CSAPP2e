@@ -1,0 +1,14 @@
+cread:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl 	8(%ebp), %edx
+/* $begin cread-invalid 5 */
+# Invalid implementation of function cread
+# xp in register %edx
+	movl	$0, %eax	# Set 0 as return value
+	testl	%edx, %edx	# Test xp
+	cmovne	(%edx), %eax	# if !0, dereference xp to get return value # line:asm:cread:cmovne
+/* $end cread-invalid 5 */
+	popl	%ebp
+	ret
+

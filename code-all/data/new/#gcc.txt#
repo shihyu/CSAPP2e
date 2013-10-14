@@ -1,0 +1,10 @@
+Script started on Fri Jun  3 12:38:11 2005
+[bryant@bryant new]$ gcc -v
+Reading specs from /usr/local/lib/gcc-lib/i686-pc-linux-gnu/3.2.3/specs
+Configured with: /afs/cs/usr/bhudson/gcc/gcc-3.2.3/configure  : (reconfigured) /afs/cs/usr/bhudson/gcc/gcc-3.2.3/configure 
+Thread model: posix
+gcc version 3.2.3
+[bryant@bryant new]$ gcc -m64 sizeof.c
+cc1: sorry, not implemented: 64-bit mode not compiled in
+[bryant@bryant new]$ 
+Script done on Fri Jun  3 12:38:25 2005

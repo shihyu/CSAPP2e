@@ -1,0 +1,100 @@
+	.file	"switch.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl switch_eg
+	.type	 switch_eg,@function
+switch_eg:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+
+	/* $begin switch1-s 12 */
+	# Set up the jump table access
+	leal -100(%edx),%eax		# Compute xi = x-100
+	cmpl $6,%eax			# Compare xi:6
+	ja .L9				# if >, goto \textbf{loc\_def}
+	jmp *.L10(,%eax,4)		# Goto jt[xi]
+	/* $end switch1-s 12 */
+
+	.p2align 4,,7
+
+	/* $begin switch2-s 17 */
+.section .rodata
+	.align 4	# Align address to multiple of 4
+	/* $end switch2-s 17 */
+	.align 4
+
+	/* $begin switch2-s 20 */
+.L10:
+	.long .L4 	# Case 100: loc_A
+	.long .L9	# Case 101: loc_def
+	.long .L5	# Case 102: loc_B	
+	.long .L6	# Case 103: loc_C
+	.long .L8	# Case 104: loc_D
+	.long .L9	# Case 105: loc_def
+	.long .L8	# Case 106: loc_D
+	/* $end switch2-s 20 */
+
+.text
+	.p2align 4,,7
+
+	/* $begin switch1-s 30 */
+
+	# Case 100
+.L4:				      # \textbf{loc\_A:}	
+	leal (%edx,%edx,2),%eax		# Compute 3*x
+	leal (%edx,%eax,4),%edx		# Compute x+4*3*x
+	jmp .L3				# Goto \textbf{done}
+	/* $end switch1-s 30 */
+
+	.p2align 4,,7
+
+	/* $begin switch1-s 35 */
+
+	# Case 102
+.L5:				      # \textbf{loc\_B:}
+	addl $10,%edx			# result += 10, Fall through
+	/* $end switch1-s 35 */	
+
+	/* $begin switch1-s 37 */
+
+	# Case 103
+.L6:				      # \textbf{loc\_C:}
+	addl $11,%edx			# result += 11
+	jmp .L3				# Goto \textbf{done}
+	/* $end switch1-s 37 */
+
+	.p2align 4,,7
+
+	/* $begin switch1-s 41 */
+
+	# Cases 104, 106
+.L8:				      # \textbf{loc\_D:}
+	imull %edx,%edx			# result *= result
+	jmp .L3				# Goto \textbf{done}
+	/* $end switch1-s 41 */
+
+	.p2align 4,,7
+
+	/* $begin switch1-s 45 */
+
+	# Default case
+.L9:				      # \textbf{loc\_def:}
+	xorl %edx,%edx			# result = 0
+	/* $end switch1-s 45 */
+
+	/* $begin switch1-s 47 */
+
+	# Return result
+.L3:				      # \textbf{done:}
+	movl %edx,%eax			# Set result as return value
+	/* $end switch1-s 47 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 switch_eg,.Lfe1-switch_eg
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"

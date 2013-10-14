@@ -1,0 +1,79 @@
+	.file	"fp.c"
+.globl i
+	.bss
+	.align 4
+	.type	i, @object
+	.size	i, 4
+i:
+	.zero	4
+	.text
+	.p2align 4,,15
+.globl ident_x
+	.type	ident_x, @function
+ident_x:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fldl	8(%ebp)
+	leave
+	fld	%st(0)
+	fmul	%st(1), %st
+	fdivp	%st, %st(1)
+	ret
+	.size	ident_x, .-ident_x
+	.p2align 4,,15
+.globl ident_d
+	.type	ident_d, @function
+ident_d:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	i, %eax
+	fldl	8(%ebp)
+	fld	%st(0)
+	fmul	%st(1), %st
+	fstpl	-8(%ebp)
+	fdivrl	-8(%ebp,%eax,8)
+	leave
+	ret
+	.size	ident_d, .-ident_d
+	.p2align 4,,15
+.globl funct
+	.type	funct, @function
+funct:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fildl	28(%ebp)
+	flds	16(%ebp)
+	fxch	%st(1)
+	fdivrl	20(%ebp)
+	fxch	%st(1)
+	fmull	8(%ebp)
+	leave
+	fsubp	%st, %st(1)
+	ret
+	.size	funct, .-funct
+	.p2align 4,,15
+.globl less
+	.type	less, @function
+less:
+	pushl	%ebp
+	movl	%esp, %ebp
+	/* $begin fpless-s 61 */
+	fldl	16(%ebp)	# Push y
+	fldl	8(%ebp)		# Push x
+	fxch	%st(1)		# Swap x and y on stack
+	/* $end fpless-s 61 */
+	leave
+	/* $begin fpless-s 65 */
+	fucompp			# Compare y:x and pop both
+	/* $begin fpselectbits-s 66 */
+	fnstsw	%ax		# Store floating point status word in %ax
+	testb	$69, %ah	# Test bits 0, 2, and 6 of word
+	/* $end fpselectbits-s 66 */
+	sete	%al		# Test for comparison outcome of 0 (>)
+	movzbl	%al, %eax	# Copy low order byte to result, and set rest to 0
+	/* $end fpless-s 65 */
+	ret
+	.size	less, .-less
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

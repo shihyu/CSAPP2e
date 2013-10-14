@@ -1,0 +1,132 @@
+	.file	"canary.c"
+	.text
+.globl gets
+	.type	gets, @function
+gets:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	subl	$16, %esp
+	movl	8(%ebp), %esi
+	movl	%esi, %ebx
+	jmp	.L2
+.L4:
+	movb	%al, (%ebx)
+	addl	$1, %ebx
+.L2:
+	movl	stdin, %eax
+	movl	%eax, (%esp)
+	call	_IO_getc
+	cmpl	$10, %eax
+	je	.L3
+	cmpl	$-1, %eax
+	jne	.L4
+	.p2align 4,,7
+	.p2align 3
+	jmp	.L9
+.L3:
+	movb	$0, (%ebx)
+.L6:
+	movl	%esi, %eax
+	addl	$16, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+.L9:
+	movb	$0, (%ebx)
+	movl	$0, %esi
+	jmp	.L6
+	.size	gets, .-gets
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"Canary at %p, value = 0x%x\n"
+	.text
+.globl echo
+	.type	echo, @function
+echo:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$36, %esp
+	movl	%gs:20, %eax
+	movl	%eax, -8(%ebp)
+	xorl	%eax, %eax
+	leal	-16(%ebp), %ebx
+	leal	-8(%ebp), %edx
+	movl	(%edx), %eax
+	movl	%eax, 12(%esp)
+	movl	%edx, 8(%esp)
+	movl	$.LC0, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+	movl	%ebx, (%esp)
+	call	gets
+	movl	%ebx, (%esp)
+	call	puts
+	movl	-8(%ebp), %eax
+	xorl	%gs:20, %eax
+	je	.L12
+	call	__stack_chk_fail
+.L12:
+	addl	$36, %esp
+	popl	%ebx
+	popl	%ebp
+	.p2align 4,,2
+	.p2align 3
+	ret
+	.size	echo, .-echo
+	.section	.rodata.str1.1
+.LC1:
+	.string	"Type a string:"
+	.text
+.globl main
+	.type	main, @function
+main:
+	leal	4(%esp), %ecx
+	andl	$-16, %esp
+	pushl	-4(%ecx)
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	pushl	%ecx
+	subl	$12, %esp
+	movl	4(%ecx), %eax
+	cmpl	$1, (%ecx)
+	jg	.L14
+	movl	$1, %esi
+.L16:
+	movl	$0, %ebx
+	jmp	.L15
+.L14:
+	movl	$10, 8(%esp)
+	movl	$0, 4(%esp)
+	movl	4(%eax), %eax
+	movl	%eax, (%esp)
+	call	strtol
+	movl	%eax, %esi
+	testl	%eax, %eax
+	jg	.L16
+	jmp	.L17
+.L15:
+	movl	$.LC1, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+	call	echo
+	addl	$1, %ebx
+	cmpl	%ebx, %esi
+	jg	.L15
+.L17:
+	movl	$0, %eax
+	addl	$12, %esp
+	popl	%ecx
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	leal	-4(%ecx), %esp
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

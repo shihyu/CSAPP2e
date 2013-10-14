@@ -1,0 +1,19 @@
+	.file	"arith.c"
+	.text
+.globl arith
+	.type	arith, @function
+arith:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	16(%ebp), %eax
+	leal	(%eax,%eax,2), %eax
+	sall	$4, %eax
+	movl	12(%ebp), %edx
+	addl	8(%ebp), %edx
+	andl	$65535, %edx
+	imull	%edx, %eax
+	popl	%ebp
+	ret
+	.size	arith, .-arith
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

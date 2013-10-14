@@ -1,0 +1,137 @@
+	.file	"charbuf.c"
+	.text
+.globl storeint
+	.type	storeint, @function
+storeint:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%eax, (%edx)
+	popl	%ebp
+	ret
+	.size	storeint, .-storeint
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%d"
+	.text
+.globl itoa
+	.type	itoa, @function
+itoa:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	12(%ebp), %eax
+	movl	%eax, 16(%esp)
+	movl	$.LC0, 12(%esp)
+	movl	$-1, 8(%esp)
+	movl	$1, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	__sprintf_chk
+	leave
+	ret
+	.size	itoa, .-itoa
+.globl iptoa
+	.type	iptoa, @function
+iptoa:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	12(%ebp), %eax
+	movl	(%eax), %eax
+	movl	%eax, 16(%esp)
+	movl	$.LC0, 12(%esp)
+	movl	$-1, 8(%esp)
+	movl	$1, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	__sprintf_chk
+	leave
+	ret
+	.size	iptoa, .-iptoa
+.globl len
+	.type	len, @function
+len:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	movl	8(%ebp), %edi
+	movl	$0, %eax
+	movl	$-1, %ecx
+	repnz scasb
+	notl	%ecx
+	leal	-1(%ecx), %eax
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	len, .-len
+.globl intlen2
+	.type	intlen2, @function
+intlen2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$52, %esp
+	movl	%gs:20, %eax
+	movl	%eax, -8(%ebp)
+	xorl	%eax, %eax
+	leal	-24(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	storeint
+	movl	-24(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-20(%ebp), %ebx
+	movl	%ebx, (%esp)
+	call	itoa
+	movl	%ebx, (%esp)
+	call	len
+	movl	-8(%ebp), %edx
+	xorl	%gs:20, %edx
+	je	.L11
+	call	__stack_chk_fail
+.L11:
+	addl	$52, %esp
+	popl	%ebx
+	popl	%ebp
+	.p2align 4,,2
+	.p2align 3
+	ret
+	.size	intlen2, .-intlen2
+.globl intlen
+	.type	intlen, @function
+intlen:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin charbuf-s 109 */
+	subl	$52, %esp
+	movl	%gs:20, %eax
+	movl	%eax, -8(%ebp) ##line:asm:charbuf:canary
+	xorl	%eax, %eax
+	movl	8(%ebp), %eax
+	movl	%eax, -24(%ebp)
+	leal	-24(%ebp), %eax ##line:asm:charbuf:v
+	movl	%eax, 4(%esp)
+	leal	-20(%ebp), %ebx ##line:asm:charbuf:buf
+	movl	%ebx, (%esp)
+	call	iptoa
+/* $end charbuf-s 109 */
+	movl	%ebx, (%esp)
+	call	len
+	movl	-8(%ebp), %edx
+	xorl	%gs:20, %edx
+	je	.L14
+	call	__stack_chk_fail
+.L14:
+	addl	$52, %esp
+	popl	%ebx
+	popl	%ebp
+	.p2align 4,,2
+	.p2align 3
+	ret
+	.size	intlen, .-intlen
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

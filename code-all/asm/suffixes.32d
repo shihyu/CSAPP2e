@@ -1,0 +1,22 @@
+
+suffixes.32o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <.text>:
+   0:	00 c7                	add    %al,%bh
+   2:	c6 04 24 f3          	movb   $0xf3,(%esp)
+   6:	66 8b 07             	mov    (%edi),%ax
+   9:	66 81 ea 39 30       	sub    $0x3039,%dx
+   e:	66 03 3d f0 ff ff 0b 	add    0xbfffff0,%di
+  15:	8b 45 08             	mov    0x8(%ebp),%eax
+  18:	81 72 08 f0 f0 f0 f0 	xorl   $0xf0f0f0f0,0x8(%edx)
+  1f:	90                   	nop    
+  20:	00 c7                	add    %al,%bh
+  22:	c6 04 24 f3          	movb   $0xf3,(%esp)
+  26:	66 8b 07             	mov    (%edi),%ax
+  29:	66 81 ea 39 30       	sub    $0x3039,%dx
+  2e:	66 03 3d f0 ff ff 0b 	add    0xbfffff0,%di
+  35:	8b 45 08             	mov    0x8(%ebp),%eax
+  38:	81 72 08 f0 f0 f0 f0 	xorl   $0xf0f0f0f0,0x8(%edx)

@@ -1,0 +1,53 @@
+	.file	"sibling.c"
+	.text
+	.p2align 4,,15
+.globl square
+	.type	square, @function
+square:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	popl	%ebp
+	imull	%eax, %eax
+	ret
+	.size	square, .-square
+	.p2align 4,,15
+.globl proc1
+	.type	proc1, @function
+proc1:
+	pushl	%ebp
+	movl	%esp, %ebp
+	testb	$1, 16(%ebp)
+	movl	12(%ebp), %eax
+	jne	.L6
+	movl	%eax, 8(%ebp)
+.L6:
+	popl	%ebp
+	jmp	square
+	.size	proc1, .-proc1
+	.p2align 4,,15
+.globl proc
+	.type	proc, @function
+/* $begin sibling-proc-s 31 */
+# Function proc, optimized -O3, inline substitution disabled
+# x at %ebp+8
+proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp	# Allocate 16 bytes on stack
+# Create array b at %ebp-8 and set %eax to b[i & 0x1]
+	movl	8(%ebp), %eax	
+	movl	16(%ebp), %edx
+	movl	%eax, -8(%ebp)
+	movl	12(%ebp), %eax
+	andl	$1, %edx
+	movl	%eax, -4(%ebp)
+	movl	-8(%ebp,%edx,4), %eax
+# Set up sibling call
+	movl	%eax, 8(%ebp)	# Set first argument to b[i & 0x1] # line:asm:sibling_proc:movl
+	leave	      		# Deallocate stack frame and restore frame pointer # line:asm:sibling_proc:leave
+	jmp	square		# Make sibling call  # line:asm:sibling_proc:jmp
+/* $end sibling-proc-s 31 */
+	.size	proc, .-proc
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

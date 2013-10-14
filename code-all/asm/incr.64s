@@ -1,0 +1,217 @@
+	.file	"incr.c"
+	.text
+.globl simple
+	.type	simple, @function
+simple:
+.LFB36:
+	movl	%esi, %eax
+	addl	(%rdi), %eax
+	movl	%eax, (%rdi)
+	ret
+.LFE36:
+	.size	simple, .-simple
+.globl simple_l
+	.type	simple_l, @function
+simple_l:
+.LFB37:
+	movq	%rsi, %rax
+	addq	(%rdi), %rax
+	movq	%rax, (%rdi)
+	ret
+.LFE37:
+	.size	simple_l, .-simple_l
+.globl call_simple
+	.type	call_simple, @function
+call_simple:
+.LFB38:
+	subq	$16, %rsp
+.LCFI0:
+	movl	$37, 12(%rsp)
+	leaq	12(%rsp), %rdi
+	movl	$12, %esi
+	call	simple
+	addl	12(%rsp), %eax
+	addq	$16, %rsp
+	ret
+.LFE38:
+	.size	call_simple, .-call_simple
+.globl call_simple_l
+	.type	call_simple_l, @function
+call_simple_l:
+.LFB39:
+	movl	$12, %esi
+	movl	$gval1, %edi
+	call	simple_l
+	addq	gval2(%rip), %rax
+	ret
+.LFE39:
+	.size	call_simple_l, .-call_simple_l
+.globl post_incr
+	.type	post_incr, @function
+post_incr:
+.LFB40:
+	movl	(%rdi), %eax
+	addl	%eax, %esi
+	movl	%esi, (%rdi)
+	ret
+.LFE40:
+	.size	post_incr, .-post_incr
+.globl post_incr_l
+	.type	post_incr_l, @function
+post_incr_l:
+.LFB41:
+	movq	(%rdi), %rax
+	addq	%rax, %rsi
+	movq	%rsi, (%rdi)
+	ret
+.LFE41:
+	.size	post_incr_l, .-post_incr_l
+.globl main
+	.type	main, @function
+main:
+.LFB43:
+	pushq	%r12
+.LCFI1:
+	pushq	%rbp
+.LCFI2:
+	pushq	%rbx
+.LCFI3:
+	movl	$0, %ebx
+	movl	$val, %r12d
+	movl	$val_l, %ebp
+.L14:
+	call	random
+	movl	%eax, (%r12,%rbx)
+	cltq
+	movq	%rax, (%rbp,%rbx,2)
+	addq	$4, %rbx
+	cmpq	$2048, %rbx
+	jne	.L14
+	movl	$0, %eax
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+.LFE43:
+	.size	main, .-main
+.globl gval1
+	.data
+	.align 8
+	.type	gval1, @object
+	.size	gval1, 8
+gval1:
+	.quad	567
+.globl gval2
+	.align 8
+	.type	gval2, @object
+	.size	gval2, 8
+gval2:
+	.quad	763
+	.comm	val,2048,32
+	.comm	val_l,4096,32
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB36
+	.long	.LFE36-.LFB36
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB37
+	.long	.LFE37-.LFB37
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB38
+	.long	.LFE38-.LFB38
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI0-.LFB38
+	.byte	0xe
+	.uleb128 0x18
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB39
+	.long	.LFE39-.LFB39
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB40
+	.long	.LFE40-.LFB40
+	.uleb128 0x0
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.long	.LFB41
+	.long	.LFE41-.LFB41
+	.uleb128 0x0
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.long	.LFB43
+	.long	.LFE43-.LFB43
+	.uleb128 0x0
+	.byte	0x4
+	.long	.LCFI1-.LFB43
+	.byte	0xe
+	.uleb128 0x10
+	.byte	0x4
+	.long	.LCFI2-.LCFI1
+	.byte	0xe
+	.uleb128 0x18
+	.byte	0x4
+	.long	.LCFI3-.LCFI2
+	.byte	0xe
+	.uleb128 0x20
+	.byte	0x83
+	.uleb128 0x4
+	.byte	0x86
+	.uleb128 0x3
+	.byte	0x8c
+	.uleb128 0x2
+	.align 8
+.LEFDE13:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

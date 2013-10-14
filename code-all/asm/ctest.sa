@@ -1,0 +1,44 @@
+	.file	"ctest.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl ctest
+	.type	 ctest,@function
+ctest:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $16,%esp
+	pushl %esi
+	pushl %ebx
+/* $begin ctest-s 14 */
+	movl 8(%ebp),%ecx	# Get a
+	movl 12(%ebp),%esi	# Get b
+	cmpl %esi,%ecx		# Compare a:b
+	setl %al		# Compute t1
+	cmpl %ecx,%esi		# Compare b:a
+	setb -1(%ebp)		# Compute t2
+	cmpw %cx,16(%ebp)	# Compare c:a
+	setge -2(%ebp)		# Compute t3
+	movb %cl,%dl
+	cmpb 16(%ebp),%dl	# Compare a:c
+	setne %bl		# Compute t4
+	cmpl %esi,16(%ebp)	# Compare c:b
+	setg -3(%ebp)		# Compute t5
+	testl %ecx,%ecx		# Test a
+	setg %dl		# Compute t6
+	addb -1(%ebp),%al	# Add t2 to t1
+	addb -2(%ebp),%al	# Add t3 to t1
+	addb %bl,%al		# Add t4 to t1
+	addb -3(%ebp),%al	# Add t5 to t1
+	addb %dl,%al		# Add t6 to t1
+	movsbl %al,%eax		# Convert sum from char to int
+/* $end ctest-s 14 */
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 ctest,.Lfe1-ctest
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"

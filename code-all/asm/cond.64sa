@@ -1,0 +1,344 @@
+	.file	"cond.c"
+	.text
+.globl max
+	.type	max, @function
+/* $begin max-64 5 */
+# x86-64 code generated for function max
+# x in register %edi, y in %esi
+max:
+/* $end max-64 5 */
+.LFB2:
+/* $begin max-64 7 */
+	cmpl	%edi, %esi	# Compare x:y
+	movl	%edi, %eax	# Set y as return value
+	cmovge	%esi, %eax	# if >=, then set return value to x #line:asm:max:cmov 
+	ret
+/* $end max-64 7 */
+.LFE2:
+	.size	max, .-max
+.globl wa_max
+	.type	wa_max, @function
+wa_max:
+.LFB3:
+	leal	17(%rsi), %edx
+	leal	23(%rdi), %eax
+	cmpl	%esi, %edi
+	cmovl	%edx, %eax
+	ret
+.LFE3:
+	.size	wa_max, .-wa_max
+.globl wm_max
+	.type	wm_max, @function
+wm_max:
+.LFB4:
+	cmpl	%esi, %edi
+	jge	.L8
+	movl	%esi, %eax
+	sall	$4, %eax
+	addl	%esi, %eax
+	ret
+.L8:
+	imull	$23, %edi, %eax
+	ret
+.LFE4:
+	.size	wm_max, .-wm_max
+.globl wm_max2
+	.type	wm_max2, @function
+wm_max2:
+.LFB5:
+	movl	%esi, %eax
+	sall	$4, %eax
+	cmpl	%esi, %edi
+	cmovl	%eax, %edi
+	movl	%edi, %eax
+	ret
+.LFE5:
+	.size	wm_max2, .-wm_max2
+.globl wm_max3
+	.type	wm_max3, @function
+wm_max3:
+.LFB6:
+	cmpl	%esi, %edi
+	jge	.L15
+	movl	%esi, %eax
+	sall	$4, %eax
+	leal	(%rax,%rsi), %edi
+.L15:
+	movl	%edi, %eax
+	ret
+.LFE6:
+	.size	wm_max3, .-wm_max3
+.globl abs
+	.type	abs, @function
+abs:
+.LFB7:
+	movl	%edi, %edx
+	sarl	$31, %edx
+	movl	%edx, %eax
+	xorl	%edi, %eax
+	subl	%edx, %eax
+	ret
+.LFE7:
+	.size	abs, .-abs
+.globl cmul
+	.type	cmul, @function
+cmul:
+.LFB8:
+	movl	$0, %eax
+	testl	%esi, %esi
+	je	.L21
+	movl	%esi, %eax
+	imull	%edi, %eax
+.L21:
+	rep
+	ret
+.LFE8:
+	.size	cmul, .-cmul
+.globl cmul2
+	.type	cmul2, @function
+cmul2:
+.LFB9:
+	movl	%edi, %eax
+	imull	%esi, %eax
+	cmpl	$1, %esi
+	cmovne	%eax, %edi
+	movl	%edi, %eax
+	ret
+.LFE9:
+	.size	cmul2, .-cmul2
+.globl cdiv
+	.type	cdiv, @function
+cdiv:
+.LFB10:
+	movl	%edi, %edx
+	movl	$0, %eax
+	testl	%esi, %esi
+	je	.L28
+	movl	%edi, %eax
+	sarl	$31, %edx
+	idivl	%esi
+.L28:
+	rep
+	ret
+.LFE10:
+	.size	cdiv, .-cdiv
+.globl cdiv2
+	.type	cdiv2, @function
+cdiv2:
+.LFB11:
+	movl	%edi, %eax
+	cmpl	$1, %esi
+	je	.L31
+	movl	%edi, %edx
+	sarl	$31, %edx
+	idivl	%esi
+.L31:
+	rep
+	ret
+.LFE11:
+	.size	cdiv2, .-cdiv2
+.globl cread
+	.type	cread, @function
+cread:
+.LFB12:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L35
+	movl	(%rdi), %eax
+.L35:
+	rep
+	ret
+.LFE12:
+	.size	cread, .-cread
+.globl se_max
+	.type	se_max, @function
+se_max:
+.LFB13:
+	cmpl	%esi, %edi
+	jl	.L38
+	movl	%edi, %esi
+	jmp	.L39
+.L38:
+	addl	$1, lcount(%rip)
+.L39:
+	movl	%esi, %eax
+	ret
+.LFE13:
+	.size	se_max, .-se_max
+.globl arith
+	.type	arith, @function
+/* $begin arith-prob-64 164 */
+# x86-64 implementation of arith
+# x in register %edi
+arith:
+/* $end arith-prob-64 164 */
+.LFB14:
+/* $begin arith-prob-64 166 */
+	leal	3(%rdi), %eax
+	testl	%edi, %edi
+	cmovns	%edi, %eax
+	sarl	$2, %eax	# return value in %eax
+	ret
+/* $end arith-prob-64 166 */
+
+/* $begin arith-ans-64 164 */
+# x86-64 implementation of arith
+# x in register %edi
+arith:
+/* $end arith-ans-64 164 */
+.LFB14:
+/* $begin arith-ans-64 166 */
+	leal	3(%rdi), %eax	# temp = x+3
+	testl	%edi, %edi	# Test x
+	cmovns	%edi, %eax	# If >= 0, temp = x
+	sarl	$2, %eax	# return value = temp >> 2 (= x/4)
+	ret
+/* $end arith-ans-64 166 */
+
+.LFE14:
+	.size	arith, .-arith
+.globl lcount
+	.bss
+	.align 4
+	.type	lcount, @object
+	.size	lcount, 4
+lcount:
+	.zero	4
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB6
+	.long	.LFE6-.LFB6
+	.uleb128 0x0
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.long	.LFB7
+	.long	.LFE7-.LFB7
+	.uleb128 0x0
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.long	.LFB8
+	.long	.LFE8-.LFB8
+	.uleb128 0x0
+	.align 8
+.LEFDE13:
+.LSFDE15:
+	.long	.LEFDE15-.LASFDE15
+.LASFDE15:
+	.long	.LASFDE15-.Lframe1
+	.long	.LFB9
+	.long	.LFE9-.LFB9
+	.uleb128 0x0
+	.align 8
+.LEFDE15:
+.LSFDE17:
+	.long	.LEFDE17-.LASFDE17
+.LASFDE17:
+	.long	.LASFDE17-.Lframe1
+	.long	.LFB10
+	.long	.LFE10-.LFB10
+	.uleb128 0x0
+	.align 8
+.LEFDE17:
+.LSFDE19:
+	.long	.LEFDE19-.LASFDE19
+.LASFDE19:
+	.long	.LASFDE19-.Lframe1
+	.long	.LFB11
+	.long	.LFE11-.LFB11
+	.uleb128 0x0
+	.align 8
+.LEFDE19:
+.LSFDE21:
+	.long	.LEFDE21-.LASFDE21
+.LASFDE21:
+	.long	.LASFDE21-.Lframe1
+	.long	.LFB12
+	.long	.LFE12-.LFB12
+	.uleb128 0x0
+	.align 8
+.LEFDE21:
+.LSFDE23:
+	.long	.LEFDE23-.LASFDE23
+.LASFDE23:
+	.long	.LASFDE23-.Lframe1
+	.long	.LFB13
+	.long	.LFE13-.LFB13
+	.uleb128 0x0
+	.align 8
+.LEFDE23:
+.LSFDE25:
+	.long	.LEFDE25-.LASFDE25
+.LASFDE25:
+	.long	.LASFDE25-.Lframe1
+	.long	.LFB14
+	.long	.LFE14-.LFB14
+	.uleb128 0x0
+	.align 8
+.LEFDE25:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

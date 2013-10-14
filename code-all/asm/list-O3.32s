@@ -1,0 +1,761 @@
+	.file	"list-O3.c"
+	.text
+	.p2align 4,,15
+.globl val
+	.type	val, @function
+val:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L3
+	movl	(%edx), %eax
+.L3:
+	popl	%ebp
+	ret
+	.size	val, .-val
+	.p2align 4,,15
+.globl next
+	.type	next, @function
+next:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L8
+	movl	4(%edx), %eax
+.L8:
+	popl	%ebp
+	ret
+	.size	next, .-next
+	.p2align 4,,15
+.globl is_null
+	.type	is_null, @function
+is_null:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	cmpl	$0, 8(%ebp)
+	popl	%ebp
+	sete	%al
+	ret
+	.size	is_null, .-is_null
+	.p2align 4,,15
+.globl sum_list_rec
+	.type	sum_list_rec, @function
+sum_list_rec:
+	pushl	%ebp
+	xorl	%ecx, %ecx
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L14
+	.p2align 4,,7
+	.p2align 3
+.L17:
+	movl	(%edx), %eax
+	movl	4(%edx), %edx
+	addl	%eax, %ecx
+	testl	%edx, %edx
+	jne	.L17
+.L14:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	sum_list_rec, .-sum_list_rec
+	.p2align 4,,15
+.globl diff_list_rec_helper
+	.type	diff_list_rec_helper, @function
+diff_list_rec_helper:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	movl	12(%ebp), %ecx
+	testl	%edx, %edx
+	je	.L21
+	.p2align 4,,7
+	.p2align 3
+.L24:
+	movl	%ecx, %eax
+	negl	%ecx
+	imull	(%edx), %eax
+	movl	4(%edx), %edx
+	addl	%eax, %ebx
+	testl	%edx, %edx
+	jne	.L24
+.L21:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	diff_list_rec_helper, .-diff_list_rec_helper
+	.p2align 4,,15
+.globl diff_list_rec2
+	.type	diff_list_rec2, @function
+diff_list_rec2:
+	pushl	%ebp
+	movl	$1, %ecx
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	testl	%edx, %edx
+	je	.L28
+	.p2align 4,,7
+	.p2align 3
+.L31:
+	movl	%ecx, %eax
+	negl	%ecx
+	imull	(%edx), %eax
+	movl	4(%edx), %edx
+	addl	%eax, %ebx
+	testl	%edx, %edx
+	jne	.L31
+.L28:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	diff_list_rec2, .-diff_list_rec2
+	.p2align 4,,15
+.globl diff_list_iter1
+	.type	diff_list_iter1, @function
+diff_list_iter1:
+	pushl	%ebp
+	movl	$1, %ecx
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	pushl	%ebx
+	xorl	%ebx, %ebx
+	testl	%edx, %edx
+	je	.L35
+	.p2align 4,,7
+	.p2align 3
+.L38:
+	movl	%ecx, %eax
+	negl	%ecx
+	imull	(%edx), %eax
+	movl	4(%edx), %edx
+	addl	%eax, %ebx
+	testl	%edx, %edx
+	jne	.L38
+.L35:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	diff_list_iter1, .-diff_list_iter1
+	.p2align 4,,15
+.globl sum_list_rec_abs
+	.type	sum_list_rec_abs, @function
+sum_list_rec_abs:
+	pushl	%ebp
+	xorl	%ecx, %ecx
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L42
+	.p2align 4,,7
+	.p2align 3
+.L45:
+	movl	(%edx), %eax
+	movl	4(%edx), %edx
+	addl	%eax, %ecx
+	testl	%edx, %edx
+	jne	.L45
+.L42:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	sum_list_rec_abs, .-sum_list_rec_abs
+	.p2align 4,,15
+.globl sum_list_tail
+	.type	sum_list_tail, @function
+sum_list_tail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%edx, %edx
+	je	.L48
+	.p2align 4,,7
+	.p2align 3
+.L51:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L51
+.L48:
+	popl	%ebp
+	ret
+	.size	sum_list_tail, .-sum_list_tail
+	.p2align 4,,15
+.globl sum_list_tail_call
+	.type	sum_list_tail_call, @function
+sum_list_tail_call:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L55
+	.p2align 4,,7
+	.p2align 3
+.L58:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L58
+.L55:
+	popl	%ebp
+	ret
+	.size	sum_list_tail_call, .-sum_list_tail_call
+	.p2align 4,,15
+.globl sum_list_iter
+	.type	sum_list_iter, @function
+sum_list_iter:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L62
+	.p2align 4,,7
+	.p2align 3
+.L65:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L65
+.L62:
+	popl	%ebp
+	ret
+	.size	sum_list_iter, .-sum_list_iter
+	.p2align 4,,15
+.globl sum_list_iter_abs
+	.type	sum_list_iter_abs, @function
+sum_list_iter_abs:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L69
+	.p2align 4,,7
+	.p2align 3
+.L72:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L72
+.L69:
+	popl	%ebp
+	ret
+	.size	sum_list_iter_abs, .-sum_list_iter_abs
+	.p2align 4,,15
+.globl sum_list_iter_expand
+	.type	sum_list_iter_expand, @function
+sum_list_iter_expand:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L76
+	.p2align 4,,7
+	.p2align 3
+.L79:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L79
+.L76:
+	popl	%ebp
+	ret
+	.size	sum_list_iter_expand, .-sum_list_iter_expand
+	.p2align 4,,15
+.globl max
+	.type	max, @function
+max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	12(%ebp), %edx
+	popl	%ebp
+	cmpl	%eax, %edx
+	cmovge	%edx, %eax
+	ret
+	.size	max, .-max
+	.p2align 4,,15
+.globl max_list_tail
+	.type	max_list_tail, @function
+max_list_tail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %ecx
+	testl	%edx, %edx
+	je	.L84
+	.p2align 4,,7
+	.p2align 3
+.L87:
+	movl	(%edx), %eax
+	movl	4(%edx), %edx
+	cmpl	%eax, %ecx
+	cmovl	%eax, %ecx
+	testl	%edx, %edx
+	jne	.L87
+.L84:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	max_list_tail, .-max_list_tail
+	.p2align 4,,15
+.globl max_list_tail_call
+	.type	max_list_tail_call, @function
+max_list_tail_call:
+	pushl	%ebp
+	movl	$-2147483648, %ecx
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L91
+	.p2align 4,,7
+	.p2align 3
+.L94:
+	movl	(%edx), %eax
+	movl	4(%edx), %edx
+	cmpl	%eax, %ecx
+	cmovl	%eax, %ecx
+	testl	%edx, %edx
+	jne	.L94
+.L91:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	max_list_tail_call, .-max_list_tail_call
+	.p2align 4,,15
+.globl sum_list_iter2
+	.type	sum_list_iter2, @function
+sum_list_iter2:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	testl	%edx, %edx
+	je	.L98
+	movl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	je	.L98
+	.p2align 4,,7
+	.p2align 3
+.L101:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L101
+.L98:
+	popl	%ebp
+	ret
+	.size	sum_list_iter2, .-sum_list_iter2
+	.p2align 4,,15
+.globl sum_list_itail
+	.type	sum_list_itail, @function
+sum_list_itail:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%edx, %edx
+	je	.L104
+	.p2align 4,,7
+	.p2align 3
+.L107:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L107
+.L104:
+	popl	%ebp
+	ret
+	.size	sum_list_itail, .-sum_list_itail
+	.p2align 4,,15
+.globl new_ele
+	.type	new_ele, @function
+new_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$8, (%esp)
+	call	malloc
+	movl	8(%ebp), %edx
+	movl	%edx, (%eax)
+	leave
+	ret
+	.size	new_ele, .-new_ele
+	.p2align 4,,15
+.globl max_list_rec
+	.type	max_list_rec, @function
+max_list_rec:
+	pushl	%ebp
+	movl	$-2147483648, %eax
+	movl	%esp, %ebp
+	subl	$40, %esp
+	movl	8(%ebp), %edx
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	testl	%edx, %edx
+	je	.L113
+	movl	8(%ebp), %eax
+	movl	$-2147483648, %edx
+	movl	4(%eax), %ebx
+	testl	%ebx, %ebx
+	je	.L115
+	movl	4(%ebx), %esi
+	movl	$-2147483648, %edx
+	testl	%esi, %esi
+	je	.L117
+	movl	4(%esi), %ecx
+	movl	$-2147483648, %edx
+	testl	%ecx, %ecx
+	movl	%ecx, -32(%ebp)
+	je	.L119
+	movl	4(%ecx), %eax
+	movl	$-2147483648, %edx
+	testl	%eax, %eax
+	movl	%eax, -28(%ebp)
+	je	.L121
+	movl	4(%eax), %ecx
+	movl	$-2147483648, %edx
+	testl	%ecx, %ecx
+	movl	%ecx, -24(%ebp)
+	je	.L123
+	movl	4(%ecx), %eax
+	movl	$-2147483648, %edx
+	testl	%eax, %eax
+	movl	%eax, -20(%ebp)
+	je	.L125
+	movl	4(%eax), %ecx
+	movl	$-2147483648, %edx
+	testl	%ecx, %ecx
+	movl	%ecx, -16(%ebp)
+	je	.L127
+	movl	4(%ecx), %edi
+	movl	$-2147483648, %edx
+	testl	%edi, %edi
+	je	.L129
+	movl	4(%edi), %eax
+	movl	%eax, (%esp)
+	call	max_list_rec
+	movl	(%edi), %edx
+	cmpl	%edx, %eax
+	cmovge	%eax, %edx
+.L129:
+	movl	-16(%ebp), %ecx
+	movl	(%ecx), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L127:
+	movl	-20(%ebp), %ecx
+	movl	(%ecx), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L125:
+	movl	-24(%ebp), %ecx
+	movl	(%ecx), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L123:
+	movl	-28(%ebp), %ecx
+	movl	(%ecx), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L121:
+	movl	-32(%ebp), %ecx
+	movl	(%ecx), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L119:
+	movl	(%esi), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L117:
+	movl	(%ebx), %eax
+	cmpl	%eax, %edx
+	cmovl	%eax, %edx
+.L115:
+	movl	8(%ebp), %ecx
+	movl	(%ecx), %eax
+	cmpl	%eax, %edx
+	cmovge	%edx, %eax
+.L113:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	max_list_rec, .-max_list_rec
+	.p2align 4,,15
+.globl diff_list_rec
+	.type	diff_list_rec, @function
+diff_list_rec:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	subl	$40, %esp
+	movl	8(%ebp), %edx
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	testl	%edx, %edx
+	je	.L133
+	movl	(%edx), %esi
+	xorl	%eax, %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	je	.L135
+	movl	4(%edx), %eax
+	movl	(%edx), %edi
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L137
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -36(%ebp)
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L139
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -32(%ebp)
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L141
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -28(%ebp)
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L143
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -24(%ebp)
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L145
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -20(%ebp)
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L147
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -16(%ebp)
+	xorl	%edx, %edx
+	testl	%eax, %eax
+	je	.L149
+	movl	(%eax), %ebx
+	movl	4(%eax), %eax
+	movl	%eax, (%esp)
+	call	diff_list_rec
+	movl	%ebx, %edx
+	subl	%eax, %edx
+.L149:
+	movl	-16(%ebp), %eax
+	subl	%edx, %eax
+	movl	%eax, %edx
+.L147:
+	movl	-20(%ebp), %eax
+	subl	%edx, %eax
+	movl	%eax, %edx
+.L145:
+	movl	-24(%ebp), %eax
+	subl	%edx, %eax
+	movl	%eax, %edx
+.L143:
+	movl	-28(%ebp), %eax
+	subl	%edx, %eax
+	movl	%eax, %edx
+.L141:
+	movl	-32(%ebp), %eax
+	subl	%edx, %eax
+	movl	%eax, %edx
+.L139:
+	movl	-36(%ebp), %eax
+	subl	%edx, %eax
+	movl	%eax, %edx
+.L137:
+	movl	%edi, %eax
+	subl	%edx, %eax
+.L135:
+	subl	%eax, %esi
+	movl	%esi, %eax
+.L133:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	diff_list_rec, .-diff_list_rec
+	.p2align 4,,15
+.globl dsum_list_rec
+	.type	dsum_list_rec, @function
+dsum_list_rec:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$56, %esp
+	movl	8(%ebp), %eax
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	testl	%eax, %eax
+	je	.L171
+	movl	(%eax), %ebx
+	movl	4(%eax), %eax
+	testl	%eax, %eax
+	je	.L172
+	movl	(%eax), %esi
+	movl	4(%eax), %eax
+	testl	%eax, %eax
+	je	.L173
+	movl	(%eax), %edi
+	movl	4(%eax), %eax
+	testl	%eax, %eax
+	je	.L174
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -44(%ebp)
+	testl	%eax, %eax
+	je	.L175
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -40(%ebp)
+	testl	%eax, %eax
+	je	.L176
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -36(%ebp)
+	testl	%eax, %eax
+	je	.L177
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -32(%ebp)
+	testl	%eax, %eax
+	je	.L178
+	movl	(%eax), %edx
+	movl	4(%eax), %eax
+	movl	%edx, -28(%ebp)
+	testl	%eax, %eax
+	je	.L179
+	fildl	(%eax)
+	movl	4(%eax), %eax
+	fstpl	-24(%ebp)
+	movl	%eax, (%esp)
+	call	dsum_list_rec
+	faddl	-24(%ebp)
+.L169:
+	fildl	-28(%ebp)
+	faddp	%st, %st(1)
+.L167:
+	fildl	-32(%ebp)
+	faddp	%st, %st(1)
+.L165:
+	fildl	-36(%ebp)
+	faddp	%st, %st(1)
+.L163:
+	fildl	-40(%ebp)
+	faddp	%st, %st(1)
+.L161:
+	fildl	-44(%ebp)
+	faddp	%st, %st(1)
+.L159:
+	pushl	%edi
+	fildl	(%esp)
+	addl	$4, %esp
+	faddp	%st, %st(1)
+.L157:
+	pushl	%esi
+	fildl	(%esp)
+	addl	$4, %esp
+	faddp	%st, %st(1)
+.L155:
+	pushl	%ebx
+	fildl	(%esp)
+	addl	$4, %esp
+	faddp	%st, %st(1)
+	jmp	.L153
+	.p2align 4,,7
+	.p2align 3
+.L171:
+	fldz
+.L153:
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.p2align 4,,7
+	.p2align 3
+.L173:
+	fldz
+	jmp	.L157
+	.p2align 4,,7
+	.p2align 3
+.L176:
+	fldz
+	jmp	.L163
+	.p2align 4,,7
+	.p2align 3
+.L172:
+	fldz
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L155
+	.p2align 4,,7
+	.p2align 3
+.L174:
+	fldz
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L159
+	.p2align 4,,7
+	.p2align 3
+.L175:
+	fldz
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L161
+	.p2align 4,,7
+	.p2align 3
+.L177:
+	fldz
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L165
+	.p2align 4,,7
+	.p2align 3
+.L178:
+	fldz
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L167
+	.p2align 4,,7
+	.p2align 3
+.L179:
+	fldz
+	.p2align 4,,5
+	.p2align 3
+	jmp	.L169
+	.size	dsum_list_rec, .-dsum_list_rec
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

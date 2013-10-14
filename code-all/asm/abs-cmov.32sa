@@ -1,0 +1,123 @@
+	.file	"abs-cmov.c"
+	.text
+.globl absdiff
+	.type	absdiff, @function
+absdiff:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin cmovdiff-s 9 */
+# x at \ebpreg+8, y at \ebpreg+12
+	movl	8(%ebp), %ecx	# Get x
+	movl	12(%ebp), %edx	# Get y
+	movl	%edx, %ebx	# Copy y
+	subl	%ecx, %ebx	# Compute y-x
+	movl	%ecx, %eax	# Copy x
+	subl	%edx, %eax	# Compute x-y and set as return value
+	cmpl	%edx, %ecx	# Compare x:y
+	cmovl	%ebx, %eax	# If <, replace return value with y-x	#line:asm:cmovdiff:cmovl
+/* $end cmovdiff-s 9 */
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	absdiff, .-absdiff
+.globl gotodiff
+	.type	gotodiff, @function
+gotodiff:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	%edx, %ebx
+	subl	%ecx, %ebx
+	movl	%ecx, %eax
+	subl	%edx, %eax
+	cmpl	%edx, %ecx
+	cmovl	%ebx, %eax
+.L6:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	gotodiff, .-gotodiff
+.globl absdiff2
+	.type	absdiff2, @function
+absdiff2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	%edx, %ebx
+	subl	%ecx, %ebx
+	movl	%ecx, %eax
+	subl	%edx, %eax
+	cmpl	%edx, %ecx
+	cmovl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	absdiff2, .-absdiff2
+.globl absdiff3
+	.type	absdiff3, @function
+absdiff3:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	%edx, %ebx
+	subl	%ecx, %ebx
+	movl	%ecx, %eax
+	subl	%edx, %eax
+	cmpl	%edx, %ecx
+	cmovl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	absdiff3, .-absdiff3
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"x = %d, y = %d, |x-y| = %d\n"
+	.text
+.globl main
+	.type	main, @function
+main:
+	leal	4(%esp), %ecx
+	andl	$-16, %esp
+	pushl	-4(%ecx)
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$40, %esp
+	movl	%ecx, -12(%ebp)
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	4(%ecx), %ebx
+	movl	4(%ebx), %eax
+	movl	%eax, (%esp)
+	call	atoi
+	movl	%eax, %esi
+	movl	8(%ebx), %eax
+	movl	%eax, (%esp)
+	call	atoi
+	movl	%eax, %ebx
+	movl	%eax, 4(%esp)
+	movl	%esi, (%esp)
+	call	absdiff
+	movl	%eax, 16(%esp)
+	movl	%ebx, 12(%esp)
+	movl	%esi, 8(%esp)
+	movl	$.LC0, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+	movl	$0, %eax
+	movl	-12(%ebp), %ecx
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	leal	-4(%ecx), %esp
+	ret
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

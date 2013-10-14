@@ -1,0 +1,59 @@
+	.file	"cast.c"
+	.text
+.globl c2i
+	.type	c2i, @function
+c2i:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	8(%ebp),%edx
+	movl	12(%ebp), %eax
+	movl	%edx, (%eax)
+	popl	%ebp
+	ret
+	.size	c2i, .-c2i
+.globl c2u
+	.type	c2u, @function
+c2u:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movsbl	8(%ebp),%edx
+	movl	12(%ebp), %eax
+	movl	%edx, (%eax)
+	popl	%ebp
+	ret
+	.size	c2u, .-c2u
+.globl uc2i
+	.type	uc2i, @function
+uc2i:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movzbl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	movl	%edx, (%eax)
+	popl	%ebp
+	ret
+	.size	uc2i, .-uc2i
+.globl i2c
+	.type	i2c, @function
+i2c:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movb	%al, (%edx)
+	popl	%ebp
+	ret
+	.size	i2c, .-i2c
+.globl u2uc
+	.type	u2uc, @function
+u2uc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movb	%al, (%edx)
+	popl	%ebp
+	ret
+	.size	u2uc, .-u2uc
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

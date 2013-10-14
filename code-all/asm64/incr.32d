@@ -1,0 +1,208 @@
+
+incr.32o:     file format elf32-i386
+
+Disassembly of section .text:
+
+00000000 <simple>:
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	8b 55 08             	mov    0x8(%ebp),%edx
+   6:	8b 02                	mov    (%edx),%eax
+   8:	03 45 0c             	add    0xc(%ebp),%eax
+   b:	89 02                	mov    %eax,(%edx)
+   d:	c9                   	leave  
+   e:	c3                   	ret    
+   f:	90                   	nop    
+
+00000010 <simple_l>:
+  10:	55                   	push   %ebp
+  11:	89 e5                	mov    %esp,%ebp
+  13:	8b 55 08             	mov    0x8(%ebp),%edx
+  16:	8b 02                	mov    (%edx),%eax
+  18:	03 45 0c             	add    0xc(%ebp),%eax
+  1b:	89 02                	mov    %eax,(%edx)
+  1d:	c9                   	leave  
+  1e:	c3                   	ret    
+  1f:	90                   	nop    
+
+00000020 <call_simple>:
+  20:	55                   	push   %ebp
+  21:	89 e5                	mov    %esp,%ebp
+  23:	83 ec 0c             	sub    $0xc,%esp
+  26:	8d 45 fc             	lea    0xfffffffc(%ebp),%eax
+  29:	c7 45 fc 25 00 00 00 	movl   $0x25,0xfffffffc(%ebp)
+  30:	c7 44 24 04 0c 00 00 	movl   $0xc,0x4(%esp)
+  37:	00 
+  38:	89 04 24             	mov    %eax,(%esp)
+  3b:	e8 fc ff ff ff       	call   3c <call_simple+0x1c>
+  40:	03 45 fc             	add    0xfffffffc(%ebp),%eax
+  43:	c9                   	leave  
+  44:	c3                   	ret    
+  45:	8d 74 26 00          	lea    0x0(%esi),%esi
+  49:	8d bc 27 00 00 00 00 	lea    0x0(%edi),%edi
+
+00000050 <call_simple_l>:
+  50:	55                   	push   %ebp
+  51:	89 e5                	mov    %esp,%ebp
+  53:	83 ec 08             	sub    $0x8,%esp
+  56:	c7 44 24 04 0c 00 00 	movl   $0xc,0x4(%esp)
+  5d:	00 
+  5e:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)
+  65:	e8 fc ff ff ff       	call   66 <call_simple_l+0x16>
+  6a:	03 05 00 00 00 00    	add    0x0,%eax
+  70:	c9                   	leave  
+  71:	c3                   	ret    
+  72:	8d b4 26 00 00 00 00 	lea    0x0(%esi),%esi
+  79:	8d bc 27 00 00 00 00 	lea    0x0(%edi),%edi
+
+00000080 <post_incr>:
+  80:	55                   	push   %ebp
+  81:	89 e5                	mov    %esp,%ebp
+  83:	8b 55 08             	mov    0x8(%ebp),%edx
+  86:	8b 02                	mov    (%edx),%eax
+  88:	89 c1                	mov    %eax,%ecx
+  8a:	03 4d 0c             	add    0xc(%ebp),%ecx
+  8d:	89 0a                	mov    %ecx,(%edx)
+  8f:	c9                   	leave  
+  90:	c3                   	ret    
+  91:	eb 0d                	jmp    a0 <post_incr_l>
+  93:	90                   	nop    
+  94:	90                   	nop    
+  95:	90                   	nop    
+  96:	90                   	nop    
+  97:	90                   	nop    
+  98:	90                   	nop    
+  99:	90                   	nop    
+  9a:	90                   	nop    
+  9b:	90                   	nop    
+  9c:	90                   	nop    
+  9d:	90                   	nop    
+  9e:	90                   	nop    
+  9f:	90                   	nop    
+
+000000a0 <post_incr_l>:
+  a0:	55                   	push   %ebp
+  a1:	89 e5                	mov    %esp,%ebp
+  a3:	8b 55 08             	mov    0x8(%ebp),%edx
+  a6:	8b 02                	mov    (%edx),%eax
+  a8:	89 c1                	mov    %eax,%ecx
+  aa:	03 4d 0c             	add    0xc(%ebp),%ecx
+  ad:	89 0a                	mov    %ecx,(%edx)
+  af:	c9                   	leave  
+  b0:	c3                   	ret    
+  b1:	eb 0d                	jmp    c0 <test_simple>
+  b3:	90                   	nop    
+  b4:	90                   	nop    
+  b5:	90                   	nop    
+  b6:	90                   	nop    
+  b7:	90                   	nop    
+  b8:	90                   	nop    
+  b9:	90                   	nop    
+  ba:	90                   	nop    
+  bb:	90                   	nop    
+  bc:	90                   	nop    
+  bd:	90                   	nop    
+  be:	90                   	nop    
+  bf:	90                   	nop    
+
+000000c0 <test_simple>:
+  c0:	55                   	push   %ebp
+  c1:	31 c0                	xor    %eax,%eax
+  c3:	89 e5                	mov    %esp,%ebp
+  c5:	56                   	push   %esi
+  c6:	be 00 00 00 00       	mov    $0x0,%esi
+  cb:	53                   	push   %ebx
+  cc:	bb ff 01 00 00       	mov    $0x1ff,%ebx
+  d1:	83 ec 08             	sub    $0x8,%esp
+  d4:	89 34 24             	mov    %esi,(%esp)
+  d7:	89 44 24 04          	mov    %eax,0x4(%esp)
+  db:	83 c6 04             	add    $0x4,%esi
+  de:	e8 fc ff ff ff       	call   df <test_simple+0x1f>
+  e3:	4b                   	dec    %ebx
+  e4:	79 ee                	jns    d4 <test_simple+0x14>
+  e6:	a3 00 00 00 00       	mov    %eax,0x0
+  eb:	83 c4 08             	add    $0x8,%esp
+  ee:	5b                   	pop    %ebx
+  ef:	5e                   	pop    %esi
+  f0:	c9                   	leave  
+  f1:	c3                   	ret    
+  f2:	8d b4 26 00 00 00 00 	lea    0x0(%esi),%esi
+  f9:	8d bc 27 00 00 00 00 	lea    0x0(%edi),%edi
+
+00000100 <test_simple_l>:
+ 100:	55                   	push   %ebp
+ 101:	31 c0                	xor    %eax,%eax
+ 103:	89 e5                	mov    %esp,%ebp
+ 105:	56                   	push   %esi
+ 106:	be 00 00 00 00       	mov    $0x0,%esi
+ 10b:	53                   	push   %ebx
+ 10c:	bb ff 01 00 00       	mov    $0x1ff,%ebx
+ 111:	83 ec 08             	sub    $0x8,%esp
+ 114:	89 34 24             	mov    %esi,(%esp)
+ 117:	89 44 24 04          	mov    %eax,0x4(%esp)
+ 11b:	83 c6 04             	add    $0x4,%esi
+ 11e:	e8 fc ff ff ff       	call   11f <test_simple_l+0x1f>
+ 123:	4b                   	dec    %ebx
+ 124:	79 ee                	jns    114 <test_simple_l+0x14>
+ 126:	a3 00 00 00 00       	mov    %eax,0x0
+ 12b:	83 c4 08             	add    $0x8,%esp
+ 12e:	5b                   	pop    %ebx
+ 12f:	5e                   	pop    %esi
+ 130:	c9                   	leave  
+ 131:	c3                   	ret    
+ 132:	8d b4 26 00 00 00 00 	lea    0x0(%esi),%esi
+ 139:	8d bc 27 00 00 00 00 	lea    0x0(%edi),%edi
+
+00000140 <cpt>:
+ 140:	55                   	push   %ebp
+ 141:	89 e5                	mov    %esp,%ebp
+ 143:	83 ec 08             	sub    $0x8,%esp
+ 146:	8b 45 0c             	mov    0xc(%ebp),%eax
+ 149:	89 44 24 04          	mov    %eax,0x4(%esp)
+ 14d:	8b 45 08             	mov    0x8(%ebp),%eax
+ 150:	89 04 24             	mov    %eax,(%esp)
+ 153:	e8 fc ff ff ff       	call   154 <cpt+0x14>
+ 158:	d9 05 00 00 00 00    	flds   0x0
+ 15e:	c9                   	leave  
+ 15f:	de c9                	fmulp  %st,%st(1)
+ 161:	c3                   	ret    
+ 162:	8d b4 26 00 00 00 00 	lea    0x0(%esi),%esi
+ 169:	8d bc 27 00 00 00 00 	lea    0x0(%edi),%edi
+
+00000170 <main>:
+ 170:	55                   	push   %ebp
+ 171:	89 e5                	mov    %esp,%ebp
+ 173:	53                   	push   %ebx
+ 174:	31 db                	xor    %ebx,%ebx
+ 176:	83 ec 14             	sub    $0x14,%esp
+ 179:	83 e4 f0             	and    $0xfffffff0,%esp
+ 17c:	83 ec 10             	sub    $0x10,%esp
+ 17f:	90                   	nop    
+ 180:	e8 fc ff ff ff       	call   181 <main+0x11>
+ 185:	89 04 9d 00 00 00 00 	mov    %eax,0x0(,%ebx,4)
+ 18c:	89 04 9d 00 00 00 00 	mov    %eax,0x0(,%ebx,4)
+ 193:	43                   	inc    %ebx
+ 194:	81 fb ff 01 00 00    	cmp    $0x1ff,%ebx
+ 19a:	7e e4                	jle    180 <main+0x10>
+ 19c:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%esp)
+ 1a3:	00 
+ 1a4:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)
+ 1ab:	e8 fc ff ff ff       	call   1ac <main+0x3c>
+ 1b0:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%esp)
+ 1b7:	00 
+ 1b8:	dd 5c 24 08          	fstpl  0x8(%esp)
+ 1bc:	c7 04 24 07 00 00 00 	movl   $0x7,(%esp)
+ 1c3:	e8 fc ff ff ff       	call   1c4 <main+0x54>
+ 1c8:	c7 44 24 04 00 00 00 	movl   $0x0,0x4(%esp)
+ 1cf:	00 
+ 1d0:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)
+ 1d7:	e8 fc ff ff ff       	call   1d8 <main+0x68>
+ 1dc:	c7 44 24 04 20 00 00 	movl   $0x20,0x4(%esp)
+ 1e3:	00 
+ 1e4:	dd 5c 24 08          	fstpl  0x8(%esp)
+ 1e8:	c7 04 24 07 00 00 00 	movl   $0x7,(%esp)
+ 1ef:	e8 fc ff ff ff       	call   1f0 <main+0x80>
+ 1f4:	8b 5d fc             	mov    0xfffffffc(%ebp),%ebx
+ 1f7:	31 c0                	xor    %eax,%eax
+ 1f9:	c9                   	leave  
+ 1fa:	c3                   	ret    

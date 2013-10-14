@@ -1,0 +1,19 @@
+
+code.o:     file format elf32-i386
+
+Disassembly of section .text:
+
+/* $begin sum-rel-d 6 */
+# Disassembly of function{\em sum} in file{\em code.o}
+00000000 <sum>:
+#Offset   Bytes                        Equivalent assembly language
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	8b 45 0c             	mov    0xc(%ebp),%eax
+   6:	03 45 08             	add    0x8(%ebp),%eax
+   9:	01 05 00 00 00 00    	add    %eax,0x0
+   f:	89 ec                	mov    %ebp,%esp
+  11:	5d                   	pop    %ebp
+  12:	c3                   	ret    
+  13:	90                   	nop    
+/* $end sum-rel-d 6 */

@@ -1,0 +1,34 @@
+/* $begin bufovf-d 187 */
+08048524 <getline>:
+ 8048524:	55                   	push   %ebp
+ 8048525:	89 e5                	mov    %esp,%ebp
+ 8048527:	83 ec 10             	sub    $0x10,%esp
+ 804852a:	56                   	push   %esi
+ 804852b:	53                   	push   %ebx
+# Diagram stack at this point
+ 804852c:	83 c4 f4             	add    $0xfffffff4,%esp
+ 804852f:	8d 5d f8             	lea    0xfffffff8(%ebp),%ebx
+ 8048532:	53                   	push   %ebx
+ 8048533:	e8 74 fe ff ff       	call   80483ac <_init+0x50> 	# gets
+# Modify diagram to show values at this point
+/* $end bufovf-d 187 */
+ 8048538:	83 c4 f4             	add    $0xfffffff4,%esp
+ 804853b:	83 c4 f4             	add    $0xfffffff4,%esp
+ 804853e:	53                   	push   %ebx
+ 804853f:	e8 9c ff ff ff       	call   80484e0 <strlen> 	# strlen
+ 8048544:	50                   	push   %eax
+ 8048545:	e8 82 fe ff ff       	call   80483cc <_init+0x70> 	# malloc
+ 804854a:	89 c6                	mov    %eax,%esi
+ 804854c:	83 c4 30             	add    $0x30,%esp
+ 804854f:	83 c4 f8             	add    $0xfffffff8,%esp
+ 8048552:	53                   	push   %ebx
+ 8048553:	56                   	push   %esi
+ 8048554:	e8 a7 ff ff ff       	call   8048500 <strcpy> 	# strcpy
+ 8048559:	89 f0                	mov    %esi,%eax
+ 804855b:	8d 65 e8             	lea    0xffffffe8(%ebp),%esp
+ 804855e:	5b                   	pop    %ebx
+ 804855f:	5e                   	pop    %esi
+ 8048560:	89 ec                	mov    %ebp,%esp
+ 8048562:	5d                   	pop    %ebp
+ 8048563:	c3                   	ret    
+

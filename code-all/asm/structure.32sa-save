@@ -1,0 +1,94 @@
+	.file	"structure.c"
+	.text
+	.p2align 4,,15
+.globl copy
+	.type	copy, @function
+copy:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+/* $begin structcopy-s 10 */
+	movl	(%edx), %eax	# Get r->i
+	movl	%eax, 4(%edx)	# Store in r->j
+/* $end structcopy-s 10 */
+	leave
+	ret
+	.size	copy, .-copy
+	.p2align 4,,15
+.globl set_i
+	.type	set_i, @function
+set_i:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%edx, (%eax)
+	leave
+	ret
+	.size	set_i, .-set_i
+	.p2align 4,,15
+.globl set_a_ele
+	.type	set_a_ele, @function
+set_a_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	16(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%ecx, 8(%eax,%edx,4)
+	leave
+	ret
+	.size	set_a_ele, .-set_a_ele
+	.p2align 4,,15
+.globl set_p
+	.type	set_p, @function
+set_p:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%edx, 20(%eax)
+	leave
+	ret
+	.size	set_p, .-set_p
+	.p2align 4,,15
+.globl find_a
+	.type	find_a, @function
+find_a:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %ecx
+	movl	%edx, p
+	movl	%ecx, j
+	/* $begin structptr-s 62 */
+	# r is in %edx, i in %ecx
+	leal	8(%edx,%ecx,4), %eax  # %eax = &r->a[i]
+	/* $end structptr-s 62 */
+	movl	%edx, q
+	movl	%ecx, k
+	leave
+	ret
+	.size	find_a, .-find_a
+	.p2align 4,,15
+.globl link_p
+	.type	link_p, @function
+link_p:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+/* $begin structlink-s 75 */
+	movl	4(%edx), %eax		# Get r->j
+	addl	(%edx), %eax		# Add r->i
+	leal	8(%edx,%eax,4), %eax	# Compute &r->(r->i + r->j)
+	movl	%eax, 20(%edx)		# Store in r->p
+/* $end structlink-s 75 */
+	leave
+	ret
+	.size	link_p, .-link_p
+	.comm	p,4,4
+	.comm	q,4,4
+	.comm	j,4,4
+	.comm	k,4,4
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

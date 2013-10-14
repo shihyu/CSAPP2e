@@ -1,0 +1,52 @@
+isb	ipb	fsb	fpb	dsb	dpb	funct		description
+11.01	12.00	12.00	11.09	12.00	12.09	combine1	Maximum use of data abstraction
+8.05	8.09	10.08	11.10	10.09	12.09	combine2	Take vec_length() out of loop
+3.00	3.01	3.01	4.03	3.01	5.03	combine3	Array reference to vector data
+3.00	3.00	3.00	4.02	3.03	5.04	combine3w	Update *dest within loop only with write
+0.75	3.00	3.00	4.00	3.00	5.00	combine4	Array reference, accumulate in temporary
+0.75	3.00	3.00	4.00	3.00	5.00	combine4p	Pointer reference, accumulate in temporary
+1.50	1.50	3.00	4.00	3.00	5.00	combine5	Array code, unrolled by 2
+2.00	1.50	3.00	4.00	3.00	5.00	combine5p	Pointer code, unrolled by 2, for loop
+1.50	1.50	3.00	4.00	3.00	5.00	unroll2aw	Array code, unrolled by 2, while loop
+1.00	1.00	3.00	4.00	3.00	5.00	unroll3a	Array code, unrolled by 3
+1.00	1.00	3.00	4.00	3.00	5.00	unroll4a	Array code, unrolled by 4
+1.01	1.00	3.00	4.00	3.00	5.00	unroll5a	Array code, unrolled by 5
+1.02	0.99	3.00	4.00	3.00	5.00	unroll6a	Array code, unrolled by 6
+1.03	1.00	3.00	4.00	3.00	5.00	unroll8a	Array code, unrolled by 8
+0.99	1.00	3.00	4.00	3.00	5.00	unroll16a	Array code, unrolled by 16
+2.00	1.50	3.00	4.00	3.00	5.00	unroll2	Pointer code, unrolled by 2
+1.00	1.00	3.00	4.00	3.00	5.00	unroll3	Pointer code, unrolled by 3
+1.00	1.00	3.00	4.00	3.00	5.00	unroll4	Pointer code, unrolled by 4
+1.01	1.00	3.00	4.00	3.00	5.00	unroll8	Pointer code, unrolled by 8
+1.00	0.99	3.00	4.00	3.00	5.00	unroll16	Pointer code, unrolled by 16
+1.50	1.50	1.50	2.00	1.50	2.50	combine6	Array code, unrolled by 2, Superscalar x2
+1.00	1.00	1.50	2.00	1.50	2.50	unroll4x2a	Array code, unrolled by 4, Superscalar x2
+1.03	1.00	1.50	2.01	1.50	2.50	unroll8x2a	Array code, unrolled by 8, Superscalar x2
+1.00	1.00	1.00	1.34	1.00	1.67	unroll3x3a	Array code, unrolled by 3, Superscalar x3
+1.00	1.00	1.00	1.00	1.00	1.25	unroll4x4a	Array code, unrolled by 4, Superscalar x4
+1.01	1.01	1.00	1.00	1.01	1.00	unroll5x5a	Array code, unrolled by 5, Superscalar x5
+1.02	1.02	1.00	1.01	1.02	1.01	unroll6x6a	Array code, unrolled by 6, Superscalar x6
+1.03	1.00	1.00	1.02	1.00	1.26	unroll8x4a	Array code, unrolled by 8, Superscalar x4
+1.03	1.01	1.00	1.00	0.99	1.02	unroll8x8a	Array code, unrolled by 8, Superscalar x8
+1.10	1.00	1.00	1.01	1.00	1.00	unroll10x10a	Array code, unrolled by 10, Superscalar x10
+1.01	1.02	1.02	1.00	1.02	1.00	unroll2x6a	Array code, unrolled by 12, Superscalar x6
+1.26	1.01	1.00	1.01	1.02	1.01	unroll12x12a	Array code, unrolled by 12, Superscalar x12
+1.02	1.02	1.50	2.01	1.49	2.50	unroll8x2	Pointer code, unrolled by 8, Superscalar x2
+0.99	1.00	1.00	1.01	1.00	1.26	unroll8x4	Pointer code, unrolled by 8, Superscalar x4
+1.02	1.00	1.00	1.01	1.00	1.03	unroll8x8	Pointer code, unrolled by 8, Superscalar x8
+1.02	1.03	1.03	1.35	1.10	1.68	unroll9x3	Pointer code, unrolled by 9, Superscalar x3
+0.41	1.50	1.50	2.00	1.61	2.50	unrollx2as	Array code, Unroll x2, Superscalar x2, noninterleaved
+1.50	1.50	1.50	2.00	1.50	2.50	combine7	Array code, unrolled by 2, different associativity
+1.00	1.00	1.33	1.34	1.34	1.67	unroll3aa	Array code, unrolled by 3, Different Associativity
+1.00	1.00	1.00	1.00	1.01	1.25	unroll4aa	Array code, unrolled by 4, Different Associativity
+1.01	1.00	1.00	1.01	1.01	1.01	unroll5aa	Array code, unrolled by 5, Different Associativity
+1.02	1.00	1.01	1.05	1.01	1.01	unroll6aa	Array code, unrolled by 6, Different Associativity
+1.03	0.99	1.00	1.08	1.01	1.01	unroll8aa	Array code, unrolled by 8, Different Associativity
+0.50	2.00	0.75	1.08	1.50	2.50	unrollv1	SSE code, 1*VSIZE-way parallelism
+0.28	1.29	0.37	0.54	0.75	1.25	unrollv2	SSE code, 2*VSIZE-way parallelism
+0.26	1.06	0.25	0.26	0.50	0.65	unrollv4	SSE code, 4*VSIZE-way parallelism
+0.25	1.00	0.25	0.26	0.54	0.49	unrollv8	SSE code, 8*VSIZE-way parallelism
+0.25	0.97	0.23	0.22	0.54	0.48	unrollv12	SSE code, 12*VSIZE-way parallelism
+0.50	1.18	0.39	0.54	0.81	1.25	unrollv2a	SSE code, 2*VSIZE-way parallelism, reassociate
+0.24	1.02	0.25	0.26	0.53	0.68	unrollv4a	SSE code, 4*VSIZE-way parallelism, reassociate
+0.25	0.99	0.24	0.25	0.53	0.52	unrollv8a	SSE code, 8*VSIZE-way parallelism, reassociate

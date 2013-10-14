@@ -1,0 +1,37 @@
+decode1:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %edi
+	pushl %esi
+	pushl %ebx
+
+	/* $begin decode1-ans-s 14 */
+	movl 8(%ebp),%edi
+	movl 12(%ebp),%ebx
+	movl 16(%ebp),%esi
+	movl (%edi),%eax
+	movl (%ebx),%edx
+	movl (%esi),%ecx
+	movl %eax,(%ebx)
+	movl %edx,(%esi)
+	movl %ecx,(%edi)
+	/* $end decode1-ans-s 14 */
+
+	/* $begin decode1-ann-s 14 */
+	movl 8(%ebp),%edi   # xp
+	movl 12(%ebp),%ebx  # yp
+	movl 16(%ebp),%esi  # zp
+	movl (%edi),%eax    # x
+	movl (%ebx),%edx    # y
+	movl (%esi),%ecx    # z
+	movl %eax,(%ebx)    # *yp = x
+	movl %edx,(%esi)    # *zp = y
+	movl %ecx,(%edi)    # *xp = z
+	/* $end decode1-ann-s 14 */
+
+	popl %ebx
+	popl %esi
+	popl %edi
+	movl %ebp,%esp
+	popl %ebp
+	ret

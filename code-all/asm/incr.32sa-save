@@ -1,0 +1,13 @@
+/* $begin simple_l-32 32 */
+# IA32 version of function simple_l.
+# Arguments in stack locations 8(%ebp) (xp) and 12(%ebp) (y)
+simple_l:
+	pushl	%ebp		# Save frame pointer # line:asm2:simple32:setup_start
+	movl	%esp, %ebp	# Create new frame pointer # line:asm2:simple32:setup_finish
+	movl	8(%ebp), %edx	# Get xp # line:asm2:simple32:compute_start
+	movl	(%edx), %eax	# Retrieve *xp
+	addl	12(%ebp), %eax  # Add y to get t (and return value) # line:asm2:simple32:compute_finish
+	movl	%eax, (%edx)	# Store t at *xp # line:asm2:simple32:store
+	leave		        # Restore stack and frame pointers # line:asm2:simple32:finish
+	ret			# Return
+/* $end simple_l-32 32 */

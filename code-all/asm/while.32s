@@ -1,0 +1,112 @@
+	.file	"while.c"
+	.text
+.globl loop_while_old
+	.type	loop_while_old, @function
+loop_while_old:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %eax
+	movl	%eax, %esi
+	movl	%ecx, %ebx
+	movl	%eax, %edx
+	movl	%eax, %edi
+	negl	%edi
+.L2:
+	addl	%ecx, %ebx
+	addl	%edi, %ecx
+	addl	%esi, %edx
+	movl	%edx, %eax
+	subl	%esi, %eax
+	cmpl	$255, %eax
+	jle	.L2
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	loop_while_old, .-loop_while_old
+.globl loop_while_old_goto
+	.type	loop_while_old_goto, @function
+loop_while_old_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %eax
+	movl	%eax, %esi
+	movl	%ecx, %ebx
+	movl	%eax, %edx
+	movl	%eax, %edi
+	negl	%edi
+.L6:
+	addl	%ecx, %ebx
+	addl	%edi, %ecx
+	addl	%esi, %edx
+	movl	%edx, %eax
+	subl	%esi, %eax
+	cmpl	$255, %eax
+	jle	.L6
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	loop_while_old_goto, .-loop_while_old_goto
+.globl loop_while
+	.type	loop_while, @function
+loop_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %ebx
+	movl	$1, %eax
+	cmpl	%ebx, %ecx
+	jge	.L11
+	leal	(%ebx,%ecx), %edx
+	movl	$1, %eax
+.L12:
+	imull	%edx, %eax
+	addl	$1, %ecx
+	addl	$1, %edx
+	cmpl	%ecx, %ebx
+	jg	.L12
+.L11:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	loop_while, .-loop_while
+.globl loop_while_goto
+	.type	loop_while_goto, @function
+loop_while_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %ebx
+	movl	$1, %eax
+	cmpl	%ebx, %ecx
+	jge	.L17
+	leal	(%ebx,%ecx), %edx
+	movl	$1, %eax
+.L18:
+	imull	%edx, %eax
+	addl	$1, %ecx
+	addl	$1, %edx
+	cmpl	%ecx, %ebx
+	jg	.L18
+.L17:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	loop_while_goto, .-loop_while_goto
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

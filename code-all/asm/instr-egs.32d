@@ -1,0 +1,105 @@
+
+instr-egs.32o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <mov>:
+   0:	b8 50 40 00 00       	mov    $0x4050,%eax
+   5:	89 ec                	mov    %ebp,%esp
+   7:	8b 04 0f             	mov    (%edi,%ecx,1),%eax
+   a:	c7 04 24 ef ff ff ff 	movl   $0xffffffef,(%esp)
+  11:	89 45 f4             	mov    %eax,-0xc(%ebp)
+  14:	66 b8 50 40          	mov    $0x4050,%ax
+  18:	66 89 ec             	mov    %bp,%sp
+  1b:	66 8b 04 0f          	mov    (%edi,%ecx,1),%ax
+  1f:	66 c7 04 24 ef ff    	movw   $0xffef,(%esp)
+  25:	66 89 45 f4          	mov    %ax,-0xc(%ebp)
+  29:	b4 50                	mov    $0x50,%ah
+  2b:	88 fb                	mov    %bh,%bl
+  2d:	8a 24 0f             	mov    (%edi,%ecx,1),%ah
+  30:	c6 04 24 ef          	movb   $0xef,(%esp)
+  34:	88 45 f4             	mov    %al,-0xc(%ebp)
+
+00000037 <movw16>:
+  37:	67 66 8b 46 00       	addr16 mov 0x0(%bp),%ax
+  3c:	67 66 c7 46 00 ef ff 	addr16 movw $0xffef,0x0(%bp)
+  43:	67 66 89 46 f4       	addr16 mov %ax,-0xc(%bp)
+
+00000048 <push>:
+  48:	66 50                	push   %ax
+  4a:	50                   	push   %eax
+  4b:	66 68 ff 00          	pushw  $0xff
+  4f:	68 ff ff 00 00       	push   $0xffff
+
+00000054 <pop>:
+  54:	66 58                	pop    %ax
+  56:	58                   	pop    %eax
+
+00000057 <movsbl>:
+  57:	0f be e3             	movsbl %bl,%esp
+  5a:	0f be 04 0f          	movsbl (%edi,%ecx,1),%eax
+
+0000005e <movs>:
+  5e:	66 0f be d8          	movsbw %al,%bx
+  62:	0f be d0             	movsbl %al,%edx
+  65:	0f bf d0             	movswl %ax,%edx
+
+00000068 <movz>:
+  68:	66 0f b6 d8          	movzbw %al,%bx
+  6c:	0f b6 d0             	movzbl %al,%edx
+  6f:	0f b7 d0             	movzwl %ax,%edx
+
+00000072 <add>:
+  72:	05 50 40 00 00       	add    $0x4050,%eax
+  77:	01 ec                	add    %ebp,%esp
+  79:	03 04 0f             	add    (%edi,%ecx,1),%eax
+  7c:	83 04 24 ef          	addl   $0xffffffef,(%esp)
+  80:	01 45 f4             	add    %eax,-0xc(%ebp)
+  83:	66 05 50 40          	add    $0x4050,%ax
+  87:	66 01 ec             	add    %bp,%sp
+  8a:	66 03 04 0f          	add    (%edi,%ecx,1),%ax
+  8e:	66 83 04 24 ef       	addw   $0xffffffef,(%esp)
+  93:	66 01 45 f4          	add    %ax,-0xc(%ebp)
+  97:	80 c4 50             	add    $0x50,%ah
+  9a:	00 fb                	add    %bh,%bl
+  9c:	02 24 0f             	add    (%edi,%ecx,1),%ah
+  9f:	80 04 24 ef          	addb   $0xef,(%esp)
+  a3:	00 45 f4             	add    %al,-0xc(%ebp)
+
+000000a6 <lea>:
+  a6:	66 8d 5c 50 04       	lea    0x4(%eax,%edx,2),%bx
+  ab:	8d 5c 50 04          	lea    0x4(%eax,%edx,2),%ebx
+
+000000af <inc16>:
+  af:	67 66 ff 46 00       	addr16 incw 0x0(%bp)
+
+000000b4 <inc>:
+  b4:	fe c0                	inc    %al
+  b6:	fe 44 04 04          	incb   0x4(%esp,%eax,1)
+  ba:	66 40                	inc    %ax
+  bc:	66 ff 44 04 04       	incw   0x4(%esp,%eax,1)
+  c1:	40                   	inc    %eax
+  c2:	ff 44 04 04          	incl   0x4(%esp,%eax,1)
+
+000000c6 <shift>:
+  c6:	d2 e0                	shl    %cl,%al
+  c8:	c0 64 94 08 ff       	shlb   $0xff,0x8(%esp,%edx,4)
+  cd:	66 d3 e0             	shl    %cl,%ax
+  d0:	66 c1 64 94 08 ff    	shlw   $0xff,0x8(%esp,%edx,4)
+  d6:	d3 e0                	shl    %cl,%eax
+  d8:	c1 64 94 08 ff       	shll   $0xff,0x8(%esp,%edx,4)
+
+000000dd <cmp>:
+  dd:	83 f8 00             	cmp    $0x0,%eax
+  e0:	66 83 38 00          	cmpw   $0x0,(%eax)
+  e4:	66 39 08             	cmp    %cx,(%eax)
+  e7:	38 c4                	cmp    %al,%ah
+  e9:	3a 08                	cmp    (%eax),%cl
+
+000000eb <test>:
+  eb:	a9 00 00 00 00       	test   $0x0,%eax
+  f0:	66 f7 00 00 00       	testw  $0x0,(%eax)
+  f5:	66 85 08             	test   %cx,(%eax)
+  f8:	84 e0                	test   %ah,%al
+  fa:	84 08                	test   %cl,(%eax)

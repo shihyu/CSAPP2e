@@ -1,0 +1,347 @@
+.Ldebug_abbrev0:
+.Ldebug_info0:
+.Ldebug_line0:
+.Ltext0:
+write_read:
+	testl	%edx, %edx
+	je	.L4
+	movl	$0, %eax
+.L3:
+	movl	%eax, (%rsi)
+	movl	(%rdi), %eax
+	addl	$1, %eax
+	subl	$1, %edx
+	jne	.L3
+.L4:
+	rep
+	ret
+
+copy_array:
+	testl	%edx, %edx
+	jle	.L9
+	movl	$0, %ecx
+.L8:
+	movl	(%rdi,%rcx,4), %eax
+	movl	%eax, (%rsi,%rcx,4)
+	addq	$1, %rcx
+	cmpl	%ecx, %edx
+	jg	.L8
+.L9:
+	rep
+	ret
+
+clear_array:
+	testl	%esi, %esi
+	jle	.L14
+	movl	$0, %eax
+.L13:
+	movl	$0, (%rdi,%rax,4)
+	addq	$1, %rax
+	cmpl	%eax, %esi
+	jg	.L13
+.L14:
+	rep
+	ret
+
+clear_array_4:
+	leal	-3(%rsi), %ecx
+	testl	%ecx, %ecx
+	jle	.L19
+	movl	$0, %edx
+.L18:
+	movslq	%edx,%rax
+	movl	$0, (%rdi,%rax,4)
+	movl	$0, 4(%rdi,%rax,4)
+	movl	$0, 8(%rdi,%rax,4)
+	movl	$0, 12(%rdi,%rax,4)
+	addl	$4, %edx
+	cmpl	%edx, %ecx
+	jg	.L18
+.L19:
+	rep
+	ret
+
+array_copy:
+	testl	%edx, %edx
+	jle	.L24
+	movl	$0, %ecx
+.L23:
+	movl	(%rdi,%rcx,4), %eax
+	movl	%eax, (%rsi,%rcx,4)
+	addq	$1, %rcx
+	cmpl	%ecx, %edx
+	jg	.L23
+.L24:
+	rep
+	ret
+
+array_clear:
+	testl	%edx, %edx
+	jle	.L29
+	movl	$0, %eax
+.L28:
+	movl	$0, (%rsi,%rax,4)
+	addq	$1, %rax
+	cmpl	%eax, %edx
+	jg	.L28
+.L29:
+	rep
+	ret
+
+array_copy_2:
+	movl	%edx, %r9d
+	leal	-1(%r9), %r10d
+	movl	$0, %r8d
+	testl	%r10d, %r10d
+	jle	.L33
+.L39:
+	movslq	%r8d,%rax
+	leaq	0(,%rax,4), %rcx
+	movl	(%rdi,%rcx), %edx
+	movl	%edx, (%rsi,%rcx)
+	leaq	4(,%rax,4), %rax
+	movl	(%rdi,%rax), %edx
+	movl	%edx, (%rsi,%rax)
+	addl	$2, %r8d
+	cmpl	%r8d, %r10d
+	jg	.L39
+.L33:
+	cmpl	%r8d, %r9d
+	jle	.L37
+.L38:
+	movslq	%r8d,%rax
+	salq	$2, %rax
+	movl	(%rdi,%rax), %edx
+	movl	%edx, (%rsi,%rax)
+	addl	$1, %r8d
+	cmpl	%r8d, %r9d
+	jg	.L38
+.L37:
+	rep
+	ret
+
+array_clear_2:
+	leal	-1(%rdx), %edi
+	movl	$0, %ecx
+	testl	%edi, %edi
+	jle	.L44
+.L50:
+	movslq	%ecx,%rax
+	movl	$0, (%rsi,%rax,4)
+	movl	$0, 4(%rsi,%rax,4)
+	addl	$2, %ecx
+	cmpl	%ecx, %edi
+	jg	.L50
+.L44:
+	cmpl	%ecx, %edx
+	jle	.L48
+.L49:
+	movslq	%ecx,%rax
+	movl	$0, (%rsi,%rax,4)
+	addl	$1, %ecx
+	cmpl	%ecx, %edx
+	jg	.L49
+.L48:
+	rep
+	ret
+
+array_copy_4:
+	movl	%edx, %r9d
+	leal	-3(%r9), %r10d
+	movl	$0, %r8d
+	testl	%r10d, %r10d
+	jle	.L55
+.L61:
+	movslq	%r8d,%rax
+	leaq	0(,%rax,4), %rcx
+	movl	(%rdi,%rcx), %edx
+	movl	%edx, (%rsi,%rcx)
+	leaq	4(,%rax,4), %rcx
+	movl	(%rdi,%rcx), %edx
+	movl	%edx, (%rsi,%rcx)
+	leaq	8(,%rax,4), %rcx
+	movl	(%rdi,%rcx), %edx
+	movl	%edx, (%rsi,%rcx)
+	leaq	12(,%rax,4), %rax
+	movl	(%rdi,%rax), %edx
+	movl	%edx, (%rsi,%rax)
+	addl	$4, %r8d
+	cmpl	%r8d, %r10d
+	jg	.L61
+.L55:
+	cmpl	%r8d, %r9d
+	jle	.L59
+.L60:
+	movslq	%r8d,%rax
+	salq	$2, %rax
+	movl	(%rdi,%rax), %edx
+	movl	%edx, (%rsi,%rax)
+	addl	$1, %r8d
+	cmpl	%r8d, %r9d
+	jg	.L60
+.L59:
+	rep
+	ret
+
+array_clear_3:
+	leal	-2(%rdx), %edi
+	movl	$0, %ecx
+	testl	%edi, %edi
+	jle	.L66
+.L72:
+	movslq	%ecx,%rax
+	movl	$0, (%rsi,%rax,4)
+	movl	$0, 4(%rsi,%rax,4)
+	movl	$0, 8(%rsi,%rax,4)
+	addl	$3, %ecx
+	cmpl	%ecx, %edi
+	jg	.L72
+.L66:
+	cmpl	%ecx, %edx
+	jle	.L70
+.L71:
+	movslq	%ecx,%rax
+	movl	$0, (%rsi,%rax,4)
+	addl	$1, %ecx
+	cmpl	%ecx, %edx
+	jg	.L71
+.L70:
+	rep
+	ret
+
+array_clear_4:
+	leal	-3(%rdx), %edi
+	movl	$0, %ecx
+	testl	%edi, %edi
+	jle	.L77
+.L83:
+	movslq	%ecx,%rax
+	movl	$0, (%rsi,%rax,4)
+	movl	$0, 4(%rsi,%rax,4)
+	movl	$0, 8(%rsi,%rax,4)
+	movl	$0, 12(%rsi,%rax,4)
+	addl	$4, %ecx
+	cmpl	%ecx, %edi
+	jg	.L83
+.L77:
+	cmpl	%ecx, %edx
+	jle	.L81
+.L82:
+	movslq	%ecx,%rax
+	movl	$0, (%rsi,%rax,4)
+	addl	$1, %ecx
+	cmpl	%ecx, %edx
+	jg	.L82
+.L81:
+	rep
+	ret
+
+test2a:
+	subq	$8, %rsp
+	movslq	idx(%rip),%rax
+	movl	%edi, %edx
+	movl	$data, %esi
+	movq	%rsi, %rdi
+	call	*copier(,%rax,8)
+	addq	$8, %rsp
+	ret
+
+test2b:
+	subq	$8, %rsp
+	movslq	idx(%rip),%rax
+	movl	%edi, %edx
+	movl	$data+4, %esi
+	movl	$data, %edi
+	call	*copier(,%rax,8)
+	addq	$8, %rsp
+	ret
+
+test2c:
+	subq	$8, %rsp
+	movslq	idx(%rip),%rax
+	movl	%edi, %edx
+	movl	$data, %esi
+	movl	$data+4, %edi
+	call	*copier(,%rax,8)
+	addq	$8, %rsp
+	ret
+
+test2d:
+	subq	$8, %rsp
+	movslq	idx(%rip),%rax
+	movl	%edi, %edx
+	movl	$data2, %esi
+	movl	$data, %edi
+	call	*copier(,%rax,8)
+	addq	$8, %rsp
+	ret
+
+run_test:
+	pushq	%r12
+	pushq	%rbx
+	subq	$8, %rsp
+	movl	%edi, %r12d
+	movslq	%esi,%rbx
+	movq	case_descr(,%rbx,8), %rdx
+	movslq	%edi,%rax
+	movq	test_descr(,%rax,8), %rsi
+	movl	$.LC0, %edi
+	movl	$0, %eax
+	call	printf
+	movl	%r12d, idx(%rip)
+	movq	case_fun(,%rbx,8), %rdi
+	movl	$1024, %esi
+	call	find_cpe
+	movl	$.LC1, %edi
+	movl	$1, %eax
+	call	printf
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%r12
+	ret
+
+main:
+	pushq	%rbx
+	movl	$0, %ebx
+	jmp	.L97
+.L102:
+	movl	$0, %eax
+	popq	%rbx
+	ret
+
+.L97:
+	movl	$0, %esi
+	movl	%ebx, %edi
+	call	run_test
+	movl	$1, %esi
+	movl	%ebx, %edi
+	call	run_test
+	movl	$2, %esi
+	movl	%ebx, %edi
+	call	run_test
+	movl	$3, %esi
+	movl	%ebx, %edi
+	call	run_test
+	addl	$1, %ebx
+	cmpl	$9, %ebx
+	jne	.L97
+	jmp	.L102
+mem_clear:
+	subq	$8, %rsp
+	movq	%rsi, %rdi
+	movslq	%edx,%rdx
+	salq	$2, %rdx
+	movl	$0, %esi
+	call	memset
+	addq	$8, %rsp
+	ret
+
+idx:
+case_descr:
+test_descr:
+case_fun:
+copier:
+.Lframe0:
+.Lframe1:
+.Letext0:
+.Ldebug_loc0:

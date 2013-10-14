@@ -1,0 +1,54 @@
+                      | # Execution begins at address 0 
+  0x000:              | 	.pos 0 
+  0x000: 30f400010000 | init:	irmovl Stack, %esp  	# Set up stack pointer  
+  0x006: 30f500010000 | 	irmovl Stack, %ebp  	# Set up base pointer   
+  0x00c: 8028000000   | 	call Main		# Execute main program
+  0x011: 00           | 	halt			# Terminate program 
+                      | 
+                      | # Array of 4 elements + terminating 0
+  0x014:              | 	.align 4 	
+  0x014: 0d000000     | array:	.long 0xd
+  0x018: c0000000     | 	.long 0xc0
+  0x01c: 000b0000     | 	.long 0xb00
+  0x020: 00a00000     | 	.long 0xa000
+  0x024: 00000000     | 	.long 0
+                      | 
+  0x028: a05f         | Main:	pushl %ebp 
+  0x02a: 2045         | 	rrmovl %esp,%ebp
+  0x02c: 30f214000000 | 	irmovl array,%edx
+  0x032: a02f         | 	pushl %edx      	# Push array
+  0x034: 803e000000   | 	call len2		# len2(array)
+  0x039: 2054         | 	rrmovl %ebp,%esp
+  0x03b: b05f         | 	popl %ebp
+  0x03d: 90           | 	ret 
+                      | 
+  0x03e:              | len2:
+  0x03e: a05f         | 	pushl %ebp		# Save %ebp
+  0x040: 2045         | 	rrmovl %esp, %ebp	# Create new frame pointer
+  0x042: a06f         | 	pushl %esi   		# Save callee-save register
+  0x044: 30f604000000 | 	irmovl $4, %esi		# Set %esi to 4
+  0x04a: a07f         | 	pushl %edi		# Save callee-save register
+  0x04c: 30f701000000 | 	irmovl $1, %edi		# Set %edi to 1
+  0x052: 502508000000 | 	mrmovl 8(%ebp), %edx	# Get a
+  0x058: 30f100000000 | 	irmovl $0, %ecx		# len = 0
+  0x05e: 500200000000 | 	mrmovl (%edx), %eax	# Get *a
+  0x064: 6062         | 	addl %esi, %edx		# a++
+  0x066: 6200         | 	andl %eax, %eax		# Test *a
+  0x068: 737e000000   | 	je Done	   		# If zero, goto Done
+  0x06d:              | Loop:
+  0x06d: 6071         | 	addl %edi, %ecx		# len++
+  0x06f: 500200000000 | 	mrmovl (%edx), %eax	# Get *a
+  0x075: 6062         | 	addl %esi, %edx		# a++
+  0x077: 6200         | 	andl %eax, %eax		# Test *a
+  0x079: 746d000000   | 	jne Loop   		# If !0, goto Loop
+  0x07e:              | Done:
+  0x07e: 2010         | 	rrmovl %ecx, %eax	# return value = len
+  0x080: b07f         | 	popl %edi    		# Restore %edi
+  0x082: b06f         | 	popl %esi		# Restore %esi
+  0x084: 2054         | 	rrmovl %ebp, %esp	# Restore stack pointer
+  0x086: b05f         | 	popl %ebp		# Restore %ebp
+  0x088: 90           | 	ret
+                      | 
+                      | # Stack starts here and grows to lower addresses
+  0x100:              |   	.pos 0x100
+  0x100:              | Stack:

@@ -1,0 +1,160 @@
+	.file	"loop.c"
+	.text
+	.p2align 4,,15
+.globl fact_dw
+	.type	fact_dw, @function
+fact_dw:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	.p2align 4,,7
+.L2:
+	imull	%edx, %eax
+	decl	%edx
+	testl	%edx, %edx
+	jg	.L2
+	leave
+	ret
+	.size	fact_dw, .-fact_dw
+	.p2align 4,,15
+.globl fact_while
+	.type	fact_while, @function
+fact_while:
+	pushl	%ebp
+/* $begin fact_while_jm-s 25 */
+	movl	$1, %eax	# result = 1
+/* $end fact_while_jm-s 25 */
+	movl	%esp, %ebp	
+/* $begin fact_while_jm-s 27 */
+	movl	8(%ebp), %edx	# Get x
+	jmp	.L12		# Goto \textbf{middle}
+/* $end fact_while_jm-s 27 */
+	.p2align 4,,7
+/* $begin fact_while_jm-s 30 */
+.L13:			      # \textbf{loop:}
+	imull	%edx, %eax	# result *= x
+	decl	%edx		# x--
+.L12:			      # \textbf{middle:}
+	testl	%edx, %edx	# Test x
+	jg	.L13		# if > 0, goto \textbf{loop}
+/* $end fact_while_jm-s 30 */
+	leave
+	ret
+	.size	fact_while, .-fact_while
+	.p2align 4,,15
+.globl fact_for1
+	.type	fact_for1, @function
+fact_for1:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	jmp	.L21
+	.p2align 4,,7
+.L22:
+	imull	%edx, %eax
+	decl	%edx
+.L21:
+	testl	%edx, %edx
+	jg	.L22
+	leave
+	ret
+	.size	fact_for1, .-fact_for1
+	.p2align 4,,15
+.globl fact_for2
+	.type	fact_for2, @function
+fact_for2:
+	pushl	%ebp
+	movl	$1, %eax
+	movl	$2, %edx
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	jmp	.L30
+	.p2align 4,,7
+.L31:
+	imull	%edx, %eax
+	incl	%edx
+.L30:
+	cmpl	%ecx, %edx
+	jle	.L31
+	leave
+	ret
+	.size	fact_for2, .-fact_for2
+	.p2align 4,,15
+.globl sum_dw
+	.type	sum_dw, @function
+sum_dw:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	.p2align 4,,7
+.L33:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+	testl	%edx, %edx
+	jne	.L33
+	leave
+	ret
+	.size	sum_dw, .-sum_dw
+	.p2align 4,,15
+.globl sum_while
+	.type	sum_while, @function
+sum_while:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	jmp	.L42
+	.p2align 4,,7
+.L43:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+.L42:
+	testl	%edx, %edx
+	jne	.L43
+	leave
+	ret
+	.size	sum_while, .-sum_while
+	.p2align 4,,15
+.globl sum_for
+	.type	sum_for, @function
+sum_for:
+	pushl	%ebp
+	xorl	%eax, %eax
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	jmp	.L51
+	.p2align 4,,7
+.L52:
+	addl	(%edx), %eax
+	movl	4(%edx), %edx
+.L51:
+	testl	%edx, %edx
+	jne	.L52
+	leave
+	ret
+	.size	sum_for, .-sum_for
+	.p2align 4,,15
+.globl puzzle
+	.type	puzzle, @function
+puzzle:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %ecx
+	movl	8(%ebp), %edx
+	movl	%ecx, %eax
+	jmp	.L60
+	.p2align 4,,7
+.L61:
+	imull	%edx, %eax
+	subl	%ecx, %edx
+.L60:
+	testl	%edx, %edx
+	jg	.L61
+	leave
+	ret
+	.size	puzzle, .-puzzle
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

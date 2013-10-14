@@ -1,0 +1,92 @@
+	.file	"probs.c"
+	.text
+.globl incrprob
+	.type	incrprob, @function
+incrprob:
+.LFB0:
+	.cfi_startproc
+	addl	(%rdx), %edi
+	movl	%edi, (%rdx)
+	movslq	%edi, %rdi
+	addq	%rdi, (%rsi)
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	incrprob, .-incrprob
+.globl incrprob_u
+	.type	incrprob_u, @function
+incrprob_u:
+.LFB1:
+	.cfi_startproc
+	addl	(%rdx), %edi
+	movl	%edi, (%rdx)
+	movslq	%edi, %rdi
+	addq	%rdi, (%rsi)
+	ret
+	.cfi_endproc
+.LFE1:
+	.size	incrprob_u, .-incrprob_u
+.globl arithprob
+	.type	arithprob, @function
+arithprob:
+.LFB2:
+	.cfi_startproc
+	movslq	%ecx, %rax
+	imulq	%rax, %rdx
+	movsbl	%sil, %esi
+	imull	%esi, %edi
+	movslq	%edi, %rdi
+	leaq	(%rdx,%rdi), %rax
+	ret
+	.cfi_endproc
+.LFE2:
+	.size	arithprob, .-arithprob
+.globl moveprob
+	.type	moveprob, @function
+moveprob:
+.LFB3:
+	.cfi_startproc
+	movsbq	%dil, %rdi
+	movq	%rdi, gv1(%rip)
+	movslq	%esi, %rsi
+	movq	%rsi, gv2(%rip)
+	movzbl	%dl, %edx
+	movq	%rdx, gv3(%rip)
+	mov	%ecx, %ecx
+	movq	%rcx, gv4(%rip)
+	ret
+	.cfi_endproc
+.LFE3:
+	.size	moveprob, .-moveprob
+.globl incrprob_ls
+	.type	incrprob_ls, @function
+incrprob_ls:
+.LFB4:
+	.cfi_startproc
+	addl	(%rdx), %edi
+	movl	%edi, (%rdx)
+	movslq	%edi, %rdi
+	addq	%rdi, (%rsi)
+	ret
+	.cfi_endproc
+.LFE4:
+	.size	incrprob_ls, .-incrprob_ls
+.globl incrprob_lu
+	.type	incrprob_lu, @function
+incrprob_lu:
+.LFB5:
+	.cfi_startproc
+	addl	(%rdx), %edi
+	movl	%edi, (%rdx)
+	movslq	%edi, %rdi
+	addq	%rdi, (%rsi)
+	ret
+	.cfi_endproc
+.LFE5:
+	.size	incrprob_lu, .-incrprob_lu
+	.comm	gv1,8,8
+	.comm	gv2,8,8
+	.comm	gv3,8,8
+	.comm	gv4,8,8
+	.ident	"GCC: (GNU) 4.4.6 20110731 (Red Hat 4.4.6-3)"
+	.section	.note.GNU-stack,"",@progbits

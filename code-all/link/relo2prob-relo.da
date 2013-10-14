@@ -1,0 +1,28 @@
+Disassembly of section .text:
+
+/* $begin relo2prob-relo-d 6 */
+00000000 <p2>:
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	89 ec                	mov    %ebp,%esp
+   5:	5d                   	pop    %ebp
+   6:	c3                   	ret    
+
+/* $end relo2prob-relo-d 6 */
+
+/* $begin relo2prob-relo-d 14 */
+00000008 <p1>:
+   8:	55                   	push   %ebp
+   9:	89 e5                	mov    %esp,%ebp
+   b:	83 ec 08             	sub    $0x8,%esp
+   e:	83 c4 f4             	add    $0xfffffff4,%esp
+  11:	e8 fc ff ff ff       	call   12 <p1+0xa>
+  16:	89 c2                	mov    %eax,%edx
+  18:	a1 00 00 00 00       	mov    0x0,%eax
+  1d:	03 10                	add    (%eax),%edx
+  1f:	52                   	push   %edx
+  20:	e8 fc ff ff ff       	call   21 <p1+0x19>
+  25:	89 ec                	mov    %ebp,%esp
+  27:	5d                   	pop    %ebp
+  28:	c3                   	ret    
+/* $end relo2prob-relo-d 14 */

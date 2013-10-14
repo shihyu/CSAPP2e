@@ -1,0 +1,44 @@
+	/* $begin pushl-sa 0 */
+	subl $4,%esp 
+	movl %ebp,(%esp) 
+	/* $end pushl-sa 0 */
+
+	/* $begin popl-sa 0 */
+	movl (%esp),%eax 
+	addl $4,%esp 
+	/* $end popl-sa 0 */
+
+	/* $begin movl-sa 0 */
+	movl $0x4050,%eax  	# Immediate--Register
+	movl %ebp,%esp  	# Register--Register
+	movl (%edi,%ecx),%eax  	# Memory--Register 
+	movl $-17,(%esp)  	# Immediate--Memory
+	movl %eax,-12(%ebp)  	# Register--Memory
+	/* $end movl-sa 0 */
+
+	/* $begin byte-move-sa 0 */
+	# Assume initially that %dh = 8D, %eax = 98765432
+	movb %dh,%al		# %eax = 9876548D
+	movsbl %dh,%eax		# %eax = FFFFFF8D
+	movzbl %dh,%eax		# %eax = 0000008D
+	/* $end byte-move-sa 0 */
+
+	/* $begin jump-sa 0 */
+	xorl %eax,%eax   	# Set %eax to 0 
+	jmp .L1          	# Goto .L1 
+	movl (%eax),%edx 	# Null pointer dereference 
+.L1: 
+	popl %edx 
+	/* $end jump-sa 0 */
+
+ 
+	/* $begin leave-sa 0 */
+	movl %ebp, %esp	# Set stack pointer to beginning of frame 
+	popl %ebp	# Restore saved \ebpreg and set stack ptr to end of caller's frame
+	/* $end leave-sa 0 */
+
+	/* $begin loadpc-sa 0 */
+        call next 
+next: 	
+	popl %eax 
+	/* $end loadpc-sa 0 */

@@ -1,0 +1,278 @@
+	.file	"cond.c"
+	.text
+	.p2align 4,,15
+.globl max
+	.type	max, @function
+/* $begin max-64 13 */
+# x86-64 code generated for function max
+# x in register %edi, y in %esi
+max:
+/* $end max-64 13 */
+.LFB2:
+/* $begin max-64 15 */
+	cmpl	%esi, %edi	# Compare x:y
+	cmovge	%edi, %esi	# if >=, then y=x # line:asm2:max:cmov
+	movl	%esi, %eax	# set y as return value
+	ret
+/* $end max-64 15 */
+.LFE2:
+	.size	max, .-max
+	.p2align 4,,15
+.globl wa_max
+	.type	wa_max, @function
+wa_max:
+.LFB3:
+	leal	17(%rsi), %eax
+	leal	23(%rdi), %edx
+	cmpl	%esi, %edi
+	cmovge	%edx, %eax
+	ret
+.LFE3:
+	.size	wa_max, .-wa_max
+	.p2align 4,,15
+.globl wm_max
+	.type	wm_max, @function
+wm_max:
+.LFB4:
+	cmpl	%esi, %edi
+	jge	.L8
+	movl	%esi, %eax
+	sall	$4, %eax
+	addl	%esi, %eax
+	ret
+	.p2align 4,,7
+.L8:
+	movl	%edi, %eax
+	movl	$23, %edx
+	imull	%edx, %eax
+	ret
+.LFE4:
+	.size	wm_max, .-wm_max
+	.p2align 4,,15
+.globl wm_max2
+	.type	wm_max2, @function
+wm_max2:
+.LFB5:
+	movl	%esi, %eax
+	sall	$4, %eax
+	cmpl	%esi, %edi
+	cmovl	%eax, %edi
+	movl	%edi, %eax
+	ret
+.LFE5:
+	.size	wm_max2, .-wm_max2
+	.p2align 4,,15
+.globl wm_max3
+	.type	wm_max3, @function
+wm_max3:
+.LFB6:
+	cmpl	%esi, %edi
+	jge	.L16
+	movl	%esi, %eax
+	sall	$4, %eax
+	leal	(%rax,%rsi), %edi
+.L16:
+	movl	%edi, %eax
+	ret
+.LFE6:
+	.size	wm_max3, .-wm_max3
+	.p2align 4,,15
+.globl abs
+	.type	abs, @function
+abs:
+.LFB7:
+	movl	%edi, %eax
+	sarl	$31, %eax
+	xorl	%eax, %edi
+	subl	%eax, %edi
+	movl	%edi, %eax
+	ret
+.LFE7:
+	.size	abs, .-abs
+	.p2align 4,,15
+.globl cmul
+	.type	cmul, @function
+cmul:
+.LFB8:
+	imull	%esi, %edi
+	xorl	%eax, %eax
+	testl	%esi, %esi
+	cmovne	%edi, %eax
+	ret
+.LFE8:
+	.size	cmul, .-cmul
+	.p2align 4,,15
+.globl cmul2
+	.type	cmul2, @function
+cmul2:
+.LFB9:
+	movl	%edi, %eax
+	imull	%esi, %eax
+	decl	%esi
+	cmovne	%eax, %edi
+	movl	%edi, %eax
+	ret
+.LFE9:
+	.size	cmul2, .-cmul2
+	.p2align 4,,15
+.globl cdiv
+	.type	cdiv, @function
+cdiv:
+.LFB10:
+	xorl	%ecx, %ecx
+	testl	%esi, %esi
+	je	.L26
+	movl	%edi, %eax
+	cltd
+	idivl	%esi
+	movl	%eax, %ecx
+.L26:
+	movl	%ecx, %eax
+	ret
+.LFE10:
+	.size	cdiv, .-cdiv
+	.p2align 4,,15
+.globl cdiv2
+	.type	cdiv2, @function
+cdiv2:
+.LFB11:
+	cmpl	$1, %esi
+	movl	%edi, %eax
+	je	.L28
+	cltd
+	idivl	%esi
+.L28:
+	rep ; ret
+.LFE11:
+	.size	cdiv2, .-cdiv2
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB3
+	.quad	.LFE3-.LFB3
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.quad	.LFB4
+	.quad	.LFE4-.LFB4
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.quad	.LFB5
+	.quad	.LFE5-.LFB5
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.quad	.LFB6
+	.quad	.LFE6-.LFB6
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.quad	.LFB7
+	.quad	.LFE7-.LFB7
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.quad	.LFB8
+	.quad	.LFE8-.LFB8
+	.align 8
+.LEFDE13:
+.LSFDE15:
+	.long	.LEFDE15-.LASFDE15
+.LASFDE15:
+	.long	.LASFDE15-.Lframe1
+	.quad	.LFB9
+	.quad	.LFE9-.LFB9
+	.align 8
+.LEFDE15:
+.LSFDE17:
+	.long	.LEFDE17-.LASFDE17
+.LASFDE17:
+	.long	.LASFDE17-.Lframe1
+	.quad	.LFB10
+	.quad	.LFE10-.LFB10
+	.align 8
+.LEFDE17:
+.LSFDE19:
+	.long	.LEFDE19-.LASFDE19
+.LASFDE19:
+	.long	.LASFDE19-.Lframe1
+	.quad	.LFB11
+	.quad	.LFE11-.LFB11
+	.align 8
+.LEFDE19:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"
+
+/* $begin arith-prob-64 179 */
+# x86-64 implementation of arith
+# x in register %edi
+arith:
+/* $end arith-prob-64 179 */
+.LFB14:
+/* $begin arith-prob-64 181 */
+	leal	3(%rdi), %eax
+	cmpl	$-1, %edi
+	cmovle	%eax, %edi
+	sarl	$2, %edi
+	movl	%edi, %eax  # return value in %eax
+	ret
+/* $end arith-prob-64 181 */
+.LFE14:
+
+/* $begin arith-ans-64 179 */
+# x86-64 implementation of arith
+# x in register %edi
+arith:
+/* $end arith-ans-64 179 */
+.LFB14:
+/* $begin arith-ans-64 181 */
+	leal	3(%rdi), %eax # x+3
+	cmpl	$-1, %edi     # Compare x:-1
+	cmovle	%eax, %edi    # If <= then x = x+3
+	sarl	$2, %edi      # x >>= 2
+	movl	%edi, %eax    # return value in %eax
+	ret
+/* $end arith-ans-64 181 */
+.LFE14:

@@ -1,0 +1,61 @@
+	.file	"floatcvt.c"
+	.text
+	.p2align 4,,15
+.globl copy_vals
+	.type	copy_vals, @function
+/* $begin copy_vals-64 6 */
+copy_vals:
+# x86-64 implementation of copy_vals
+# Arguments
+# 	ip	%rdi	int *
+#	lp	%rsi	long *
+#	fp	%rdx	float *
+#	dp	%rcx	double *
+/* $end copy_vals-64 6 */
+.LFB2:
+/* $begin copy_vals-64 8 */
+	movss	(%rdx), %xmm0		# f = *fp
+	movl	(%rdi), %r8d		# i = *ip
+	cvttss2si	%xmm0, %eax	# (int) f
+	movq	(%rsi), %r9		# l = *lp
+	xorps	%xmm0, %xmm0		# 0
+	movlpd	(%rcx), %xmm1		# d = *dp
+	cvtsi2ss	%r8d, %xmm0	# (float) i
+	movl	%eax, (%rdi)		# *ip = (int) f
+	cvttsd2siq	%xmm1, %rax	# (long) d
+	movss	%xmm0, (%rdx)		# *dp = (float) i
+	cvtsi2sdq	%r9, %xmm0	# (double) l
+	movq	%rax, (%rsi)		# *lp = (long) d
+	movsd	%xmm0, (%rcx)		# *dp = (double) l
+	cvtsd2ss	%xmm1, %xmm0	# return (float) d
+	ret
+/* $end copy_vals-64 8 */
+.LFE2:
+	.size	copy_vals, .-copy_vals
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

@@ -1,0 +1,104 @@
+Double Product combine1: Maximum use of data abstraction:
+Best: 10.03 (2%), Overall Best: 10.53 40-most: 11.00 cycles/element
+Double Product combine2: Take vec_length() out of loop:
+Best: 10.00 (2%), Overall Best: 11.47 40-most: 11.07 cycles/element
+Double Product combine3: Array reference to vector data:
+Best: 10.22 (2%), Overall Best: 10.22 40-most: 11.05 cycles/element
+Double Product combine3w: Update *dest within loop only with write:
+Best: 3.68 (2%), Overall Best: 3.93 40-most: 4.25 cycles/element
+Double Product combine4: Array reference, accumulate in temporary:
+Best: 3.70 (2%), Overall Best: 3.99 40-most: 4.21 cycles/element
+Double Product combine4b: Include bonds check in loop:
+Best: 3.58 (2%), Overall Best: 3.79 40-most: 4.21 cycles/element
+Double Product combine4p: Pointer reference, accumulate in temporary:
+Best: 3.69 (2%), Overall Best: 4.13 40-most: 4.21 cycles/element
+Double Product combine5: Array code, unrolled by 2:
+Best: 3.73 (2%), Overall Best: 4.14 40-most: 4.26 cycles/element
+Double Product combine5p: Pointer code, unrolled by 2, for loop:
+Best: 3.56 (2%), Overall Best: 3.76 40-most: 4.21 cycles/element
+Double Product unroll2aw: Array code, unrolled by 2, while loop:
+Best: 3.62 (2%), Overall Best: 3.94 40-most: 4.26 cycles/element
+Double Product unroll3a: Array code, unrolled by 3:
+Best: 3.61 (2%), Overall Best: 4.02 40-most: 4.20 cycles/element
+Double Product unroll4a: Array code, unrolled by 4:
+Best: 3.68 (2%), Overall Best: 3.68 40-most: 4.20 cycles/element
+Double Product unroll5a: Array code, unrolled by 5:
+Best: 3.70 (2%), Overall Best: 3.94 40-most: 4.25 cycles/element
+Double Product unroll6a: Array code, unrolled by 6:
+Best: 3.76 (2%), Overall Best: 4.42 40-most: 4.20 cycles/element
+Double Product unroll8a: Array code, unrolled by 8:
+Best: 3.69 (2%), Overall Best: 3.91 40-most: 4.22 cycles/element
+Double Product unroll16a: Array code, unrolled by 16:
+Best: 3.69 (2%), Overall Best: 4.16 40-most: 4.19 cycles/element
+Double Product unroll2: Pointer code, unrolled by 2:
+Best: 3.65 (2%), Overall Best: 3.93 40-most: 4.22 cycles/element
+Double Product unroll3: Pointer code, unrolled by 3:
+Best: 3.74 (2%), Overall Best: 3.94 40-most: 4.23 cycles/element
+Double Product unroll4: Pointer code, unrolled by 4:
+Best: 3.61 (2%), Overall Best: 3.84 40-most: 4.26 cycles/element
+Double Product unroll8: Pointer code, unrolled by 8:
+Best: 3.53 (2%), Overall Best: 3.90 40-most: 4.23 cycles/element
+Double Product unroll16: Pointer code, unrolled by 16:
+Best: 3.65 (2%), Overall Best: 4.07 40-most: 4.21 cycles/element
+Double Product combine6: Array code, unrolled by 2, Superscalar x2:
+Best: 0.00 (98%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll4x2a: Array code, unrolled by 4, Superscalar x2:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8x2a: Array code, unrolled by 8, Superscalar x2:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll3x3a: Array code, unrolled by 3, Superscalar x3:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll4x4a: Array code, unrolled by 4, Superscalar x4:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll5x5a: Array code, unrolled by 5, Superscalar x5:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll6x6a: Array code, unrolled by 6, Superscalar x6:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8x4a: Array code, unrolled by 8, Superscalar x4:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8x8a: Array code, unrolled by 8, Superscalar x8:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll10x10a: Array code, unrolled by 10, Superscalar x10:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll2x6a: Array code, unrolled by 12, Superscalar x6:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll12x12a: Array code, unrolled by 12, Superscalar x12:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8x2: Pointer code, unrolled by 8, Superscalar x2:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8x4: Pointer code, unrolled by 8, Superscalar x4:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8x8: Pointer code, unrolled by 8, Superscalar x8:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll9x3: Pointer code, unrolled by 9, Superscalar x3:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unrollx2as: Array code, Unroll x2, Superscalar x2, noninterleaved:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product combine7: Array code, unrolled by 2, different associativity:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll3aa: Array code, unrolled by 3, Different Associativity:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll4aa: Array code, unrolled by 4, Different Associativity:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll5aa: Array code, unrolled by 5, Different Associativity:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll6aa: Array code, unrolled by 6, Different Associativity:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product unroll8aa: Array code, unrolled by 8, Different Associativity:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v1: SSE code, 1*VSIZE-way parallelism:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v2: SSE code, 2*VSIZE-way parallelism:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v4: SSE code, 4*VSIZE-way parallelism:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v8: SSE code, 8*VSIZE-way parallelism:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v12: SSE code, 12*VSIZE-way parallelism:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v2a: SSE code, 2*VSIZE-way parallelism, reassociate:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v4a: SSE code, 4*VSIZE-way parallelism, reassociate:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element
+Double Product simd_v8a: SSE code, 8*VSIZE-way parallelism, reassociate:
+Best: 0.00 (100%), Overall Best: 0.00 40-most: 0.00 cycles/element

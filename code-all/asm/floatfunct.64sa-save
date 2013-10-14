@@ -1,0 +1,92 @@
+	.file	"floatfunct.c"
+	.text
+	.p2align 4,,15
+.globl funct
+	.type	funct, @function
+/* $begin float_funct-64 6 */
+# x86-64 implementation of funct
+# Arguments:
+#	a	%xmm0	double
+#	x	%xmm1	float
+#	b	%xmm2	double
+#	i	%edi	int
+funct:
+/* $end float_funct-64 6 */
+.LFB2:
+/* $begin float_funct-64 8 */
+	cvtss2sd	%xmm1, %xmm1	# %xmm1 = (double) x
+	mulsd	%xmm0, %xmm1		# %xmm1 = a*x
+	cvtsi2sd	%edi, %xmm0	# %xmm0 = (double) i
+	divsd	%xmm0, %xmm2		# %xmm2 = b/i
+	movsd	%xmm1, %xmm0		# %xmm0 = a*x
+	subsd	%xmm2, %xmm0		# return a*x - b/i
+	ret
+/* $end float_funct-64 8 */
+.LFE2:
+	.size	funct, .-funct
+	.p2align 4,,15
+.globl find_range
+	.type	find_range, @function
+/* $begin find_range-64 20 */
+# x86-64 implementation of find_range
+# Argument x in %xmm0 (single precision)
+find_range:
+/* $end find_range-64 20 */
+.LFB3:
+/* $begin find_range-64 22 */
+	xorps	%xmm1, %xmm1	#   %xmm1 = 0
+	xorl	%eax, %eax	#   result = 0
+	ucomiss	%xmm0, %xmm1	#   Compare 0:x
+	ja	.L5		#   If (> and not NaN) goto done # line:asm2:find_range:ja
+	movb	$1, %al		#   result = 1	# line:asm2:find_range:movb
+	ucomiss	%xmm1, %xmm0	#   Compare x:0
+	jp	.L13		#   If unordered goto next # line:asm2:find_range:jp
+	je	.L5		#   If (= and not NaN) goto done # line:asm2:find_range:je
+.L13:				# next:
+	xorl	%eax, %eax	#   result = 0
+	ucomiss	%xmm1, %xmm0	#   compare x:0
+	setbe	%al		#   if (<= or NaN) result = 1 # line:asm2:find_range:setbe
+	addl	$2, %eax	#   result += 2 # line:asm2:find_range:addl
+/* $end find_range-64 22 */
+	.p2align 4,,7
+/* $begin find_range-64 36 */  # done:
+.L5:				#   return
+	rep ; ret
+/* $end find_range-64 36 */
+.LFE3:
+	.size	find_range, .-find_range
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB3
+	.quad	.LFE3-.LFB3
+	.align 8
+.LEFDE3:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

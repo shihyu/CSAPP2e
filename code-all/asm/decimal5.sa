@@ -1,0 +1,70 @@
+	.file	"decimal5.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl decimal5
+	.type	 decimal5,@function
+
+
+decimal5:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+	movl 8(%ebp),%ebx		
+	xorl %eax,%eax			
+	xorl %ecx,%ecx			
+	.p2align 4,,7
+.L6:					
+	leal (%eax,%eax,4),%edx		
+	movl (%ebx,%ecx,4),%eax		
+	leal (%eax,%edx,2),%eax
+	incl %ecx			
+	cmpl $4,%ecx
+	jle .L6				
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 decimal5,.Lfe1-decimal5
+	.align 4
+.globl decimal5_opt
+	.type	 decimal5_opt,@function
+
+
+decimal5_opt:
+	# Setup code
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+
+	/* $begin decimal5opt-s 36 */
+	# Body code 
+	movl 8(%ebp),%ecx		# Get base addr of array x
+	xorl %eax,%eax			# val = 0;
+	leal 16(%ecx),%ebx		# xend = x+4 (16 bytes = 4 double words)
+	/* $end decimal5opt-s 36 */
+
+	.p2align 4,,7
+
+	/* $begin decimal5opt-s 40 */
+.L12:				      # \textbf{loop:}
+	leal (%eax,%eax,4),%edx		# Compute 5*val
+	movl (%ecx),%eax		# Compute *x
+	leal (%eax,%edx,2),%eax		# Compute *x + 2*(5*val)
+	addl $4,%ecx			# x++
+	cmpl %ebx,%ecx			# Compare x:xend
+	jbe .L12			# if <=, goto \textbf{loop}
+	/* $end decimal5opt-s 40 */
+
+	# Finishing code
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+
+.Lfe2:
+	.size	 decimal5_opt,.Lfe2-decimal5_opt
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"

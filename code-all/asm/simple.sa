@@ -1,0 +1,39 @@
+/* $begin simple-raw 1 */	
+	.file	"simple.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl simple
+	.type	 simple,@function
+simple:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl (%eax),%edx
+	addl 12(%ebp),%edx
+	movl %edx,(%eax)
+	movl %edx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 simple,.Lfe1-simple
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+/* $end simple-raw 1 */
+
+# Annotated version
+
+/* $begin simple-ann 8 */
+simple:
+	pushl %ebp         # Save frame pointer
+	movl %esp,%ebp	   # Create new frame pointer
+	movl 8(%ebp),%eax  # Get xp
+	movl (%eax),%edx   # Retrieve *xp
+	addl 12(%ebp),%edx # Add y to get t
+	movl %edx,(%eax)   # Store t at *xp
+	movl %edx,%eax     # Set t as return value
+	movl %ebp,%esp     # Reset stack pointer
+	popl %ebp          # Reset frame pointer
+	ret                # Return
+/* $end simple-ann 8 */

@@ -1,0 +1,43 @@
+/* Check aspects of stack operation */
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Implementation of library function gets() */
+char *gets(char *s)
+{
+    int c;
+    char *dest = s;
+    while ((c = getchar()) != '\n' && c != EOF) 
+        *dest++ = c;
+    *dest++ = '\0'; /* Terminate String */
+    if (c == EOF)
+        return NULL;
+    return s;  
+}
+
+/* Read input line and write it back */
+void echo()
+{
+    char buf[8];  /* Way too small! */
+    int *cpos = (int *) buf + 2;
+    printf("Canary at %p, value = 0x%x\n",
+	   cpos, *cpos);
+    gets(buf);
+    puts(buf);
+}
+
+
+int main(int argc, char *argv[])
+{
+    int local;
+    int i;
+    for (i = 0; i < 3; i++) {
+	printf("local at %p\n", &local);
+	printf("Type a string:");
+	echo();
+    }
+    return 0;
+}

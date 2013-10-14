@@ -1,0 +1,90 @@
+Float Sum combine1: Maximum use of data abstraction:
+26.00 cycles/element
+Float Sum combine2: Take vec_length() out of loop:
+27.00 cycles/element
+Float Sum combine3: Array reference to vector data:
+5.00 cycles/element
+Float Sum combine4: Array reference, accumulate in temporary:
+5.00 cycles/element
+Float Sum combine4p: Pointer reference, accumulate in temporary:
+5.00 cycles/element
+Float Sum Array code, unrolled by 2:
+5.00 cycles/element
+Float Sum combine5p: Pointer code, unrolled by 3, for loop:
+5.00 cycles/element
+Float Sum Array code, unrolled by 3, while loop:
+5.00 cycles/element
+Float Sum Array code, unrolled by 4:
+4.98 cycles/element
+Float Sum Array code, unrolled by 8:
+5.00 cycles/element
+Float Sum Array code, unrolled by 16:
+5.01 cycles/element
+Float Sum Pointer code, unrolled by 2:
+5.00 cycles/element
+Float Sum Pointer code, unrolled by 3:
+5.01 cycles/element
+Float Sum Pointer code, unrolled by 4:
+5.00 cycles/element
+Float Sum Pointer code, unrolled by 8:
+5.00 cycles/element
+Float Sum Pointer code, unrolled by 16:
+5.01 cycles/element
+Float Sum combine6: Array code, unrolled by 2, Superscalar x2:
+2.50 cycles/element
+Float Sum Array code, unrolled by 4, Superscalar x2:
+2.68 cycles/element
+Float Sum Array code, unrolled by 8, Superscalar x2:
+2.50 cycles/element
+Float Sum Array code, unrolled by 3, Superscalar x3:
+1.99 cycles/element
+Float Sum Array code, unrolled by 4, Superscalar x4:
+2.01 cycles/element
+Float Sum Array code, unrolled by 8, Superscalar x4:
+2.00 cycles/element
+Float Sum Array code, unrolled by 6, Superscalar x6:
+2.00 cycles/element
+Float Sum Array code, unrolled by 8, Superscalar x8:
+2.01 cycles/element
+Float Sum Array code, unrolled by 10, Superscalar x10:
+2.01 cycles/element
+Float Sum Array code, unrolled by 12, Superscalar x6:
+2.01 cycles/element
+Float Sum Array code, unrolled by 12, Superscalar x12:
+2.01 cycles/element
+Float Sum Pointer code, unrolled by 8, Superscalar x2:
+2.50 cycles/element
+Float Sum Pointer code, unrolled by 8, Superscalar x4:
+2.01 cycles/element
+Float Sum Pointer code, unrolled by 8, Superscalar x8:
+2.00 cycles/element
+Float Sum Pointer code, unrolled by 9, Superscalar x3:
+2.00 cycles/element
+Float Sum Array code, Unroll x2, Superscalar x2, noninterleaved:
+2.53 cycles/element
+Float Sum Array code, unrolled by 2, different associativity:
+2.75 cycles/element
+Float Sum Array code, unrolled by 3, Different Associativity:
+1.97 cycles/element
+Float Sum Array code, unrolled by 4, Different Associativity:
+2.01 cycles/element
+Float Sum Array code, unrolled by 6, Different Associativity:
+2.00 cycles/element
+Float Sum Array code, unrolled by 8, Different Associativity:
+2.00 cycles/element
+Float Sum SSE code, 1*VSIZE-way parallelism:
+1.25 cycles/element
+Float Sum SSE code, 2*VSIZE-way parallelism:
+0.89 cycles/element
+Float Sum SSE code, 4*VSIZE-way parallelism:
+0.91 cycles/element
+Float Sum SSE code, 8*VSIZE-way parallelism:
+0.58 cycles/element
+Float Sum SSE code, 12*VSIZE-way parallelism:
+0.48 cycles/element
+Float Sum SSE code, 2*VSIZE-way parallelism, reassociate:
+0.97 cycles/element
+Float Sum SSE code, 4*VSIZE-way parallelism, reassociate:
+0.68 cycles/element
+Float Sum SSE code, 8*VSIZE-way parallelism, reassociate:
+0.60 cycles/element

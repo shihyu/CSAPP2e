@@ -1,0 +1,41 @@
+absdiff:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin absdiff-s 11 */
+	movl 8(%ebp),%edx	# Get x
+	movl 12(%ebp),%eax	# Get y
+	cmpl %eax,%edx		# Compare x:y
+	jl .L3			# If <, goto \textbf{less}
+	subl %eax,%edx		# Compute x-y
+	movl %edx,%eax		# Set as return value
+	jmp .L5			# Goto \textbf{done}
+/* $end absdiff-s 11 */
+
+	.p2align 4,,7
+
+/* $begin absdiff-s 19 */
+.L3:			      # \textbf{less:}
+	subl %edx,%eax		# Compute y-x as return value
+.L5:			      # \textbf{done:} Begin completion code
+/* $end absdiff-s 19 */		
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+absdiff2:
+	pushl %ebp
+	movl %esp,%ebp
+	/* $begin absdiff2-s 53 */
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%ecx
+	movl %edx,%eax
+	subl %ecx,%eax
+	cmpl %ecx,%edx
+	jge .L11
+	movl %ecx,%eax
+	subl %edx,%eax
+.L11:
+	/* $end absdiff2-s 53 */
+	movl %ebp,%esp
+	popl %ebp
+	ret

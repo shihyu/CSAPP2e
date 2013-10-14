@@ -1,0 +1,15 @@
+/* $begin getbuf-d 198 */
+080484f4 <getbuf>:
+ 80484f4:	55                   	push   %ebp
+ 80484f5:	89 e5                	mov    %esp,%ebp
+ 80484f7:	83 ec 18             	sub    $0x18,%esp
+ 80484fa:	83 c4 f4             	add    $0xfffffff4,%esp
+ 80484fd:	8d 45 f4             	lea    0xfffffff4(%ebp),%eax
+ 8048500:	50                   	push   %eax
+ 8048501:	e8 6a ff ff ff       	call   8048470 <getxs>
+ 8048506:	b8 01 00 00 00       	mov    $0x1,%eax
+ 804850b:	89 ec                	mov    %ebp,%esp
+ 804850d:	5d                   	pop    %ebp
+ 804850e:	c3                   	ret    
+ 804850f:	90                   	nop    
+/* $end getbuf-d 198 */

@@ -1,0 +1,12 @@
+Called fun with xp = 0xff7fffd4
+  ip     = 0xff7fffa0, *ip    = 0xff7fffd4, **ip   = 2
+  ip+1   = 0xff7fffa4, ip[1]  =  0x804a01c, *ip[1] = 15
+  &s.v   = 0xff7fffac, s.v    = 'a'
+  &up->v =  0x813f008, up->v  = 'b'
+  f      =  0x8048480
+Called fun with xp = 0xff7fffd4
+  ip     = 0xff7fff60, *ip    = 0xff7fffd4, **ip   = 1
+  ip+1   = 0xff7fff64, ip[1]  =  0x804a01c, *ip[1] = 15
+  &s.v   = 0xff7fff6c, s.v    = 'a'
+  &up->v =  0x813f018, up->v  = 'b'
+  f      =  0x8048480

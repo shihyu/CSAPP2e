@@ -1,0 +1,47 @@
+  0x000: 	.pos 0 
+  0x000: init:	irmovl Stack, %esp  	# Set up stack pointer  
+  0x006: 	irmovl Stack, %ebp  	# Set up base pointer   
+  0x00c: 	call Main		# Execute main program
+  0x011: 	halt			# Terminate program 
+  0x014: 	.align 4 	
+  0x014: array:	.long 0xd
+  0x018: 	.long 0xc0
+  0x01c: 	.long 0xb00
+  0x020: 	.long 0xa000
+  0x024: 	.long 0
+  0x028: Main:	pushl %ebp 
+  0x02a: 	rrmovl %esp,%ebp
+  0x02c: 	irmovl array,%edx
+  0x032: 	pushl %edx      	# Push array
+  0x034: 	call len2		# len2(array)
+  0x039: 	rrmovl %ebp,%esp
+  0x03b: 	popl %ebp
+  0x03d: 	ret 
+  0x03e: len2:
+  0x03e: 	pushl %ebp		# Save %ebp
+  0x040: 	rrmovl %esp, %ebp	# Create new frame pointer
+  0x042: 	pushl %esi   		# Save callee-save register
+  0x044: 	irmovl $4, %esi		# Set %esi to 4
+  0x04a: 	pushl %edi		# Save callee-save register
+  0x04c: 	irmovl $1, %edi		# Set %edi to 1
+  0x052: 	mrmovl 8(%ebp), %edx	# Get a
+  0x058: 	xorl %ecx, %ecx		# len = 0
+  0x05a: 	mrmovl (%edx), %eax	# Get *a
+  0x060: 	addl %esi, %edx		# a++
+  0x062: 	andl %eax, %eax		# Test *a
+  0x064: 	je Done	   		# If zero, goto Done
+  0x069: Loop:
+  0x069: 	addl %edi, %ecx		# len++
+  0x06b: 	mrmovl (%edx), %eax	# Get *a
+  0x071: 	addl %esi, %edx		# a++
+  0x073: 	andl %eax, %eax		# Test *a
+  0x075: 	jne Loop   		# If !0, goto Loop
+  0x07a: Done:
+  0x07a: 	rrmovl %ecx, %eax	# return value = len
+  0x07c: 	popl %edi    		# Restore %edi
+  0x07e: 	popl %esi		# Restore %esi
+  0x080: 	rrmovl %ebp, %esp	# Restore stack pointer
+  0x082: 	popl %ebp		# Restore %ebp
+  0x084: 	ret
+  0x100:   	.pos 0x100
+  0x100: Stack:

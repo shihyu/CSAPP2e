@@ -1,0 +1,197 @@
+	.file	"abs.c"
+	.text
+.globl absdiff
+	.type	absdiff, @function
+absdiff:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jge	.L2
+	subl	%edx, %eax
+	jmp	.L3
+.L2:
+	subl	%eax, %edx
+	movl	%edx, %eax
+.L3:
+	popl	%ebp
+	ret
+	.size	absdiff, .-absdiff
+.globl gotodiff
+	.type	gotodiff, @function
+gotodiff:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jge	.L6
+	subl	%edx, %eax
+	jmp	.L7
+.L6:
+	subl	%eax, %edx
+	movl	%edx, %eax
+.L7:
+	popl	%ebp
+	ret
+	.size	gotodiff, .-gotodiff
+.globl absdiff2
+	.type	absdiff2, @function
+absdiff2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jge	.L10
+	subl	%edx, %eax
+	jmp	.L11
+.L10:
+	subl	%eax, %edx
+	movl	%edx, %eax
+.L11:
+	popl	%ebp
+	ret
+	.size	absdiff2, .-absdiff2
+.globl cmovdiff
+	.type	cmovdiff, @function
+cmovdiff:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%edx, %eax
+	jg	.L14
+	subl	%eax, %edx
+	movl	%edx, %eax
+	jmp	.L15
+.L14:
+	subl	%edx, %eax
+.L15:
+	popl	%ebp
+	ret
+	.size	cmovdiff, .-cmovdiff
+.globl absdiff_e
+	.type	absdiff_e, @function
+absdiff_e:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jge	.L18
+	subl	%edx, %eax
+	jmp	.L19
+.L18:
+	subl	%eax, %edx
+	movl	%edx, %eax
+.L19:
+	popl	%ebp
+	ret
+	.size	absdiff_e, .-absdiff_e
+.globl absdiff_se
+	.type	absdiff_se, @function
+absdiff_se:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jge	.L22
+	addl	$1, lcount
+	subl	%edx, %eax
+	jmp	.L23
+.L22:
+	subl	%eax, %edx
+	movl	%edx, %eax
+.L23:
+	popl	%ebp
+	ret
+	.size	absdiff_se, .-absdiff_se
+.globl gotodiff_alt
+	.type	gotodiff_alt, @function
+gotodiff_alt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jl	.L26
+	subl	%eax, %edx
+	movl	%edx, %eax
+	jmp	.L27
+.L26:
+	subl	%edx, %eax
+.L27:
+	popl	%ebp
+	ret
+	.size	gotodiff_alt, .-gotodiff_alt
+	.section	.rodata.str1.4,"aMS",@progbits,1
+	.align 4
+.LC0:
+	.string	"x = %d, y = %d, |x-y| = (%d,%d,%d)\n"
+	.text
+.globl main
+	.type	main, @function
+main:
+	leal	4(%esp), %ecx
+	andl	$-16, %esp
+	pushl	-4(%ecx)
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$56, %esp
+	movl	%ecx, -16(%ebp)
+	movl	%ebx, -12(%ebp)
+	movl	%esi, -8(%ebp)
+	movl	%edi, -4(%ebp)
+	movl	4(%ecx), %ebx
+	movl	$10, 8(%esp)
+	movl	$0, 4(%esp)
+	movl	4(%ebx), %eax
+	movl	%eax, (%esp)
+	call	strtol
+	movl	%eax, %esi
+	movl	$10, 8(%esp)
+	movl	$0, 4(%esp)
+	movl	8(%ebx), %eax
+	movl	%eax, (%esp)
+	call	strtol
+	movl	%eax, %ebx
+	movl	%eax, 4(%esp)
+	movl	%esi, (%esp)
+	call	absdiff
+	movl	%eax, 16(%esp)
+	movl	%ebx, 4(%esp)
+	movl	%esi, (%esp)
+	call	gotodiff
+	movl	%eax, %edi
+	movl	%ebx, 4(%esp)
+	movl	%esi, (%esp)
+	call	cmovdiff
+	movl	%eax, 24(%esp)
+	movl	%edi, 20(%esp)
+	movl	%ebx, 12(%esp)
+	movl	%esi, 8(%esp)
+	movl	$.LC0, 4(%esp)
+	movl	$1, (%esp)
+	call	__printf_chk
+	movl	$0, %eax
+	movl	-16(%ebp), %ecx
+	movl	-12(%ebp), %ebx
+	movl	-8(%ebp), %esi
+	movl	-4(%ebp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	leal	-4(%ecx), %esp
+	ret
+	.size	main, .-main
+.globl lcount
+	.bss
+	.align 4
+	.type	lcount, @object
+	.size	lcount, 4
+lcount:
+	.zero	4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

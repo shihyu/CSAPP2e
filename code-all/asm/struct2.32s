@@ -1,0 +1,18 @@
+	.file	"struct2.c"
+	.text
+.globl sp_init
+	.type	sp_init, @function
+sp_init:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	8(%eax), %edx
+	movl	%edx, 4(%eax)
+	leal	4(%eax), %edx
+	movl	%edx, (%eax)
+	movl	%eax, 12(%eax)
+	popl	%ebp
+	ret
+	.size	sp_init, .-sp_init
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

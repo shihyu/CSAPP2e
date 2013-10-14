@@ -1,0 +1,19 @@
+	.file	"exchange.c"
+	.text
+	.p2align 4,,15
+.globl exchange
+	.type	exchange, @function
+exchange:
+	pushl	%ebp
+	movl	%esp, %ebp
+	/* $begin exchange-s 9 */
+	movl	8(%ebp), %edx	# Get xp
+	movl	12(%ebp), %ecx	# Get y
+	movl	(%edx), %eax	# x = *xp  (also return value)
+	movl	%ecx, (%edx)	# *xp = y
+	/* $end exchange-s 9 */
+	leave
+	ret
+	.size	exchange, .-exchange
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

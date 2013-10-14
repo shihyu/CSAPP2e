@@ -1,0 +1,73 @@
+	.file	"abs.c"
+	.text
+	.p2align 4,,15
+.globl absdiff
+	.type	absdiff, @function
+absdiff:
+/* $begin absdiff-s 7 */
+	pushl	%ebp		# Setup stack frame #line:asm:absdiff_s:setup_1
+	movl	%esp, %ebp	##line:asm:absdiff_s:setup_2
+	movl	8(%ebp), %edx	# Get x
+	movl	12(%ebp), %eax	# Get y
+	cmpl	%eax, %edx	# Compare x:y
+	jge	.L2		# If >=, goto \textbf{ge}
+	leave			# Prepare to return #line:asm:absdiff_s:leave_1
+	subl	%edx, %eax	# Return value = y-x
+	ret			# Return	#line:asm:absdiff_s:return_1
+/* $end absdiff-s 7 */
+	.p2align 4,,7
+/* $begin absdiff-s 17 */
+.L2:			      # \textbf{ge:}
+	leave			# Prepare to return #line:asm:absdiff_s:leave_2
+	subl	%eax, %edx	# Compute x-y
+	movl	%edx, %eax	# Set as return value
+	ret			# Return #line:asm:absdiff_s:return_2
+/* $end absdiff-s 17 */
+	.size	absdiff, .-absdiff
+	.p2align 4,,15
+.globl gotodiff
+	.type	gotodiff, @function
+gotodiff:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jl	.L7
+.L8:
+	leave
+	subl	%eax, %edx
+	movl	%edx, %eax
+	ret
+	.p2align 4,,7
+.L7:
+	leave
+	subl	%edx, %eax
+	ret
+	.size	gotodiff, .-gotodiff
+	.p2align 4,,15
+.globl absdiff2
+	.type	absdiff2, @function
+absdiff2:
+/* $begin absdiff2-s 48 */
+	pushl	%ebp 		##line:asm:absdiff2_s:setup_1
+	movl	%esp, %ebp	##line:asm:absdiff2_s:setup_2
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	cmpl	%eax, %edx
+	jge	.L10
+	leave			##line:asm:absdiff2_s:leave_1
+	subl	%edx, %eax
+	ret
+/* $end absdiff2-s 48 */
+	.p2align 4,,7
+/* $begin absdiff2-s 58 */
+.L10:
+	leave			##line:asm:absdiff2_s:leave_2
+	subl	%eax, %edx
+	movl	%edx, %eax
+	ret
+/* $end absdiff2-s 48 */
+	.size	absdiff2, .-absdiff2
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

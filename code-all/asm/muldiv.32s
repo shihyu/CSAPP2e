@@ -1,0 +1,71 @@
+	.file	"muldiv.c"
+	.text
+.globl shrink
+	.type	shrink, @function
+shrink:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	shrink, .-shrink
+.globl prod
+	.type	prod, @function
+prod:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	12(%ebp), %eax
+	imull	8(%ebp)
+	movl	%eax, %ebx
+	movl	%edx, %esi
+	movl	%eax, (%esp)
+	movl	%edx, 4(%esp)
+	call	shrink
+	addl	%ebx, %eax
+	addl	%esi, %eax
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	prod, .-prod
+.globl combine
+	.type	combine, @function
+combine:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	addl	8(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	combine, .-combine
+.globl div
+	.type	div, @function
+div:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	8(%ebp), %edx
+	movl	%edx, %eax
+	sarl	$31, %edx
+	idivl	12(%ebp)
+	movl	%edx, %ebx
+	movl	%eax, %esi
+	movl	%eax, 4(%esp)
+	movl	%edx, (%esp)
+	call	combine
+	leal	(%esi,%ebx), %edx
+	leal	(%edx,%eax), %eax
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	div, .-div
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,10 @@
+Description: Recursive, CPE = 3.00
+Description: Iterative, CPE = 3.00
+Description: Unroll 2X Assoc 1, CPE = 2.00
+Description: Unroll 2X Assoc 2, CPE = 2.00
+Description: Unroll 2X Assoc 2 reverse, CPE = 2.00
+Description: Unroll 2X Split, CPE = 1.75
+Description: Unroll 3X Assoc 1, CPE = 3.00
+Description: Unroll 3X Assoc 2, CPE = 3.00
+Description: Unroll 3X Assoc 2 reverse, CPE = 3.00
+Description: Unroll 3X Split, CPE = 1.84

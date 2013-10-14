@@ -1,0 +1,316 @@
+	.file	"fun.c"
+	.text
+.globl test_fun_a
+	.type	test_fun_a, @function
+test_fun_a:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ecx
+	movl	$0, %edx
+	movl	$1, %ebx
+.L2:
+	movl	%ebx, %eax
+	sall	%cl, %eax
+	testl	%esi, %eax
+	setne	%al
+	movzbl	%al, %eax
+	xorl	%eax, %edx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L2
+	movl	%edx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	test_fun_a, .-test_fun_a
+.globl fun_a
+	.type	fun_a, @function
+fun_a:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %eax
+	testl	%edx, %edx
+	je	.L7
+.L10:
+	xorl	%edx, %eax
+	shrl	%edx
+	jne	.L10
+.L7:
+	andl	$1, %eax
+	popl	%ebp
+	ret
+	.size	fun_a, .-fun_a
+.globl fun_b
+	.type	fun_b, @function
+fun_b:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ebx
+	movl	$0, %eax
+	movl	$0, %ecx
+.L13:
+	leal	(%eax,%eax), %edx
+	movl	%ebx, %eax
+	andl	$1, %eax
+	orl	%edx, %eax
+	shrl	%ebx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L13
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	fun_b, .-fun_b
+.globl test_fun_b
+	.type	test_fun_b, @function
+test_fun_b:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	subl	$4, %esp
+	movl	$0, -16(%ebp)
+	movl	$0, %ebx
+	movl	$31, %edi
+	movl	$1, %esi
+.L18:
+	movl	%edi, %edx
+	subl	-16(%ebp), %edx
+	movl	%esi, %eax
+	movzbl	-16(%ebp), %ecx
+	sall	%cl, %eax
+	testl	%eax, 8(%ebp)
+	je	.L17
+	movl	%esi, %eax
+	movl	%edx, %ecx
+	sall	%cl, %eax
+	orl	%eax, %ebx
+.L17:
+	addl	$1, -16(%ebp)
+	cmpl	$32, -16(%ebp)
+	jne	.L18
+	movl	%ebx, %eax
+	addl	$4, %esp
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	test_fun_b, .-test_fun_b
+.globl fun_c
+	.type	fun_c, @function
+fun_c:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	$0, %ebx
+	movl	$0, %edx
+.L22:
+	movl	%ecx, %eax
+	andl	$16843009, %eax
+	addl	%eax, %ebx
+	shrl	%ecx
+	addl	$1, %edx
+	cmpl	$8, %edx
+	jne	.L22
+	movl	%ebx, %edx
+	sarl	$16, %edx
+	addl	%ebx, %edx
+	movl	%edx, %eax
+	sarl	$8, %eax
+	addl	%edx, %eax
+	andl	$255, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	fun_c, .-fun_c
+.globl test_fun_c
+	.type	test_fun_c, @function
+test_fun_c:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ecx
+	movl	$0, %edx
+	movl	$1, %ebx
+.L26:
+	movl	%ebx, %eax
+	sall	%cl, %eax
+	testl	%esi, %eax
+	setne	%al
+	movzbl	%al, %eax
+	addl	%eax, %edx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L26
+	movl	%edx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	test_fun_c, .-test_fun_c
+.globl test_count_p
+	.type	test_count_p, @function
+test_count_p:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ecx
+	movl	$0, %edx
+	movl	$1, %ebx
+.L30:
+	movl	%ebx, %eax
+	sall	%cl, %eax
+	testl	%esi, %eax
+	setne	%al
+	movzbl	%al, %eax
+	addl	%eax, %edx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L30
+	movl	%edx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	test_count_p, .-test_count_p
+.globl count_p
+	.type	count_p, @function
+count_p:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$0, %ecx
+	testl	%edx, %edx
+	je	.L35
+.L38:
+	movl	%edx, %eax
+	shrl	$31, %eax
+	addl	%eax, %ecx
+	addl	%edx, %edx
+	jne	.L38
+.L35:
+	movl	%ecx, %eax
+	popl	%ebp
+	ret
+	.size	count_p, .-count_p
+.globl count_q
+	.type	count_q, @function
+count_q:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ebx
+	movl	$-2147483648, %ecx
+	movl	$0, %edx
+.L41:
+	testl	%esi, %ecx
+	setne	%al
+	movzbl	%al, %eax
+	addl	%eax, %ebx
+	shrl	%ecx
+	addl	$1, %edx
+	cmpl	$32, %edx
+	jne	.L41
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	count_q, .-count_q
+.globl test_count_q
+	.type	test_count_q, @function
+test_count_q:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ecx
+	movl	$0, %edx
+	movl	$1, %ebx
+.L45:
+	movl	%ebx, %eax
+	sall	%cl, %eax
+	testl	%esi, %eax
+	setne	%al
+	movzbl	%al, %eax
+	addl	%eax, %edx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L45
+	movl	%edx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	test_count_q, .-test_count_q
+.globl count_r
+	.type	count_r, @function
+count_r:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ebx
+	movl	$1, %edx
+	movl	$0, %ecx
+.L50:
+	movl	%edx, %eax
+	andl	%esi, %eax
+	cmpl	$1, %eax
+	sbbl	$-1, %ebx
+	addl	%edx, %edx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L50
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	count_r, .-count_r
+.globl test_count_r
+	.type	test_count_r, @function
+test_count_r:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	$0, %ecx
+	movl	$0, %edx
+	movl	$1, %ebx
+.L54:
+	movl	%ebx, %eax
+	sall	%cl, %eax
+	testl	%esi, %eax
+	setne	%al
+	movzbl	%al, %eax
+	addl	%eax, %edx
+	addl	$1, %ecx
+	cmpl	$32, %ecx
+	jne	.L54
+	movl	%edx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	test_count_r, .-test_count_r
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

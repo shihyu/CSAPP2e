@@ -1,0 +1,146 @@
+	.file	"compiler-eg.c"
+	.text
+.globl sum_abs
+	.type	sum_abs, @function
+sum_abs:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	leal	(%edx,%eax,4), %esi
+	movl	%edx, %ecx
+	movl	$0, %ebx
+	cmpl	%esi, %edx
+	jae	.L3
+.L6:
+	movl	(%ecx), %eax
+	addl	$4, %ecx
+	movl	%eax, %edx
+	sarl	$31, %edx
+	xorl	%edx, %eax
+	subl	%edx, %eax
+	addl	%eax, %ebx
+	cmpl	%ecx, %esi
+	ja	.L6
+.L3:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	sum_abs, .-sum_abs
+.globl find_max
+	.type	find_max, @function
+find_max:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %esi
+	movl	12(%ebp), %ebx
+	movl	$-2147483648, %eax
+	movl	$0, %edx
+	testl	%ebx, %ebx
+	jle	.L10
+.L14:
+	movl	(%esi,%edx,4), %ecx
+	cmpl	%ecx, %eax
+	jge	.L11
+	movl	%ecx, %eax
+.L11:
+	addl	$1, %edx
+	cmpl	%edx, %ebx
+	jg	.L14
+.L10:
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	find_max, .-find_max
+.globl find_maxp
+	.type	find_maxp, @function
+find_maxp:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	leal	(%edx,%eax,4), %ebx
+	movl	%edx, %ecx
+	movl	$-2147483648, %eax
+	cmpl	%ebx, %edx
+	jae	.L18
+.L22:
+	movl	(%ecx), %edx
+	addl	$4, %ecx
+	cmpl	%edx, %eax
+	jge	.L19
+	movl	%edx, %eax
+.L19:
+	cmpl	%ecx, %ebx
+	ja	.L22
+.L18:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	find_maxp, .-find_maxp
+.globl find_maxl
+	.type	find_maxl, @function
+find_maxl:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %edx
+	movl	$-2147483648, %ebx
+	testl	%edx, %edx
+	je	.L26
+	movl	8(%ebp), %ecx
+	leal	-4(%ecx,%edx,4), %eax
+	movl	%edx, %ecx
+	movl	$-2147483648, %ebx
+.L28:
+	subl	$1, %ecx
+	movl	(%eax), %edx
+	cmpl	%edx, %ebx
+	jge	.L27
+	movl	%edx, %ebx
+.L27:
+	subl	$4, %eax
+	testl	%ecx, %ecx
+	jne	.L28
+.L26:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	find_maxl, .-find_maxl
+.globl raise_pwr2
+	.type	raise_pwr2, @function
+raise_pwr2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %ecx
+	movl	$1, %ebx
+	testl	%edx, %edx
+	je	.L33
+.L36:
+	movl	%edx, %eax
+	andl	$1, %eax
+	negl	%eax
+	andl	%ecx, %eax
+	imull	%eax, %ebx
+	addl	%ecx, %ecx
+	shrl	%edx
+	jne	.L36
+.L33:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	raise_pwr2, .-raise_pwr2
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

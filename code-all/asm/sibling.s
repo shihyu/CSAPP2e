@@ -1,0 +1,47 @@
+	.file	"sibling.c"
+	.text
+	.p2align 4,,15
+.globl square
+	.type	square, @function
+square:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	popl	%ebp
+	imull	%eax, %eax
+	ret
+	.size	square, .-square
+	.p2align 4,,15
+.globl proc1
+	.type	proc1, @function
+proc1:
+	pushl	%ebp
+	movl	%esp, %ebp
+	testb	$1, 16(%ebp)
+	movl	12(%ebp), %eax
+	jne	.L6
+	movl	%eax, 8(%ebp)
+.L6:
+	popl	%ebp
+	jmp	square
+	.size	proc1, .-proc1
+	.p2align 4,,15
+.globl proc2
+	.type	proc2, @function
+proc2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	8(%ebp), %eax
+	movl	16(%ebp), %edx
+	movl	%eax, -8(%ebp)
+	movl	12(%ebp), %eax
+	andl	$1, %edx
+	movl	%eax, -4(%ebp)
+	movl	-8(%ebp,%edx,4), %eax
+	movl	%eax, 8(%ebp)
+	leave
+	jmp	square
+	.size	proc2, .-proc2
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

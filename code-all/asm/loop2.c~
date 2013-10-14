@@ -1,0 +1,10 @@
+/* See if can make compiler put loop closing jump in middle */
+
+int loop(int x, int y)
+{
+    while (x < 0) {
+	x = y;
+	y = y + x;
+    }
+    return x;
+}

@@ -1,0 +1,320 @@
+	.file	"array.c"
+	.text
+.globl get_value
+	.type	get_value, @function
+get_value:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin arrayaccess-s 8 */
+# A at \ebpreg+8, i at \ebpreg+12,j at \ebpreg+16
+	movl	12(%ebp), %eax		# Get i
+	leal	(%eax,%eax,2), %eax	# Compute 3*i #line:asm;
+	movl	16(%ebp), %edx		# Get j
+	sall	$2, %edx		# Compute j*4
+	addl	8(%ebp), %edx		# Compute \(\startaddr{A}+4j\)
+	movl	(%edx,%eax,4), %eax	# Read from \(\memref{\startaddr{A}+4j + 12i}\)
+/* $end arrayaccess-s 8 */
+	popl	%ebp
+	ret
+	.size	get_value, .-get_value
+.globl get_value2
+	.type	get_value2, @function
+get_value2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	(%eax,%edx,4), %edx
+	movl	16(%ebp), %eax
+	movl	(%edx,%eax,4), %eax
+	popl	%ebp
+	ret
+	.size	get_value2, .-get_value2
+.globl fix_prod_ele
+	.type	fix_prod_ele, @function
+fix_prod_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	16(%ebp), %eax
+	sall	$6, %eax
+	movl	8(%ebp), %esi
+	addl	%eax, %esi
+	movl	20(%ebp), %eax
+	sall	$2, %eax
+	movl	12(%ebp), %ecx
+	addl	%eax, %ecx
+	movl	$0, %edx
+	movl	$0, %ebx
+/* $begin fixprodele-s 47 */
+# Registers: Arow in %esi, Bptr in %ecx, j in %edx, result in %ebx
+.L6:				      # \textbf{loop:}
+	movl	(%ecx), %eax		# Get *Bptr
+	imull	(%esi,%edx,4), %eax	# Multiply by Arow[j]
+	addl	%eax, %ebx		# Add to result
+	addl	$1, %edx		# Increment j
+	addl	$64, %ecx		# Add 64 to Bptr #line:asm:array:fixprodele:incr
+	cmpl	$16, %edx		# Compare j:16
+	jne	.L6			# If !=, goto loop
+/* $end fixprodele-s 47 */
+	movl	%ebx, %eax		# Return result
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fix_prod_ele, .-fix_prod_ele
+.globl fix_prod_ele_opt
+	.type	fix_prod_ele_opt, @function
+fix_prod_ele_opt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%esi
+	pushl	%ebx
+	movl	16(%ebp), %eax
+	sall	$6, %eax
+	movl	8(%ebp), %esi
+	addl	%eax, %esi
+	movl	20(%ebp), %eax
+	sall	$2, %eax
+	movl	12(%ebp), %ecx
+	addl	%eax, %ecx
+	movl	$0, %ebx
+	movl	$0, %edx
+.L10:
+	movl	(%ecx), %eax
+	imull	(%esi,%edx,4), %eax
+	addl	%eax, %ebx
+	addl	$64, %ecx
+	addl	$1, %edx
+	cmpl	$16, %edx
+	jne	.L10
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%ebp
+	ret
+	.size	fix_prod_ele_opt, .-fix_prod_ele_opt
+.globl fix_set_diag
+	.type	fix_set_diag, @function
+fix_set_diag:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin fixdiag-prob-s 97 */
+# A at \ebpreg+8, val at \ebpreg+12
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	$0, %eax
+.L14:
+	movl	%edx, (%ecx,%eax)
+	addl	$68, %eax
+	cmpl	$1088, %eax
+	jne	.L14
+/* $end fixdiag-prob-s 97 */
+	popl	%ebp
+	ret
+	.size	fix_set_diag, .-fix_set_diag
+
+/* $begin fixdiag-ans-s 97 */
+# A at \ebpreg+8, val at \ebpreg+12
+	movl	8(%ebp), %ecx		# Get Abase = &A[0][0]
+	movl	12(%ebp), %edx		# Get val
+	movl	$0, %eax		# Set index4 to 0
+.L14:				      # \textbf{loop:}
+	movl	%edx, (%ecx,%eax)	# Set Abase[index4/4] to val
+	addl	$68, %eax		# index4 += 4(N+1)
+	cmpl	$1088, %eax		# Compare index4:4N(N+1)
+	jne	.L14			# If !=, goto loop
+/* $end fixdiag-ans-s 97 */
+
+
+.globl fix_set_diag_opt
+	.type	fix_set_diag_opt, @function
+fix_set_diag_opt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %edx
+	movl	$0, %eax
+.L18:
+	movl	%edx, (%ecx,%eax,4)
+	addl	$17, %eax
+	cmpl	$272, %eax
+	jne	.L18
+	popl	%ebp
+	ret
+	.size	fix_set_diag_opt, .-fix_set_diag_opt
+.globl fix_ele
+	.type	fix_ele, @function
+fix_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	sall	$6, %edx
+	movl	16(%ebp), %eax
+	sall	$2, %eax
+	addl	8(%ebp), %eax
+	movl	(%eax,%edx), %eax
+	popl	%ebp
+	ret
+	.size	fix_ele, .-fix_ele
+.globl var_ele
+	.type	var_ele, @function
+var_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin varele-s 143 */
+# n at \ebpreg+8, A at \ebpreg+12, i at \ebpreg+16, j at \ebpreg+20
+	movl	8(%ebp), %eax		# Get n
+	sall	$2, %eax 		# Compute 4*n
+	movl	%eax, %edx		# Copy 4*n
+	imull	16(%ebp), %edx		# Compute 4*n*i #line:asm:varele:mult
+	movl	20(%ebp), %eax		# Get j
+	sall	$2, %eax  		# Compute 4*j
+	addl	12(%ebp), %eax		# Compute \(\startaddr{A} + 4*j\)
+	movl	(%eax,%edx), %eax	# Read from \(\startaddr{A} + 4*(n*i + j)\)
+/* $end varele-s 143 */
+	popl	%ebp
+	ret
+	.size	var_ele, .-var_ele
+.globl v_var_ele
+	.type	v_var_ele, @function
+v_var_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	var_ele
+	leave
+	ret
+	.size	v_var_ele, .-v_var_ele
+.globl var_prod_ele
+	.type	var_prod_ele, @function
+var_prod_ele:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	movl	$0, %ebx
+	cmpl	$0, 8(%ebp)
+	jle	.L29
+	movl	8(%ebp), %edi
+	sall	$2, %edi
+	movl	%edi, %eax
+	imull	20(%ebp), %eax
+	movl	12(%ebp), %esi
+	addl	%eax, %esi
+	movl	24(%ebp), %eax
+	movl	16(%ebp), %edx
+	leal	(%edx,%eax,4), %ecx
+	movl	$0, %edx
+	movl	$0, %ebx
+/* $begin varprodele-s 194 */
+# n stored at \ebpreg{}+8
+# Registers: Arow in \esireg{}, Bptr in \ecxreg{}, j in \edxreg{}, 
+#     result in \ebxreg{}, \edireg{} holds 4*n
+.L30:				      # \bf{loop:}
+	movl	(%ecx), %eax	        # Get *Bptr
+	imull	(%esi,%edx,4), %eax	# Multiply by Arow[j]
+	addl	%eax, %ebx     		# Add to result
+	addl	$1, %edx		# Increment j
+	addl	%edi, %ecx		# Add 4*n to Bptr
+	cmpl	%edx, 8(%ebp)		# Compare n:j # line:asm:array:spill
+	jg	.L30  			# If >, goto \textbf{loop}
+/* $end varprodele-s 194 */
+.L29:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	var_prod_ele, .-var_prod_ele
+.globl var_prod_ele_opt
+	.type	var_prod_ele_opt, @function
+var_prod_ele_opt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	movl	$0, %ebx
+	cmpl	$0, 8(%ebp)
+	jle	.L35
+	movl	8(%ebp), %eax
+	imull	20(%ebp), %eax
+	movl	12(%ebp), %edx
+	leal	(%edx,%eax,4), %edi
+	movl	24(%ebp), %eax
+	movl	16(%ebp), %edx
+	leal	(%edx,%eax,4), %ecx
+	movl	8(%ebp), %esi
+	sall	$2, %esi
+	movl	$0, %ebx
+	movl	$0, %edx
+.L36:
+	movl	(%ecx), %eax
+	imull	(%edi,%edx,4), %eax
+	addl	%eax, %ebx
+	addl	%esi, %ecx
+	addl	$1, %edx
+	cmpl	%edx, 8(%ebp)
+	jg	.L36
+.L35:
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	var_prod_ele_opt, .-var_prod_ele_opt
+.globl new_var_matrix
+	.type	new_var_matrix, @function
+new_var_matrix:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	8(%ebp), %eax
+	imull	%eax, %eax
+	sall	$2, %eax
+	movl	%eax, (%esp)
+	call	malloc
+	leave
+	ret
+	.size	new_var_matrix, .-new_var_matrix
+.globl new_fix_matrix
+	.type	new_fix_matrix, @function
+new_fix_matrix:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	$1024, (%esp)
+	call	malloc
+	leave
+	ret
+	.size	new_fix_matrix, .-new_fix_matrix
+.globl B
+	.data
+	.align 4
+	.type	B, @object
+	.size	B, 16
+B:
+	.long	row0
+	.long	row1
+	.long	row2
+	.long	row3
+	.comm	A,60,32
+	.comm	row0,12,4
+	.comm	row1,12,4
+	.comm	row2,12,4
+	.comm	row3,12,4
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

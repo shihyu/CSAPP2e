@@ -1,0 +1,13 @@
+/* $begin simple_l-64 30 */
+# x86-64 version of function simple_l.
+# Arguments in registers %rdi (xp) and %rsi (y)
+simple_l:
+/* $end simple_l-64 30 */
+.LFB3:
+/* $begin simple_l-64 32 */
+	addq	(%rdi), %rsi	# Add *xp to y to get t # line:asm2:simple64:compute_start
+	movq	%rsi, %rax	# Set t as return value # line:asm2:simple64:compute_finish
+	movq	%rsi, (%rdi)	# Store t at *xp # line:asm2:simple64:store
+	ret			# Return
+/* $end simple_l-64 32 */
+.LFE3:

@@ -1,0 +1,2 @@
+N = 10000, Allocation: dynamic, expected=49995000, got=49995000, tpe=10.90
+N = 10000, Allocation: static, expected=49995000, got=49995000, tpe=8.36

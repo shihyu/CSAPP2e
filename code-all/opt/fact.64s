@@ -1,0 +1,302 @@
+.Ldebug_abbrev0:
+.Ldebug_info0:
+.Ldebug_line0:
+.Ltext0:
+rfact:
+	pushq	%rbx
+	movl	%edi, %ebx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L3
+	leal	-1(%rbx), %edi
+	call	rfact
+	imull	%ebx, %eax
+.L3:
+	popq	%rbx
+	ret
+
+fact:
+	movl	$2, %edx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L7
+.L10:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L10
+.L7:
+	rep
+	ret
+
+fact_u2a:
+	leal	-1(%rdi), %esi
+	movl	$2, %edx
+	movl	$1, %ecx
+	cmpl	$1, %esi
+	jle	.L14
+.L20:
+	leal	1(%rdx), %eax
+	imull	%edx, %eax
+	imull	%eax, %ecx
+	addl	$2, %edx
+	cmpl	%esi, %edx
+	jle	.L20
+.L14:
+	cmpl	%edx, %edi
+	jl	.L16
+.L19:
+	imull	%edx, %ecx
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L19
+.L16:
+	movl	%ecx, %eax
+	ret
+
+fact_u2b:
+	leal	-1(%rdi), %esi
+	movl	$2, %edx
+	movl	$1, %ecx
+	cmpl	$1, %esi
+	jle	.L25
+.L31:
+	leal	1(%rdx), %eax
+	imull	%edx, %eax
+	imull	%eax, %ecx
+	addl	$2, %edx
+	cmpl	%esi, %edx
+	jle	.L31
+.L25:
+	cmpl	%edx, %edi
+	jl	.L27
+.L30:
+	imull	%edx, %ecx
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L30
+.L27:
+	movl	%ecx, %eax
+	ret
+
+fact_u2c:
+	leal	-1(%rdi), %r8d
+	cmpl	$1, %r8d
+	jg	.L35
+	movl	$2, %edx
+	movl	$1, %ecx
+	movl	$1, %esi
+	jmp	.L36
+.L35:
+	movl	$2, %edx
+	movl	$1, %ecx
+	movl	$1, %esi
+.L37:
+	imull	%edx, %ecx
+	leal	1(%rdx), %eax
+	imull	%eax, %esi
+	addl	$2, %edx
+	cmpl	%r8d, %edx
+	jle	.L37
+.L36:
+	cmpl	%edi, %edx
+	jg	.L38
+.L41:
+	imull	%edx, %ecx
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L41
+.L38:
+	movl	%ecx, %eax
+	imull	%esi, %eax
+	ret
+
+fact_u3a:
+	leal	-2(%rdi), %esi
+	movl	$2, %ecx
+	movl	$1, %edx
+	cmpl	$1, %esi
+	jle	.L46
+.L52:
+	leal	1(%rcx), %eax
+	imull	%ecx, %edx
+	imull	%edx, %eax
+	leal	2(%rcx), %edx
+	imull	%eax, %edx
+	addl	$3, %ecx
+	cmpl	%esi, %ecx
+	jle	.L52
+.L46:
+	cmpl	%ecx, %edi
+	jl	.L48
+.L51:
+	imull	%ecx, %edx
+	addl	$1, %ecx
+	cmpl	%ecx, %edi
+	jge	.L51
+.L48:
+	movl	%edx, %eax
+	ret
+
+fact_u3b:
+	leal	-2(%rdi), %esi
+	movl	$2, %ecx
+	movl	$1, %edx
+	cmpl	$1, %esi
+	jle	.L57
+.L63:
+	leal	1(%rcx), %eax
+	imull	%ecx, %edx
+	imull	%edx, %eax
+	leal	2(%rcx), %edx
+	imull	%eax, %edx
+	addl	$3, %ecx
+	cmpl	%esi, %ecx
+	jle	.L63
+.L57:
+	cmpl	%ecx, %edi
+	jl	.L59
+.L62:
+	imull	%ecx, %edx
+	addl	$1, %ecx
+	cmpl	%ecx, %edi
+	jge	.L62
+.L59:
+	movl	%edx, %eax
+	ret
+
+fact_u3c:
+	leal	-2(%rdi), %r9d
+	cmpl	$1, %r9d
+	jg	.L67
+	movl	$2, %edx
+	movl	$1, %ecx
+	movl	$1, %r8d
+	movl	$1, %esi
+	jmp	.L68
+.L67:
+	movl	$2, %edx
+	movl	$1, %ecx
+	movl	$1, %r8d
+	movl	$1, %esi
+.L69:
+	imull	%edx, %ecx
+	leal	1(%rdx), %eax
+	imull	%eax, %r8d
+	leal	2(%rdx), %eax
+	imull	%eax, %esi
+	addl	$3, %edx
+	cmpl	%r9d, %edx
+	jle	.L69
+.L68:
+	cmpl	%edi, %edx
+	jg	.L70
+.L73:
+	imull	%edx, %ecx
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L73
+.L70:
+	movl	%esi, %eax
+	imull	%r8d, %eax
+	imull	%ecx, %eax
+	ret
+
+rfact_a:
+	pushq	%rbx
+	movl	%edi, %ebx
+	movl	$1, %eax
+	cmpl	$1, %edi
+	jle	.L78
+	leal	-1(%rbx), %edi
+	call	rfact_a
+	negl	%eax
+	imull	%ebx, %eax
+.L78:
+	popq	%rbx
+	ret
+
+test:
+	subq	$8, %rsp
+	movslq	idx(%rip),%rax
+	call	*funs(,%rax,8)
+	addq	$8, %rsp
+	ret
+
+ftest:
+	pushq	%r12
+	pushq	%rbp
+	pushq	%rbx
+	movslq	%edi,%rdi
+	movq	funs(,%rdi,8), %r12
+	movl	$0, %ebp
+.L85:
+	movl	%ebp, %edi
+	call	*%r12
+	movl	%eax, %ebx
+	movl	%ebp, %edi
+	call	rfact
+	cmpl	%eax, %ebx
+	je	.L83
+	movl	%ebp, %edi
+	call	rfact
+	movl	%eax, %ebx
+	movl	%ebp, %edi
+	call	*%r12
+	movl	%ebx, %ecx
+	movl	%eax, %edx
+	movl	%ebp, %esi
+	movl	$.LC0, %edi
+	movl	$0, %eax
+	call	printf
+	jmp	.L86
+.L83:
+	addl	$1, %ebp
+	cmpl	$10, %ebp
+	jne	.L85
+.L86:
+	popq	%rbx
+	popq	%rbp
+	popq	%r12
+	ret
+
+run_test:
+	pushq	%rbx
+	movl	%edi, %ebx
+	movslq	%edi,%rax
+	movq	test_descr(,%rax,8), %rsi
+	movl	$.LC1, %edi
+	movl	$0, %eax
+	call	printf
+	movl	%ebx, idx(%rip)
+	movl	$1024, %esi
+	movl	$test, %edi
+	call	find_cpe
+	movl	$.LC2, %edi
+	movl	$1, %eax
+	call	printf
+	movl	%ebx, %edi
+	call	ftest
+	popq	%rbx
+	ret
+
+main:
+	pushq	%rbx
+	movl	$0, %ebx
+.L91:
+	movl	%ebx, %edi
+	call	run_test
+	addl	$1, %ebx
+	cmpl	$9, %ebx
+	jne	.L91
+	movl	$0, %eax
+	popq	%rbx
+	ret
+
+idx:
+test_descr:
+funs:
+.Lframe0:
+.Lframe1:
+.Letext0:
+.Ldebug_loc0:

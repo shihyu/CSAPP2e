@@ -1,0 +1,25 @@
+
+code.32o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <sum>:
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	8b 45 0c             	mov    0xc(%ebp),%eax
+   6:	03 45 08             	add    0x8(%ebp),%eax
+   9:	01 05 00 00 00 00    	add    %eax,0x0
+   f:	5d                   	pop    %ebp
+  10:	c3                   	ret    
+
+00000011 <p>:
+  11:	55                   	push   %ebp
+  12:	89 e5                	mov    %esp,%ebp
+  14:	83 ec 08             	sub    $0x8,%esp
+  17:	8b 45 08             	mov    0x8(%ebp),%eax
+  1a:	89 44 24 04          	mov    %eax,0x4(%esp)
+  1e:	89 04 24             	mov    %eax,(%esp)
+  21:	e8 fc ff ff ff       	call   22 <p+0x11>
+  26:	c9                   	leave  
+  27:	c3                   	ret    

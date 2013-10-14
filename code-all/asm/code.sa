@@ -1,0 +1,11 @@
+/* $begin sum-s 15 */
+sum:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 12(%ebp),%eax
+	addl 8(%ebp),%eax
+	addl %eax,accum
+	movl %ebp,%esp
+	popl %ebp
+	ret
+/* $end sum-s 15 */

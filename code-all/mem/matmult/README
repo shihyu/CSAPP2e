@@ -1,0 +1,33 @@
+This is the code that generated the various matrix multiplication 
+performance charts in Introduction to Computer Systems.
+
+Files:
+
+# Conventional matrix multiply
+mm.c		- driver for the 6 different version of mat mult
+ijk.c		- matrix multiply versions
+ikj.c
+jki.c
+jik.c
+kij.c
+kji.c
+
+# Blocked matrix multiply
+bmm.c		- driver for blocked matrix multiply
+bijk.c		- blocked matrix multiply versions
+bikj.c
+
+# Timing routines
+clock.{c,h}	- routines for accessing the Pentium cycle timers
+fcyc4.{c,h}	- routines that use the K-best scheme for estimating
+	          the number of cycles required by a function with 4 args.
+		  (See "Measuring Program Performance" Chapter for
+		  a discussion of the K-best scheme.)
+
+To compile:
+	linux> make clean
+	linux> make
+
+To run:
+	linux> mm
+	linux> bmm

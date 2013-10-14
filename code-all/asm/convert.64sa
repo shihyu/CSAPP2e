@@ -1,0 +1,72 @@
+	.file	"convert.c"
+	.text
+.globl gfun
+	.type	gfun, @function
+/* $begin gfun-64 5 */
+gfun:
+/* $end gfun-64 5 */
+.LFB2:
+/* $begin gfun-64 7 */
+# x in \rdireg, y in \rsireg
+	leal	(%rsi,%rdi), %eax	# Compute t2 as 32-bit sum of x and y # line:asm:gfun_add32
+	# cltq is equivalent to movslq %eax,%rax
+	cltq				# Sign extend to 64 bits # line:asm:gfun_t2
+	movslq	%esi,%rsi		# Convert y to long  # line:asm:gfun_cvty
+	movslq	%edi,%rdi		# Convert x to long  # line:asm:gfun_cvtx
+	addq	%rdi, %rsi		# Compute t1 (64-bit addition) # line:asm:gfun_t1
+	orq	%rsi, %rax		# Set t1 | t2 as return value
+	ret				# Return
+/* $end gfun-64 7 */
+.LFE2:
+	.size	gfun, .-gfun
+.globl gfun_u
+	.type	gfun_u, @function
+gfun_u:
+.LFB3:
+	leal	(%rsi,%rdi), %eax
+	mov	%esi, %esi
+	mov	%edi, %edi
+	addq	%rdi, %rsi
+	orq	%rsi, %rax
+	ret
+.LFE3:
+	.size	gfun_u, .-gfun_u
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

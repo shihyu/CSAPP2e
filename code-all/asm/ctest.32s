@@ -1,0 +1,37 @@
+	.file	"ctest.c"
+	.text
+.globl ctest
+	.type	ctest, @function
+ctest:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	%ebx, (%esp)
+	movl	%esi, 4(%esp)
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %edx
+	movl	16(%ebp), %esi
+	cmpl	%edx, %ebx
+	setl	%al
+	testl	%ebx, %ebx
+	setg	%cl
+	cmpl	%ebx, %edx
+	adcb	%cl, %al
+	cmpl	%edx, %esi
+	setg	%dl
+	addl	%edx, %eax
+	cmpw	%bx, %si
+	setge	%dl
+	addl	%edx, %eax
+	movl	%esi, %edx
+	cmpb	%dl, %bl
+	setne	%dl
+	addl	%edx, %eax
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	ctest, .-ctest
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

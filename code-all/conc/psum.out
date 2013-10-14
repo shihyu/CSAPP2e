@@ -1,0 +1,17 @@
+Performance on Core i2 system:
+
+droh@csapp2:~/ics2/code/conc$ /usr/bin/time ./psum 1 31
+1.56 elapsed 
+
+droh@csapp2:~/ics2/code/conc$ /usr/bin/time ./psum 2 31
+0.81 elapsed 
+
+droh@csapp2:~/ics2/code/conc$ /usr/bin/time ./psum 4 31
+0.40 elapsed 
+
+droh@csapp2:~/ics2/code/conc$ /usr/bin/time ./psum 8 31
+0.40 elapsed 
+
+droh@csapp2:~/ics2/code/conc$ /usr/bin/time ./psum 16 31
+0.45 elapsed 
+

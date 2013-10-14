@@ -1,0 +1,46 @@
+isb	ipb	fsb	fpb	dsb	dpb	funct		description
+11.00	11.00	12.00	12.00	12.00	13.00	combine1	Maximum use of data abstraction
+8.04	8.12	10.03	11.03	10.10	12.09	combine2	Take vec_length() out of loop
+6.02	8.01	10.02	11.02	10.02	12.02	combine3	Array reference to vector data
+2.00	3.00	3.00	4.00	3.00	5.00	combine4	Array reference, accumulate in temporary
+2.00	3.00	3.00	4.00	3.00	5.00	combine4p	Pointer reference, accumulate in temporary
+2.00	1.50	3.00	4.00	3.00	5.00	unroll2a	Array code, unrolled by 2
+1.00	1.00	3.00	4.00	3.00	5.00	combine5p	Pointer code, unrolled by 3, for loop
+1.37	3.33	3.00	4.00	3.00	5.00	unroll3aw	Array code, unrolled by 3, while loop
+1.50	3.50	3.00	4.00	3.00	5.00	unroll4a	Array code, unrolled by 4
+1.27	3.25	3.00	4.00	3.00	5.00	unroll8a	Array code, unrolled by 8
+1.12	3.13	3.00	4.00	3.00	3.03	unroll16a	Array code, unrolled by 16
+3.00	1.50	3.00	4.00	3.00	2.86	unroll2	Pointer code, unrolled by 2
+1.00	1.00	3.00	4.00	3.00	2.86	unroll3	Pointer code, unrolled by 3
+1.00	1.00	3.00	4.00	3.00	2.86	unroll4	Pointer code, unrolled by 4
+1.01	1.00	3.00	4.00	3.00	2.86	unroll8	Pointer code, unrolled by 8
+0.99	1.00	3.00	4.00	3.00	2.86	unroll16	Pointer code, unrolled by 16
+1.50	1.50	1.50	2.00	1.50	1.43	combine6	Array code, unrolled by 2, Superscalar x2
+1.33	1.00	1.50	2.00	1.50	1.43	unroll4x2a	Array code, unrolled by 4, Superscalar x2
+1.00	1.75	1.50	2.00	1.50	1.43	unroll8x2a	Array code, unrolled by 8, Superscalar x2
+1.33	1.34	1.33	1.33	1.34	0.95	unroll3x3a	Array code, unrolled by 3, Superscalar x3
+1.00	1.00	1.00	1.00	1.00	0.71	unroll4x4a	Array code, unrolled by 4, Superscalar x4
+1.18	1.02	1.01	1.01	1.00	0.71	unroll8x4a	Array code, unrolled by 8, Superscalar x4
+1.02	1.01	1.01	1.01	1.01	0.58	unroll6x6a	Array code, unrolled by 6, Superscalar x6
+1.03	1.02	1.02	1.02	1.01	0.58	unroll8x8a	Array code, unrolled by 8, Superscalar x8
+1.03	1.04	1.02	1.02	1.00	0.59	unroll10x10a	Array code, unrolled by 10, Superscalar x10
+1.12	1.02	1.11	1.08	1.11	0.64	unroll2x6a	Array code, unrolled by 12, Superscalar x6
+1.13	1.12	1.02	1.01	1.02	0.58	unroll12x12a	Array code, unrolled by 12, Superscalar x12
+1.03	0.99	1.50	2.00	1.50	1.43	unroll8x2	Pointer code, unrolled by 8, Superscalar x2
+1.04	0.99	1.00	1.02	0.99	0.72	unroll8x4	Pointer code, unrolled by 8, Superscalar x4
+1.02	1.00	1.00	1.01	1.00	0.58	unroll8x8	Pointer code, unrolled by 8, Superscalar x8
+1.04	0.99	1.00	1.37	1.00	0.96	unroll9x3	Pointer code, unrolled by 9, Superscalar x3
+1.50	1.50	1.50	2.00	1.50	1.43	unrollx2as	Array code, Unroll x2, Superscalar x2, noninterleaved
+2.00	1.50	1.50	2.00	1.50	1.43	unroll2aa	Array code, unrolled by 2, different associativity
+1.67	3.67	1.00	1.33	1.00	0.95	unroll3aa	Array code, unrolled by 3, Different Associativity
+1.50	3.50	1.00	1.00	1.00	0.72	unroll4aa	Array code, unrolled by 4, Different Associativity
+1.35	3.33	1.01	1.01	1.01	0.58	unroll6aa	Array code, unrolled by 6, Different Associativity
+1.28	3.25	1.01	1.00	1.02	0.57	unroll8aa	Array code, unrolled by 8, Different Associativity
+0.50	2.00	0.75	1.00	1.50	1.43	unrollv1	SSE code, 1*VSIZE-way parallelism
+0.22	1.34	0.37	0.53	0.75	0.72	unrollv2	SSE code, 2*VSIZE-way parallelism
+0.24	1.12	0.25	0.24	0.50	0.36	unrollv4	SSE code, 4*VSIZE-way parallelism
+0.25	1.04	0.25	0.24	0.49	0.28	unrollv8	SSE code, 8*VSIZE-way parallelism
+0.23	0.99	0.23	0.21	0.49	0.28	unrollv12	SSE code, 12*VSIZE-way parallelism
+0.50	1.27	0.39	0.50	0.75	0.71	unrollv2a	SSE code, 2*VSIZE-way parallelism, reassociate
+0.25	1.10	0.24	0.24	0.50	0.36	unrollv4a	SSE code, 4*VSIZE-way parallelism, reassociate
+0.25	1.02	0.25	0.24	0.51	0.28	unrollv8a	SSE code, 8*VSIZE-way parallelism, reassociate

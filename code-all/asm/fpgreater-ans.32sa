@@ -1,0 +1,23 @@
+	.file	"fpgreater-ans.c"
+	.text
+	.p2align 4,,15
+.globl greater
+	.type	greater, @function
+greater:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fldl	8(%ebp)
+	fldl	16(%ebp)
+	fxch	%st(1)
+	leave
+	fucompp
+	fnstsw	%ax
+/* $begin fpgreater-ans-s 15 */
+	testb	$69, %ah    # Test if comparison outcome is <
+	sete	%al
+/* $end fpgreater-ans-s 15 */
+	movzbl	%al, %eax
+	ret
+	.size	greater, .-greater
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

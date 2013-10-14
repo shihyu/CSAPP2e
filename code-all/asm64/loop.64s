@@ -1,0 +1,220 @@
+	.file	"loop.c"
+	.text
+	.p2align 4,,15
+.globl fact_dw
+	.type	fact_dw, @function
+fact_dw:
+.LFB2:
+	movl	$1, %eax
+	.p2align 4,,7
+.L2:
+	imull	%edi, %eax
+	decl	%edi
+	testl	%edi, %edi
+	jg	.L2
+	rep ; ret
+.LFE2:
+	.size	fact_dw, .-fact_dw
+	.p2align 4,,15
+.globl fact_while
+	.type	fact_while, @function
+fact_while:
+.LFB3:
+	movl	$1, %eax
+	jmp	.L12
+	.p2align 4,,7
+.L13:
+	imull	%edi, %eax
+	decl	%edi
+.L12:
+	testl	%edi, %edi
+	jg	.L13
+	rep ; ret
+.LFE3:
+	.size	fact_while, .-fact_while
+	.p2align 4,,15
+.globl fact_for1
+	.type	fact_for1, @function
+fact_for1:
+.LFB4:
+	movl	$1, %eax
+	jmp	.L21
+	.p2align 4,,7
+.L22:
+	imull	%edi, %eax
+	decl	%edi
+.L21:
+	testl	%edi, %edi
+	jg	.L22
+	rep ; ret
+.LFE4:
+	.size	fact_for1, .-fact_for1
+	.p2align 4,,15
+.globl fact_for2
+	.type	fact_for2, @function
+fact_for2:
+.LFB5:
+	movl	$1, %eax
+	movl	$2, %edx
+	jmp	.L30
+	.p2align 4,,7
+.L31:
+	imull	%edx, %eax
+	incl	%edx
+.L30:
+	cmpl	%edi, %edx
+	jle	.L31
+	rep ; ret
+.LFE5:
+	.size	fact_for2, .-fact_for2
+	.p2align 4,,15
+.globl sum_dw
+	.type	sum_dw, @function
+sum_dw:
+.LFB6:
+	xorl	%eax, %eax
+	.p2align 4,,7
+.L33:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L33
+	rep ; ret
+.LFE6:
+	.size	sum_dw, .-sum_dw
+	.p2align 4,,15
+.globl sum_while
+	.type	sum_while, @function
+sum_while:
+.LFB7:
+	xorl	%eax, %eax
+	jmp	.L42
+	.p2align 4,,7
+.L43:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+.L42:
+	testq	%rdi, %rdi
+	jne	.L43
+	rep ; ret
+.LFE7:
+	.size	sum_while, .-sum_while
+	.p2align 4,,15
+.globl sum_for
+	.type	sum_for, @function
+sum_for:
+.LFB8:
+	xorl	%eax, %eax
+	jmp	.L51
+	.p2align 4,,7
+.L52:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+.L51:
+	testq	%rdi, %rdi
+	jne	.L52
+	rep ; ret
+.LFE8:
+	.size	sum_for, .-sum_for
+	.p2align 4,,15
+.globl puzzle
+	.type	puzzle, @function
+puzzle:
+.LFB9:
+	movslq	%esi,%rdx
+	jmp	.L60
+	.p2align 4,,7
+.L61:
+	movslq	%edi,%rax
+	subl	%esi, %edi
+	imulq	%rax, %rdx
+.L60:
+	testl	%edi, %edi
+	jg	.L61
+	movq	%rdx, %rax
+	ret
+.LFE9:
+	.size	puzzle, .-puzzle
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	""
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.quad	.LFB2
+	.quad	.LFE2-.LFB2
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.quad	.LFB3
+	.quad	.LFE3-.LFB3
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.quad	.LFB4
+	.quad	.LFE4-.LFB4
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.quad	.LFB5
+	.quad	.LFE5-.LFB5
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.quad	.LFB6
+	.quad	.LFE6-.LFB6
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.quad	.LFB7
+	.quad	.LFE7-.LFB7
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.quad	.LFB8
+	.quad	.LFE8-.LFB8
+	.align 8
+.LEFDE13:
+.LSFDE15:
+	.long	.LEFDE15-.LASFDE15
+.LASFDE15:
+	.long	.LASFDE15-.Lframe1
+	.quad	.LFB9
+	.quad	.LFE9-.LFB9
+	.align 8
+.LEFDE15:
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

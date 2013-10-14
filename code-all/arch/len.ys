@@ -1,0 +1,55 @@
+# Execution begins at address 0 
+	.pos 0 
+init:	irmovl Stack, %esp  	# Set up stack pointer  
+	irmovl Stack, %ebp  	# Set up base pointer   
+	call Main		# Execute main program
+	halt			# Terminate program 
+
+# Array of 4 elements + terminating 0
+	.align 4 	
+array:	.long 0xd
+	.long 0xc0
+	.long 0xb00
+	.long 0xa000
+	.long 0
+
+Main:	pushl %ebp 
+	rrmovl %esp,%ebp
+	irmovl array,%edx
+	pushl %edx      	# Push array
+	call len2		# len2(array)
+	rrmovl %ebp,%esp
+	popl %ebp
+	ret 
+
+len2:
+	pushl %ebp		# Save %ebp
+	rrmovl %esp, %ebp	# Create new frame pointer
+	pushl %esi   		# Save callee-save register
+	irmovl $4, %esi		# Set %esi to 4
+	pushl %edi		# Save callee-save register
+	irmovl $1, %edi		# Set %edi to 1
+	mrmovl 8(%ebp), %edx	# Get a
+	irmovl $0, %ecx		# len = 0
+	mrmovl (%edx), %eax	# Get *a
+	addl %esi, %edx		# a++
+	andl %eax, %eax		# Test *a
+	je Done	   		# If zero, goto Done
+Loop:
+	addl %edi, %ecx		# len++
+	mrmovl (%edx), %eax	# Get *a
+	addl %esi, %edx		# a++
+	andl %eax, %eax		# Test *a
+	jne Loop   		# If !0, goto Loop
+Done:
+	rrmovl %ecx, %eax	# return value = len
+	popl %edi    		# Restore %edi
+	popl %esi		# Restore %esi
+	rrmovl %ebp, %esp	# Restore stack pointer
+	popl %ebp		# Restore %ebp
+	ret
+
+# Stack starts here and grows to lower addresses
+  	.pos 0x100
+Stack:
+	

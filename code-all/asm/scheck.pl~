@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+
+user Getopt::Std;
+
+$progdir = ".";
+$progname = "scheck";
+$wsize = 32;
+$count = 10;
+
+getopts('hw:n:');
+
+if ($opt_h) {
+  print STDOUT "Usage $0 [-h] [-w wsize] [-n count]\n";
+  print STDOUT "     -h         Print this message\n";
+  print STDOUT "     -n cnt     Run cnt samples\n";
+  print STDOUT "     -w wsize   Use wsize-bit code\n";
+}
+
+if ($opt_n) {
+    $count = $opt_n;
+}
+
+if ($opt_w) {
+    $wsize = $opt_w;
+}
+
+$progname = $progdir . $progname . $wsize;
+
+for ($i = 0; $i < $count; $i = $i+1) {
+    $str = `$progname`;
+    chomp $str;
+    print "Got '$str'\n";
+}

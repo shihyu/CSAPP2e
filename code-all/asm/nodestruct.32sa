@@ -1,0 +1,3 @@
+	.file	"nodestruct.c"
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

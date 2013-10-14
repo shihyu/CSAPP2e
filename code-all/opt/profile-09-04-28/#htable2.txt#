@@ -1,0 +1,8 @@
+Case		Sort	List	Lower	Hash	Rest
+Initial		752.35	187.09	0.46	0.33	3.71
+Quicksort	0.14	185.12	0.40	0.33	3.66
+Iter First	0.14	651.71	0.40	0.41	3.67
+Iter Last	0.15	143.78	0.37	0.31	3.58
+Big Table	0.14	117.03	0.40	0.25	2.99
+Better Hash	0.14	0.93	0.47	0.41	3.65
+Linear Lower	0.15	1.24	0.34	0.40	1.64

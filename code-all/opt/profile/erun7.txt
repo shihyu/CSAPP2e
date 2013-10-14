@@ -1,0 +1,24 @@
+verbose	10
+size	199999
+hash	2
+lower	1
+find	2
+ngram	1
+quicksort	1
+file	../../../corpora/europarl-v3-en.txt
+N-gram size 1
+Lower case function lower2
+Hash function h_xor
+Find element function find_ele_iter_r
+2668028	'the'
+1254241	'of'
+1175674	'to'
+970724	'and'
+823188	'in'
+644476	'that'
+591291	'a'
+588797	'is'
+402422	'we'
+395364	'for'
+34771343 n-grams, 116035 unique, 51120 singletons.  Most common (2668028) = 'the'.  Longest (1 have length 56) = 'group for a europe of democracies and diversities'
+Total time = 5.700000 seconds

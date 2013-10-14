@@ -1,0 +1,65 @@
+	.file	"okmul-asm-proto.c"
+	.text
+.globl tmult_ok_asm
+	.type	tmult_ok_asm, @function
+tmult_ok_asm:
+.LFB2:
+	imull	%edi, %esi
+	movl	%esi, (%rdx)
+	testl	%esi, %esi
+	setg	%al
+	movzbl	%al, %eax
+	ret
+.LFE2:
+	.size	tmult_ok_asm, .-tmult_ok_asm
+.globl umult_ok_asm
+	.type	umult_ok_asm, @function
+umult_ok_asm:
+.LFB3:
+	imull	%edi, %esi
+	movl	%esi, (%rdx)
+	testl	%esi, %esi
+	setne	%al
+	movzbl	%al, %eax
+	ret
+.LFE3:
+	.size	umult_ok_asm, .-umult_ok_asm
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,19 @@
+	.file	"fpfunct2-ans.c"
+	.text
+.globl funct2
+	.type	funct2, @function
+funct2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	fildl	8(%ebp)
+	flds	20(%ebp)
+	faddl	12(%ebp)
+	fdivrp	%st, %st(1)
+	fld1
+	fadds	24(%ebp)
+	fsubrp	%st, %st(1)
+	popl	%ebp
+	ret
+	.size	funct2, .-funct2
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

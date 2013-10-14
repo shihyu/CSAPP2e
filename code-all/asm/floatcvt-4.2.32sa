@@ -1,0 +1,105 @@
+	.file	"floatcvt-4.2.c"
+	.text
+.globl fcvt
+	.type	fcvt, @function
+fcvt:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+/* $begin fcvt-32 11 */
+# IA32+SSE implementation of fcvt
+# Arguments:
+#	i	%edp+8	int
+#	fp	%ebp+12	float *
+#	dp	%ebp+16	double *
+#	lp	%ebp+20	long *
+	movl	12(%ebp), %ebx		# Get fp
+	movl	16(%ebp), %esi		# Get dp
+	movl	20(%ebp), %edx		# Get lp
+	movss	(%ebx), %xmm1		# Get f = *fp
+	movl	(%edx), %ecx		# Get l = *lp
+	cvttsd2si	(%esi), %eax	# Get d = *dp and convert to long # line:asm:fcvt32:cvttsd2si
+	movl	%eax, (%edx)		# Store at dp
+	cvtsi2ss	8(%ebp), %xmm0	# Get i and convert to float
+	movss	%xmm0, (%ebx)	 	# Store at *fp
+	cvtsi2sd	%ecx, %xmm0	# Convert l to double
+	movsd	%xmm0, (%esi) 		# Store at dp
+	cvtss2sd	%xmm1, %xmm1	# Convert f to double
+	movsd	%xmm1, -16(%ebp)	# Store in memory # line:asm:fcvt32:movsd
+	fldl	-16(%ebp)		# Read from memory and push onto x87 stack # line:asm:fcvt32:fldl
+/* $end fcvt-32 11 */
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	fcvt, .-fcvt
+.globl fcvt2
+	.type	fcvt2, @function
+fcvt2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	movl	%ebx, -8(%ebp)
+	movl	%esi, -4(%ebp)
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %ebx
+	movl	16(%ebp), %esi
+	movl	(%edx), %ecx
+	movss	(%ebx), %xmm1
+	cvttsd2si	(%esi), %eax
+	movl	%eax, (%edx)
+	cvtsi2ss	%ecx, %xmm0
+	movss	%xmm0, (%ebx)
+	cvtsi2sd	20(%ebp), %xmm0
+	movsd	%xmm0, (%esi)
+	cvtss2sd	%xmm1, %xmm1
+	movsd	%xmm1, -16(%ebp)
+	fldl	-16(%ebp)
+	movl	-8(%ebp), %ebx
+	movl	-4(%ebp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	fcvt2, .-fcvt2
+.globl mf2md
+	.type	mf2md, @function
+mf2md:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movss	(%eax), %xmm0
+	movl	12(%ebp), %eax
+	cvtss2sd	%xmm0, %xmm0
+	movsd	%xmm0, (%eax)
+	popl	%ebp
+	ret
+	.size	mf2md, .-mf2md
+.globl f2d
+	.type	f2d, @function
+f2d:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	cvtss2sd	8(%ebp), %xmm0
+	movsd	%xmm0, -8(%ebp)
+	fldl	-8(%ebp)
+	leave
+	ret
+	.size	f2d, .-f2d
+.globl d2f
+	.type	d2f, @function
+d2f:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$4, %esp
+	cvtsd2ss	8(%ebp), %xmm0
+	movss	%xmm0, -4(%ebp)
+	flds	-4(%ebp)
+	leave
+	ret
+	.size	d2f, .-d2f
+	.ident	"GCC: (GNU) 4.2.4 (Ubuntu 4.2.4-3ubuntu4)"
+	.section	.note.GNU-stack,"",@progbits

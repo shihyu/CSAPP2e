@@ -1,0 +1,24 @@
+	.file	"frame.c"
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%x %x"
+	.text
+.globl proc
+	.type	proc, @function
+proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$40, %esp
+	leal	-4(%ebp), %eax
+	movl	%eax, 8(%esp)
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	$.LC0, (%esp)
+	call	scanf
+	movl	-4(%ebp), %eax
+	subl	-8(%ebp), %eax
+	leave
+	ret
+	.size	proc, .-proc
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

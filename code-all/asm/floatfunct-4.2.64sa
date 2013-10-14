@@ -1,0 +1,168 @@
+	.file	"floatfunct-4.2.c"
+	.text
+.globl funct
+	.type	funct, @function
+
+/* $begin float_funct-64 5 */
+# x86-64 implementation of funct
+# Arguments:
+#	a	%xmm0	double
+#	x	%xmm1	float
+#	b	%xmm2	double
+#	i	%edi	int
+funct:
+/* $end float_funct-64 5 */
+.LFB2:
+/* $begin float_funct-64 7 */
+	cvtss2sd	%xmm1, %xmm1	# Convert x to double # line:asm:funct:cvtss2sd
+	mulsd	%xmm0, %xmm1		# Multiply x by a
+	cvtsi2sd	%edi, %xmm0	# Convert i to double # line:asm:funct:cvtsi2sd
+	divsd	%xmm0, %xmm2		# Compute b/i
+	movapd	%xmm1, %xmm0		# Copy x*a # line:asm:funct:movapd
+	subsd	%xmm2, %xmm0		# Subtract b/i
+	ret	       			# Return
+/* $end float_funct-64 7 */
+.LFE2:
+	.size	funct, .-funct
+.globl find_range
+	.type	find_range, @function
+/* $begin find_range-64 18 */
+# x86-64 implementation of find_range
+# Argument x in %xmm0 (single precision)
+find_range:
+/* $end find_range-64 18 */
+.LFB3:
+/* $begin find_range-64 20 */
+	movl	$0, %eax		# Set result = 0
+	ucomiss	.LC0(%rip), %xmm0	# Compare x:0
+	jp	.L4			# If NaN, goto \textbf{nonneg} # line:asm:find_range:jp1
+	jb	.L7			# If <, goto \textbf{done} # line:asm:find_range:jb
+.L4:				      # \textbf{nonneg:}
+	movl	$1, %eax		# Set result = 1 # line:asm:find_range:movl
+	ucomiss	.LC0(%rip), %xmm0	# Compare x:0
+	jp	.L8			# if NaN, goto  \textbf{posornan} # line:asm:find_range:jp2
+/* $end find_range-64 20 */
+	.p2align 4,,4
+/* $begin find_range-64 29 */
+	je	.L7			# If ==, goto \textbf{done} # line:asm:find_range:je
+.L8:				      # \textbf{posornan:}
+	ucomiss	.LC0(%rip), %xmm0	# Compare x:0
+	setbe	%al			# Set result = NaN ? 1 : 0 # line:asm:find_range:setbe
+	movzbl	%al, %eax		# Zero extend
+	addl	$2, %eax		# result += 2 (2 for >0, 3 for NaN) # line:asm:find_range:addl
+.L7:				      # \textbf{done:}
+	rep ; ret			# Return result
+/* $end find_range-64 29 */
+.LFE3:
+	.size	find_range, .-find_range
+.globl xfer
+	.type	xfer, @function
+xfer:
+.LFB4:
+	cvtsi2ss	ss1(%rip), %xmm0
+	movss	%xmm0, si+16(%rip)
+	cvtsi2sd	ss2(%rip), %xmm0
+	movsd	%xmm0, si+24(%rip)
+	cvtsi2ssq	ss1+8(%rip), %xmm0
+	movss	%xmm0, sl+16(%rip)
+	cvtsi2sdq	ss2+8(%rip), %xmm0
+	movsd	%xmm0, sl+24(%rip)
+	cvttss2si	ss1+16(%rip), %eax
+	movl	%eax, sf(%rip)
+	movss	ss2+16(%rip), %xmm0
+	cvttss2siq	%xmm0, %rax
+	movq	%rax, sf+8(%rip)
+	cvtss2sd	%xmm0, %xmm0
+	movsd	%xmm0, sf+24(%rip)
+	movsd	ss1+24(%rip), %xmm0
+	cvttsd2si	%xmm0, %eax
+	movl	%eax, sd(%rip)
+	cvttsd2siq	ss2+24(%rip), %rax
+	movq	%rax, sd+8(%rip)
+	cvtsd2ss	%xmm0, %xmm0
+	movss	%xmm0, sd+16(%rip)
+	ret
+.LFE4:
+	.size	xfer, .-xfer
+.globl copy_vals
+	.type	copy_vals, @function
+copy_vals:
+.LFB5:
+	cvttss2si	%xmm0, %eax
+	movl	%eax, (%rdx)
+	cvttsd2siq	%xmm1, %rax
+	movq	%rax, (%rcx)
+	cvtsd2ss	%xmm1, %xmm1
+	movss	%xmm1, (%r8)
+	cvtsi2sdq	%rsi, %xmm0
+	movsd	%xmm0, (%r9)
+	ret
+.LFE5:
+	.size	copy_vals, .-copy_vals
+	.comm	ss1,32,32
+	.comm	ss2,32,32
+	.comm	si,32,32
+	.comm	sl,32,32
+	.comm	sf,32,32
+	.comm	sd,32,32
+	.section	.rodata.cst4,"aM",@progbits,4
+	.align 4
+.LC0:
+	.long	0
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+	.ident	"GCC: (GNU) 4.2.4 (Ubuntu 4.2.4-3ubuntu4)"
+	.section	.note.GNU-stack,"",@progbits

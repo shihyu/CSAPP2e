@@ -1,0 +1,55 @@
+	.file	"ctest.c"
+	.text
+	.p2align 4,,15
+.globl ctest
+	.type	ctest, @function
+ctest:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$16, %esp
+	/* $begin ctest-s 10 */
+	movl	8(%ebp), %edx		# Get a
+	cmpl	12(%ebp), %edx		# Compare a:b (4 bytes)
+	movl	16(%ebp), %ecx		# Get c
+	/* $end ctest-s 10 */
+	movl	%ebx, -12(%ebp)		
+	movl	%edi, -4(%ebp)
+	movl	%esi, -8(%ebp)
+	/* $begin ctest-s 16 */
+	setl	-13(%ebp)		# t1 = a<b
+	cmpl	%edx, 12(%ebp)		# Compare b:a (4 bytes)
+	setb	%bl			# t2 = (unsigned) b < (unsigned) a
+	cmpw	%dx, %cx		# Compare c:a (2 bytes)
+	setge	%al			# t3 = (short) c >= (short) a
+	cmpb	%cl, %dl		# Compare a:c (1 byte)
+	movl	%eax, %edi		# Copy t3
+	setne	%al			# t4 = (char) a != (char) c
+	cmpl	12(%ebp), %ecx		# Compare c:b (4 bytes)
+	movl	%eax, %esi		# Copy t4
+	movzbl	-13(%ebp), %eax		# Copy t1
+	setg	%cl			# t5 = c > b
+	testl	%edx, %edx		# Test a
+	setg	%dl			# t6 = a > 0
+	addl	%ebx, %eax		# Add t2 to t1
+	/* $end ctest-s 16 */
+	movl	-12(%ebp), %ebx		
+	/* $begin ctest-s 32 */
+	addl	%edi, %eax		# Add t3 to t1
+	/* $end ctest-s 32 */
+	movl	-4(%ebp), %edi
+	/* $begin ctest-s 34 */
+	addl	%esi, %eax		# Add t4 to t1
+	/* $end ctest-s 34 */
+	movl	-8(%ebp), %esi
+	/* $begin ctest-s 36 */
+	addl	%ecx, %eax		# Add t5 to t1
+	/* $end ctest-s 36 */
+	leave
+	/* $begin ctest-s 38 */
+	addl	%edx, %eax		# Add t6 to t1
+	movsbl	%al,%eax		# Convert t1 from char to int
+	/* $end ctest-s 38 */
+	ret
+	.size	ctest, .-ctest
+	.section	.note.GNU-stack,"",@progbits
+	.ident	"GCC: (GNU) 3.4.2 20041017 (Red Hat 3.4.2-6.fc3)"

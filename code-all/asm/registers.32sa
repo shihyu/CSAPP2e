@@ -1,0 +1,68 @@
+	.file	"registers.c"
+	.text
+.globl proc
+	.type	proc, @function
+proc:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %eax
+	addl	8(%ebp), %eax
+	addl	16(%ebp), %eax
+	popl	%ebp
+	ret
+	.size	proc, .-proc
+.globl t3
+	.type	t3, @function
+t3:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin register-usage-s 19 */
+	subl	$12, %esp
+	movl	%ebx, (%esp)
+	movl	%esi, 4(%esp)
+	movl	%edi, 8(%esp)
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %edi
+	movl	(%ebx), %esi
+	movl	(%edi), %eax
+	movl	16(%ebp), %edx
+	movl	(%edx), %ecx
+/* $end register-usage-s 19 */
+	leal	(%eax,%esi), %edx
+	movl	%edx, (%ebx)
+	leal	(%ecx,%eax), %eax
+	movl	%eax, (%edi)
+	addl	%esi, %ecx
+	movl	16(%ebp), %eax
+	movl	%ecx, (%eax)
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	8(%esp), %edi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	t3, .-t3
+.globl t2
+	.type	t2, @function
+t2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$8, %esp
+	movl	%ebx, (%esp)
+	movl	%esi, 4(%esp)
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %esi
+	movl	(%ebx), %ecx
+	movl	(%esi), %eax
+	leal	(%eax,%ecx), %edx
+	movl	%edx, (%ebx)
+	subl	%ecx, %eax
+	movl	%eax, (%esi)
+	movl	(%esp), %ebx
+	movl	4(%esp), %esi
+	movl	%ebp, %esp
+	popl	%ebp
+	ret
+	.size	t2, .-t2
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

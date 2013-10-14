@@ -1,0 +1,117 @@
+	.file	"charbuf-unsafe.c"
+	.text
+.globl storeint
+	.type	storeint, @function
+storeint:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	12(%ebp), %edx
+	movl	8(%ebp), %eax
+	movl	%eax, (%edx)
+	popl	%ebp
+	ret
+	.size	storeint, .-storeint
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%d"
+	.text
+.globl itoa
+	.type	itoa, @function
+itoa:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	12(%ebp), %eax
+	movl	%eax, 16(%esp)
+	movl	$.LC0, 12(%esp)
+	movl	$-1, 8(%esp)
+	movl	$1, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	__sprintf_chk
+	leave
+	ret
+	.size	itoa, .-itoa
+.globl iptoa
+	.type	iptoa, @function
+iptoa:
+	pushl	%ebp
+	movl	%esp, %ebp
+	subl	$24, %esp
+	movl	12(%ebp), %eax
+	movl	(%eax), %eax
+	movl	%eax, 16(%esp)
+	movl	$.LC0, 12(%esp)
+	movl	$-1, 8(%esp)
+	movl	$1, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	__sprintf_chk
+	leave
+	ret
+	.size	iptoa, .-iptoa
+.globl len
+	.type	len, @function
+len:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	movl	8(%ebp), %edi
+	movl	$0, %eax
+	movl	$-1, %ecx
+	repnz scasb
+	notl	%ecx
+	leal	-1(%ecx), %eax
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	len, .-len
+.globl intlen2
+	.type	intlen2, @function
+intlen2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	subl	$36, %esp
+	leal	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	storeint
+	movl	-8(%ebp), %eax
+	movl	%eax, 4(%esp)
+	leal	-20(%ebp), %ebx
+	movl	%ebx, (%esp)
+	call	itoa
+	movl	%ebx, (%esp)
+	call	len
+	addl	$36, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	intlen2, .-intlen2
+.globl intlen
+	.type	intlen, @function
+intlen:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin charbuf-unsafe-s 99 */
+	subl	$36, %esp
+	movl	8(%ebp), %eax
+	movl	%eax, -8(%ebp)
+	leal	-8(%ebp), %eax ##line:asm:charbuf_unsafe:v
+	movl	%eax, 4(%esp)
+	leal	-20(%ebp), %ebx ##line:asm:charbuf_unsafe:buf
+	movl	%ebx, (%esp)
+	call	iptoa
+/* $end charbuf-unsafe-s 99 */
+	movl	%ebx, (%esp)
+	call	len
+	addl	$36, %esp
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	intlen, .-intlen
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

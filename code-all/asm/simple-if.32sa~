@@ -1,0 +1,43 @@
+	.file	"simple-if.c"
+	.text
+.globl cond
+	.type	cond, @function
+cond:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin simple-if-s 8 */
+# a \ebpreg+8, p at \ebpreg+12
+	movl	8(%ebp), %edx
+	movl	12(%ebp), %eax
+	testl	%eax, %eax
+	je	.L3
+	testl	%edx, %edx
+	jle	.L3
+	addl	%edx, (%eax)
+.L3:
+/* $end simple-if-s 8 */
+	popl	%ebp
+	ret
+	.size	cond, .-cond
+.globl gen_cond
+	.type	gen_cond, @function
+gen_cond:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+	movl	8(%ebp), %ebx
+	movl	12(%ebp), %ecx
+	testl	%ecx, %ecx
+	setne	%dl
+	testl	%ebx, %ebx
+	setg	%al
+	testb	%al, %dl
+	je	.L6
+	addl	%ebx, (%ecx)
+.L6:
+	popl	%ebx
+	popl	%ebp
+	ret
+	.size	gen_cond, .-gen_cond
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

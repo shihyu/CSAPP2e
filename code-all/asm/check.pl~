@@ -1,0 +1,11 @@
+$n = 32;
+$prog = "./scheck.$n";
+
+$cnt = 10;
+
+for ($i = 0; $i < $cnt; $i = $i+1) {
+    $str = `$prog`;
+    $str =~ m/0x([a-f0-9]*)+/;
+    $val = hex($1);
+    print "Address = 0x$1 = $val\n";
+}

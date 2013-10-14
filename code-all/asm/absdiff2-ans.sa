@@ -1,0 +1,2274 @@
+absdiff2:
+	pushl %ebp
+	movl %esp,%ebp
+	/* $begin absdiff2-ans1-s 11 */
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%ecx
+	movl %edx,%eax
+	subl %ecx,%eax
+	cmpl %ecx,%edx
+	jge .L3
+	movl %ecx,%eax
+	subl %edx,%eax
+.L3:
+	/* $end absdiff2-ans1-s 11 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+
+absdiff2:
+	pushl %ebp
+	movl %esp,%ebp
+	/* $begin absdiff2-ans2-s 11 */
+	movl 8(%ebp),%edx	# x
+	movl 12(%ebp),%ecx	# y
+	movl %edx,%eax		
+	subl %ecx,%eax		# result = x - y
+	cmpl %ecx,%edx		# Compare x:y
+	jge .L3			# if >= goto \textbf{done:}
+	movl %ecx,%eax
+	subl %edx,%eax		# result = y - x
+.L3:			      # \textbf{done:}
+	/* $end absdiff2-ans2-s 11 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+absdiff:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin absdiff-s 11 */
+	movl 8(%ebp),%edx	# Get x
+	movl 12(%ebp),%eax	# Get y
+	cmpl %eax,%edx		# Compare x:y
+	jl .L3			# If <, goto \textbf{less:}
+	subl %eax,%edx		# Compute y-x
+	movl %edx,%eax		# Set as return value
+	jmp .L5			# Goto \textbf{done:}
+/* $end absdiff-s 11 */
+
+	.p2align 4,,7
+
+/* $begin absdiff-s 19 */
+.L3:			      # \textbf{less:}
+	subl %edx,%eax		# Compute x-y as return value
+.L5:			      # \textbf{done:} Begin completion code
+/* $end absdiff-s 19 */		
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+absdiff2:
+	pushl %ebp
+	movl %esp,%ebp
+	/* $begin absdiff2-s 53 */
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%ecx
+	movl %edx,%eax
+	subl %ecx,%eax
+	cmpl %ecx,%edx
+	jge .L11
+	movl %ecx,%eax
+	subl %edx,%eax
+.L11:
+	/* $end absdiff2-s 53 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+arith:
+	pushl %ebp
+	movl %esp,%ebp
+
+	/* $begin arith-s 11 */
+	movl 12(%ebp),%eax	# Get y
+	movl 16(%ebp),%edx	# Get z
+	addl 8(%ebp),%eax	# Compute t1 = x+y
+	leal (%edx,%edx,2),%edx	# Compute z*3
+	sall $4,%edx		# Compute t2 = z*48 
+	andl $65535,%eax	# Compute t3 = t1&0xFFFF
+	imull %eax,%edx 	# Compute t4 = t2*t3 
+	movl %edx,%eax		# Set t4 as return val
+	/* $end arith-s 11 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+	.file	"array.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl get_value
+	.type	 get_value,@function
+get_value:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl 12(%ebp),%edx
+	movl 16(%ebp),%ecx
+/* $begin arrayaccess-s 14 */
+	# A in %eax, i in %edx, j in %ecx
+	sall $2,%ecx			# j * 4
+	leal (%edx,%edx,2),%edx		# i * 3
+	leal (%ecx,%edx,4),%edx		# j * 4 + i * 12
+/* $end arrayaccess-s 14 */
+	movl %ebp,%esp
+	popl %ebp
+/* $begin arrayaccess-s 19 */
+	movl (%eax,%edx),%eax	# Read \(\memref{\startaddr{A}+4(3\cdot i+j)}\)
+/* $end arrayaccess-s 19 */
+	ret
+.Lfe1:
+	.size	 get_value,.Lfe1-get_value
+.globl B
+.data
+	.align 4
+	.type	 B,@object
+	.size	 B,16
+B:
+	.long row0
+	.long row1
+	.long row2
+	.long row3
+.text
+	.align 4
+.globl get_value2
+	.type	 get_value2,@function
+get_value2:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%ecx
+	movl 12(%ebp),%eax
+	movl 16(%ebp),%edx
+	movl (%ecx,%eax,4),%eax
+	movl %ebp,%esp
+	popl %ebp
+	movl (%eax,%edx,4),%eax
+	ret
+.Lfe2:
+	.size	 get_value2,.Lfe2-get_value2
+	.align 4
+.globl fix_prod_ele
+	.type	 fix_prod_ele,@function
+fix_prod_ele:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %esi
+	pushl %ebx
+	movl 20(%ebp),%ecx
+	movl 16(%ebp),%edx
+	xorl %esi,%esi
+	sall $2,%ecx
+	addl 12(%ebp),%ecx
+	sall $6,%edx
+	addl 8(%ebp),%edx
+	movl $15,%ebx
+	.p2align 4,,7
+
+/* $begin fixprodele-s 67 */
+# Aptr is in %edx, Bptr in %ecx, result in %esi, cnt in %ebx
+.L23:			      # \textbf{loop:}
+	movl (%edx),%eax	# Compute t = *Aptr	
+	imull (%ecx),%eax	# Compute v = *Bptr * t
+	addl %eax,%esi		# Add v result
+	addl $64,%ecx		# Add 64 to Bptr
+	addl $4,%edx		# Add 4 to Aptr
+	decl %ebx		# Decrement cnt
+	jns .L23		# if >=, goto \textbf{loop}
+/* $end fixprodele-s 67 */
+
+	movl %esi,%eax
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+var_ele:
+	pushl %ebp
+	movl %esp,%ebp
+
+/* $begin varele-s 158 */
+	movl 8(%ebp),%edx	# Get A
+	movl 12(%ebp),%eax	# Get i
+	imull 20(%ebp),%eax	# Compute n*i
+	addl 16(%ebp),%eax	# Compute n*i + j
+/* $end varele-s 158 */
+
+	movl %ebp,%esp # finish code that we've elided
+	popl %ebp
+
+/* $begin varele-s 164 */
+	movl (%edx,%eax,4),%eax	# Get A[i*n + j]
+/* $end varele-s 164 */
+	ret
+
+	
+var_prod_ele:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $12,%esp
+	pushl %edi
+	pushl %esi
+	pushl %ebx
+	movl 16(%ebp),%edx
+	xorl %esi,%esi
+	cmpl 24(%ebp),%esi
+	jge .L35
+	imull 24(%ebp),%edx
+	movl 8(%ebp),%eax
+	movl 20(%ebp),%ecx
+	leal (%eax,%edx,4),%ebx
+	movl 24(%ebp),%edx
+	.p2align 4,,7
+
+/* $begin varprodele-s 188 */	
+.L37:				      # \textbf{loop:}
+	movl 12(%ebp),%eax		# Get B
+	movl (%ebx),%edi		# Get *Aptr	
+	addl $4,%ebx			# Increment Aptr
+	imull (%eax,%ecx,4),%edi	# Multiply by B[nTjPk]	
+	addl %edi,%esi			# Add to result
+	addl 24(%ebp),%ecx		# Add n to nTjPk
+	decl %edx			# Decrement cnt
+	jnz .L37			# If cnt <> 0, goto \textbf{loop}
+/* $end varprodele-s 188 */	
+
+
+.L35:
+	movl %esi,%eax
+	popl %ebx
+	popl %esi
+	popl %edi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+var_prod_ele_opt:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $12,%esp
+/* $begin array-register-s 214 */
+	pushl %edi
+	pushl %esi
+	pushl %ebx
+	movl 24(%ebp),%eax
+	imull 16(%ebp),%eax
+	movl 24(%ebp),%ebx
+	leal 0(,%eax,4),%ecx
+	addl 8(%ebp),%ecx
+	movl %ebx,%edx
+/* $end array-register-s  214 */
+	xorl %esi,%esi
+	testl %edx,%edx
+	jg .L44
+	xorl %eax,%eax
+	jmp .L45
+	.p2align 4,,7
+.L44:
+	movl 12(%ebp),%eax
+	movl (%ecx),%edi
+	addl $4,%ecx
+	imull (%eax,%ebx,4),%edi
+	addl %edi,%esi
+	addl 24(%ebp),%ebx
+	decl %edx
+	jnz .L44
+	movl %esi,%eax
+.L45:
+	popl %ebx
+	popl %esi
+	popl %edi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+	.align 4
+.globl fix_set_diag
+	.type	 fix_set_diag,@function
+fix_set_diag:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin fixdiag-prob-s 254 */
+	movl 12(%ebp),%edx
+	movl 8(%ebp),%eax
+	movl $15,%ecx
+	addl $1020,%eax
+	.p2align 4,,7	    # Added to optimize cache performance
+.L50:
+	movl %edx,(%eax)
+	addl $-68,%eax
+	decl %ecx
+	jns .L50
+/* $end fixdiag-prob-s 254 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe5:
+	.size	 fix_set_diag,.Lfe5-fix_set_diag
+
+	.align 4
+.globl fix_set_diag
+	.type	 fix_set_diag,@function
+fix_set_diag:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin fixdiag-ans-s 254 */
+	movl 12(%ebp),%edx  # Get val
+	movl 8(%ebp),%eax   # Get A
+	movl $15,%ecx	    # i = 0
+	addl $1020,%eax     # Aptr = &A[0][0] + 1020/4
+	.p2align 4,,7
+.L50:			  # {\tt loop:}
+	movl %edx,(%eax)    # *Aptr = val
+	addl $-68,%eax      # Aptr -= 68/4
+	decl %ecx 	    # i--
+	jns .L50            # if i >= 0 goto \textbf{loop}
+/* $end fixdiag-ans-s 254 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe5:
+	.size	 fix_set_diag,.Lfe5-fix_set_diag
+	.file	"branch.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl silly
+	.type	 silly,@function
+silly:
+	pushl %ebp
+	movl %esp,%ebp
+
+	movl 8(%ebp),%edx
+	testl %edx,%edx
+
+	/* $begin branch-s 13 */
+	jle .L4			# If <, goto \textbf{dest2}
+	.p2align 4,,7		# Aligns next instruction to multiple of 8
+.L5:			      # \textbf{dest1:}
+	movl %edx,%eax
+	sarl $1,%eax
+	subl %eax,%edx
+	testl %edx,%edx
+	jg .L5			# If >, goto \textbf{dest1}
+.L4:			      # \textbf{dest2:}
+	movl %edx,%eax
+	/* $end branch-s 13 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 silly,.Lfe1-silly
+	.align 4
+.globl main
+	.type	 main,@function
+main:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $8,%esp
+	addl $-12,%esp
+	pushl $2
+	call silly
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 main,.Lfe2-main
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+
+
+
+#Buffer Overflow Attack for bufbomb 
+/*	
+
+ From disassembly, can see that buf will be position 12 bytes
+ below %ebp
+	
+ Use GDB to determine value of %ebp saved on stack, as follows:
+ (gdb) break getbuf
+ (gdb) run
+ This causes gdb to stop at instruction 0x80484f2	
+ (gdb) print /x *($ebp+4)
+ Prints 0x8048528 (Return pointer)
+ (gdb) print /x *$ebp
+ Prints 0xbfffefe8 (old value of %ebp)
+ (gdb) print /x $ebp-12
+ Prints 0xbfffefbc (location of buf)
+
+*/
+	
+/* $begin bufattack-s 23 */
+	pushl $ 0x8048528 	# Put correct return pointer back on stack
+	movl $0xdeadbeef,%eax	# Alter return value
+	ret			# Re-execute return
+.align 4			# Round up to 12
+	.long 0xbfffefe8 	# Saved value of %ebp
+	.long 0xbfffefbc 	# Location of buf
+	.long 0x00000000	# Padding
+/* $end bufattack-s 23 */
+	.file	"bufdemo.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl gets
+	.type	 gets,@function
+gets:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $16,%esp
+	pushl %esi
+	pushl %ebx
+	movl 8(%ebp),%esi
+	movl %esi,%ebx
+	jmp .L33
+	.p2align 4,,7
+.L35:
+	movb %al,(%ebx)
+	incl %ebx
+.L33:
+	movl stdin,%eax
+	addl $-12,%esp
+	pushl %eax
+	call _IO_getc
+	addl $16,%esp
+	cmpl $10,%eax
+	je .L34
+	cmpl $-1,%eax
+	jne .L35
+.L34:
+	movb $0,(%ebx)
+	cmpl $-1,%eax
+	je .L39
+	movl %esi,%eax
+	jmp .L40
+	.p2align 4,,7
+.L39:
+	xorl %eax,%eax
+.L40:
+	leal -24(%ebp),%esp
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 gets,.Lfe1-gets
+	.align 4
+.globl echo
+	.type	 echo,@function
+/* $begin bufdemo-s 52 */	
+echo:
+	pushl %ebp		# Save %ebp on stack
+	movl %esp,%ebp
+	subl $20,%esp		# Allocate space on stack
+	pushl %ebx		# Save %ebx
+	addl $-12,%esp		# Allocate more space on stack
+	leal -4(%ebp),%ebx	# Compute buf as %ebp-4
+	pushl %ebx		# Push buf on stack
+	call gets		# Call gets
+/* $end bufdemo-s 52 */	
+	addl $-12,%esp
+	pushl %ebx
+	call puts
+	movl -24(%ebp),%ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 echo,.Lfe2-echo
+	.align 4
+.globl good_echo
+	.type	 good_echo,@function
+good_echo:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $80,%esp
+	pushl %esi
+	pushl %ebx
+	leal -64(%ebp),%esi
+	.p2align 4,,7
+.L45:
+	movl stdin,%eax
+	addl $-4,%esp
+	pushl %eax
+	pushl $64
+	pushl %esi
+	call fgets
+	addl $16,%esp
+	testl %eax,%eax
+	je .L42
+	xorl %ebx,%ebx
+	movb -64(%ebp),%al
+	testb %al,%al
+	je .L48
+	cmpb $10,%al
+	je .L58
+	.p2align 4,,7
+.L50:
+	movl stdout,%eax
+	movsbl (%ebx,%esi),%edx
+	addl $-8,%esp
+	pushl %eax
+	pushl %edx
+	call _IO_putc
+	addl $16,%esp
+	cmpl $-1,%eax
+	je .L42
+	incl %ebx
+	movb (%ebx,%esi),%al
+	testb %al,%al
+	je .L48
+	cmpb $10,%al
+	jne .L50
+.L48:
+	cmpb $10,(%ebx,%esi)
+	jne .L45
+.L58:
+	movl stdout,%eax
+	addl $-8,%esp
+	pushl %eax
+	pushl $10
+	call _IO_putc
+.L42:
+	leal -88(%ebp),%esp
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe3:
+	.size	 good_echo,.Lfe3-good_echo
+.section	.rodata
+.LC0:
+	.string	"Type a string:"
+.text
+	.align 4
+.globl main
+	.type	 main,@function
+main:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $20,%esp
+	pushl %ebx
+	cmpl $1,8(%ebp)
+	setg %al
+	movzbl %al,%ebx
+	addl $-12,%esp
+	pushl $.LC0
+	call printf
+	addl $16,%esp
+	testl %ebx,%ebx
+	je .L60
+	call good_echo
+	jmp .L61
+	.p2align 4,,7
+.L60:
+	call echo
+.L61:
+	movl -24(%ebp),%ebx
+	xorl %eax,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe4:
+	.size	 main,.Lfe4-main
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+	.file	"cc.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl lt
+	.type	 lt,@function
+lt:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%eax
+	movl %edx,x
+	movl %eax,y
+	/* $begin cc-s 15 */
+	# Note:	a is in %edx, b is in %eax
+	cmpl %eax,%edx	# Compare a:b
+	setl %al	# Set low order byte of %eax to 0 or 1
+	movzbl %al,%eax	# Set remaining bytes of %eax to 0
+	/* $end cc-s 15 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 lt,.Lfe1-lt
+	.comm	x,4,4
+	.comm	y,4,4
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+/* $begin sum-s 15 */
+sum:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 12(%ebp),%eax
+	addl 8(%ebp),%eax
+	addl %eax,accum
+	movl %ebp,%esp
+	popl %ebp
+	ret
+/* $end sum-s 15 */
+	.file	"ctest.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl ctest
+	.type	 ctest,@function
+ctest:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $16,%esp
+	pushl %esi
+	pushl %ebx
+/* $begin ctest-s 14 */
+	movl 8(%ebp),%ecx	# Get a
+	movl 12(%ebp),%esi	# Get b
+	cmpl %esi,%ecx		# Compare a:b
+	setl %al		# Compute t1
+	cmpl %ecx,%esi		# Compare b:a
+	setb -1(%ebp)		# Compute t2
+	cmpw %cx,16(%ebp)	# Compare c:a
+	setge -2(%ebp)		# Compute t3
+	movb %cl,%dl
+	cmpb 16(%ebp),%dl	# Compare a:c
+	setne %bl		# Compute t4
+	cmpl %esi,16(%ebp)	# Compare c:b
+	setg -3(%ebp)		# Compute t5
+	testl %ecx,%ecx		# Test a
+	setg %dl		# Compute t4
+	addb -1(%ebp),%al	# Add t2 to t1
+	addb -2(%ebp),%al	# Add t3 to t1
+	addb %bl,%al		# Add t4 to t1
+	addb -3(%ebp),%al	# Add t5 to t1
+	addb %dl,%al		# Add t6 to t1
+	movsbl %al,%eax		# Convert sum from char to int
+/* $end ctest-s 14 */
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 ctest,.Lfe1-ctest
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+	.file	"decimal5.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl decimal5
+	.type	 decimal5,@function
+
+
+decimal5:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+	movl 8(%ebp),%ebx		
+	xorl %eax,%eax			
+	xorl %ecx,%ecx			
+	.p2align 4,,7
+.L6:					
+	leal (%eax,%eax,4),%edx		
+	movl (%ebx,%ecx,4),%eax		
+	leal (%eax,%edx,2),%eax
+	incl %ecx			
+	cmpl $4,%ecx
+	jle .L6				
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 decimal5,.Lfe1-decimal5
+	.align 4
+.globl decimal5_opt
+	.type	 decimal5_opt,@function
+
+
+decimal5_opt:
+	# Setup code
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+
+	/* $begin decimal5opt-s 36 */
+	# Body code 
+	movl 8(%ebp),%ecx		# Get base addr of array x
+	xorl %eax,%eax			# val = 0;
+	leal 16(%ecx),%ebx		# xend = x+4 (16 bytes = 4 double words)
+	/* $end decimal5opt-s 36 */
+
+	.p2align 4,,7
+
+	/* $begin decimal5opt-s 40 */
+.L12:				      # \textbf{loop:}
+	leal (%eax,%eax,4),%edx		# Compute 5*val
+	movl (%ecx),%eax		# Compute *x
+	leal (%eax,%edx,2),%eax		# Compute *x + 2*(5*val)
+	addl $4,%ecx			# x++
+	cmpl %ebx,%ecx			# Compare x:xend
+	jbe .L12			# if <=, goto \textbf{loop:}
+	/* $end decimal5opt-s 40 */
+
+	# Finishing code
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+
+.Lfe2:
+	.size	 decimal5_opt,.Lfe2-decimal5_opt
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+decode1:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %edi
+	pushl %esi
+	pushl %ebx
+
+	/* $begin decode1-ans-s 14 */
+	movl 8(%ebp),%edi
+	movl 12(%ebp),%ebx
+	movl 16(%ebp),%esi
+	movl (%edi),%eax
+	movl (%ebx),%edx
+	movl (%esi),%ecx
+	movl %eax,(%ebx)
+	movl %edx,(%esi)
+	movl %ecx,(%edi)
+	/* $end decode1-ans-s 14 */
+
+	/* $begin decode1-ann-s 14 */
+	movl 8(%ebp),%edi   # xp
+	movl 12(%ebp),%ebx  # yp
+	movl 16(%ebp),%esi  # zp
+	movl (%edi),%eax    # x
+	movl (%ebx),%edx    # y
+	movl (%esi),%ecx    # z
+	movl %eax,(%ebx)    # *yp = x
+	movl %edx,(%esi)    # *zp = y
+	movl %ecx,(%edi)    # *xp = z
+	/* $end decode1-ann-s 14 */
+
+	popl %ebx
+	popl %esi
+	popl %edi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+decode2:
+	pushl %ebp
+	movl %esp,%ebp
+
+	/* $begin decode2-ans-s 11 */
+	movl 16(%ebp),%eax
+	movl 12(%ebp),%edx
+	subl %eax,%edx
+	movl %edx,%eax
+	imull 8(%ebp),%edx
+	sall $31,%eax
+	sarl $31,%eax
+	xorl %edx,%eax
+	/* $end decode2-ans-s 11 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+	.file	"dw.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl dw_loop
+	.type	 dw_loop,@function
+dw_loop:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %esi
+	pushl %ebx
+/* $begin dw-s 13 */
+# Initially x, y, and n are at offsets 8, 12, and 16 from %ebp	
+	movl 8(%ebp),%esi
+	movl 12(%ebp),%ebx
+	movl 16(%ebp),%ecx
+	.p2align 4,,7	# Inserted to optimize cache performance
+.L6:
+	imull %ecx,%ebx
+	addl %ecx,%esi
+	decl %ecx
+	testl %ecx,%ecx
+	setg %al
+	cmpl %ecx,%ebx
+	setl %dl
+	andl %edx,%eax
+	testb $1,%al
+	jne .L6
+/* $end dw-s 13 */	
+	movl %esi,%eax
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 dw_loop,.Lfe1-dw_loop
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+/* $begin dw-ann-s 13 */
+# Initially x, y, and n are at offsets 8, 12, and 16 from %ebp	
+	movl 8(%ebp),%esi    # Put x in %esi
+	movl 12(%ebp),%ebx   # Put y in %ebx
+	movl 16(%ebp),%ecx   # Put n in %ecx
+	.p2align 4,,7
+.L6:			   # \textbf{loop:}
+	imull %ecx,%ebx      # y *= n
+	addl %ecx,%esi       # x += n
+	decl %ecx            # n--
+	testl %ecx,%ecx      # Test n
+	setg %al             # n > 0
+	cmpl %ecx,%ebx       # Compare y:n
+	setl %dl             # y < n
+	andl %edx,%eax       # (n > 0) & (y < n) 
+	testb $1,%al         # Test least significant bit
+	jne .L6               # If != 0, goto \textbf{loop}
+/* $end dw-ann-s 13 */	
+exchange:
+	pushl %ebp		
+	movl %esp,%ebp
+
+	/* $begin exchange-s 11 */
+	movl 8(%ebp),%eax  # Get xp
+	movl 12(%ebp),%edx # Get y
+	/* $end exchange-s 11 */
+
+	movl %ebp,%esp		
+
+	/* $begin exchange-s 14 */
+	movl (%eax),%ecx   # Get x at *xp
+	movl %edx,(%eax)   # Store y at *xp
+	movl %ecx,%eax	   # Set x as return value
+	/* $end exchange-s 14 */
+	popl %ebp
+	ret
+
+	/* $begin fibdw-s 18 */
+.L6:			      # \textbf{loop:}
+	leal (%edx,%ebx),%eax	# Compute t = val + nval 
+	movl %edx,%ebx		# copy nval to val
+	movl %eax,%edx		# Copy t to nval 
+	incl %ecx		# Increment i	
+	cmpl %esi,%ecx		# Compare i:n
+	jl .L6			# If less, goto \textbf{loop}
+	movl %ebx,%eax          # Set val as return value
+	/* $end fibdw-s 18 */ 
+
+	/* $begin fibw-s 40 */
+
+	movl 8(%ebp),%eax	# Get n
+	movl $1,%ebx		# Set val to 1
+	movl $1,%ecx		# Set nval to 1
+	cmpl %eax,%ebx		# Compare val:n
+	jge .L9			# If >= goto \textbf{done:}
+	leal -1(%eax),%edx	# nmi = n-1	
+	/* $end fibw-s 40 */	
+
+	.p2align 4,,7
+
+	/* $begin fibw-s 47 */
+.L10:			      # \textbf{loop:}
+	leal (%ecx,%ebx),%eax	# Compute t = nval+val
+	movl %ecx,%ebx		# Set val to nval
+	movl %eax,%ecx		# Set nval to t
+	decl %edx		# Decrement nmi
+	jnz .L10		# if != 0, goto \textbf{loop:}
+.L9:			      # \textbf{done:}
+	/* $end fibw-s 47 */
+
+
+	/* $begin fibrec-s 119 */	
+fib_rec:
+	# Setup code
+	pushl %ebp		# Save old \ebpreg                   
+	movl %esp,%ebp		# Set \ebpreg{} as frame pointer  
+	subl $16,%esp		# Allocate 16 bytes on stack  
+	pushl %esi		# Save \esireg{} (offset -20)  
+	pushl %ebx		# Save \ebxreg{} (offset -24)  
+
+	# Body code
+	movl 8(%ebp),%ebx	# Get n   
+	cmpl $2,%ebx		# Compare n:2  
+	jle .L24		# if <=, goto \textbf{terminate}  
+	addl $-12,%esp		# Allocate 12 bytes on stack  
+	leal -2(%ebx),%eax	# Compute n-2 
+	pushl %eax		# Push as argument  
+	call fib_rec		# Call fib_rec(n-2)  
+	movl %eax,%esi		# Store result in \esireg{}  
+	addl $-12,%esp		# Allocate 12 bytes to stack  
+	leal -1(%ebx),%eax	# Compute n-1 
+	pushl %eax		# Push as argument  
+	call fib_rec		# Call fib_rec(n-1)  
+	addl %esi,%eax		# Compute val+nval  
+	jmp .L25		# Go to \textbf{done}  
+	/* $end fibrec-s 119 */	
+	.p2align 4,,7
+	/* $begin fibrec-s 140 */	
+
+	# Terminal condition
+.L24:			      # \textbf{terminate:}  
+	movl $1,%eax		# Return value 1  
+
+	# Finishing code
+.L25:			      # \textbf{done:}  	
+	leal -24(%ebp),%esp	# Set stack to offset -24  
+	popl %ebx		# Restore \ebxreg{}  
+	popl %esi		# Restore \esireg{}  
+	movl %ebp,%esp		# Restore stack pointer 
+	popl %ebp		# Restore \ebpreg{}  
+	ret			# Return
+	/* $end fibrec-s 140 */	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	.file	"fixarray.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl sum_element
+	.type	 sum_element,@function
+sum_element:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+/* $begin fixarray-prob-s 12 */
+	movl 8(%ebp),%ecx
+	movl 12(%ebp),%eax
+	leal 0(,%eax,4),%ebx
+	leal 0(,%ecx,8),%edx
+	subl %ecx,%edx
+	addl %ebx,%eax
+	sall $2,%eax
+	movl mat2(%eax,%ecx,4),%eax
+	addl mat1(%ebx,%edx,4),%eax
+/* $end fixarray-prob-s 12 */
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 sum_element,.Lfe1-sum_element
+	.comm	mat1,140,32
+	.comm	mat2,140,32
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+	
+/* $begin fixarray-ans-s 12 */
+	movl 8(%ebp),%ecx		# Get i
+	movl 12(%ebp),%eax		# Get j
+	leal 0(,%eax,4),%ebx		# 4*j
+	leal 0(,%ecx,8),%edx		# 8*i
+	subl %ecx,%edx			# 7*i
+	addl %ebx,%eax			# 5*j
+	sall $2,%eax			# 20*j
+	movl mat2(%eax,%ecx,4),%eax	# mat2[(20*j + 4*i)/4]
+	addl mat1(%ebx,%edx,4),%eax	# + mat1[(4*j + 28*i)/4]
+/* $end fixarray-ans-s 12 */
+	.file	"for.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl loop
+	.type	 loop,@function
+loop:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+/* $begin for-s 12 */	
+# Initially x, y, and n are offsets 8, 12, and 16 from %ebp
+	movl 8(%ebp),%ebx
+	movl 16(%ebp),%edx
+	xorl %eax,%eax
+	decl %edx
+	js .L4
+	movl %ebx,%ecx
+	imull 12(%ebp),%ecx
+	.p2align 4,,7  # Inserted to optimize cache performance
+.L6:
+	addl %ecx,%eax
+	subl %ebx,%edx
+	jns .L6
+.L4:
+/* $end for-s 12 */	
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 loop,.Lfe1-loop
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+/* $begin for-ann-s 12 */	
+# Initially x, y, and n are offsets 8, 12, and 16 from %ebp
+	movl 8(%ebp),%ebx	# x
+	movl 16(%ebp),%edx	# n
+	xorl %eax,%eax		# result = 0
+	decl %edx		# i = n-1
+	js .L4			# if i < 0 goto \textbf{done}
+	movl %ebx,%ecx		# x
+	imull 12(%ebp),%ecx	# Put x*y in %ecx
+	.p2align 4,,7  
+# x*y in %ecx, result in %eax, x in %ebx, i in %edx
+.L6:			      # \textbf{loop:}
+	addl %ecx,%eax		# result += x*y
+	subl %ebx,%edx		# i -= x
+	jns .L6			# if i < 0 goto \textbf{loop}
+.L4:			      # \textbf{done:}
+/* $end for-ann-s 12 */	
+	.file	"fpfunct2-ans.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl funct2
+	.type	 funct2,@function
+funct2:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $24,%esp
+/* $begin fpfunct2-prob-s 12 */	
+	movl 8(%ebp),%eax
+	fldl 12(%ebp)
+	flds 20(%ebp)
+	movl %eax,-4(%ebp)
+	fildl -4(%ebp)
+	fxch %st(2)
+	faddp %st,%st(1)
+	fdivrp %st,%st(1)
+	fld1
+	flds 24(%ebp)
+	faddp %st,%st(1)
+/* $end fpfunct2-prob-s 12 */	
+	movl %ebp,%esp
+	popl %ebp
+	fsubrp %st,%st(1)
+	ret
+.Lfe1:
+	.size	 funct2,.Lfe1-funct2
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+	.file	"fpgreater-ans.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl greater
+	.type	 greater,@function
+greater:
+	pushl %ebp
+	movl %esp,%ebp
+	fldl 16(%ebp)
+	fcompl 8(%ebp)
+	fnstsw %ax
+	andb $69,%ah
+	/* $begin fpgreater-ans-s 15 */
+	cmpb $1,%ah	# Test if comparison outcome is <
+	/* $end fpgreater-ans-s 15 */
+	sete %al
+	movzbl %al,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 greater,.Lfe1-greater
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+less:
+	pushl %ebp
+	movl %esp,%ebp
+	/* $begin fpless-s 73 */
+	fldl 16(%ebp)   # Push y
+	fcompl 8(%ebp)	# Compare y:x
+	/* $begin fpselectbits-s 75 */
+	fnstsw %ax	# Store floating point status word in %ax
+	andb $69,%ah	# Mask all but bits 0, 2, and 6
+	/* $end fpselectbits-s 75 */
+	sete %al	# Test for comparison outcome of 0 (>)
+	movzbl %al,%eax	# Copy low order byte to result, and set rest to 0
+	/* $end fpless-s 73 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+
+	/* $begin pushl-sa 0 */
+	subl $4,%esp 
+	movl %ebp,(%esp) 
+	/* $end pushl-sa 0 */
+
+	/* $begin popl-sa 0 */
+	movl (%esp),%eax 
+	addl $4,%esp 
+	/* $end popl-sa 0 */
+
+	/* $begin movl-sa 0 */
+	movl $0x4050,%eax  	# Immediate--Register
+	movl %ebp,%esp  	# Register--Register
+	movl (%edi,%ecx),%eax  	# Memory--Register 
+	movl $-17,(%esp)  	# Immediate--Memory
+	movl %eax,-12(%ebp)  	# Register--Memory
+	/* $end movl-sa 0 */
+
+	/* $begin byte-move-sa 0 */
+	# Assume initially that %dh = 8D, %eax = 98765432
+	movb %dh,%al		# %eax = 9876548D
+	movsbl %dh,%eax		# %eax = FFFFFF8D
+	movzbl %dh,%eax		# %eax = 0000008D
+	/* $end byte-move-sa 0 */
+
+	/* $begin jump-sa 0 */
+	xorl %eax,%eax   	# Set %eax to 0 
+	jmp .L1          	# Goto .L1 
+	movl (%eax),%edx 	# Null pointer dereference 
+.L1: 
+	popl %edx 
+	/* $end jump-sa 0 */
+
+ 
+	/* $begin leave-sa 0 */
+	movl %ebp, %esp	# Set stack pointer to beginning of frame 
+	popl %ebp	# Restore saved \ebpreg and set stack ptr to end of caller's frame
+	/* $end leave-sa 0 */
+
+	/* $begin loadpc-sa 0 */
+        call next 
+next: 	
+	popl %eax 
+	/* $end loadpc-sa 0 */
+	.file	"frame.c"
+	.version	"01.01"
+gcc2_compiled.:
+.section	.rodata
+.LC0:
+	.string	"%x %x"
+.text
+	.align 4
+.globl proc
+	.type	 proc,@function
+/* $begin frame-prob-s 	11 */	
+proc:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $24,%esp
+	addl $-4,%esp
+	leal -4(%ebp),%eax
+	pushl %eax
+	leal -8(%ebp),%eax
+	pushl %eax
+	pushl $.LC0	# Pointer to string "%x %x"
+	call scanf
+# Diagram stack frame at this point	
+	movl -8(%ebp),%eax
+	movl -4(%ebp),%edx
+	subl %eax,%edx
+	movl %edx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+/* $end frame-prob-s 11 */	
+.Lfe1:
+	.size	 proc,.Lfe1-proc
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+	.file	"sa.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl shrink
+	.type	 shrink,@function
+shrink:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 shrink,.Lfe1-shrink
+	.align 4
+.globl prod
+	.type	 prod,@function
+prod:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $8,%esp
+	/* $begin imull-s 24 */
+	# x at \ebpreg+8, y at \ebpreg+12
+	movl 8(%ebp),%eax	# Put x in \eaxreg
+	imull 12(%ebp)		# Multiply by y
+	/* $end imull-s 24 */
+	addl $-8,%esp		
+	/* $begin imull-s 27 */
+	pushl %edx		# Push high-order 32 bits
+	pushl %eax		# Push low-order 32 bits
+	/* $end imull-s 27 */
+	call shrink
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 prod,.Lfe2-prod
+	.align 4
+.globl combine
+	.type	 combine,@function
+combine:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 12(%ebp),%eax
+	addl 8(%ebp),%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe3:
+	.size	 combine,.Lfe3-combine
+	.align 4
+.globl div
+	.type	 div,@function
+div:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $8,%esp
+	/* $begin divl-s 55 */
+	# x at \ebpreg+8, y at \ebpreg+12
+	movl 8(%ebp),%eax	# Put x in \eaxreg
+	cltd			# Sign extend into \edxreg
+	idivl 12(%ebp)		# Divide by y
+	/* $end divl-s 55 */
+	addl $-8,%esp		
+	/* $begin divl-s 59 */
+	pushl %eax		# Push x / y
+	pushl %edx		# Push x % y
+	/* $end divl-s 59 */
+	call combine
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe4:
+	.size	 div,.Lfe4-div
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+	.file	"okmul.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl ok_smul1
+	.type	 ok_smul1,@function
+ok_smul1:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 16(%ebp),%edx
+	movl 8(%ebp),%eax
+	imull 12(%ebp),%eax
+	movl %eax,(%edx)
+#APP
+	setae %al
+#NO_APP
+	xorl %eax,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 ok_smul1,.Lfe1-ok_smul1
+.globl dummy
+.data
+	.align 4
+	.type	 dummy,@object
+	.size	 dummy,4
+dummy:
+	.long 0
+.text
+	.align 4
+.globl ok_smul2
+	.type	 ok_smul2,@function
+ok_smul2:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 16(%ebp),%edx
+	movl 8(%ebp),%eax
+	imull 12(%ebp),%eax
+	movl %eax,(%edx)
+	movl dummy,%eax
+#APP
+	setae %al
+#NO_APP
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 ok_smul2,.Lfe2-ok_smul2
+	.align 4
+.globl ok_smul3
+	.type	 ok_smul3,@function
+ok_smul3:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+	movl 16(%ebp),%edx
+	movl 8(%ebp),%eax
+	imull 12(%ebp),%eax
+	movl %eax,(%edx)
+#APP
+	setae %bl; movzbl %bl,%eax
+#NO_APP
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe3:
+	.size	 ok_smul3,.Lfe3-ok_smul3
+	.align 4
+.globl ok_umul
+	.type	 ok_umul,@function
+ok_umul:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %esi
+	pushl %ebx
+/* $begin okumul-s 79 */	
+# Set up asm inputs
+	movl 8(%ebp),%ecx	# Load x into %ecx
+	movl 12(%ebp),%ebx	# Load y into %ebx
+	movl 16(%ebp),%esi	# Load dest into %esi
+/* $end okumul-s 79 */	
+#APP
+/* $begin okumul-s 83 */
+# The following instruction was generated by asm.
+	# Input registers: %ecx for x, %ebx for y
+	# Output registers: %ecx for product, %ebx for result
+	movl %ecx,%eax; mull %ebx; movl %eax,%ecx; 
+           setae %dl; movzbl %dl,%ebx
+/* $end okumul-s 83 */	
+#NO_APP
+/* $begin okumul-s 86 */	
+# Process asm outputs
+	movl %ecx,(%esi)	# Store product at dest
+	movl %ebx,%eax		# Set result as return value
+/* $end okumul-s 86 */	
+	popl %ebx
+	popl %esi
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe4:
+	.size	 ok_umul,.Lfe4-ok_umul
+.section	.rodata
+.LC0:
+	.string	"Enter sx:"
+.LC1:
+	.string	"%d"
+.LC2:
+	.string	"Enter sy:"
+	.align 32
+.LC3:
+	.string	"ok_smul1: %d*%d=%d does not overflow\n"
+.LC4:
+	.string	"ok_smul1: %d*%d=%d overflows\n"
+	.align 32
+.LC5:
+	.string	"ok_smul2: %d*%d=%d does not overflow\n"
+.LC6:
+	.string	"ok_smul2: %d*%d=%d overflows\n"
+	.align 32
+.LC7:
+	.string	"ok_smul3: %d*%d=%d does not overflow\n"
+.LC8:
+	.string	"ok_smul3: %d*%d=%d overflows\n"
+.LC9:
+	.string	"Enter ux:"
+.LC10:
+	.string	"%u"
+.LC11:
+	.string	"Enter uy:"
+	.align 32
+.LC12:
+	.string	"ok_umul: %u*%u=%u does not overflow\n"
+.LC13:
+	.string	"ok_umul: %u*%u=%u overflows\n"
+.text
+	.align 4
+.globl main
+	.type	 main,@function
+main:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $36,%esp
+	pushl %ebx
+	addl $-12,%esp
+	pushl $.LC0
+	call printf
+	addl $-8,%esp
+	leal -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC1
+	call scanf
+	addl $32,%esp
+	addl $-12,%esp
+	pushl $.LC2
+	call printf
+	addl $-8,%esp
+	leal -8(%ebp),%eax
+	pushl %eax
+	pushl $.LC1
+	call scanf
+	addl $32,%esp
+	addl $-4,%esp
+	leal -12(%ebp),%ebx
+	pushl %ebx
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	call ok_smul1
+	addl $16,%esp
+	testl %eax,%eax
+	je .L37
+	movl -12(%ebp),%eax
+	pushl %eax
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC3
+	jmp .L45
+	.p2align 4,,7
+.L37:
+	movl -12(%ebp),%eax
+	pushl %eax
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC4
+.L45:
+	call printf
+	addl $16,%esp
+	addl $-4,%esp
+	pushl %ebx
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	call ok_smul2
+	addl $16,%esp
+	testl %eax,%eax
+	je .L39
+	movl -12(%ebp),%eax
+	pushl %eax
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC5
+	jmp .L46
+	.p2align 4,,7
+.L39:
+	movl -12(%ebp),%eax
+	pushl %eax
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC6
+.L46:
+	call printf
+	addl $16,%esp
+	addl $-4,%esp
+	pushl %ebx
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	call ok_smul3
+	addl $16,%esp
+	testl %eax,%eax
+	je .L41
+	movl -12(%ebp),%eax
+	pushl %eax
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC7
+	jmp .L47
+	.p2align 4,,7
+.L41:
+	movl -12(%ebp),%eax
+	pushl %eax
+	movl -8(%ebp),%eax
+	pushl %eax
+	movl -4(%ebp),%eax
+	pushl %eax
+	pushl $.LC8
+.L47:
+	call printf
+	addl $16,%esp
+	addl $-12,%esp
+	pushl $.LC9
+	call printf
+	addl $-8,%esp
+	leal -16(%ebp),%eax
+	pushl %eax
+	pushl $.LC10
+	call scanf
+	addl $32,%esp
+	addl $-12,%esp
+	pushl $.LC11
+	call printf
+	addl $-8,%esp
+	leal -20(%ebp),%eax
+	pushl %eax
+	pushl $.LC10
+	call scanf
+	addl $32,%esp
+	addl $-4,%esp
+	leal -24(%ebp),%eax
+	pushl %eax
+	movl -20(%ebp),%eax
+	pushl %eax
+	movl -16(%ebp),%eax
+	pushl %eax
+	call ok_umul
+	addl $16,%esp
+	testl %eax,%eax
+	je .L43
+	movl -24(%ebp),%eax
+	pushl %eax
+	movl -20(%ebp),%eax
+	pushl %eax
+	movl -16(%ebp),%eax
+	pushl %eax
+	pushl $.LC12
+	jmp .L48
+	.p2align 4,,7
+.L43:
+	movl -24(%ebp),%eax
+	pushl %eax
+	movl -20(%ebp),%eax
+	pushl %eax
+	movl -16(%ebp),%eax
+	pushl %eax
+	pushl $.LC13
+.L48:
+	call printf
+	addl $16,%esp
+	addl $-12,%esp
+	pushl $0
+	call exit
+.Lfe5:
+	.size	 main,.Lfe5-main
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+/* $begin pointer-out 1 */
+ip     = 0xbfffefa8, *ip    = 0xbfffefe4, **ip   = 2  # ip[0] = xp. *xp = x = 2
+ip+1   = 0xbfffefac, ip[1]  =  0x804965c, *ip[1] = 15 # ip[1] = &g. g = 15
+&s.v   = 0xbfffefb4, s.v    = 'a'                     # s in stack frame
+&up->v =  0x8049760, up->v  = 'b'                     # up points to area in heap
+f      =  0x8048414                                   # f points to code for fun
+ip     = 0xbfffef68, *ip    = 0xbfffefe4, **ip   = 1  # ip in new frame, x = 1
+ip+1   = 0xbfffef6c, ip[1]  =  0x804965c, *ip[1] = 15 # ip[1] same as before
+&s.v   = 0xbfffef74, s.v    = 'a'                     # s in new frame
+&up->v =  0x8049770, up->v  = 'b'                     # up points to new area in heap
+f      =  0x8048414                                   # f points to code for fun
+/* $end pointer-out 1 */
+
+	.file	"shift.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl shift_left2_rightn
+	.type	 shift_left2_rightn,@function
+shift_left2_rightn:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin shift-ans 11 */	
+	movl 12(%ebp),%ecx  # Get x
+	movl 8(%ebp),%eax   # Get n
+	sall $2,%eax        # x <<= 2
+	sarl %cl,%eax       # x >>= n
+/* $end shift-ans 11 */	
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 shift_left2_rightn,.Lfe1-shift_left2_rightn
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+	.file	"simple-if.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl simple_if
+	.type	 simple_if,@function
+simple_if:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin simple-if-s 11 */
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%eax
+	testl %eax,%eax
+	je .L3
+	testl %edx,%edx
+	jle .L3
+	addl %edx,(%eax)
+.L3:
+/* $end simple-if-s 11 */
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 simple_if,.Lfe1-simple_if
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+/* $begin simple-raw 1 */	
+	.file	"simple.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl simple
+	.type	 simple,@function
+simple:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl (%eax),%edx
+	addl 12(%ebp),%edx
+	movl %edx,(%eax)
+	movl %edx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 simple,.Lfe1-simple
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+/* $end simple-raw 1 */
+
+# Annotated version
+
+/* $begin simple-ann 8 */
+simple:
+	pushl %ebp         # Save frame pointer
+	movl %esp,%ebp	   # Create new frame pointer
+	movl 8(%ebp),%eax  # Get xp
+	movl (%eax),%edx   # Retrieve *xp
+	addl 12(%ebp),%edx # Add y to get t
+	movl %edx,(%eax)   # Store t at *xp
+	movl %edx,%eax     # Set t as return value
+	movl %ebp,%esp     # Reset stack pointer
+	popl %ebp          # Reset frame pointer
+	ret                # Return
+/* $end simple-ann 8 */
+	.file	"struct2.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl sp_init
+	.type	 sp_init,@function
+sp_init:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin struct2-s 11 */	
+	movl 8(%ebp),%eax
+/* $end struct2-s 11 */		
+	movl %ebp,%esp
+/* $begin struct2-s 13 */		
+	movl 8(%eax),%edx
+	movl %edx,4(%eax)
+	leal 4(%eax),%edx
+	movl %edx,(%eax)
+	movl %eax,12(%eax)
+/* $end struct2-s 13 */	
+	popl %ebp
+	ret
+
+	.align 4
+.globl sp_init
+	.type	 sp_init,@function
+sp_init:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin struct2-ans-s 11 */	
+	movl 8(%ebp),%eax	# Get sp
+/* $end struct2-ans-s 11 */		
+	movl %ebp,%esp	
+/* $begin struct2-ans-s 13 */		
+	movl 8(%eax),%edx	# Get sp->s.y
+	movl %edx,4(%eax)	# Copy to sp->s.x
+	leal 4(%eax),%edx	# Get &(sp->s.x)
+	movl %edx,(%eax)	# Copy to sp->p
+	movl %eax,12(%eax)	# sp->next = p
+/* $end struct2-ans-s 13 */	
+	popl %ebp
+	ret
+	
+	
+	.Lfe1:
+	.size	 sp_init,.Lfe1-sp_init
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+
+
+	.file	"structure.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl copy
+	.type	 copy,@function
+copy:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+	movl %ebp,%esp
+	/* $begin structcopy-s 13 */
+	movl (%edx),%eax		# Get r->i
+	movl %eax,4(%edx)		# Store in r->j
+	/* $end structcopy-s 13 */
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 copy,.Lfe1-copy
+	.align 4
+.globl set_i
+	.type	 set_i,@function
+set_i:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%eax
+	movl %eax,(%edx)
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 set_i,.Lfe2-set_i
+	.align 4
+.globl set_a_ele
+	.type	 set_a_ele,@function
+set_a_ele:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 16(%ebp),%ecx
+	movl 12(%ebp),%edx
+	movl 8(%ebp),%eax
+	sall $2,%edx
+	addl $8,%eax
+	movl %ecx,(%edx,%eax)
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe3:
+	.size	 set_a_ele,.Lfe3-set_a_ele
+	.align 4
+.globl set_p
+	.type	 set_p,@function
+set_p:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+	movl 12(%ebp),%eax
+	movl %eax,20(%edx)
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe4:
+	.size	 set_p,.Lfe4-set_p
+	.align 4
+.globl find_a
+	.type	 find_a,@function
+find_a:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%eax
+	movl 12(%ebp),%edx
+	movl %eax,p
+	movl %edx,j
+	/* $begin structptr-s 74 */
+	# r in %eax, i in %edx
+	leal 8(%eax,%edx,4),%ecx # %ecx = &r->a[i]
+	/* $end structptr-s 74 */
+	movl %eax,q
+	movl %edx,k
+	movl %ecx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe5:
+	.size	 find_a,.Lfe5-find_a
+	.align 4
+.globl link_p
+	.type	 link_p,@function
+link_p:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+	movl %ebp,%esp
+	/* $begin structlink-s 91 */
+	movl 4(%edx),%eax		# Get r->j
+	addl (%edx),%eax		# Add r->i
+	leal 8(%edx,%eax,4),%eax	# Compute &r->[r->i + r->j]	
+	movl %eax,20(%edx)		# Store in r->p
+	/* $end structlink-s 91 */
+	popl %ebp
+	ret
+.Lfe6:
+	.size	 link_p,.Lfe6-link_p
+	.comm	p,4,4
+	.comm	q,4,4
+	.comm	j,4,4
+	.comm	k,4,4
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+	/* $begin swapadd-setup-s 8 */
+	# Setup code in swap_add
+swap_add:
+	pushl %ebp		# Save old \ebpreg
+	movl %esp,%ebp		# Set \ebpreg as frame pointer
+	pushl %ebx		# Save \ebxreg
+	/* $end swapadd-setup-s 8 */
+
+	/* $begin swapadd-body-s 12 */
+	# Body code in swap_add
+	movl 8(%ebp),%edx	# Get xp
+	movl 12(%ebp),%ecx	# Get yp
+	movl (%edx),%ebx	# Get x
+	movl (%ecx),%eax	# Get y
+	movl %eax,(%edx)	# Store y at *xp
+	movl %ebx,(%ecx)	# Store x at *yp
+	addl %ebx,%eax		# Set return value = x+y
+	/* $end swapadd-body-s 12 */
+
+	/* $begin swapadd-finish-s 19 */
+	# Finishing code in swap_add
+	popl %ebx		# Restore \ebxreg
+	movl %ebp,%esp		# Restore \espreg
+	popl %ebp		# Restore \ebpreg
+	ret			# Return to caller
+	/* $end swapadd-finish-s 19 */
+
+caller:
+	pushl %ebp
+	movl %esp,%ebp
+	subl $24,%esp
+	movl $534,-8(%ebp)
+	movl $1057,-4(%ebp)
+	addl $-8,%esp
+
+	/* $begin swapadd-call-s 35 */
+	# Calling code in caller
+	leal -4(%ebp),%eax	# Compute &arg2
+	pushl %eax		# Push &arg2
+	leal -8(%ebp),%eax	# Compute &arg1
+	pushl %eax		# Push &arg1
+	call swap_add		# Call the swap_add function
+	/* $end swapadd-call-s 35 */
+
+	/* $begin swapadd-resume-s 40 */
+	movl %eax,%edx		# Resume here
+	/* $end swapadd-resume-s 40 */
+
+	movl -4(%ebp),%eax
+	movl -8(%ebp),%ecx
+	subl %eax,%ecx
+	movl %ecx,%eax
+	imull %edx,%eax
+	movl %ebp,%esp
+	popl %ebp
+	ret
+	.file	"switchprob2.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl switch2
+	.type	 switch2,@function
+switch2:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin switch-prob2-s 11 */	
+# Setting up jump table access	
+	movl 8(%ebp),%eax  # Retrieve x
+	addl $2,%eax
+	cmpl $6,%eax
+	ja .L10		
+	jmp *.L11(,%eax,4)
+/* $end switch-prob2-s 11 */	
+	.p2align 4,,7
+.section	.rodata
+	.align 4
+	.align 4
+/* $begin switch-prob2-jt-s 20 */		
+# Jump table for switch2
+.L11:
+	.long .L4
+	.long .L10
+	.long .L5
+	.long .L6
+	.long .L8
+	.long .L8
+	.long .L9
+/* $end switch-prob2-jt-s 20 */	
+.text
+	.p2align 4,,7
+.L4:
+	movl $-2,%eax
+	jmp .L12
+	.p2align 4,,7
+.L5:
+	xorl %eax,%eax
+	jmp .L12
+	.p2align 4,,7
+.L6:
+	movl $1,%eax
+	jmp .L12
+	.p2align 4,,7
+.L8:
+	movl $3,%eax
+	jmp .L12
+	.p2align 4,,7
+.L9:
+	movl $4,%eax
+	jmp .L12
+	.p2align 4,,7
+.L10:
+	movl $7,%eax
+.L12:
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 switch2,.Lfe1-switch2
+	.align 4
+.globl switch3
+	.type	 switch3,@function
+switch3:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+	movl 8(%ebp),%ecx
+	movl 12(%ebp),%ebx
+	movl 16(%ebp),%eax
+	cmpl $4,%eax
+	ja .L20
+	jmp *.L21(,%eax,4)
+	.p2align 4,,7
+.section	.rodata
+	.align 4
+	.align 4
+.L21:
+	.long .L15
+	.long .L16
+	.long .L17
+	.long .L18
+	.long .L19
+.text
+	.p2align 4,,7
+/* $begin switch-prob3-s 83 */	
+# The jump targets 	
+# Arguments p1 and p2 are in registers %ebx and %ecx.
+.L15:			# MODE_A
+	movl (%ecx),%edx
+	movl (%ebx),%eax
+	movl %eax,(%ecx)
+	jmp .L14
+	.p2align 4,,7	# Inserted to optimize cache performance
+.L16:			# MODE_B
+	movl (%ecx),%eax
+	addl (%ebx),%eax
+	movl %eax,(%ebx)
+	movl %eax,%edx
+	jmp .L14
+	.p2align 4,,7	# Inserted to optimize cache performance
+.L17:			# MODE_C
+	movl $15,(%ebx)
+	movl (%ecx),%edx
+	jmp .L14
+	.p2align 4,,7	# Inserted to optimize cache performance
+.L18:			# MODE_D
+	movl (%ecx),%eax
+	movl %eax,(%ebx)
+.L19:			# MODE_E
+	movl $17,%edx
+	jmp .L14
+	.p2align 4,,7	# Inserted to optimize cache performance
+.L20:
+	movl $-1,%edx
+.L14:			# default
+	movl %edx,%eax  # Set return value
+/* $end switch-prob3-s 83 */	
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe2:
+	.size	 switch3,.Lfe2-switch3
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+	.file	"switch.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl switch_eg
+	.type	 switch_eg,@function
+switch_eg:
+	pushl %ebp
+	movl %esp,%ebp
+	movl 8(%ebp),%edx
+
+	/* $begin switch1-s 12 */
+	# Set up the jump table access
+	leal -100(%edx),%eax		# Compute xi = x-100
+	cmpl $6,%eax			# Compare xi:6
+	ja .L9				# if >, goto \textbf{done}
+	jmp *.L10(,%eax,4)		# Goto jt[xi]
+	/* $end switch1-s 12 */
+
+	.p2align 4,,7
+
+	/* $begin switch2-s 17 */
+.section .rodata
+	.align 4	# Align address to multiple of 4
+	/* $end switch2-s 17 */
+	.align 4
+
+	/* $begin switch2-s 20 */
+.L10:
+	.long .L4 	# Case 100: loc_A
+	.long .L9	# Case 101: loc_def
+	.long .L5	# Case 102: loc_B	
+	.long .L6	# Case 103: loc_C
+	.long .L8	# Case 104: loc_D
+	.long .L9	# Case 105: loc_def
+	.long .L8	# Case 106: loc_D
+	/* $end switch2-s 20 */
+
+.text
+	.p2align 4,,7
+
+	/* $begin switch1-s 30 */
+
+	# Case 100
+.L4:				      # \textbf{loc\_A:}	
+	leal (%edx,%edx,2),%eax		# Compute 3*x
+	leal (%edx,%eax,4),%edx		# Compute x+4*3*x
+	jmp .L3				# Goto \textbf{done}
+	/* $end switch1-s 30 */
+
+	.p2align 4,,7
+
+	/* $begin switch1-s 35 */
+
+	# Case 102
+.L5:				      # \textbf{loc\_B:}
+	addl $10,%edx			# result += 10, Fall through
+	/* $end switch1-s 35 */	
+
+	/* $begin switch1-s 37 */
+
+	# Case 103
+.L6:				      # \textbf{loc\_C:}
+	addl $11,%edx			# result += 11
+	jmp .L3				# Goto \textbf{done}
+	/* $end switch1-s 37 */
+
+	.p2align 4,,7
+
+	/* $begin switch1-s 41 */
+
+	# Cases 104, 106
+.L8:				      # \textbf{loc\_D:}
+	imull %edx,%edx			# result *= result
+	jmp .L3				# Goto \textbf{done}
+	/* $end switch1-s 41 */
+
+	.p2align 4,,7
+
+	/* $begin switch1-s 45 */
+
+	# Default case
+.L9:				      # \textbf{loc\_def:}
+	xorl %edx,%edx			# result = 0
+	/* $end switch1-s 45 */
+
+	/* $begin switch1-s 47 */
+
+	# Return result
+.L3:				      # \textbf{done:}
+	movl %edx,%eax			# Set result as return value
+	/* $end switch1-s 47 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 switch_eg,.Lfe1-switch_eg
+	.ident	"GCC: (GNU) 2.95.2 19991024 (release)"
+	.file	"union2.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl proc
+	.type	 proc,@function
+proc:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin union2-prob-s  11 */	
+	movl 8(%ebp),%eax
+	movl 4(%eax),%edx
+	movl (%edx),%ecx
+	movl %ebp,%esp
+	movl (%eax),%eax
+	movl (%ecx),%ecx
+	subl %eax,%ecx
+	movl %ecx,4(%edx)
+/* $end union2-prob-s 11 */	
+	popl %ebp
+	ret
+
+.globl proc
+	.type	 proc,@function
+proc:
+	pushl %ebp
+	movl %esp,%ebp
+/* $begin union2-ans-s  11 */	
+	movl 8(%ebp),%eax	# Get up
+	movl 4(%eax),%edx	# up->e1.y (no) or up->e2.next
+	movl (%edx),%ecx	# up->e2.next->e1.p or up->e2.next->e2.x (no)
+/* $end union2-ans-s 11 */	
+	movl %ebp,%esp
+/* $begin union2-ans-s  15 */		
+	movl (%eax),%eax	# up->e1.p (no) or up->e2.x
+	movl (%ecx),%ecx	# *(up->e2.next->e1.p)
+	subl %eax,%ecx		# *(up->e2.next->e1.p) - up->e2.x
+	movl %ecx,4(%edx)	# Store in up->e2.next->e1.y
+/* $end union2-ans-s 15 */	
+	popl %ebp
+	ret
+	
+	
+.Lfe1:
+	.size	 proc,.Lfe1-proc
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+copy:
+	pushl %ebp
+	movl %esp,%ebp
+
+	/* $begin float2bit-s 23 */
+	movl 8(%ebp),%eax
+	/* $end float2bit-s 23 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+	.file	"while.c"
+	.version	"01.01"
+gcc2_compiled.:
+.text
+	.align 4
+.globl loop_while
+	.type	 loop_while,@function
+loop_while:
+	pushl %ebp
+	movl %esp,%ebp
+	pushl %ebx
+/* $begin while-s 12 */
+# Initially a and b are at offsets 8 and 12 from %ebp
+	movl 8(%ebp),%eax
+	movl 12(%ebp),%ebx
+	xorl %ecx,%ecx
+	movl %eax,%edx
+	.p2align 4,,7
+.L5:
+	addl %eax,%edx
+	subl %ebx,%eax
+	addl %ebx,%ecx
+	cmpl $255,%ecx
+	jle .L5
+/* $end while-s 12 */	# Inserted to optimize cache performance
+	movl %edx,%eax
+	popl %ebx
+	movl %ebp,%esp
+	popl %ebp
+	ret
+.Lfe1:
+	.size	 loop_while,.Lfe1-loop_while
+	.ident	"GCC: (GNU) 2.95.3 20010315 (release)"
+
+
+/* $begin while-ann-s 12 */	
+	movl 8(%ebp),%eax	# Put a in %eax
+	movl 12(%ebp),%ebx	# Put b in %ebx
+	xorl %ecx,%ecx		# i = 0
+	movl %eax,%edx		# result = a
+	.p2align 4,,7
+# a in %eax, b in %ebx, i in %ecx, result in %edx	
+.L5:			      # \textbf{loop:}
+	addl %eax,%edx		# result += a
+	subl %ebx,%eax		# a -= b
+	addl %ebx,%ecx		# i += b
+	cmpl $255,%ecx		# Compare i:255
+	jle .L5			# If <= goto \textbf{loop}
+	movl %edx,%eax		# Set result as return value
+/* $end while-ann-s 12 */arith:
+	pushl %ebp
+	movl %esp,%ebp
+
+	/* $begin arith-s 11 */
+	movl 12(%ebp),%eax	# Get y
+	movl 16(%ebp),%edx	# Get z
+	addl 8(%ebp),%eax	# Compute t1 = x+y
+	leal (%edx,%edx,2),%edx	# Compute z*3
+	sall $4,%edx		# Compute t2 = z*48 
+	andl $65535,%eax	# Compute t3 = t1&0xFFFF
+	imull %eax,%edx 	# Compute t4 = t2*t3 
+	movl %edx,%eax		# Set t4 as return val
+	/* $end arith-s 11 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+

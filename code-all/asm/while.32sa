@@ -1,0 +1,142 @@
+	.file	"while.c"
+	.text
+.globl loop_while
+	.type	loop_while, @function
+loop_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+/* $begin while-old-s 11 */
+# a at \ebpreg+8, b at \ebpreg+12
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %eax
+	movl	%eax, %esi
+	movl	%ecx, %ebx
+	movl	%eax, %edx
+	movl	%eax, %edi
+	negl	%edi
+.L2:
+	addl	%ecx, %ebx
+	addl	%edi, %ecx
+	addl	%esi, %edx
+	movl	%edx, %eax
+	subl	%esi, %eax
+	cmpl	$255, %eax
+	jle	.L2
+	movl	%ebx, %eax
+/* $end while-old-s 11 */
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	loop_while, .-loop_while
+.globl loop_while_goto
+	.type	loop_while_goto, @function
+loop_while_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%edi
+	pushl	%esi
+	pushl	%ebx
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %eax
+	movl	%eax, %esi
+	movl	%ecx, %ebx
+	movl	%eax, %edx
+	movl	%eax, %edi
+	negl	%edi
+.L6:
+	addl	%ecx, %ebx
+	addl	%edi, %ecx
+	addl	%esi, %edx
+	movl	%edx, %eax
+	subl	%esi, %eax
+	cmpl	$255, %eax
+	jle	.L6
+	movl	%ebx, %eax
+	popl	%ebx
+	popl	%esi
+	popl	%edi
+	popl	%ebp
+	ret
+	.size	loop_while_goto, .-loop_while_goto
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
+
+/* $begin while-old-ann-s 11 */
+# Note: Really weird and not very clever translation! 
+# Arguments: a at \ebpreg+8, b at \ebpreg+12
+# Registers: a in \ecxreg, b in \esireg, -b in \edireg
+	# ipb (= i+b) in \edxreg, result in \ebxreg
+	movl	8(%ebp), %ecx	# Get a
+	movl	12(%ebp), %eax	# Get b
+	movl	%eax, %esi	# Copy b
+	movl	%ecx, %ebx	# Set result = a
+	movl	%eax, %edx	# Set ipb = b
+	movl	%eax, %edi	# Copy b
+	negl	%edi		# Compute -b
+.L2:			      # \textbf{loop}
+	addl	%ecx, %ebx	# Compute result += a
+	addl	%edi, %ecx	# Compute a += -b
+	addl	%esi, %edx	# ipb += b
+	movl	%edx, %eax	# Copy ipb
+	subl	%esi, %eax	# Compute i = ipb-b
+	cmpl	$255, %eax	# Compare i:255
+	jle	.L2		# if <=, goto \textbf{loop}
+	movl	%ebx, %eax	# Return result
+/* $end while-old-ann-s 11 */
+
+loop_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin while-s 69 */
+# a at \ebpreg+8, b at \ebpreg+12
+	movl	8(%ebp), %ecx
+	movl	12(%ebp), %ebx
+	movl	$1, %eax
+	cmpl	%ebx, %ecx
+	jge	.L11
+	leal	(%ebx,%ecx), %edx
+	movl	$1, %eax
+.L12:
+	imull	%edx, %eax
+	addl	$1, %ecx
+	addl	$1, %edx
+	cmpl	%ecx, %ebx
+	jg	.L12
+.L11:
+/* $end while-s 69 */
+	popl	%ebx
+	popl	%ebp
+	ret
+
+loop_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	pushl	%ebx
+/* $begin while-ann-s 69 */
+# Arguments: a at \ebpreg+8, b at \ebpreg+12
+# Registers: a in %ecx, b in %ebx, result in %eax, %edx set to apb (a+b)
+	movl	8(%ebp), %ecx		# Get a
+	movl	12(%ebp), %ebx		# Get b
+	movl	$1, %eax  		# Set result = 1
+	cmpl	%ebx, %ecx		# Compare a:b
+	jge	.L11  			# If >=, goto \textbf{done}
+	leal	(%ebx,%ecx), %edx	# Compute apb = a+b # line:asm:while:leal
+	movl	$1, %eax     		# Set result = 1
+.L12:		    		      # \textbf{loop:}
+	imull	%edx, %eax	      	# Compute result *= apb
+	addl	$1, %ecx		# Compute a++
+	addl	$1, %edx		# Compute apb++	# line:asm:while:incr
+	cmpl	%ecx, %ebx		# Compare b:a
+	jg	.L12  			# If >, goto \textbf{loop}
+.L11:				      # \textbf{done:}
+				      	# Return result
+/* $end while-ann-s 69 */
+	popl	%ebx
+	popl	%ebp
+	ret

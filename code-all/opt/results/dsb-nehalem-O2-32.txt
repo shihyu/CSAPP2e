@@ -1,0 +1,92 @@
+Double Sum combine1: Maximum use of data abstraction:
+Best: 11.60 (2%), Overall Best: 11.60 40-most: 16.42 cycles/element
+Double Sum combine2: Take vec_length() out of loop:
+Best: 8.04 (2%), Overall Best: 8.04 40-most: 14.07 cycles/element
+Double Sum combine3: Array reference to vector data:
+Best: 1.73 (2%), Overall Best: 1.73 40-most: 3.03 cycles/element
+Double Sum combine3v: Array reference to vector data. Volatile dest:
+Best: 5.73 (2%), Overall Best: 5.73 40-most: 10.02 cycles/element
+Double Sum combine4: Array reference, accumulate in temporary:
+Best: 1.72 (2%), Overall Best: 1.72 40-most: 3.00 cycles/element
+Double Sum combine4p: Pointer reference, accumulate in temporary:
+Best: 1.71 (2%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll2a: Array code, unrolled by 2:
+Best: 1.71 (2%), Overall Best: 1.72 40-most: 3.00 cycles/element
+Double Sum combine5p: Pointer code, unrolled by 3, for loop:
+Best: 1.71 (4%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll3aw: Array code, unrolled by 3, while loop:
+Best: 1.71 (4%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll4a: Array code, unrolled by 4:
+Best: 1.71 (2%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll8a: Array code, unrolled by 8:
+Best: 1.71 (2%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll16a: Array code, unrolled by 16:
+Best: 1.71 (4%), Overall Best: 1.72 40-most: 3.00 cycles/element
+Double Sum unroll2: Pointer code, unrolled by 2:
+Best: 1.71 (2%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll3: Pointer code, unrolled by 3:
+Best: 1.71 (4%), Overall Best: 1.72 40-most: 3.00 cycles/element
+Double Sum unroll4: Pointer code, unrolled by 4:
+Best: 1.71 (6%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll8: Pointer code, unrolled by 8:
+Best: 1.71 (4%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum unroll16: Pointer code, unrolled by 16:
+Best: 1.71 (6%), Overall Best: 1.71 40-most: 3.00 cycles/element
+Double Sum combine6: Array code, unrolled by 2, Superscalar x2:
+Best: 1.43 (6%), Overall Best: 1.43 40-most: 2.50 cycles/element
+Double Sum unroll4x2a: Array code, unrolled by 4, Superscalar x2:
+Best: 1.29 (6%), Overall Best: 1.29 40-most: 2.26 cycles/element
+Double Sum unroll8x2a: Array code, unrolled by 8, Superscalar x2:
+Best: 1.27 (2%), Overall Best: 1.28 40-most: 2.34 cycles/element
+Double Sum unroll3x3a: Array code, unrolled by 3, Superscalar x3:
+Best: 1.52 (4%), Overall Best: 1.53 40-most: 2.84 cycles/element
+Double Sum unroll4x4a: Array code, unrolled by 4, Superscalar x4:
+Best: 1.57 (4%), Overall Best: 1.57 40-most: 2.95 cycles/element
+Double Sum unroll8x4a: Array code, unrolled by 8, Superscalar x4:
+Best: 1.37 (4%), Overall Best: 1.37 40-most: 2.58 cycles/element
+Double Sum unroll6x6a: Array code, unrolled by 6, Superscalar x6:
+Best: 1.63 (6%), Overall Best: 1.63 40-most: 3.05 cycles/element
+Double Sum unroll8x8a: Array code, unrolled by 8, Superscalar x8:
+Best: 1.59 (6%), Overall Best: 1.59 40-most: 2.97 cycles/element
+Double Sum unroll10x10a: Array code, unrolled by 10, Superscalar x10:
+Best: 1.01 (4%), Overall Best: 1.01 40-most: 1.90 cycles/element
+Double Sum unroll2x6a: Array code, unrolled by 12, Superscalar x6:
+Best: 0.62 (6%), Overall Best: 0.62 40-most: 1.17 cycles/element
+Double Sum unroll12x12a: Array code, unrolled by 12, Superscalar x12:
+Best: 0.91 (2%), Overall Best: 0.95 40-most: 1.72 cycles/element
+Double Sum unroll8x2: Pointer code, unrolled by 8, Superscalar x2:
+Best: 0.86 (6%), Overall Best: 0.86 40-most: 1.60 cycles/element
+Double Sum unroll8x4: Pointer code, unrolled by 8, Superscalar x4:
+Best: 0.90 (2%), Overall Best: 0.91 40-most: 1.69 cycles/element
+Double Sum unroll8x8: Pointer code, unrolled by 8, Superscalar x8:
+Best: 1.11 (2%), Overall Best: 1.13 40-most: 2.11 cycles/element
+Double Sum unroll9x3: Pointer code, unrolled by 9, Superscalar x3:
+Best: 0.81 (2%), Overall Best: 0.82 40-most: 1.53 cycles/element
+Double Sum unrollx2as: Array code, Unroll x2, Superscalar x2, noninterleaved:
+Best: 1.43 (6%), Overall Best: 1.43 40-most: 2.71 cycles/element
+Double Sum unroll2aa: Array code, unrolled by 2, different associativity:
+Best: 0.86 (6%), Overall Best: 0.86 40-most: 1.63 cycles/element
+Double Sum unroll3aa: Array code, unrolled by 3, Different Associativity:
+Best: 0.76 (6%), Overall Best: 0.76 40-most: 1.44 cycles/element
+Double Sum unroll4aa: Array code, unrolled by 4, Different Associativity:
+Best: 0.57 (4%), Overall Best: 0.58 40-most: 1.09 cycles/element
+Double Sum unroll6aa: Array code, unrolled by 6, Different Associativity:
+Best: 0.57 (4%), Overall Best: 0.57 40-most: 1.08 cycles/element
+Double Sum unroll8aa: Array code, unrolled by 8, Different Associativity:
+Best: 0.58 (6%), Overall Best: 0.58 40-most: 1.09 cycles/element
+Double Sum unrollv1: SSE code, 1*VSIZE-way parallelism:
+Best: 0.86 (6%), Overall Best: 0.86 40-most: 1.63 cycles/element
+Double Sum unrollv2: SSE code, 2*VSIZE-way parallelism:
+Best: 0.43 (6%), Overall Best: 0.43 40-most: 0.85 cycles/element
+Double Sum unrollv4: SSE code, 4*VSIZE-way parallelism:
+Best: 0.29 (6%), Overall Best: 0.29 40-most: 0.57 cycles/element
+Double Sum unrollv8: SSE code, 8*VSIZE-way parallelism:
+Best: 0.28 (2%), Overall Best: 0.28 40-most: 0.57 cycles/element
+Double Sum unrollv12: SSE code, 12*VSIZE-way parallelism:
+Best: 0.41 (4%), Overall Best: 0.41 40-most: 0.83 cycles/element
+Double Sum unrollv2a: SSE code, 2*VSIZE-way parallelism, reassociate:
+Best: 0.43 (6%), Overall Best: 0.43 40-most: 0.86 cycles/element
+Double Sum unrollv4a: SSE code, 4*VSIZE-way parallelism, reassociate:
+Best: 0.28 (2%), Overall Best: 0.29 40-most: 0.56 cycles/element
+Double Sum unrollv8a: SSE code, 8*VSIZE-way parallelism, reassociate:
+Best: 0.28 (6%), Overall Best: 0.28 40-most: 0.57 cycles/element

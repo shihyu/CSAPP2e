@@ -1,0 +1,361 @@
+isb-combine1: 11.01
+isb-combine2: 8.04
+isb-combine3: 3.00
+isb-combine4: 2.00
+isb-combine4p: 2.00
+isb-unroll2a: 1.51
+isb-combine5p: 1.00
+isb-unroll3aw: 1.00
+isb-unroll4a: 1.00
+isb-unroll8a: 1.04
+isb-unroll16a: 1.00
+isb-unroll2: 2.00
+isb-unroll3: 1.00
+isb-unroll4: 1.00
+isb-unroll8: 1.02
+isb-unroll16: 1.00
+isb-combine6: 1.50
+isb-unroll4x2a: 1.00
+isb-unroll8x2a: 0.99
+isb-unroll3x3a: 1.00
+isb-unroll4x4a: 1.00
+isb-unroll8x4a: 1.03
+isb-unroll6x6a: 1.02
+isb-unroll8x8a: 1.03
+isb-unroll10x10a: 1.01
+isb-unroll2x6a: 1.00
+isb-unroll12x12a: 1.09
+isb-unroll8x2: 1.02
+isb-unroll8x4: 1.01
+isb-unroll8x8: 1.01
+isb-unroll9x3: 1.04
+isb-unrollx2as: 1.50
+isb-unroll2aa: 1.50
+isb-unroll3aa: 1.00
+isb-unroll4aa: 1.00
+isb-unroll6aa: 1.02
+isb-unroll8aa: 1.03
+isb-unrollv1: 0.50
+isb-unrollv2: 0.23
+isb-unrollv4: 0.24
+isb-unrollv8: 0.25
+isb-unrollv12: 0.23
+isb-unrollv2a: 0.50
+isb-unrollv4a: 0.24
+isb-unrollv8a: 0.24
+ipb-combine1: 11.01
+ipb-combine2: 7.82
+ipb-combine3: 3.00
+ipb-combine4: 3.00
+ipb-combine4p: 3.00
+ipb-unroll2a: 1.50
+ipb-combine5p: 1.00
+ipb-unroll3aw: 0.83
+ipb-unroll4a: 1.00
+ipb-unroll8a: 1.01
+ipb-unroll16a: 1.00
+ipb-unroll2: 1.50
+ipb-unroll3: 1.00
+ipb-unroll4: 1.00
+ipb-unroll8: 1.00
+ipb-unroll16: 0.99
+ipb-combine6: 1.50
+ipb-unroll4x2a: 1.00
+ipb-unroll8x2a: 1.00
+ipb-unroll3x3a: 1.00
+ipb-unroll4x4a: 1.00
+ipb-unroll8x4a: 1.01
+ipb-unroll6x6a: 1.00
+ipb-unroll8x8a: 1.01
+ipb-unroll10x10a: 1.00
+ipb-unroll2x6a: 1.00
+ipb-unroll12x12a: 1.09
+ipb-unroll8x2: 1.00
+ipb-unroll8x4: 0.99
+ipb-unroll8x8: 1.00
+ipb-unroll9x3: 1.02
+ipb-unrollx2as: 1.50
+ipb-unroll2aa: 1.50
+ipb-unroll3aa: 1.00
+ipb-unroll4aa: 1.00
+ipb-unroll6aa: 1.00
+ipb-unroll8aa: 1.01
+ipb-unrollv1: 2.00
+ipb-unrollv2: 1.27
+ipb-unrollv4: 1.06
+ipb-unrollv8: 0.99
+ipb-unrollv12: 0.95
+ipb-unrollv2a: 1.17
+ipb-unrollv4a: 1.03
+ipb-unrollv8a: 0.98
+fsb-combine1: 11.01
+fsb-combine2: 10.03
+fsb-combine3: 3.00
+fsb-combine4: 3.00
+fsb-combine4p: 3.00
+fsb-unroll2a: 3.00
+fsb-combine5p: 3.00
+fsb-unroll3aw: 3.00
+fsb-unroll4a: 3.00
+fsb-unroll8a: 1.88
+fsb-unroll16a: 1.72
+fsb-unroll2: 1.71
+fsb-unroll3: 1.71
+fsb-unroll4: 1.71
+fsb-unroll8: 1.72
+fsb-unroll16: 1.71
+fsb-combine6: 0.86
+fsb-unroll4x2a: 0.86
+fsb-unroll8x2a: 0.86
+fsb-unroll3x3a: 0.57
+fsb-unroll4x4a: 0.57
+fsb-unroll8x4a: 0.57
+fsb-unroll6x6a: 0.58
+fsb-unroll8x8a: 0.58
+fsb-unroll10x10a: 0.57
+fsb-unroll2x6a: 0.57
+fsb-unroll12x12a: 0.57
+fsb-unroll8x2: 0.86
+fsb-unroll8x4: 0.57
+fsb-unroll8x8: 0.58
+fsb-unroll9x3: 0.58
+fsb-unrollx2as: 0.86
+fsb-unroll2aa: 0.86
+fsb-unroll3aa: 0.76
+fsb-unroll4aa: 0.57
+fsb-unroll6aa: 0.57
+fsb-unroll8aa: 0.58
+fsb-unrollv1: 0.43
+fsb-unrollv2: 0.21
+fsb-unrollv4: 0.14
+fsb-unrollv8: 0.14
+fsb-unrollv12: 0.13
+fsb-unrollv2a: 0.23
+fsb-unrollv4a: 0.14
+fsb-unrollv8a: 0.14
+fpb-combine1: 12.01
+fpb-combine2: 11.13
+fpb-combine3: 4.03
+fpb-combine4: 4.00
+fpb-combine4p: 4.00
+fpb-unroll2a: 4.00
+fpb-combine5p: 4.00
+fpb-unroll3aw: 4.00
+fpb-unroll4a: 4.00
+fpb-unroll8a: 4.00
+fpb-unroll16a: 4.00
+fpb-unroll2: 4.00
+fpb-unroll3: 4.00
+fpb-unroll4: 4.00
+fpb-unroll8: 4.00
+fpb-unroll16: 4.00
+fpb-combine6: 2.00
+fpb-unroll4x2a: 2.00
+fpb-unroll8x2a: 2.00
+fpb-unroll3x3a: 1.34
+fpb-unroll4x4a: 1.00
+fpb-unroll8x4a: 1.00
+fpb-unroll6x6a: 1.00
+fpb-unroll8x8a: 1.02
+fpb-unroll10x10a: 1.02
+fpb-unroll2x6a: 1.01
+fpb-unroll12x12a: 1.01
+fpb-unroll8x2: 2.01
+fpb-unroll8x4: 1.01
+fpb-unroll8x8: 1.01
+fpb-unroll9x3: 1.33
+fpb-unrollx2as: 2.02
+fpb-unroll2aa: 2.00
+fpb-unroll3aa: 1.33
+fpb-unroll4aa: 1.00
+fpb-unroll6aa: 1.00
+fpb-unroll8aa: 1.00
+fpb-unrollv1: 1.00
+fpb-unrollv2: 0.50
+fpb-unrollv4: 0.25
+fpb-unrollv8: 0.24
+fpb-unrollv12: 0.21
+fpb-unrollv2a: 0.50
+fpb-unrollv4a: 0.24
+fpb-unrollv8a: 0.23
+dsb-combine1: 11.00
+dsb-combine2: 10.08
+dsb-combine3: 3.00
+dsb-combine4: 3.00
+dsb-combine4p: 3.00
+dsb-unroll2a: 3.00
+dsb-combine5p: 3.00
+dsb-unroll3aw: 3.00
+dsb-unroll4a: 3.00
+dsb-unroll8a: 3.00
+dsb-unroll16a: 3.00
+dsb-unroll2: 3.00
+dsb-unroll3: 3.00
+dsb-unroll4: 3.00
+dsb-unroll8: 3.00
+dsb-unroll16: 3.00
+dsb-combine6: 1.50
+dsb-unroll4x2a: 1.50
+dsb-unroll8x2a: 1.49
+dsb-unroll3x3a: 1.00
+dsb-unroll4x4a: 1.00
+dsb-unroll8x4a: 1.00
+dsb-unroll6x6a: 1.00
+dsb-unroll8x8a: 1.00
+dsb-unroll10x10a: 1.00
+dsb-unroll2x6a: 1.00
+dsb-unroll12x12a: 1.00
+dsb-unroll8x2: 1.49
+dsb-unroll8x4: 0.99
+dsb-unroll8x8: 1.00
+dsb-unroll9x3: 1.03
+dsb-unrollx2as: 1.50
+dsb-unroll2aa: 1.50
+dsb-unroll3aa: 1.33
+dsb-unroll4aa: 1.00
+dsb-unroll6aa: 0.99
+dsb-unroll8aa: 1.00
+dsb-unrollv1: 1.50
+dsb-unrollv2: 0.75
+dsb-unrollv4: 0.49
+dsb-unrollv8: 0.50
+dsb-unrollv12: 0.51
+dsb-unrollv2a: 0.75
+dsb-unrollv4a: 0.49
+dsb-unrollv8a: 0.49
+dpb-combine1: 12.08
+dpb-combine2: 12.09
+dpb-combine3: 5.03
+dpb-combine4: 5.00
+dpb-combine4p: 5.00
+dpb-unroll2a: 5.00
+dpb-combine5p: 5.00
+dpb-unroll3aw: 5.00
+dpb-unroll4a: 5.00
+dpb-unroll8a: 5.00
+dpb-unroll16a: 5.00
+dpb-unroll2: 5.00
+dpb-unroll3: 5.00
+dpb-unroll4: 5.00
+dpb-unroll8: 5.00
+dpb-unroll16: 5.00
+dpb-combine6: 2.50
+dpb-unroll4x2a: 2.50
+dpb-unroll8x2a: 2.50
+dpb-unroll3x3a: 1.67
+dpb-unroll4x4a: 1.25
+dpb-unroll8x4a: 1.26
+dpb-unroll6x6a: 1.02
+dpb-unroll8x8a: 1.02
+dpb-unroll10x10a: 1.02
+dpb-unroll2x6a: 1.01
+dpb-unroll12x12a: 1.01
+dpb-unroll8x2: 2.50
+dpb-unroll8x4: 1.26
+dpb-unroll8x8: 1.01
+dpb-unroll9x3: 1.68
+dpb-unrollx2as: 2.50
+dpb-unroll2aa: 2.50
+dpb-unroll3aa: 1.67
+dpb-unroll4aa: 1.25
+dpb-unroll6aa: 1.00
+dpb-unroll8aa: 1.00
+dpb-unrollv1: 2.50
+dpb-unrollv2: 1.25
+dpb-unrollv4: 0.62
+dpb-unrollv8: 0.49
+dpb-unrollv12: 0.48
+dpb-unrollv2a: 1.25
+dpb-unrollv4a: 0.63
+dpb-unrollv8a: 0.49
+isb	ipb	fsb	fpb	dsb	dpb	funct		description
+combine1	Maximum use of data abstraction
+11.01	11.01	11.01	12.01	11.00	12.08		
+combine2	Take vec_length() out of loop
+8.04	7.82	10.03	11.13	10.08	12.09		
+combine3	Array reference to vector data
+3.00	3.00	3.00	4.03	3.00	5.03		
+combine4	Array reference, accumulate in temporary
+2.00	3.00	3.00	4.00	3.00	5.00		
+combine4p	Pointer reference, accumulate in temporary
+2.00	3.00	3.00	4.00	3.00	5.00		
+unroll2a	Array code, unrolled by 2
+1.51	1.50	3.00	4.00	3.00	5.00		
+combine5p	Pointer code, unrolled by 3, for loop
+1.00	1.00	3.00	4.00	3.00	5.00		
+unroll3aw	Array code, unrolled by 3, while loop
+1.00	0.83	3.00	4.00	3.00	5.00		
+unroll4a	Array code, unrolled by 4
+1.00	1.00	3.00	4.00	3.00	5.00		
+unroll8a	Array code, unrolled by 8
+1.04	1.01	1.88	4.00	3.00	5.00		
+unroll16a	Array code, unrolled by 16
+1.00	1.00	1.72	4.00	3.00	5.00		
+unroll2	Pointer code, unrolled by 2
+2.00	1.50	1.71	4.00	3.00	5.00		
+unroll3	Pointer code, unrolled by 3
+1.00	1.00	1.71	4.00	3.00	5.00		
+unroll4	Pointer code, unrolled by 4
+1.00	1.00	1.71	4.00	3.00	5.00		
+unroll8	Pointer code, unrolled by 8
+1.02	1.00	1.72	4.00	3.00	5.00		
+unroll16	Pointer code, unrolled by 16
+1.00	0.99	1.71	4.00	3.00	5.00		
+combine6	Array code, unrolled by 2, Superscalar x2
+1.50	1.50	0.86	2.00	1.50	2.50		
+unroll4x2a	Array code, unrolled by 4, Superscalar x2
+1.00	1.00	0.86	2.00	1.50	2.50		
+unroll8x2a	Array code, unrolled by 8, Superscalar x2
+0.99	1.00	0.86	2.00	1.49	2.50		
+unroll3x3a	Array code, unrolled by 3, Superscalar x3
+1.00	1.00	0.57	1.34	1.00	1.67		
+unroll4x4a	Array code, unrolled by 4, Superscalar x4
+1.00	1.00	0.57	1.00	1.00	1.25		
+unroll8x4a	Array code, unrolled by 8, Superscalar x4
+1.03	1.01	0.57	1.00	1.00	1.26		
+unroll6x6a	Array code, unrolled by 6, Superscalar x6
+1.02	1.00	0.58	1.00	1.00	1.02		
+unroll8x8a	Array code, unrolled by 8, Superscalar x8
+1.03	1.01	0.58	1.02	1.00	1.02		
+unroll10x10a	Array code, unrolled by 10, Superscalar x10
+1.01	1.00	0.57	1.02	1.00	1.02		
+unroll2x6a	Array code, unrolled by 12, Superscalar x6
+1.00	1.00	0.57	1.01	1.00	1.01		
+unroll12x12a	Array code, unrolled by 12, Superscalar x12
+1.09	1.09	0.57	1.01	1.00	1.01		
+unroll8x2	Pointer code, unrolled by 8, Superscalar x2
+1.02	1.00	0.86	2.01	1.49	2.50		
+unroll8x4	Pointer code, unrolled by 8, Superscalar x4
+1.01	0.99	0.57	1.01	0.99	1.26		
+unroll8x8	Pointer code, unrolled by 8, Superscalar x8
+1.01	1.00	0.58	1.01	1.00	1.01		
+unroll9x3	Pointer code, unrolled by 9, Superscalar x3
+1.04	1.02	0.58	1.33	1.03	1.68		
+unrollx2as	Array code, Unroll x2, Superscalar x2, noninterleaved
+1.50	1.50	0.86	2.02	1.50	2.50		
+unroll2aa	Array code, unrolled by 2, different associativity
+1.50	1.50	0.86	2.00	1.50	2.50		
+unroll3aa	Array code, unrolled by 3, Different Associativity
+1.00	1.00	0.76	1.33	1.33	1.67		
+unroll4aa	Array code, unrolled by 4, Different Associativity
+1.00	1.00	0.57	1.00	1.00	1.25		
+unroll6aa	Array code, unrolled by 6, Different Associativity
+1.02	1.00	0.57	1.00	0.99	1.00		
+unroll8aa	Array code, unrolled by 8, Different Associativity
+1.03	1.01	0.58	1.00	1.00	1.00		
+unrollv1	SSE code, 1*VSIZE-way parallelism
+0.50	2.00	0.43	1.00	1.50	2.50		
+unrollv2	SSE code, 2*VSIZE-way parallelism
+0.23	1.27	0.21	0.50	0.75	1.25		
+unrollv4	SSE code, 4*VSIZE-way parallelism
+0.24	1.06	0.14	0.25	0.49	0.62		
+unrollv8	SSE code, 8*VSIZE-way parallelism
+0.25	0.99	0.14	0.24	0.50	0.49		
+unrollv12	SSE code, 12*VSIZE-way parallelism
+0.23	0.95	0.13	0.21	0.51	0.48		
+unrollv2a	SSE code, 2*VSIZE-way parallelism, reassociate
+0.50	1.17	0.23	0.50	0.75	1.25		
+unrollv4a	SSE code, 4*VSIZE-way parallelism, reassociate
+0.24	1.03	0.14	0.24	0.49	0.63		
+unrollv8a	SSE code, 8*VSIZE-way parallelism, reassociate
+0.24	0.98	0.14	0.23	0.49	0.49		

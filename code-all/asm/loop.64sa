@@ -1,0 +1,303 @@
+	.file	"loop.c"
+	.text
+.globl fact_dw
+	.type	fact_dw, @function
+/* $begin fact_dw-64 5 */
+# x86-64 implementation of fact_dw
+# x in register %edi
+fact_dw:
+/* $end fact_dw-64 5 */
+.LFB2:
+/* $begin fact_dw-64 7 */
+	movl	$1, %eax	# Set result to 1
+.L2:			      # \textbf{loop:}
+	imull	%edi, %eax	# Compute result *= x
+	subl	$1, %edi	# Decrement x
+	testl	%edi, %edi	# Test x
+	jg	.L2		# If > 0, goto loop
+	rep			# Inserted to improve branch performance #line:asm:fact_dw:rep
+	ret			# return
+/* $end fact_dw-64 7 */
+.LFE2:
+	.size	fact_dw, .-fact_dw
+.globl fact_while
+	.type	fact_while, @function
+/* $begin fact_while-64 19 */
+# This code uses a conversion of while to do-while 
+fact_while:
+/* $end fact_while-64 19 */
+.LFB3:
+/* $begin fact_while-64 21 */
+	movl	$1, %eax
+	testl	%edi, %edi
+	jle	.L7
+.L10:
+	imull	%edi, %eax
+	subl	$1, %edi
+	testl	%edi, %edi
+	jg	.L10
+.L7:
+	rep
+	ret
+/* $end fact_while-64 21 */
+.LFE3:
+	.size	fact_while, .-fact_while
+.globl fact_for1
+	.type	fact_for1, @function
+fact_for1:
+.LFB4:
+	movl	%edi, %edx
+	movl	$1, %eax
+	testl	%edi, %edi
+	jle	.L14
+.L17:
+	imull	%edx, %eax
+	subl	$1, %edx
+	testl	%edx, %edx
+	jg	.L17
+.L14:
+	rep
+	ret
+.LFE4:
+	.size	fact_for1, .-fact_for1
+.globl fact_for2
+	.type	fact_for2, @function
+fact_for2:
+.LFB5:
+	movl	$1, %eax
+	movl	$2, %edx
+	cmpl	$1, %edi
+	jle	.L21
+.L24:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %edi
+	jge	.L24
+.L21:
+	rep
+	ret
+.LFE5:
+	.size	fact_for2, .-fact_for2
+.globl sum_dw
+	.type	sum_dw, @function
+sum_dw:
+.LFB6:
+	movl	$0, %eax
+.L27:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L27
+	rep
+	ret
+.LFE6:
+	.size	sum_dw, .-sum_dw
+.globl sum_while
+	.type	sum_while, @function
+sum_while:
+.LFB7:
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L32
+.L35:
+	addq	(%rdi), %rax
+	movq	8(%rdi), %rdi
+	testq	%rdi, %rdi
+	jne	.L35
+.L32:
+	rep
+	ret
+.LFE7:
+	.size	sum_while, .-sum_while
+.globl sum_for
+	.type	sum_for, @function
+sum_for:
+.LFB8:
+	movq	%rdi, %rdx
+	movl	$0, %eax
+	testq	%rdi, %rdi
+	je	.L39
+.L42:
+	addq	(%rdx), %rax
+	movq	8(%rdx), %rdx
+	testq	%rdx, %rdx
+	jne	.L42
+.L39:
+	rep
+	ret
+.LFE8:
+	.size	sum_for, .-sum_for
+.globl puzzle
+	.type	puzzle, @function
+/* $begin puzzle-prob-64 121 */
+# x86-64 implementation of puzzle
+# Arguments: a in \rdireg{}, b in \rsireg, n in \edxreg{}
+# return value in register %rax
+puzzle:
+/* $end puzzle-prob-64 121 */
+.LFB9:
+/* $begin puzzle-prob-64 123 */
+	movl	%edx, %ecx
+	andq	%rdi, %rsi
+	movl	$1, %eax
+	salq	%cl, %rax
+	cmpq	$-1, %rax
+	je	.L45
+	movq	$-1, %rdx
+.L46:
+	xorq	%rdx, %rsi
+	shrq	$2, %rdx
+	cmpq	%rax, %rdx
+	ja	.L46
+.L45:
+	movq	%rsi, %rax
+	ret
+/* $end puzzle-prob-64 123 */
+
+/* $begin puzzle-ans-64 121 */
+# x86-64 implementation of puzzle
+# Arguments: a in \rdireg{}, b in \rsireg, n in \edxreg{}
+# return value in register %rax
+puzzle:
+/* $end puzzle-ans-64 121 */
+.LFB9:
+/* $begin puzzle-ans-64 123 */
+	movl	%edx, %ecx	# Copy n
+	andq	%rdi, %rsi	# Set result to a & b (EXPR1)
+	movl	$1, %eax	# Set \eaxreg{} to 1
+	salq	%cl, %rax	# Compute 1<<n        (EXPR3)
+	cmpq	$-1, %rax	# Compare 1<<n:-1
+	je	.L45		# If ==, goto done
+	movq	$-1, %rdx     	# Set mask to -1      (EXPR2)
+.L46:			      # \textbf{loop:}
+	xorq	%rdx, %rsi	# result ^= mask      (EXPR5)
+	shrq	$2, %rdx	# mask >>= 2          (EXPR4)
+	cmpq	%rax, %rdx	# Compare mask:1<<n   (EXPR3)
+	ja	.L46		# If >, goto done
+.L45:			      # \textbf{done:}
+	movq	%rsi, %rax	# Resturn result
+	ret
+/* $end puzzle-ans-64 123 */
+
+
+.LFE9:
+	.size	puzzle, .-puzzle
+.globl sfact_while
+	.type	sfact_while, @function
+sfact_while:
+.LFB10:
+	movl	$1, %eax
+	testl	%edi, %edi
+	jle	.L51
+.L54:
+	imull	%edi, %eax
+	subl	$1, %edi
+	testl	%edi, %edi
+	jg	.L54
+.L51:
+	movl	%eax, (%rsi)
+	ret
+.LFE10:
+	.size	sfact_while, .-sfact_while
+	.section	.eh_frame,"a",@progbits
+.Lframe1:
+	.long	.LECIE1-.LSCIE1
+.LSCIE1:
+	.long	0x0
+	.byte	0x1
+	.string	"zR"
+	.uleb128 0x1
+	.sleb128 -8
+	.byte	0x10
+	.uleb128 0x1
+	.byte	0x3
+	.byte	0xc
+	.uleb128 0x7
+	.uleb128 0x8
+	.byte	0x90
+	.uleb128 0x1
+	.align 8
+.LECIE1:
+.LSFDE1:
+	.long	.LEFDE1-.LASFDE1
+.LASFDE1:
+	.long	.LASFDE1-.Lframe1
+	.long	.LFB2
+	.long	.LFE2-.LFB2
+	.uleb128 0x0
+	.align 8
+.LEFDE1:
+.LSFDE3:
+	.long	.LEFDE3-.LASFDE3
+.LASFDE3:
+	.long	.LASFDE3-.Lframe1
+	.long	.LFB3
+	.long	.LFE3-.LFB3
+	.uleb128 0x0
+	.align 8
+.LEFDE3:
+.LSFDE5:
+	.long	.LEFDE5-.LASFDE5
+.LASFDE5:
+	.long	.LASFDE5-.Lframe1
+	.long	.LFB4
+	.long	.LFE4-.LFB4
+	.uleb128 0x0
+	.align 8
+.LEFDE5:
+.LSFDE7:
+	.long	.LEFDE7-.LASFDE7
+.LASFDE7:
+	.long	.LASFDE7-.Lframe1
+	.long	.LFB5
+	.long	.LFE5-.LFB5
+	.uleb128 0x0
+	.align 8
+.LEFDE7:
+.LSFDE9:
+	.long	.LEFDE9-.LASFDE9
+.LASFDE9:
+	.long	.LASFDE9-.Lframe1
+	.long	.LFB6
+	.long	.LFE6-.LFB6
+	.uleb128 0x0
+	.align 8
+.LEFDE9:
+.LSFDE11:
+	.long	.LEFDE11-.LASFDE11
+.LASFDE11:
+	.long	.LASFDE11-.Lframe1
+	.long	.LFB7
+	.long	.LFE7-.LFB7
+	.uleb128 0x0
+	.align 8
+.LEFDE11:
+.LSFDE13:
+	.long	.LEFDE13-.LASFDE13
+.LASFDE13:
+	.long	.LASFDE13-.Lframe1
+	.long	.LFB8
+	.long	.LFE8-.LFB8
+	.uleb128 0x0
+	.align 8
+.LEFDE13:
+.LSFDE15:
+	.long	.LEFDE15-.LASFDE15
+.LASFDE15:
+	.long	.LASFDE15-.Lframe1
+	.long	.LFB9
+	.long	.LFE9-.LFB9
+	.uleb128 0x0
+	.align 8
+.LEFDE15:
+.LSFDE17:
+	.long	.LEFDE17-.LASFDE17
+.LASFDE17:
+	.long	.LASFDE17-.Lframe1
+	.long	.LFB10
+	.long	.LFE10-.LFB10
+	.uleb128 0x0
+	.align 8
+.LEFDE17:
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

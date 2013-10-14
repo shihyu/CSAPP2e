@@ -1,0 +1,18 @@
+	.file	"shift.c"
+	.text
+.globl shift_left2_rightn
+	.type	shift_left2_rightn, @function
+shift_left2_rightn:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin shift-ans 8 */
+	movl	8(%ebp), %eax	# Get x
+	sall	$2, %eax	# x <<= 2
+	movl	12(%ebp), %ecx	# Get n
+	sarl	%cl, %eax	# x >>= n
+/* $end shift-ans 8 */
+	popl	%ebp
+	ret
+	.size	shift_left2_rightn, .-shift_left2_rightn
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

@@ -1,0 +1,10 @@
+
+relo3prob.o:     file format elf32-i386
+
+Contents of section .rodata:
+
+/* $begin relo3probdata-relo-d 5 */
+# This is the jump table for the switch statement
+0000 28000000 15000000 25000000 18000000 #4 words at offsets 0x0,0x4,0x8, and 0xc
+0010 18000000 20000000                   #2 words at offsets 0x10 and 0x14  
+/* $end relo3probdata-relo-d 5 */

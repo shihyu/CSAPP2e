@@ -1,0 +1,49 @@
+
+fragments.32o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <next-0x46>:
+   0:	b8 50 40 00 00       	mov    $0x4050,%eax
+   5:	66 89 ec             	mov    %bp,%sp
+   8:	8a 24 0f             	mov    (%edi,%ecx,1),%ah
+   b:	c6 04 24 ef          	movb   $0xef,(%esp)
+   f:	89 45 f4             	mov    %eax,-0xc(%ebp)
+  12:	83 ec 04             	sub    $0x4,%esp
+  15:	89 2c 24             	mov    %ebp,(%esp)
+  18:	8b 04 24             	mov    (%esp),%eax
+  1b:	83 c4 04             	add    $0x4,%esp
+  1e:	88 d8                	mov    %bl,%al
+  20:	66 89 d8             	mov    %bx,%ax
+  23:	89 d8                	mov    %ebx,%eax
+  25:	88 d8                	mov    %bl,%al
+  27:	66 89 d8             	mov    %bx,%ax
+  2a:	89 d8                	mov    %ebx,%eax
+  2c:	88 f0                	mov    %dh,%al
+  2e:	0f be c6             	movsbl %dh,%eax
+  31:	0f b6 c6             	movzbl %dh,%eax
+  34:	b8 00 00 00 00       	mov    $0x0,%eax
+  39:	eb 02                	jmp    3d <next-0x9>
+  3b:	8b 10                	mov    (%eax),%edx
+  3d:	5a                   	pop    %edx
+  3e:	89 ec                	mov    %ebp,%esp
+  40:	5d                   	pop    %ebp
+  41:	e8 00 00 00 00       	call   46 <next>
+
+00000046 <next>:
+  46:	58                   	pop    %eax
+  47:	8b 45 08             	mov    0x8(%ebp),%eax
+  4a:	99                   	cltd   
+  4b:	f7 7d 0c             	idivl  0xc(%ebp)
+  4e:	89 44 24 04          	mov    %eax,0x4(%esp)
+  52:	89 14 24             	mov    %edx,(%esp)
+  55:	8b 45 08             	mov    0x8(%ebp),%eax
+  58:	ba 00 00 00 00       	mov    $0x0,%edx
+  5d:	f7 75 0c             	divl   0xc(%ebp)
+  60:	89 44 24 04          	mov    %eax,0x4(%esp)
+  64:	89 14 24             	mov    %edx,(%esp)
+
+00000067 <zero>:
+  67:	31 d2                	xor    %edx,%edx
+  69:	ba 00 00 00 00       	mov    $0x0,%edx

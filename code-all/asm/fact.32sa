@@ -1,0 +1,205 @@
+	.file	"fact.c"
+	.text
+.globl fact_do
+	.type	fact_do, @function
+fact_do:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin fact_do-s 8 */
+# Argument: n at \ebpreg+8
+# Registers: n in \edxreg, result in \eaxreg
+	movl	8(%ebp), %edx	# Get n			# line:asm:fact:do:getn
+	movl	$1, %eax	# Set result = 1	# line:asm:fact:do:init
+.L2:			      # \textbf{loop:}
+	imull	%edx, %eax	# Compute result *= n	# line:asm:fact:do:bodystart
+	subl	$1, %edx	# Decrement n		# line:asm:fact:do:bodyend
+	cmpl	$1, %edx	# Compare n:1		# line:asm:fact:do:test
+	jg	.L2		# If >, goto \textbf{loop} # line:asm:fact:do:jump
+				# Return result
+/* $end fact_do-s 8 */
+	popl	%ebp
+	ret
+	.size	fact_do, .-fact_do
+.globl fact_while
+	.type	fact_while, @function
+fact_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin fact_while-s 23 */
+# Argument: n at \ebpreg+8
+# Registers: n in \edxreg, result in \eaxreg
+	movl	8(%ebp), %edx	# Get n
+	movl	$1, %eax	# Set result = 1
+	cmpl	$1, %edx	# Compare n:1	# line:asm:fact:while:itest
+	jle	.L7		# If <=, goto \textbf{done} # line:asm:fact:while:jle
+.L10:			      # \textbf{loop:}
+	imull	%edx, %eax	# Compute result *= n
+	subl	$1, %edx	# Decrement n
+	cmpl	$1, %edx	# Compare n:1
+	jg	.L10		# If >, goto \textbf{loop}
+.L7:			      #\textbf{done:}
+				# Return result
+/* $end fact_while-s 23 */
+	popl	%ebp
+	ret
+
+/* $begin fact_while-32 20 */
+fact_while:
+# n at \ebpreg+8
+	pushl	%ebp		# Save frame pointer
+	movl	%esp, %ebp	# Create new frame pointer
+	movl	8(%ebp), %edx	# Get n
+	movl	$1, %eax	# Set result = 1
+	cmpl	$1, %edx	# Compare n:1
+	jle	.L7		# If <=, goto \textbf{done}
+.L10:			      # \textbf{loop:}
+	imull	%edx, %eax	# Compute result *= n
+	subl	$1, %edx	# Decrement n
+	cmpl	$1, %edx	# Compare n:1
+	jg	.L10		# If >, goto \textbf{loop}
+.L7:			      #\textbf{done:}
+	popl	%ebp	        # Restore frame pointer
+	ret			# Return result
+/* $end fact_while-32 20 */
+
+	.size	fact_while, .-fact_while
+.globl fact_for
+	.type	fact_for, @function
+fact_for:
+	pushl	%ebp
+	movl	%esp, %ebp
+/* $begin fact_for-s 41 */
+# Argument: n at \ebpreg+8
+# Registers: n in \ecxreg, i in \edxreg, result in \eaxreg
+	movl	8(%ebp), %ecx	# Get n
+	movl	$2, %edx	# Set i to 2	      (init)
+	movl	$1, %eax	# Set result to 1
+	cmpl	$1, %ecx	# Compare n:1	      (!test)
+	jle	.L14		# If <=, goto \textbf{done}
+.L17:			      # \textbf{loop:}
+	imull	%edx, %eax	# Compute result *= i (body)
+	addl	$1, %edx	# Increment i	      (update)
+	cmpl	%edx, %ecx	# Compare n:i         (test)
+	jge	.L17		# If >=, goto \textbf{loop}
+.L14:			      # \textbf{done:}
+/* $end fact_for-s 41 */
+	popl	%ebp
+	ret
+	.size	fact_for, .-fact_for
+.globl fact_for_while
+	.type	fact_for_while, @function
+fact_for_while:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$1, %edx
+	movl	$1, %eax
+	testl	%ecx, %ecx
+	jle	.L21
+.L24:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L24
+.L21:
+	popl	%ebp
+	ret
+	.size	fact_for_while, .-fact_for_while
+.globl fact_for_do
+	.type	fact_for_do, @function
+fact_for_do:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$1, %edx
+	movl	$1, %eax
+	testl	%ecx, %ecx
+	jle	.L28
+.L31:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L31
+.L28:
+	popl	%ebp
+	ret
+	.size	fact_for_do, .-fact_for_do
+.globl fact_do_goto
+	.type	fact_do_goto, @function
+fact_do_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+.L34:
+	imull	%edx, %eax
+	subl	$1, %edx
+	cmpl	$1, %edx
+	jg	.L34
+	popl	%ebp
+	ret
+	.size	fact_do_goto, .-fact_do_goto
+.globl fact_while_goto
+	.type	fact_while_goto, @function
+fact_while_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	$1, %eax
+	cmpl	$1, %edx
+	jle	.L39
+.L42:
+	imull	%edx, %eax
+	subl	$1, %edx
+	cmpl	$1, %edx
+	jg	.L42
+.L39:
+	popl	%ebp
+	ret
+	.size	fact_while_goto, .-fact_while_goto
+.globl fact_for_goto
+	.type	fact_for_goto, @function
+fact_for_goto:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %ecx
+	movl	$1, %edx
+	movl	$1, %eax
+	testl	%ecx, %ecx
+	jle	.L46
+.L49:
+	imull	%edx, %eax
+	addl	$1, %edx
+	cmpl	%edx, %ecx
+	jge	.L49
+.L46:
+	popl	%ebp
+	ret
+	.size	fact_for_goto, .-fact_for_goto
+.globl rfact
+	.type	rfact, @function
+/* $begin rfact-s 147 */
+# Argument: n at \ebpreg+8
+# Registers: n in \ebxreg, result in \eaxreg
+rfact:
+	pushl	%ebp		# Save old \ebpreg #line:asm:fact:rfact:setup1
+	movl	%esp, %ebp	# Set \ebpreg{} as frame pointer
+	pushl	%ebx		# Save callee save register \ebxreg
+	subl	$4, %esp	# Allocate 4 bytes on stack #line:asm:fact:rfact:setup2
+	movl	8(%ebp), %ebx	# Get n #line:asm:fact:rfact:getn
+	movl	$1, %eax	# result = 1 #line:asm:fact:rfact:result1
+	cmpl	$1, %ebx	# Compare n:1 #line:asm:fact:rfact:comp
+	jle	.L53		# If <=, goto \textbf{done} #line:asm:fact:rfact:jump
+	leal	-1(%ebx), %eax	# Compute n-1#line:asm:fact:rfact:nm1
+	movl	%eax, (%esp)	# Store at top of stack#line:asm:fact:rfact:store
+	call	rfact		# Call rfact(n-1)#line:asm:fact:rfact:call
+	imull	%ebx, %eax	# Compute result = return value * n#line:asm:fact:rfact:nstar
+.L53:			      # \textbf{done:}
+	addl	$4, %esp	# Deallocate 4 bytes from stack#line:asm:fact:rfact:done1
+	popl	%ebx		# Restore \ebxreg{}
+	popl	%ebp		# Restore \ebpreg#line:asm:fact:rfact:done2
+	ret			# Return result
+/* $end rfact-s 147 */
+	.size	rfact, .-rfact
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits

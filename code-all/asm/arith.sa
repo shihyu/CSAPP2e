@@ -1,0 +1,19 @@
+arith:
+	pushl %ebp
+	movl %esp,%ebp
+
+	/* $begin arith-s 11 */
+	movl 12(%ebp),%eax	# Get y
+	movl 16(%ebp),%edx	# Get z
+	addl 8(%ebp),%eax	# Compute t1 = x+y
+	leal (%edx,%edx,2),%edx	# Compute z*3
+	sall $4,%edx		# Compute t2 = z*48 
+	andl $65535,%eax	# Compute t3 = t1&0xFFFF
+	imull %eax,%edx 	# Compute t4 = t2*t3 
+	movl %edx,%eax		# Set t4 as return val
+	/* $end arith-s 11 */
+
+	movl %ebp,%esp
+	popl %ebp
+	ret
+

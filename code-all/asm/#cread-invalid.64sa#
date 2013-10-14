@@ -1,0 +1,9 @@
+/* $begin cread-invalid64 1 */
+# Invalid implementation of function cread
+# xp in register %rdi
+cread:
+	movl	$0, %eax	# Set 0 as return value
+	testq	%rdi, %rdi	# Test xp
+	cmovne	(%rdi), %eax	# if !0, dereference xp to get return value # line:asm:cread:cmovne
+	retq
+/* $end cread-invalid64 1 */

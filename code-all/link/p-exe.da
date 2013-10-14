@@ -1,0 +1,53 @@
+Program Header:
+    PHDR off    0x00000034 vaddr 0x08048034 paddr 0x08048034 align 2**2
+         filesz 0x000000c0 memsz 0x000000c0 flags r-x
+  INTERP off    0x000000f4 vaddr 0x080480f4 paddr 0x080480f4 align 2**0
+         filesz 0x00000013 memsz 0x00000013 flags r--
+
+/* $begin p-exe-seghdr-d 13 */
+#Read-only code segment 	
+ LOAD off    0x00000000 vaddr 0x08048000 paddr 0x08048000 align 2**12
+      filesz 0x00000448 memsz 0x00000448 flags r-x
+
+#Read/write data segment 
+ LOAD off    0x00000448 vaddr 0x08049448 paddr 0x08049448 align 2**12
+      filesz 0x000000e8 memsz 0x00000104 flags rw-
+/* $end p-exe-seghdr-d 13 */
+
+ DYNAMIC off    0x00000490 vaddr 0x08049490 paddr 0x08049490 align 2**2
+         filesz 0x000000a0 memsz 0x000000a0 flags rw-
+    NOTE off    0x00000108 vaddr 0x08048108 paddr 0x08048108 align 2**2
+         filesz 0x00000020 memsz 0x00000020 flags r--
+
+/* $begin p-exe-d 302 */
+080483b4 <main>:
+ 80483b4:	55                   	push   %ebp
+ 80483b5:	89 e5                	mov    %esp,%ebp
+ 80483b7:	83 ec 08             	sub    $0x8,%esp
+/* $begin pmain-exe1-d 306 */
+ 80483ba:	e8 09 00 00 00       	call   80483c8 <swap>	     # swap();
+/* $end pmain-exe1-d 306 */
+ 80483bf:	31 c0                	xor    %eax,%eax
+ 80483c1:	89 ec                	mov    %ebp,%esp
+ 80483c3:	5d                   	pop    %ebp
+ 80483c4:	c3                   	ret    
+ 80483c5:	90                   	nop    
+ 80483c6:	90                   	nop    
+ 80483c7:	90                   	nop    
+
+080483c8 <swap>:
+ 80483c8:	55                   	push   %ebp
+ 80483c9:	8b 15 5c 94 04 08    	mov    0x804945c,%edx	     # Get *bufp0
+ 80483cf:	a1 58 94 04 08       	mov    0x8049458,%eax	     # Get buf[1]
+ 80483d4:	89 e5                	mov    %esp,%ebp		 
+ 80483d6:	c7 05 48 95 04 08 58 	movl   $0x8049458,0x8049548  # bufp1 = &buf[1]
+ 80483dd:	94 04 08 
+ 80483e0:	89 ec                	mov    %ebp,%esp
+ 80483e2:	8b 0a                	mov    (%edx),%ecx
+ 80483e4:	89 02                	mov    %eax,(%edx)
+ 80483e6:	a1 48 95 04 08       	mov    0x8049548,%eax	     # Get *bufp1
+ 80483eb:	89 08                	mov    %ecx,(%eax)
+ 80483ed:	5d                   	pop    %ebp
+ 80483ee:	c3                   	ret    
+/* $end p-exe-d 302 */
+ 80483ef:	90                   	nop    

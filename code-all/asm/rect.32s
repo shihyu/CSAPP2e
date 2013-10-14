@@ -1,0 +1,57 @@
+	.file	"rect.c"
+	.text
+.globl nothing
+	.type	nothing, @function
+nothing:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	$20, 16(%eax)
+	movl	$10, 12(%eax)
+	movl	$16711935, 8(%eax)
+	movl	$0, (%eax)
+	movl	$0, 4(%eax)
+	popl	%ebp
+	ret	$4
+	.size	nothing, .-nothing
+.globl nothing2
+	.type	nothing2, @function
+nothing2:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	$20, 16(%eax)
+	movl	$10, 12(%eax)
+	movl	$16711935, 8(%eax)
+	movl	$0, 4(%eax)
+	movl	$0, (%eax)
+	popl	%ebp
+	ret	$4
+	.size	nothing2, .-nothing2
+.globl area
+	.type	area, @function
+area:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %edx
+	movl	16(%edx), %eax
+	imull	12(%edx), %eax
+	popl	%ebp
+	ret
+	.size	area, .-area
+.globl rotate_left
+	.type	rotate_left, @function
+rotate_left:
+	pushl	%ebp
+	movl	%esp, %ebp
+	movl	8(%ebp), %eax
+	movl	16(%eax), %ecx
+	movl	12(%eax), %edx
+	movl	%edx, 16(%eax)
+	movl	%ecx, 12(%eax)
+	subl	%ecx, (%eax)
+	popl	%ebp
+	ret
+	.size	rotate_left, .-rotate_left
+	.ident	"GCC: (Ubuntu 4.3.2-1ubuntu11) 4.3.2"
+	.section	.note.GNU-stack,"",@progbits
